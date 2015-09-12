@@ -9,18 +9,23 @@ import java.util.Objects;
  */
 public class Dish {
     private int dbID;
-    private String name = "";
+    private String title = "";
     private int price = 0;
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     
     
     public Dish(){} 
 
-    public Dish(int dbID, String name, int price) {
+    public Dish(int dbID, String title, int price) {
         this.dbID = dbID;
-        this.name = name;
+        this.title = title;
         this.price = price;        
     }
+    public Dish(String title, int price) {        
+        this.title = title;
+        this.price = price;
+    }
+    
 
     public int getDbID() {
         return dbID;
@@ -30,12 +35,12 @@ public class Dish {
         this.dbID = dbID;
     }  
     
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getPrice() {
@@ -70,7 +75,7 @@ public class Dish {
             return false;
         }
         final Dish other = (Dish) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.title, other.title)) {
             return false;
         }
         if (this.price != other.price) {
@@ -84,7 +89,7 @@ public class Dish {
 
     @Override
     public String toString() {
-        return name;
+        return title;
     }
     
 

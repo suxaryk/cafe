@@ -28,7 +28,8 @@ public class dbUtils {
 //    private static final String PASSWORD = "luckyroger";
 
 
-    private static final ArrayList<String> sqlList = new ArrayList<>();
+    private static final ArrayList<String> sqlSelectList = new ArrayList<>();
+    private static final ArrayList<String> sqlInsertList = new ArrayList<>();
     private static int checkId;
 
     static {
@@ -40,17 +41,31 @@ public class dbUtils {
         }
         System.out.println("MySQL JDBC Driver Registered!");
         
-        sqlList.add("select * from firstdishes");
-        sqlList.add("select * from salats");
-        sqlList.add("select * from rogerdishes");
-        sqlList.add("select * from pandishes");
-        sqlList.add("select * from meat");
-        sqlList.add("select * from pizza");
-        sqlList.add("select * from pizza");
-        sqlList.add("select * from sushi");
-        sqlList.add("select * from dessert");
-        sqlList.add("select * from drinks");
-        sqlList.add("select * from alcohol");
+        sqlSelectList.add("select * from firstdishes");
+        sqlSelectList.add("select * from salats");
+        sqlSelectList.add("select * from rogerdishes");
+        sqlSelectList.add("select * from pandishes");
+        sqlSelectList.add("select * from meat");
+        sqlSelectList.add("select * from pizza");
+        sqlSelectList.add("select * from pizza");
+        sqlSelectList.add("select * from sushi");
+        sqlSelectList.add("select * from dessert");
+        sqlSelectList.add("select * from drinks");
+        sqlSelectList.add("select * from alcohol");
+        
+        sqlInsertList.add("INSERT INTO firstdishes(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO salats(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO rogerdishes(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO pandishes(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO meat(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO pizza(title, priceS) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO pizza(title, pricB) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO sushi(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO dessert(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO drinks(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO alcohol(title, price) VALUES(?, ?)");     
+        
+        
         
     }
     private static java.sql.Timestamp getCurrentTimeStamp() {
@@ -70,8 +85,8 @@ public class dbUtils {
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             ResultSet rs;
-            for (int i = 0; i < sqlList.size(); i++) {
-                rs = statement.executeQuery(sqlList.get(i));
+            for (int i = 0; i < sqlSelectList.size(); i++) {
+                rs = statement.executeQuery(sqlSelectList.get(i));
                 if (i == 5) {
                     while (rs.next()) {
                         MainForm.listofCat.get(i).add(
@@ -107,10 +122,8 @@ public class dbUtils {
 
     public static void addCheck(Check check) {      
         final String sql = "INSERT INTO checks( checkId, sum, datatime)"
-                                                    +" VALUES(?, ?, ?)";
-        final String sql1 = "SELECT COUNT(checkId) FROM checks";
+                                                    +" VALUES(?, ?, ?)";      
 
-        
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
@@ -126,13 +139,39 @@ public class dbUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new user was inserted successfully!");
+                System.out.println("A new check was added successfully!");
             }
           
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
-        }
+        }        
 
     }
+    
+    public static void addDish(Dish dish, int activeCat) {
+        String categoty = "";
+        for (int i = 0; i < sqlInsertList.size(); i++) {
+            if (i == activeCat) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
 
+                    System.out.println(!connection.isClosed() ? "DB connected!"
+                            : "Error DB connecting");
+
+                    PreparedStatement pstatement = connection.prepareStatement(sqlInsertList.get(i));
+                    pstatement.setString(1, dish.getTitle());
+                    pstatement.setInt(2, dish.getPrice());
+
+                    int rowsInserted = pstatement.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("A new dish was added successfully!");
+                    }
+
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console");
+                }                                 
+            }            
+        }
+        getDBmenu();
+    }
 }

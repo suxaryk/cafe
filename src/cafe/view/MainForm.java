@@ -9,6 +9,7 @@ import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.print.PrinterException;
@@ -28,6 +29,7 @@ import java.util.logging.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.OrientationRequested;
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -67,6 +69,13 @@ public class MainForm extends javax.swing.JFrame {
         jButton15.setVisible(false);
         jButton15.setBackground(RED);
         jTextField3.setVisible(false);
+        jButton1.setVisible(false);
+        jButton11.setVisible(false);
+        jButton12.setVisible(false);
+        jTextField2.setVisible(false);
+        jTextField4.setVisible(false);
+        jLabel8.setVisible(false);
+        jLabel9.setVisible(false);
         
 
         initLoginForm();
@@ -139,6 +148,9 @@ public class MainForm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -782,7 +794,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel1.setText(" Інформація");
         jLabel1.setOpaque(true);
         jPanel5.add(jLabel1);
-        jLabel1.setBounds(0, 450, 570, 40);
+        jLabel1.setBounds(0, 450, 570, 23);
 
         btn10.setBackground(new java.awt.Color(0, 153, 204));
         btn10.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -972,11 +984,17 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel5.add(jCheckBox1);
-        jCheckBox1.setBounds(0, 550, 110, 31);
+        jCheckBox1.setBounds(0, 530, 120, 31);
 
-        jTextField2.setText("jTextField2");
+        jTextField2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextField2.setText("123344");
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PriceTyped(evt);
+            }
+        });
         jPanel5.add(jTextField2);
-        jTextField2.setBounds(120, 490, 450, 40);
+        jTextField2.setBounds(490, 480, 80, 30);
 
         jComboBox1.setBackground(new java.awt.Color(240, 240, 240));
         jComboBox1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -987,24 +1005,49 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel5.add(jComboBox1);
-        jComboBox1.setBounds(0, 510, 120, 30);
+        jComboBox1.setBounds(0, 490, 120, 30);
 
         jLabel6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel6.setText("Сортування:");
         jPanel5.add(jLabel6);
-        jLabel6.setBounds(0, 490, 120, 18);
+        jLabel6.setBounds(0, 470, 120, 18);
 
-        jButton1.setText("delete");
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setText("видалити");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel5.add(jButton1);
         jButton1.setBounds(470, 530, 100, 70);
 
-        jButton11.setText("add");
+        jButton11.setBackground(new java.awt.Color(204, 204, 204));
+        jButton11.setText("додати");
+        jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDish(evt);
+            }
+        });
         jPanel5.add(jButton11);
         jButton11.setBounds(270, 530, 100, 70);
 
-        jButton12.setText("update");
+        jButton12.setBackground(new java.awt.Color(204, 204, 204));
+        jButton12.setText("оновити");
+        jButton12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel5.add(jButton12);
         jButton12.setBounds(370, 530, 100, 70);
+
+        jTextField4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jPanel5.add(jTextField4);
+        jTextField4.setBounds(130, 480, 360, 30);
+
+        jLabel8.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel8.setText("Ціна");
+        jPanel5.add(jLabel8);
+        jLabel8.setBounds(490, 510, 60, 16);
+
+        jLabel9.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel9.setText(" Назва");
+        jPanel5.add(jLabel9);
+        jLabel9.setBounds(130, 510, 90, 16);
 
         jTabbedPane1.addTab("                        ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), jPanel5); // NOI18N
 
@@ -1497,7 +1540,7 @@ public class MainForm extends javax.swing.JFrame {
                     .getCheckList().size(); i++) {
                 model.addRow(new Object[]{
                     checks.get(activeTable).getCheckList().get(i)
-                            .getDish().getName(),
+                            .getDish().getTitle(),
                     checks.get(activeTable).getCheckList().get(i).getCount(),
                     checks.get(activeTable).getCheckList().get(i).getDish()
                             .getPrice(),
@@ -1551,7 +1594,7 @@ public class MainForm extends javax.swing.JFrame {
 
 
         int dbId = listofCat.get(activeCat).get(activeDishes).getDbID();
-        String title = listofCat.get(activeCat).get(activeDishes).getName();
+        String title = listofCat.get(activeCat).get(activeDishes).getTitle();
         if (jCheckBox1.isSelected()) {
             title = "(Вел.)" + title;
         }
@@ -1564,7 +1607,7 @@ public class MainForm extends javax.swing.JFrame {
 
         model.addRow(new Object[]{
             checks.get(activeTable).getCheckList().get(addedIndex)
-                    .getDish().getName(),
+                    .getDish().getTitle(),
             checks.get(activeTable).getCheckList().get(addedIndex)
                     .getCount(),
             checks.get(activeTable).getCheckList().get(addedIndex)
@@ -1593,7 +1636,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void refreshListOfPrices() {
         int price = listofCat.get(activeCat).get(activeDishes).getPrice();
-        String title = listofCat.get(activeCat).get(activeDishes).getName();
+        String title = listofCat.get(activeCat).get(activeDishes).getTitle();
         if (jCheckBox1.isSelected()) {
             title = "(Вел.)" + title;
         }
@@ -1608,7 +1651,7 @@ public class MainForm extends javax.swing.JFrame {
         jList2.ensureIndexIsVisible(jList2.getSelectedIndex());
         clearCountButton();
         int price = listofCat.get(activeCat).get(0).getPrice();
-        String title = listofCat.get(activeCat).get(0).getName();
+        String title = listofCat.get(activeCat).get(0).getTitle();
         jLabel1.setText("Інформація: " + title);
         fillPrices(title, price);
         clearCheckboxs();
@@ -1729,6 +1772,13 @@ public class MainForm extends javax.swing.JFrame {
             jButton15.setVisible(true);
             jTextField3.setVisible(true);
             jPasswordField1.setForeground(RED);
+            jButton1.setVisible(true);
+            jButton11.setVisible(true);
+            jButton12.setVisible(true);
+            jTextField2.setVisible(true);
+            jTextField4.setVisible(true);
+            jLabel8.setVisible(true);
+            jLabel9.setVisible(true);
            
             
             
@@ -1839,7 +1889,7 @@ public class MainForm extends javax.swing.JFrame {
                 } else if (orderArg == 1) {
                     return ((Integer) o1.getPrice()).compareTo(o2.getPrice());
                 } else {
-                    return o1.getName().compareToIgnoreCase(o2.getName());
+                    return o1.getTitle().compareToIgnoreCase(o2.getTitle());
                 }
             }
         });
@@ -2012,6 +2062,27 @@ public class MainForm extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_removeEmployee
+
+    private void PriceTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || c == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_PriceTyped
+
+    private void addDish(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDish
+        // TODO add your handling code here:
+        if (!jTextField2.getText().equals("") && !jTextField4.getText().equals("")) {
+            String title = jTextField4.getText();
+            int price = Integer.parseInt(jTextField2.getText());
+            dbUtils.addDish(new Dish(title, price), activeCat);          
+            fixme
+          
+            jList2.setListData(listofCat.get(activeCat).toArray());           
+            jList2.setSelectedIndex(jList2.getLastVisibleIndex());
+        }
+    }//GEN-LAST:event_addDish
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -2260,6 +2331,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -2279,6 +2352,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JButton table01;
     private javax.swing.JButton table02;
     private javax.swing.JButton table03;

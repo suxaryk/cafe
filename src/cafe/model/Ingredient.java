@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class Ingredient implements Serializable{
     private int dbId;
-   // private String title; 
+    private String title; 
     private double count;
 
     public Ingredient() {
@@ -20,6 +20,13 @@ public class Ingredient implements Serializable{
         this.dbId = Id;
         this.count = count;
     }
+
+    public Ingredient(int dbId, String title) {
+        this.dbId = dbId;
+        this.title = title;
+    }
+    
+    
 
     public int getId() {
         return dbId;

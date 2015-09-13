@@ -5,6 +5,7 @@ import cafe.Utils.dbUtils;
 import static cafe.Utils.dbUtils.addCheck;
 import cafe.model.CheckItem;
 import cafe.model.Dish;
+import cafe.model.Ingredient;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.awt.Color;
@@ -151,6 +152,8 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -987,14 +990,14 @@ public class MainForm extends javax.swing.JFrame {
         jCheckBox1.setBounds(0, 530, 120, 31);
 
         jTextField2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jTextField2.setText("123344");
+        jTextField2.setText("0");
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 PriceTyped(evt);
             }
         });
         jPanel5.add(jTextField2);
-        jTextField2.setBounds(490, 480, 80, 30);
+        jTextField2.setBounds(490, 490, 80, 30);
 
         jComboBox1.setBackground(new java.awt.Color(240, 240, 240));
         jComboBox1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -1013,12 +1016,19 @@ public class MainForm extends javax.swing.JFrame {
         jLabel6.setBounds(0, 470, 120, 18);
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jButton1.setText("видалити");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeDish(evt);
+            }
+        });
         jPanel5.add(jButton1);
-        jButton1.setBounds(470, 530, 100, 70);
+        jButton1.setBounds(370, 530, 100, 70);
 
         jButton11.setBackground(new java.awt.Color(204, 204, 204));
+        jButton11.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jButton11.setText("додати");
         jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -1030,24 +1040,66 @@ public class MainForm extends javax.swing.JFrame {
         jButton11.setBounds(270, 530, 100, 70);
 
         jButton12.setBackground(new java.awt.Color(204, 204, 204));
-        jButton12.setText("оновити");
+        jButton12.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton12.setText("<html>&nbsp;&nbsp;&nbsp;оновити<br/>  калькуляцію </html>\n");
         jButton12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshCalc(evt);
+            }
+        });
         jPanel5.add(jButton12);
-        jButton12.setBounds(370, 530, 100, 70);
+        jButton12.setBounds(470, 530, 100, 70);
 
         jTextField4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jPanel5.add(jTextField4);
-        jTextField4.setBounds(130, 480, 360, 30);
+        jTextField4.setBounds(130, 490, 360, 30);
 
         jLabel8.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel8.setText("Ціна");
         jPanel5.add(jLabel8);
-        jLabel8.setBounds(490, 510, 60, 16);
+        jLabel8.setBounds(490, 470, 60, 16);
 
         jLabel9.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel9.setText(" Назва");
         jPanel5.add(jLabel9);
-        jLabel9.setBounds(130, 510, 90, 16);
+        jLabel9.setBounds(130, 470, 90, 16);
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "№", "Назва", "Включений", "Кількість"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Double.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(0).setMinWidth(50);
+            jTable3.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTable3.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTable3.getColumnModel().getColumn(2).setMinWidth(70);
+            jTable3.getColumnModel().getColumn(2).setPreferredWidth(70);
+            jTable3.getColumnModel().getColumn(2).setMaxWidth(70);
+            jTable3.getColumnModel().getColumn(3).setMinWidth(70);
+            jTable3.getColumnModel().getColumn(3).setPreferredWidth(70);
+            jTable3.getColumnModel().getColumn(3).setMaxWidth(70);
+        }
+
+        jPanel5.add(jScrollPane4);
+        jScrollPane4.setBounds(2, 2, 570, 450);
 
         jTabbedPane1.addTab("                        ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), jPanel5); // NOI18N
 
@@ -1577,10 +1629,12 @@ public class MainForm extends javax.swing.JFrame {
     private void getListItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getListItem
         clearCountButton();
         System.out.println("selected index " + jList2.getSelectedIndex());
-        if (evt.getClickCount() == 1) {
-            activeDishes = jList2.locationToIndex(evt.getPoint());
-            refreshListOfPrices();
-        }
+//        if (evt.getClickCount() == 1) {
+//            activeDishes = jList2.locationToIndex(evt.getPoint());
+//            refreshListOfPrices();
+//        }
+        activeDishes = jList2.getSelectedIndex();
+        refreshListOfPrices();
 
 
     }//GEN-LAST:event_getListItem
@@ -2077,12 +2131,36 @@ public class MainForm extends javax.swing.JFrame {
             String title = jTextField4.getText();
             int price = Integer.parseInt(jTextField2.getText());
             dbUtils.addDish(new Dish(title, price), activeCat);          
-            fixme
-          
-            jList2.setListData(listofCat.get(activeCat).toArray());           
-            jList2.setSelectedIndex(jList2.getLastVisibleIndex());
+            //fixme
+            jList2.clearSelection();
+            jList2.setListData(listofCat.get(activeCat).toArray());                     
+            jList2.ensureIndexIsVisible(jList2.getModel().getSize()-1);
+            jList2.setSelectedIndex(jList2.getModel().getSize() - 1);
+            getListItem(null);
         }
     }//GEN-LAST:event_addDish
+
+    private void removeDish(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeDish
+        // TODO add your handling code here:
+        System.out.println("selectd index = " + jList2.getSelectedIndex() );
+        int activeIndex = jList2.getSelectedIndex();
+        if (activeIndex >= 0) {
+            dbUtils.removeDish(listofCat.get(activeCat).get(activeIndex).getDbID(), activeCat);
+            jList2.clearSelection();
+            jList2.setListData(listofCat.get(activeCat).toArray());
+            jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
+            jList2.setSelectedIndex(jList2.getModel().getSize() - 1);
+            getListItem(null);
+        }
+     
+    }//GEN-LAST:event_removeDish
+
+    private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
+        // TODO add your handling code here:
+        jScrollPane3.setVisible(false);
+        jScrollPane4.setVisible(true);
+       
+    }//GEN-LAST:event_refreshCalc
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -2263,6 +2341,7 @@ public class MainForm extends javax.swing.JFrame {
     private static int activeDishes;
     private static int activeCat;
     private static int activeTable;
+    public static ArrayList<Ingredient> storageList = new ArrayList<>();
     public static ArrayList<ArrayList<Dish>> listofCat = new ArrayList<>();
     private static final ArrayList<Icon> icons = new ArrayList<>();
     private static ArrayList<CheckItem> dayList = new ArrayList<>();
@@ -2344,10 +2423,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

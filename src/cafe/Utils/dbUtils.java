@@ -132,7 +132,7 @@ public class dbUtils {
                 rs.close();
             }       
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
+            System.out.println("Connection Failed! Check output console - getDBmenu");
         }
     }
 
@@ -159,7 +159,29 @@ public class dbUtils {
             }
           
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
+            System.out.println("Connection Failed! Check output console - addCheck");
+        }        
+
+    }
+    
+    public static int getSumOfChecks() {      
+        final String SQL = "SELECT SUM(price) FROM checks";      
+
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected!"
+                    : "Error DB connecting");            
+            
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(SQL);
+            int sum = rs.getInt(1);
+            return sum;
+            
+          
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getSumofChecks");
+            return 0;
         }        
 
     }
@@ -185,7 +207,7 @@ public class dbUtils {
                     
 
                 } catch (SQLException e) {
-                    System.out.println("Connection Failed! Check output console");
+                    System.out.println("Connection Failed! Check output console - addDish");
                 }                                 
             }            
         }
@@ -209,7 +231,7 @@ public class dbUtils {
                     
 
                 } catch (SQLException e) {
-                    System.out.println("Connection Failed! Check output console");
+                    System.out.println("Connection Failed! Check output console - removeDish");
                 }
             }
         }
@@ -223,12 +245,11 @@ public class dbUtils {
     public static void getStorage(){
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            String SQL = "SELECT * FROM storage;";
+            String SQL = "SELECT * FROM storage ORDER BY title;";
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
-            ResultSet rs;            
-            rs = statement.executeQuery(SQL);            
+            ResultSet rs = statement.executeQuery(SQL);            
             while (rs.next()) {
                 MainForm.storageList.add(
                         new Ingredient(
@@ -237,7 +258,7 @@ public class dbUtils {
                         ));
             }           
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
+            System.out.println("Connection Failed! Check output console - getStorage");
         }
         
     } 

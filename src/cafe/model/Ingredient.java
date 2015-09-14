@@ -36,6 +36,15 @@ public class Ingredient implements Serializable{
         this.dbId = Id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
+
     public double getCount() {
         return count;
     }

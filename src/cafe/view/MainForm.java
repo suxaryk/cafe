@@ -3,12 +3,14 @@ package cafe.view;
 import cafe.model.Check;
 import cafe.Utils.dbUtils;
 import static cafe.Utils.dbUtils.addCheck;
+import static cafe.Utils.dbUtils.getStorage;
 import cafe.model.CheckItem;
 import cafe.model.Dish;
 import cafe.model.Ingredient;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
@@ -16,6 +18,7 @@ import java.awt.event.WindowListener;
 import java.awt.print.PrinterException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,17 +33,21 @@ import java.util.logging.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.OrientationRequested;
-import javax.swing.DefaultListModel;
+import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 import javax.swing.JFrame;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.TableColumn;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -77,10 +84,16 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4.setVisible(false);
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);
+        jPanel7.setVisible(false);
         
 
         initLoginForm();
         initMainForm();
+        try {
+            initCalculationTable();
+        } catch (ParseException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
@@ -115,6 +128,7 @@ public class MainForm extends javax.swing.JFrame {
         table23 = new javax.swing.JButton();
         table24 = new javax.swing.JButton();
         table25 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         cat5 = new javax.swing.JButton();
         cat6 = new javax.swing.JButton();
@@ -152,8 +166,6 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -194,6 +206,10 @@ public class MainForm extends javax.swing.JFrame {
         jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jButton16 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -573,6 +589,12 @@ public class MainForm extends javax.swing.JFrame {
         });
         jPanel2.add(table25);
         table25.setBounds(480, 440, 100, 100);
+
+        jLabel10.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel10.setText("0");
+        jPanel2.add(jLabel10);
+        jLabel10.setBounds(290, 560, 90, 30);
 
         jTabbedPane1.addTab("                          ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/two200.png")), jPanel2); // NOI18N
 
@@ -1066,41 +1088,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel5.add(jLabel9);
         jLabel9.setBounds(130, 470, 90, 16);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "№", "Назва", "Включений", "Кількість"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Double.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane4.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setMinWidth(50);
-            jTable3.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jTable3.getColumnModel().getColumn(0).setMaxWidth(50);
-            jTable3.getColumnModel().getColumn(2).setMinWidth(70);
-            jTable3.getColumnModel().getColumn(2).setPreferredWidth(70);
-            jTable3.getColumnModel().getColumn(2).setMaxWidth(70);
-            jTable3.getColumnModel().getColumn(3).setMinWidth(70);
-            jTable3.getColumnModel().getColumn(3).setPreferredWidth(70);
-            jTable3.getColumnModel().getColumn(3).setMaxWidth(70);
-        }
-
-        jPanel5.add(jScrollPane4);
-        jScrollPane4.setBounds(2, 2, 570, 450);
-
         jTabbedPane1.addTab("                        ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), jPanel5); // NOI18N
 
         getContentPane().add(jTabbedPane1);
@@ -1297,7 +1284,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(25, 25, 25)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1305,7 +1292,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1317,7 +1304,7 @@ public class MainForm extends javax.swing.JFrame {
         );
 
         jPanel3.add(jPanel1);
-        jPanel1.setBounds(0, 610, 490, 70);
+        jPanel1.setBounds(0, 600, 500, 80);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(650, 0, 490, 680);
@@ -1358,13 +1345,13 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
 
         jPanel6.add(jScrollPane2);
-        jScrollPane2.setBounds(0, 0, 594, 419);
+        jScrollPane2.setBounds(0, 10, 594, 419);
 
         jButton8.setBackground(new java.awt.Color(255, 255, 255));
         jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
-        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 goToMainMenu(evt);
             }
         });
@@ -1518,7 +1505,7 @@ public class MainForm extends javax.swing.JFrame {
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPasswordField1.setToolTipText("");
         jPanel6.add(jPasswordField1);
-        jPasswordField1.setBounds(440, 430, 154, 28);
+        jPasswordField1.setBounds(440, 440, 154, 28);
 
         jButton13.setBackground(new java.awt.Color(255, 255, 255));
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/check-box2.png"))); // NOI18N
@@ -1536,7 +1523,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel7.setText("введіть пароль");
         jLabel7.setToolTipText("");
         jPanel6.add(jLabel7);
-        jLabel7.setBounds(440, 460, 150, 15);
+        jLabel7.setBounds(440, 470, 150, 15);
 
         jButton14.setText("додати");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -1545,7 +1532,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel6.add(jButton14);
-        jButton14.setBounds(20, 430, 100, 40);
+        jButton14.setBounds(20, 440, 100, 40);
 
         jButton15.setText("видалити");
         jButton15.addActionListener(new java.awt.event.ActionListener() {
@@ -1554,14 +1541,76 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel6.add(jButton15);
-        jButton15.setBounds(20, 480, 100, 40);
+        jButton15.setBounds(20, 490, 100, 40);
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
         jPanel6.add(jTextField3);
-        jTextField3.setBounds(140, 430, 230, 30);
+        jTextField3.setBounds(140, 440, 230, 30);
 
         getContentPane().add(jPanel6);
-        jPanel6.setBounds(20, 20, 630, 680);
+        jPanel6.setBounds(20, 0, 630, 700);
 
-        setSize(new java.awt.Dimension(1152, 712));
+        jPanel7.setLayout(null);
+
+        jTable3.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "№", "Назва", "Кількість"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable3.setFocusable(false);
+        jTable3.setRowHeight(20);
+        jTable3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(0).setMinWidth(50);
+            jTable3.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTable3.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTable3.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable3.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTable3.getColumnModel().getColumn(2).setMaxWidth(100);
+        }
+
+        jPanel7.add(jScrollPane4);
+        jScrollPane4.setBounds(2, 2, 650, 540);
+
+        jButton16.setBackground(new java.awt.Color(255, 255, 255));
+        jButton16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitFromCalculation(evt);
+            }
+        });
+        jPanel7.add(jButton16);
+        jButton16.setBounds(20, 560, 100, 73);
+
+        getContentPane().add(jPanel7);
+        jPanel7.setBounds(0, 0, 650, 700);
+
+        setSize(new java.awt.Dimension(1152, 705));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1613,17 +1662,9 @@ public class MainForm extends javax.swing.JFrame {
 
     private void PersonalLogining(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalLogining
         jTabbedPane1.setVisible(false);
-        jPanel6.setVisible(true);
+        jPanel6.setVisible(true);      
+        mainForm.setSize(630, 705);
     }//GEN-LAST:event_PersonalLogining
-
-    private void goToMainMenu(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToMainMenu
-        if (User.activeUserOfList == userList.size() - 1) {
-            
-        }
-        jPanel6.setVisible(false);
-        jTabbedPane1.setVisible(true);
-        
-    }//GEN-LAST:event_goToMainMenu
 
 
     private void getListItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getListItem
@@ -1697,7 +1738,7 @@ public class MainForm extends javax.swing.JFrame {
         fillPrices(title, price);
     }
 
-    //selected first item in listofCat
+   
     private void jPanel5ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel5ComponentShown
         // TODO add your handling code here: 
         jList2.setSelectedIndex(0);
@@ -1968,6 +2009,7 @@ public class MainForm extends javax.swing.JFrame {
         if (jButton10.isEnabled()) {
             if (checks.get(activeTable).getTotalsum() != 0) {
                 addCheck(checks.get(activeTable));
+                jLabel10.setText(String.valueOf(dbUtils.getSumOfChecks())); 
                 jButton10.setBackground(GREEN);
                 jButton10.setEnabled(false);
             }
@@ -2157,20 +2199,50 @@ public class MainForm extends javax.swing.JFrame {
 
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
         // TODO add your handling code here:
-        jScrollPane3.setVisible(false);
-        jScrollPane4.setVisible(true);
+        jTabbedPane1.setVisible(false);
+        jPanel7.setVisible(true);
+        
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        getStorage();
+        for (Ingredient storageList1 : storageList) {
+            model.addRow(new Object[]{
+                storageList1.getId(), 
+                storageList1.getTitle(),                
+                0.000});
+        }
+        
+        
        
     }//GEN-LAST:event_refreshCalc
+
+    private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
+        // TODO add your handling code here:
+        jPanel6.setVisible(false);
+        jTabbedPane1.setVisible(true);
+        mainForm.setSize(1140, 705);
+       
+    }//GEN-LAST:event_goToMainMenu
+
+    private void exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromCalculation
+        // TODO add your handling code here:
+        jPanel7.setVisible(false);
+        jTabbedPane1.setVisible(true);
+       
+    }//GEN-LAST:event_exitFromCalculation
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
         jCheckBox1.setBackground(RED);
     }
 
-    private void clearBackgroundAndCheckboxs() {
-        clearCheckboxs();
-        clearCountButton();
-    }
+//    private void clearBackgroundAndCheckboxs() {
+//        clearCheckboxs();
+//        clearCountButton();
+//    }
 
     private void initLoginForm() {
         loginForm = new LoginForm();
@@ -2254,6 +2326,25 @@ public class MainForm extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("EEEE, dd/MM/yyyy", locale);
 
         this.setTitle("SmartCafe " + dateFormat.format(new Date()));
+    }
+    private void initCalculationTable() throws ParseException {
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+        jTable3.getColumnModel().getColumn(2).setCellRenderer(leftRenderer);
+       
+        
+        MaskFormatter mf2 = new MaskFormatter("#.###");
+        JFormattedTextField formattedTextField = new JFormattedTextField(mf2);
+        formattedTextField.setFont(new Font("Verdana", 0, 18));
+//        formattedTextField.setCaretPosition(1);
+        
+        
+//        textField.setBorder(new LineBorder(Color.BLACK));
+        DefaultCellEditor dce = new DefaultCellEditor(formattedTextField);
+        jTable3.getColumnModel().getColumn(2).setCellEditor(dce);
+        
+        
+        
     }
 
     public void initBDmenu() {
@@ -2382,6 +2473,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
@@ -2404,6 +2496,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2419,6 +2512,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

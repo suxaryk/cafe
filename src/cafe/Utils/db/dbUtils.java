@@ -1,4 +1,4 @@
-package cafe.Utils;
+package cafe.Utils.db;
 
 import cafe.model.Check;
 import cafe.view.MainForm;
@@ -13,36 +13,33 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 /**
  *
  * @author suxarina
  */
 public class dbUtils {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/luckyroger";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-    
+    public static final String URL = "jdbc:mysql://localhost:3306/luckyroger";
+    public static final String USERNAME = "root";
+    public static final String PASSWORD = "root";
+
 //    private static final String URL = "jdbc:mysql://db4free.net:3306/luckyroger";
 //    private static final String USERNAME = "luckyroger";
 //    private static final String PASSWORD = "luckyroger";
-
-
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
     private static final ArrayList<String> sqlRemoteList = new ArrayList<>();
-    private static int checkId;
+    
 
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
-            e.printStackTrace();            
+            e.printStackTrace();
         }
         System.out.println("MySQL JDBC Driver Registered!");
-        
+
         sqlSelectList.add("select * from firstdishes");
         sqlSelectList.add("select * from salats");
         sqlSelectList.add("select * from rogerdishes");
@@ -54,7 +51,7 @@ public class dbUtils {
         sqlSelectList.add("select * from dessert");
         sqlSelectList.add("select * from drinks");
         sqlSelectList.add("select * from alcohol");
-        
+
         sqlInsertList.add("INSERT INTO firstdishes(title, price) VALUES(?, ?)");
         sqlInsertList.add("INSERT INTO salats(title, price) VALUES(?, ?)");
         sqlInsertList.add("INSERT INTO rogerdishes(title, price) VALUES(?, ?)");
@@ -66,34 +63,30 @@ public class dbUtils {
         sqlInsertList.add("INSERT INTO dessert(title, price) VALUES(?, ?)");
         sqlInsertList.add("INSERT INTO drinks(title, price) VALUES(?, ?)");
         sqlInsertList.add("INSERT INTO alcohol(title, price) VALUES(?, ?)");
-        
-        
-        sqlRemoteList.add("DELETE FROM firstdishes WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM salats WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM rogerdishes WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM pandishes WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM meat WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM pizza WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM pizza WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM sushi WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM dessert WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM drinks WHERE Id = ");  
-        sqlRemoteList.add("DELETE FROM alcohol WHERE Id = ");  
-        
-        
-        
-        
+
+        sqlRemoteList.add("DELETE FROM firstdishes WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM salats WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM rogerdishes WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM pandishes WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM meat WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM pizza WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM pizza WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM sushi WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM dessert WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM drinks WHERE Id = ");
+        sqlRemoteList.add("DELETE FROM alcohol WHERE Id = ");
+
     }
-    private static java.sql.Timestamp getCurrentTimeStamp() {
+
+    public static java.sql.Timestamp getCurrentTimeStamp() {
 
         Date today = new Date();
         return new java.sql.Timestamp(today.getTime());
 
     }
 
-    public static void getDBmenu() {      
-        
-        
+    public static void getDBmenu() {
+
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
 
@@ -107,86 +100,37 @@ public class dbUtils {
                     while (rs.next()) {
                         MainForm.listofCat.get(i).add(
                                 new Dish(Integer.parseInt(
-                                        rs.getString("Id")),
+                                                rs.getString("Id")),
                                         rs.getString("title"),
                                         rs.getInt("priceS")));
                     }
-                } else 
-                    if (i == 6) {
+                } else if (i == 6) {
                     while (rs.next()) {
                         MainForm.listofCat.get(i).add(
                                 new Dish(Integer.parseInt(
-                                        rs.getString("Id")), 
-                                        rs.getString("title"), 
+                                                rs.getString("Id")),
+                                        rs.getString("title"),
                                         rs.getInt("priceB")));
                     }
                 } else {
                     while (rs.next()) {
                         MainForm.listofCat.get(i).add(
                                 new Dish(Integer.parseInt(
-                                        rs.getString("Id")), 
-                                        rs.getString("title"), 
+                                                rs.getString("Id")),
+                                        rs.getString("title"),
                                         rs.getInt("price")));
                     }
                 }
                 rs.close();
-            }       
+            }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getDBmenu");
         }
     }
 
-    public static void addCheck(Check check) {      
-        final String sql = "INSERT INTO checks( checkId, sum, datatime)"
-                                                    +" VALUES(?, ?, ?)";      
+   
 
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");            
-
-            PreparedStatement pstatement = connection.prepareStatement(sql);
-            //pstatement.setInt(1, (count+1));
-            pstatement.setInt(1, ++checkId);
-            pstatement.setInt(2, check.getTotalsum());
-            pstatement.setTimestamp(3, getCurrentTimeStamp());
-           
-
-            int rowsInserted = pstatement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("A new check was added successfully!");
-            }
-          
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addCheck");
-        }        
-
-    }
-    
-    public static int getSumOfChecks() {      
-        final String SQL = "SELECT SUM(price) FROM checks";      
-
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");            
-            
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
-            int sum = rs.getInt(1);
-            return sum;
-            
-          
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getSumofChecks");
-            return 0;
-        }        
-
-    }
-    
-    public static void addDish(Dish dish, int activeCat) {        
+    public static void addDish(Dish dish, int activeCat) {
         for (int i = 0; i < sqlInsertList.size(); i++) {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
@@ -203,20 +147,19 @@ public class dbUtils {
                     if (rowsInserted > 0) {
                         System.out.println("A new dish was added successfully!");
                     }
-                                       
-                    
 
                 } catch (SQLException e) {
                     System.out.println("Connection Failed! Check output console - addDish");
-                }                                 
-            }            
+                }
+            }
         }
         for (ArrayList<Dish> category : MainForm.listofCat) {
             category.clear();
         }
-        
+
         getDBmenu();
     }
+
     public static void removeDish(int Id, int activeCat) {
         for (int i = 0; i < sqlInsertList.size(); i++) {
             if (i == activeCat) {
@@ -227,8 +170,7 @@ public class dbUtils {
                             : "Error DB connecting");
 
                     Statement statement = connection.createStatement();
-                    statement.executeUpdate("" + sqlRemoteList.get(i) + Id);                  
-                    
+                    statement.executeUpdate("" + sqlRemoteList.get(i) + Id);
 
                 } catch (SQLException e) {
                     System.out.println("Connection Failed! Check output console - removeDish");
@@ -241,25 +183,25 @@ public class dbUtils {
 
         getDBmenu();
     }
-    
-    public static void getStorage(){
+
+    public static void getStorage() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             String SQL = "SELECT * FROM storage ORDER BY title;";
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);            
+            ResultSet rs = statement.executeQuery(SQL);
             while (rs.next()) {
                 MainForm.storageList.add(
                         new Ingredient(
                                 rs.getInt("Id"),
                                 rs.getString("title")
                         ));
-            }           
+            }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getStorage");
         }
-        
-    } 
+
+    }
 }

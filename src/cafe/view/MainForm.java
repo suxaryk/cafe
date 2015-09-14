@@ -1,9 +1,10 @@
 package cafe.view;
 
+import static cafe.Utils.db.CheckUtils.addCheck;
+import static cafe.Utils.db.CheckUtils.getDaySum;
 import cafe.model.Check;
-import cafe.Utils.dbUtils;
-import static cafe.Utils.dbUtils.addCheck;
-import static cafe.Utils.dbUtils.getStorage;
+import cafe.Utils.db.dbUtils;
+import static cafe.Utils.db.dbUtils.getStorage;
 import cafe.model.CheckItem;
 import cafe.model.Dish;
 import cafe.model.Ingredient;
@@ -2009,7 +2010,8 @@ public class MainForm extends javax.swing.JFrame {
         if (jButton10.isEnabled()) {
             if (checks.get(activeTable).getTotalsum() != 0) {
                 addCheck(checks.get(activeTable));
-                jLabel10.setText(String.valueOf(dbUtils.getSumOfChecks())); 
+                fixme
+                jLabel10.setText(String.valueOf(getDaySum())); 
                 jButton10.setBackground(GREEN);
                 jButton10.setEnabled(false);
             }

@@ -85,7 +85,7 @@ public class dbUtils {
 
     }
 
-    public static void getDBmenu() {
+    public static void setDBmenu() {
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
@@ -157,10 +157,10 @@ public class dbUtils {
             category.clear();
         }
 
-        getDBmenu();
+        setDBmenu();
     }
 
-    public static void removeDish(int Id, int activeCat) {
+    public static void removeDish(int dbId, int activeCat) {
         for (int i = 0; i < sqlInsertList.size(); i++) {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
@@ -170,7 +170,7 @@ public class dbUtils {
                             : "Error DB connecting");
 
                     Statement statement = connection.createStatement();
-                    statement.executeUpdate("" + sqlRemoteList.get(i) + Id);
+                    statement.executeUpdate("" + sqlRemoteList.get(i) + dbId);
 
                 } catch (SQLException e) {
                     System.out.println("Connection Failed! Check output console - removeDish");
@@ -181,10 +181,10 @@ public class dbUtils {
             category.clear();
         }
 
-        getDBmenu();
+        setDBmenu();
     }
 
-    public static void getStorage() {
+    public static void setStorage() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             String SQL = "SELECT * FROM storage ORDER BY title;";

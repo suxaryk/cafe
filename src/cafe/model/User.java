@@ -10,17 +10,32 @@ package cafe.model;
  * @author suxarina
  */
 public class User {
-
+    private int dbID;
     private String name;
     private int pass;
     private int active;
     public static int activeUserOfList;
 
-    public User(String name, int pass) {
+    public User(int id, String name, int pass) {
+        this.dbID = id;
         this.name = name;
         this.pass = pass;
     }
 
+    public User(String name, int pass) {
+        this.name = name;
+        this.pass = pass;
+    }
+    
+
+    public int getDbID() {
+        return dbID;
+    }
+
+    public void setDbID(int dbID) {
+        this.dbID = dbID;
+    }    
+    
     public String getName() {
         return name;
     }

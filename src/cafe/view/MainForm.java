@@ -1,10 +1,15 @@
 package cafe.view;
 
 import static cafe.Utils.db.CheckUtils.addCheck;
-import static cafe.Utils.db.CheckUtils.getDaySum;
+import cafe.Utils.db.EmployeeUtils;
+import static cafe.Utils.db.EmployeeUtils.addEmployeeToDB;
+import static cafe.Utils.db.EmployeeUtils.removeEmployeeFromDB;
+import static cafe.Utils.db.EmployeeUtils.setAllEmployees;
+import static cafe.Utils.db.EmployeeUtils.setEmployeeName;
+import static cafe.Utils.db.EmployeeUtils.setEmployeePass;
 import cafe.model.Check;
 import cafe.Utils.db.dbUtils;
-import static cafe.Utils.db.dbUtils.getStorage;
+import static cafe.Utils.db.dbUtils.setStorage;
 import cafe.model.CheckItem;
 import cafe.model.Dish;
 import cafe.model.Ingredient;
@@ -12,13 +17,10 @@ import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.print.PrinterException;
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,22 +33,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
@@ -1533,7 +1529,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel6.add(jButton14);
-        jButton14.setBounds(20, 440, 100, 40);
+        jButton14.setBounds(500, 510, 100, 40);
 
         jButton15.setText("видалити");
         jButton15.addActionListener(new java.awt.event.ActionListener() {
@@ -1542,7 +1538,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel6.add(jButton15);
-        jButton15.setBounds(20, 490, 100, 40);
+        jButton15.setBounds(500, 550, 100, 40);
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1550,7 +1546,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel6.add(jTextField3);
-        jTextField3.setBounds(140, 440, 230, 30);
+        jTextField3.setBounds(0, 440, 430, 30);
 
         getContentPane().add(jPanel6);
         jPanel6.setBounds(20, 0, 630, 700);
@@ -1821,6 +1817,7 @@ public class MainForm extends javax.swing.JFrame {
                             (DefaultTableModel) jTable1.getModel();                    
                     model.setRowCount(0);
                     jTextField1.setText("0");
+                    jButton10.setBackground(WHITE);
 //todo add to dayList
 
                 }
@@ -1942,37 +1939,39 @@ public class MainForm extends javax.swing.JFrame {
     }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         // TODO add your handling code here:
-        //  printComponenet();       
-        if (jButton3.isEnabled()) {
-            if (checks.get(activeTable).getTotalsum() != 0) {
-                DateFormat dateFormat = new SimpleDateFormat(
-                                                        "HH:mm:ss dd/MM/yyyy");
-                MessageFormat header = new MessageFormat(
-                                                dateFormat.format(new Date()));
-                MessageFormat footer = new MessageFormat(LoginForm.userList.
-                        get(User.activeUserOfList).getName() 
-                        + "\t" + "Сума по чеку: "
-                        + String.valueOf(checks.get(activeTable).getTotalsum())
-                        + " грн.");
-
-                PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
-                set.add(OrientationRequested.PORTRAIT);
-                try {
-                    jTable1.print(JTable.PrintMode.FIT_WIDTH, header, footer, false, set, false);
-
-                } catch (PrinterException ex) {
-                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
-                            + "\n" + ex);
-                } catch (HeadlessException ex) {
-                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
-                            + "\n" + ex);
-                }
-                CalculFromDB();
-            }
-
-        }
+        //  printComponenet();  
+        addCheck(checks.get(activeTable));
+//        if (jButton3.isEnabled()) {
+//            if (checks.get(activeTable).getTotalsum() != 0) {
+//                DateFormat dateFormat = new SimpleDateFormat(
+//                                                        "HH:mm:ss dd/MM/yyyy");
+//                MessageFormat header = new MessageFormat(
+//                                                dateFormat.format(new Date()));
+//                MessageFormat footer = new MessageFormat(LoginForm.userList.
+//                        get(User.activeUserOfList).getName() 
+//                        + "\t" + "Сума по чеку: "
+//                        + String.valueOf(checks.get(activeTable).getTotalsum())
+//                        + " грн.");
+//
+//                PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
+//                set.add(OrientationRequested.PORTRAIT);
+//                try {
+//                    jTable1.print(JTable.PrintMode.FIT_WIDTH, header, footer, false, set, false);
+//
+//                } catch (PrinterException ex) {
+//                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+//                    JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
+//                            + "\n" + ex);
+//                } catch (HeadlessException ex) {
+//                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+//                    JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
+//                            + "\n" + ex);
+//                }
+//                CalculFromDB();
+//            }
+//
+//        }
+        
 
     }//GEN-LAST:event_PrintCheck
     private void sortList(List list, final int orderArg) {
@@ -2009,9 +2008,9 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jButton10.isEnabled()) {
             if (checks.get(activeTable).getTotalsum() != 0) {
-                addCheck(checks.get(activeTable));
-                fixme
-                jLabel10.setText(String.valueOf(getDaySum())); 
+                
+              //  fixme
+              // jLabel10.setText(String.valueOf(getDaySum())); 
                 jButton10.setBackground(GREEN);
                 jButton10.setEnabled(false);
             }
@@ -2049,43 +2048,61 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_NumberPressed
 
+    private void updateEmpl(int activeRow, String name, String newPass){
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        int dbId = employeeList.get(activeRow - userList.size()).getDbID();
+        System.out.println("dbId" + dbId);
+        if (activeRow < userList.size()) {   
+            
+            userList.get(activeRow).setPass(Integer.parseInt(newPass));
+            System.out.println("value= " + userList.get(activeRow).getPass());
+        } else {
+            if (!name.equals("")) {
+                fixme sql
+                setEmployeeName(dbId, name);                
+            }else if (!newPass.equals("")) {
+                setEmployeePass(dbId, Integer.parseInt(newPass));                              
+            }
+
+           // setEmployeePass(activeRow - userList.size(), name, newPass);
+            employeeList.get(dbId).setPass(Integer.parseInt(newPass));
+            System.out.println("value= " + employeeList.get(activeRow - userList.size()).getPass());
+        }
+        
+    }
     private void loginEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginEmployee
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
         int activeRow = jTable2.getSelectedRow();
-        if (User.activeUserOfList == userList.size() - 1){
+        if (User.activeUserOfList == userList.size() - 1){            
+            String name = jTextField3.getText();
             String newPass = new String(jPasswordField1.getPassword());
-            model.setValueAt(newPass, activeRow, 1);
-            System.out.println("activerow=" + activeRow);
+            System.out.println("name" + name);
+            System.out.println("newPAss" + newPass);            
             
-            System.out.println("activeRow=" + activeRow);
-            System.out.println("size=" + listOfEmployee.size());
-            if (activeRow < userList.size() ) {
-                userList.get(activeRow).setPass(Integer.parseInt(newPass));   
-                System.out.println("value= " + userList.get(activeRow).getPass());
-            } else{                
-                listOfEmployee.get(activeRow - userList.size()).setPass(Integer.parseInt(newPass));
-                System.out.println("value= " + listOfEmployee.get(activeRow - userList.size()).getPass());
-            }
-            //userList.get(activeRow-1).setPass(Integer.parseInt(newPass)); 
+            updateEmpl(activeRow, name, newPass);
+            
+            
+           // model.setValueAt(newPass, activeRow, 1);           
+            
+            //userList.get(activeRow-1).setEmployeePass(Integer.parseInt(newPass)); 
             
         } else{
             if (jButton13.isEnabled() && !new String(jPasswordField1.
                     getPassword()).equals("")) {
-                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-                
-                
-                if (listOfEmployee.get(activeRow)
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");                
+                DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+                if (employeeList.get(activeRow)
                         .getPass() == Integer.parseInt(new String(jPasswordField1.
                                         getPassword()))) {
-                    if (listOfEmployee.get(activeRow).getActive() == 0) {
+                    if (employeeList.get(activeRow).getActive() == 0) {
                         model.setValueAt(dateFormat.format(
                                 new Date()), activeRow, 1);
-                        listOfEmployee.get(activeRow).setActive(1);
-                    } else if (listOfEmployee.get(activeRow).getActive() == 1) {
+                        employeeList.get(activeRow).setActive(1);
+                    } else if (employeeList.get(activeRow).getActive() == 1) {
                         model.setValueAt(dateFormat.format(
                                 new Date()), activeRow, 2);
-                        listOfEmployee.get(activeRow).setActive(2);
+                        employeeList.get(activeRow).setActive(2);
                     }
 
                 } else {
@@ -2119,8 +2136,8 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFrame frame = new JFrame();
         String[] options = new String[2];
-        options[0] = new String("Так");
-        options[1] = new String("Ні");
+        options[0] = "Так";
+        options[1] = "Ні";
         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
                 "Ви закрили касу?", "Закриття програми?", 0, 
                 JOptionPane.YES_NO_OPTION, null, options, null);
@@ -2131,12 +2148,16 @@ public class MainForm extends javax.swing.JFrame {
 
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
         // TODO add your handling code here:
-        if (!jTextField3.getText().equals("")) {
-            listOfEmployee.add(new User(jTextField3.getText(), 0));
+        String name = jTextField3.getText();
+        String pass = new String(jPasswordField1.getPassword());
+        
+        if (!name.equals("") && !pass.equals("")) {            
+            employeeList.add(new User(name, Integer.parseInt(pass)));            
+            addEmployeeToDB(name, Integer.parseInt(pass));
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             model.addRow(new Object[]{
-                listOfEmployee.get(listOfEmployee.size() - 1).getName(),
-                listOfEmployee.get(listOfEmployee.size() - 1).getPass()
+                employeeList.get(employeeList.size() - 1).getName(),
+                employeeList.get(employeeList.size() - 1).getPass()
             });     
             jTable2.setRowSelectionInterval(jTable2.getRowCount()-1, jTable2.getRowCount()-1);
         }
@@ -2147,13 +2168,14 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int activeRow = jTable2.getSelectedRow();
         System.out.println("activeRow= " + activeRow);
-        if (activeRow > 5) {
-            listOfEmployee.remove(activeRow - userList.size());
+        if (activeRow > 6) {
+            removeEmployeeFromDB(employeeList.get(activeRow - userList.size()).getDbID());         
+            employeeList.remove(activeRow - userList.size());
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();           
             model.removeRow(activeRow);
-            for (int i = 0; i < listOfEmployee.size(); i++) {
-                System.out.println(listOfEmployee.get(i).getName() + " " + listOfEmployee.get(i).getPass());                
-            }            
+//            for (int i = 0; i < employeeList.size(); i++) {
+//                System.out.println(employeeList.get(i).getName() + " " + employeeList.get(i).getPass());                
+//            }            
         }
         jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
         
@@ -2205,7 +2227,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel7.setVisible(true);
         
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        getStorage();
+        setStorage();
         for (Ingredient storageList1 : storageList) {
             model.addRow(new Object[]{
                 storageList1.getId(), 
@@ -2289,14 +2311,16 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void initPassTable() {  
-        listOfEmployee.add(new User("Працівник №1", 101));
-        listOfEmployee.add(new User("Працівник №2", 102));
-        listOfEmployee.add(new User("Працівник №3", 103));
-        listOfEmployee.add(new User("Працівник №4", 104));
-        listOfEmployee.add(new User("Працівник №5", 105));
-        listOfEmployee.add(new User("Працівник №6", 106));
-        listOfEmployee.add(new User("Працівник №7", 107));
-        listOfEmployee.add(new User("Працівник №8", 108));
+//        employeeList.add(new User("Працівник №1", 101));
+//        employeeList.add(new User("Працівник №2", 102));
+//        employeeList.add(new User("Працівник №3", 103));
+//        employeeList.add(new User("Працівник №4", 104));
+//        employeeList.add(new User("Працівник №5", 105));
+//        employeeList.add(new User("Працівник №6", 106));
+//        employeeList.add(new User("Працівник №7", 107));
+//        employeeList.add(new User("Працівник №8", 108));
+        setAllEmployees();
+        
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         if (User.activeUserOfList == userList.size() - 1) {
             for (int i = 0; i < userList.size(); i++) {
@@ -2305,16 +2329,16 @@ public class MainForm extends javax.swing.JFrame {
                     userList.get(i).getPass()
                 });
             }
-            for (int i = 0; i < listOfEmployee.size(); i++) {
+            for (int i = 0; i < employeeList.size(); i++) {
                 model.addRow(new Object[]{
-                    listOfEmployee.get(i).getName(),
-                    listOfEmployee.get(i).getPass()
+                    employeeList.get(i).getName(),
+                    employeeList.get(i).getPass()
                 });
             }            
         } else {
-            for (int i = 0; i < listOfEmployee.size(); i++) {
+            for (int i = 0; i < employeeList.size(); i++) {
                 model.addRow(new Object[]{
-                    listOfEmployee.get(i).getName(), null, null
+                    employeeList.get(i).getName(), null, null
                 });
             }
 
@@ -2381,7 +2405,7 @@ public class MainForm extends javax.swing.JFrame {
         listofCat.add(newCat1);
         listofCat.add(newCat2);
 
-        dbUtils.getDBmenu();
+        dbUtils.setDBmenu();
 
     }
 
@@ -2389,7 +2413,7 @@ public class MainForm extends javax.swing.JFrame {
 //        for (int i = 0; i < listofCat.size(); i++) {
 //            listofCat.get(i).clear();
 //        } 
-        dbUtils.getDBmenu();
+        dbUtils.setDBmenu();
 
     }
 
@@ -2428,7 +2452,7 @@ public class MainForm extends javax.swing.JFrame {
 
 
     }
-    public static ArrayList<User> listOfEmployee = new ArrayList<>();
+    public static ArrayList<User> employeeList = new ArrayList<>();
     private static Map<Integer, Check> checks = new HashMap<Integer, Check>();
     private static final int tablesCount = 25;
     private static int activeDishes;
@@ -2556,4 +2580,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton table8;
     private javax.swing.JButton table9;
     // End of variables declaration//GEN-END:variables
+
+    private void removeEmployee() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

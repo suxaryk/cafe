@@ -61,7 +61,6 @@ public class EmployeeUtils {
     }
 
     public static void removeById(int dbId) {
-//        final String SQL = "DELETE FROM employee WHERE Id = " + dbId;
         final String SQL = "DELETE FROM employee WHERE Id = ?";
 
         try (Connection connection = DriverManager
@@ -72,8 +71,6 @@ public class EmployeeUtils {
             if (rowsInserted > 0) {
                 System.out.println("A new Employee was removed successfully!");
             }
-//            Statement statement = connection.createStatement();
-//            statement.executeUpdate(SQL);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - removeEmployee");
         }
@@ -81,8 +78,6 @@ public class EmployeeUtils {
     }
 
     public static void updateEmployeePass(int dbId, int pass) {
-//        final String SQL = "UPDATE employee SET pass = " + pass
-//                + " WHERE Id = " + dbId;
         final String SQL = "UPDATE employee SET pass = ? WHERE Id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -94,8 +89,6 @@ public class EmployeeUtils {
             if (rowsInserted > 0) {
                 System.out.println("A new Employee was updated successfully!");
             }
-//            Statement statement = connection.createStatement();
-//            statement.executeUpdate(SQL);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateEmployeePass");
         }
@@ -103,8 +96,6 @@ public class EmployeeUtils {
     }
 
     public static void updateEmployeeName(int dbId, String name) {
-//        final String SQL = "UPDATE employee SET name = \"" + name
-//                + "\" WHERE Id = " + dbId;
         final String SQL = "UPDATE employee SET name = ? WHERE Id = ?";
 
         try (Connection connection = DriverManager
@@ -116,8 +107,6 @@ public class EmployeeUtils {
             if (rowsInserted > 0) {
                 System.out.println("A new Employee was updated successfully!");
             }
-//            Statement statement = connection.createStatement();
-//            statement.executeUpdate(SQL);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - setEmployeeName");
         }

@@ -53,11 +53,6 @@ public class CheckUtils {
     }
 
     public static int getDaySum() {
-//        final String SQL = "select SUM(sum) from ("
-//                + "SELECT * FROM checks"
-//                + "order by id "
-//                + "desc limit " + getDayCount()
-//                + ") as daysum";
         final String SQL = "select SUM(sum) from ("
                 + "SELECT * FROM checks"
                 + "order by id "
@@ -72,9 +67,6 @@ public class CheckUtils {
             PreparedStatement pst = connection.prepareStatement(SQL);
             pst.setInt(1, getDayCount());
             ResultSet rs = pst.executeQuery();
-//            Statement statement = connection.createStatement();
-//            ResultSet rs = statement.executeQuery(SQL);
-
             int sum = 0;
             while (rs.next()) {
                 sum = rs.getInt(1);

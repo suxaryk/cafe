@@ -43,8 +43,6 @@ public class UsersUtils {
     }
 
     public static void updateUserPass(int dbId, int pass) {
-//        final String SQL = "UPDATE users SET pass = " + pass
-//                + " WHERE Id = " + dbId;
         final String SQL = "UPDATE users SET pass = ? WHERE Id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -55,8 +53,6 @@ public class UsersUtils {
             if (rowsInserted > 0) {
                 System.out.println("A new User was updated successfully!");
             }
-//            Statement statement = connection.createStatement();
-//            statement.executeUpdate(SQL);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateUserPass");
         }
@@ -64,8 +60,6 @@ public class UsersUtils {
     }
 
     public static void updateUserName(int dbId, String name) {
-//        final String SQL = "UPDATE users SET name = \"" + name
-//                + "\" WHERE Id = " + dbId;
         final String SQL = "UPDATE users SET name = ? WHERE Id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -76,8 +70,6 @@ public class UsersUtils {
             if (rowsInserted > 0) {
                 System.out.println("A new User was updated successfully!");
             }
-//            Statement statement = connection.createStatement();
-//            statement.executeUpdate(SQL);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateUserName");
         }

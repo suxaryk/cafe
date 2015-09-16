@@ -22,8 +22,9 @@ import java.sql.Statement;
  * @author suxarina
  */
 public class CheckUtils {
+
     private static int checkId;
-    
+
     public static void addCheck(Check check) {
         final String sql = "INSERT INTO checks( checkId, sum, datatime)"
                 + " VALUES(?, ?, ?)";
@@ -52,10 +53,15 @@ public class CheckUtils {
     }
 
     public static int getDaySum() {
+//        final String SQL = "select SUM(sum) from ("
+//                + "SELECT * FROM checks"
+//                + "order by id "
+//                + "desc limit " + getDayCount()
+//                + ") as daysum";
         final String SQL = "select SUM(sum) from ("
                 + "SELECT * FROM checks"
                 + "order by id "
-                + "desc limit " + getDayCount()
+                + "desc limit ?"
                 + ") as daysum";
 
         try (Connection connection = DriverManager
@@ -63,9 +69,12 @@ public class CheckUtils {
 
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
+            PreparedStatement pst = connection.prepareStatement(SQL);
+            pst.setInt(1, getDayCount());
+            ResultSet rs = pst.executeQuery();
+//            Statement statement = connection.createStatement();
+//            ResultSet rs = statement.executeQuery(SQL);
 
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
             int sum = 0;
             while (rs.next()) {
                 sum = rs.getInt(1);
@@ -121,10 +130,9 @@ public class CheckUtils {
             }
             return count;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getDayCountOfChecks");
+            System.out.println("Connection Failed! Check output console - getDayCount");
             return 0;
         }
     }
-    
-    
+
 }

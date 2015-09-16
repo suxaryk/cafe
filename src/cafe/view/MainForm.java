@@ -1,8 +1,7 @@
 package cafe.view;
 
-import static cafe.Utils.db.CheckUtils.addCheck;
+import cafe.Utils.db.CheckUtils;
 import cafe.Utils.db.EmployeeUtils;
-import static cafe.Utils.db.EmployeeUtils.addEmployeeToDB;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Check;
 import cafe.Utils.db.dbUtils;
@@ -83,8 +82,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel7.setVisible(false);
         jButton11.setBackground(GREEN);
         jButton1.setBackground(RED);
-        
-        
 
         initLoginForm();
         initMainForm();
@@ -93,7 +90,7 @@ public class MainForm extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -1691,17 +1688,17 @@ public class MainForm extends javax.swing.JFrame {
 
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
             jTextField1.setText(String.valueOf(checks.get(activeTable)
-                                                            .getTotalsum()));
+                    .getTotalsum()));
             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
             for (int i = 0; i < checks.get(activeTable)
                     .getCheckList().size(); i++) {
                 model.addRow(new Object[]{
                     checks.get(activeTable).getCheckList().get(i)
-                            .getDish().getTitle(),
+                    .getDish().getTitle(),
                     checks.get(activeTable).getCheckList().get(i).getCount(),
                     checks.get(activeTable).getCheckList().get(i).getDish()
-                            .getPrice(),
-                    checks.get(activeTable).getCheckList().get(i).getSum()                
+                    .getPrice(),
+                    checks.get(activeTable).getCheckList().get(i).getSum()
                 });
             }
         } else {
@@ -1718,7 +1715,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void PersonalLogining(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalLogining
         jTabbedPane1.setVisible(false);
-        jPanel6.setVisible(true);      
+        jPanel6.setVisible(true);
         mainForm.setSize(630, 705);
     }//GEN-LAST:event_PersonalLogining
 
@@ -1743,7 +1740,6 @@ public class MainForm extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
-
         int dbId = listofCat.get(activeCat).get(activeDishes).getDbID();
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
         if (jCheckBox1.isSelected()) {
@@ -1758,15 +1754,15 @@ public class MainForm extends javax.swing.JFrame {
 
         model.addRow(new Object[]{
             checks.get(activeTable).getCheckList().get(addedIndex)
-                    .getDish().getTitle(),
+            .getDish().getTitle(),
             checks.get(activeTable).getCheckList().get(addedIndex)
-                    .getCount(),
+            .getCount(),
             checks.get(activeTable).getCheckList().get(addedIndex)
-                    .getDish().getPrice(),
+            .getDish().getPrice(),
             checks.get(activeTable).getCheckList().get(addedIndex)
-                    .getSum(),
+            .getSum(),
             dateFormat.format(checks.get(activeTable).getCheckList().
-                    get(addedIndex).getDate())
+            get(addedIndex).getDate())
         });
     }
 
@@ -1794,7 +1790,7 @@ public class MainForm extends javax.swing.JFrame {
         fillPrices(title, price);
     }
 
-   
+
     private void jPanel5ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel5ComponentShown
         // TODO add your handling code here: 
         jList2.setSelectedIndex(0);
@@ -1872,8 +1868,8 @@ public class MainForm extends javax.swing.JFrame {
                     jTabbedPane1.setEnabledAt(1, false);
                     jTabbedPane1.setEnabledAt(2, false);
                     jLabel4.setText("Стіл № ");
-                    DefaultTableModel model = 
-                            (DefaultTableModel) jTable1.getModel();                    
+                    DefaultTableModel model
+                            = (DefaultTableModel) jTable1.getModel();
                     model.setRowCount(0);
                     jTextField1.setText("0");
                     jButton10.setBackground(WHITE);
@@ -1902,7 +1898,7 @@ public class MainForm extends javax.swing.JFrame {
                 model.removeRow(jTable1.getRowCount() - 1);
                 checks.get(activeTable).getCheckList().
                         remove(checks.get(activeTable).
-                        getCheckList().size() - 1);
+                                getCheckList().size() - 1);
             } else {
                 model.removeRow(activeRow);
                 checks.get(activeTable).getCheckList().remove(activeRow);
@@ -1913,13 +1909,13 @@ public class MainForm extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        if (User.activeUserOfList == userList.size()-1) {
+        if (User.activeUserOfList == userList.size() - 1) {
             jLabel5.setText("  " + userList.get(User.activeUserOfList).getName());
-            jLabel5.setBackground(RED);          
+            jLabel5.setBackground(RED);
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             model.setColumnCount(1);
             model.addColumn("пароль");
-            
+
             jButton14.setVisible(true);
             jButton15.setVisible(true);
             jButton17.setVisible(true);
@@ -1932,12 +1928,9 @@ public class MainForm extends javax.swing.JFrame {
             jTextField4.setVisible(true);
             jLabel8.setVisible(true);
             jLabel9.setVisible(true);
-           
-            
-            
-            
-        } else {           
-            jLabel5.setText("  " +userList.get(User.activeUserOfList).getName());
+
+        } else {
+            jLabel5.setText("  " + userList.get(User.activeUserOfList).getName());
             jLabel5.setForeground(BLUE);
         }
         initMainForm();
@@ -1948,7 +1941,7 @@ public class MainForm extends javax.swing.JFrame {
     private void Settings(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Settings
         // TODO add your handling code here:
         mainForm.setBackground(darkBLUE);
-       
+
     }//GEN-LAST:event_Settings
 
 //    public void printComponenet() {
@@ -2000,7 +1993,7 @@ public class MainForm extends javax.swing.JFrame {
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         // TODO add your handling code here:
         //  printComponenet();  
-        addCheck(checks.get(activeTable));
+        CheckUtils.addCheck(checks.get(activeTable));
 //        if (jButton3.isEnabled()) {
 //            if (checks.get(activeTable).getTotalsum() != 0) {
 //                DateFormat dateFormat = new SimpleDateFormat(
@@ -2031,7 +2024,7 @@ public class MainForm extends javax.swing.JFrame {
 //            }
 //
 //        }
-        
+
 
     }//GEN-LAST:event_PrintCheck
     private void sortList(List list, final int orderArg) {
@@ -2068,9 +2061,9 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jButton10.isEnabled()) {
             if (checks.get(activeTable).getTotalsum() != 0) {
-                
+
               //  fixme
-              // jLabel10.setText(String.valueOf(getDaySum())); 
+                // jLabel10.setText(String.valueOf(getDaySum())); 
                 jButton10.setBackground(GREEN);
                 jButton10.setEnabled(false);
             }
@@ -2089,7 +2082,7 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jPasswordField1.getPassword().length > 0) {
             jPasswordField1.setText("" + new String(jPasswordField1.
-                                                    getPassword()).
+                    getPassword()).
                     substring(0, jPasswordField1.getPassword().length - 1));
         }
     }//GEN-LAST:event_clearDigit
@@ -2108,7 +2101,7 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_NumberPressed
 
-  
+
     private void loginEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginEmployee
         // TODO add your handling code here:
         int activeRow = jTable2.getSelectedRow();
@@ -2160,7 +2153,7 @@ public class MainForm extends javax.swing.JFrame {
         options[0] = "Так";
         options[1] = "Ні";
         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                "Ви закрили касу?", "Закриття програми?", 0, 
+                "Ви закрили касу?", "Закриття програми?", 0,
                 JOptionPane.YES_NO_OPTION, null, options, null);
         if (reply == JOptionPane.YES_OPTION) {
             System.exit(0);
@@ -2170,21 +2163,21 @@ public class MainForm extends javax.swing.JFrame {
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
         // TODO add your handling code here:
         String name = jTextField3.getText();
-        String pass = new String(jPasswordField1.getPassword());        
-        
-        if (!name.equals("") && !pass.equals("")) {                       
+        String pass = new String(jPasswordField1.getPassword());
 
-            EmployeeUtils.addEmployeeToDB(name, Integer.parseInt(pass)); 
+        if (!name.equals("") && !pass.equals("")) {
+
+            EmployeeUtils.addEmployeeToDB(name, Integer.parseInt(pass));
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-            model.setRowCount(0);  
+            model.setRowCount(0);
             employeeList.clear();
             initPassTable();
 
-            jTable2.setRowSelectionInterval(jTable2.getRowCount()-1, jTable2.getRowCount()-1);          
+            jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
             Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
             jTable2.scrollRectToVisible(cellRect);
         }
-        
+
     }//GEN-LAST:event_addEmployee
 
     private void PriceTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceTyped
@@ -2200,13 +2193,13 @@ public class MainForm extends javax.swing.JFrame {
         if (!jTextField2.getText().equals("") && !jTextField4.getText().equals("")) {
             String title = jTextField4.getText();
             int price = Integer.parseInt(jTextField2.getText());
-            
-            dbUtils.addDish(new Dish(title, price), activeCat);  
+
+            dbUtils.addDish(new Dish(title, price), activeCat);
             listofCat.get(activeCat).clear();
-            dbUtils.readDBCategoryById(activeCat);                    
+            dbUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
-            jList2.setListData(listofCat.get(activeCat).toArray());                     
-            jList2.ensureIndexIsVisible(jList2.getModel().getSize()-1);
+            jList2.setListData(listofCat.get(activeCat).toArray());
+            jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
             jList2.setSelectedIndex(jList2.getModel().getSize() - 1);
             getListItem(null);
         }
@@ -2214,7 +2207,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void removeDish(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeDish
         // TODO add your handling code here:
-        System.out.println("selectd index = " + jList2.getSelectedIndex() );
+        System.out.println("selectd index = " + jList2.getSelectedIndex());
         int activeIndex = jList2.getSelectedIndex();
         if (activeIndex >= 0) {
             dbUtils.removeDish(listofCat.get(activeCat).get(activeIndex).getDbID(), activeCat);
@@ -2226,25 +2219,24 @@ public class MainForm extends javax.swing.JFrame {
             jList2.setSelectedIndex(jList2.getModel().getSize() - 1);
             getListItem(null);
         }
-     
+
     }//GEN-LAST:event_removeDish
 
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
         // TODO add your handling code here:
         jTabbedPane1.setVisible(false);
         jPanel7.setVisible(true);
-        
+
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         dbUtils.readStorage();
         for (Ingredient storageList1 : storageList) {
             model.addRow(new Object[]{
-                storageList1.getId(), 
-                storageList1.getTitle(),                
+                storageList1.getId(),
+                storageList1.getTitle(),
                 0.000});
         }
-        
-        
-       
+
+
     }//GEN-LAST:event_refreshCalc
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
@@ -2252,14 +2244,14 @@ public class MainForm extends javax.swing.JFrame {
         jPanel6.setVisible(false);
         jTabbedPane1.setVisible(true);
         mainForm.setSize(1140, 705);
-       
+
     }//GEN-LAST:event_goToMainMenu
 
     private void exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromCalculation
         // TODO add your handling code here:
         jPanel7.setVisible(false);
         jTabbedPane1.setVisible(true);
-       
+
     }//GEN-LAST:event_exitFromCalculation
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -2272,18 +2264,18 @@ public class MainForm extends javax.swing.JFrame {
         int activeRow = jTable2.getSelectedRow();
         int listIndex = activeRow - userList.size();
         System.out.println("activeRow= " + activeRow);
-        if (activeRow > 5) {       
+        if (activeRow > 5) {
             EmployeeUtils.removeById(employeeList.get(listIndex).getDbId());
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             model.setRowCount(0);
             employeeList.clear();
             initPassTable();
-            
+
             jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
             Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
             jTable2.scrollRectToVisible(cellRect);
-    
-        }    
+
+        }
     }//GEN-LAST:event_removeEmployee
 
     private void updateUserAndEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserAndEmployee
@@ -2291,9 +2283,9 @@ public class MainForm extends javax.swing.JFrame {
         int activeRow = jTable2.getSelectedRow();
         String name = jTextField3.getText();
         int listIndex = activeRow - userList.size();
-        String newPass = new String(jPasswordField1.getPassword());      
+        String newPass = new String(jPasswordField1.getPassword());
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        if (activeRow < userList.size()) { 
+        if (activeRow < userList.size()) {
             int dbId = employeeList.get(activeRow).getDbId();
             if (!name.equals("")) {
                 UsersUtils.updateUserName(dbId, name);
@@ -2302,21 +2294,21 @@ public class MainForm extends javax.swing.JFrame {
             if (!newPass.equals("")) {
                 UsersUtils.updateUserPass(dbId, Integer.parseInt(newPass));
                 System.out.println("pass");
-            }  
-            
+            }
+
             userList.clear();
             UsersUtils.readAllUsers();
-            
-        } else {            
-            int dbId = employeeList.get(activeRow - userList.size()).getDbId();          
-            if (!name.equals("")) {               
-                EmployeeUtils.updateEmployeeName(dbId, name);               
+
+        } else {
+            int dbId = employeeList.get(activeRow - userList.size()).getDbId();
+            if (!name.equals("")) {
+                EmployeeUtils.updateEmployeeName(dbId, name);
             }
             if (!newPass.equals("")) {
-                EmployeeUtils.updateEmployeePass(dbId, Integer.parseInt(newPass));   
-            }                                       
-        } 
-        
+                EmployeeUtils.updateEmployeePass(dbId, Integer.parseInt(newPass));
+            }
+        }
+
         model.setRowCount(0);
         employeeList.clear();
         initPassTable();
@@ -2334,7 +2326,6 @@ public class MainForm extends javax.swing.JFrame {
 //        clearCheckboxs();
 //        clearCountButton();
 //    }
-
     private void initLoginForm() {
         loginForm = new LoginForm();
         loginForm.setVisible(true);
@@ -2377,11 +2368,10 @@ public class MainForm extends javax.swing.JFrame {
 
     }
 
-    private void initPassTable() {  
-        
+    private void initPassTable() {
+
         EmployeeUtils.readAllEmployees();
-       
-        
+
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         if (User.activeUserOfList == userList.size() - 1) {
             for (int i = 0; i < userList.size(); i++) {
@@ -2395,7 +2385,7 @@ public class MainForm extends javax.swing.JFrame {
                     employeeList.get(i).getName(),
                     employeeList.get(i).getPass()
                 });
-            }            
+            }
         } else {
             for (int i = 0; i < employeeList.size(); i++) {
                 model.addRow(new Object[]{
@@ -2404,7 +2394,6 @@ public class MainForm extends javax.swing.JFrame {
             }
 
         }
-        
 
     }
 
@@ -2414,24 +2403,21 @@ public class MainForm extends javax.swing.JFrame {
 
         this.setTitle("SmartCafe " + dateFormat.format(new Date()));
     }
+
     private void initCalculationTable() throws ParseException {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
         jTable3.getColumnModel().getColumn(2).setCellRenderer(leftRenderer);
-       
-        
+
         MaskFormatter mf2 = new MaskFormatter("#.###");
         JFormattedTextField formattedTextField = new JFormattedTextField(mf2);
         formattedTextField.setFont(new Font("Verdana", 0, 18));
 //        formattedTextField.setCaretPosition(1);
-        
-        
+
 //        textField.setBorder(new LineBorder(Color.BLACK));
         DefaultCellEditor dce = new DefaultCellEditor(formattedTextField);
         jTable3.getColumnModel().getColumn(2).setCellEditor(dce);
-        
-        
-        
+
     }
 
     public void initBDmenu() {
@@ -2450,7 +2436,7 @@ public class MainForm extends javax.swing.JFrame {
         ArrayList<Dish> newCat1 = new ArrayList();
         ArrayList<Dish> newCat2 = new ArrayList();
 
-       // fdishes.get(0)
+        // fdishes.get(0)
         //dishes wich don`t need to cook 
         listofCat.add(fdishes);
         listofCat.add(salads);
@@ -2510,7 +2496,6 @@ public class MainForm extends javax.swing.JFrame {
 
         mainForm = new MainForm();
         mainForm.setIconImage(null);
-
 
     }
     public static ArrayList<Employee> employeeList = new ArrayList<>();

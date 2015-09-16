@@ -28,8 +28,7 @@ public class dbUtils {
 //    private static final String PASSWORD = "luckyroger";
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
-    private static final ArrayList<String> sqlRemoteList = new ArrayList<>();
-    
+    private static final ArrayList<String> sqlRemoveList = new ArrayList<>();
 
     static {
         try {
@@ -64,17 +63,17 @@ public class dbUtils {
         sqlInsertList.add("INSERT INTO drinks(title, price) VALUES(?, ?)");
         sqlInsertList.add("INSERT INTO alcohol(title, price) VALUES(?, ?)");
 
-        sqlRemoteList.add("DELETE FROM firstdishes WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM salats WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM rogerdishes WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM pandishes WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM meat WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM pizza WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM pizza WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM sushi WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM dessert WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM drinks WHERE Id = ");
-        sqlRemoteList.add("DELETE FROM alcohol WHERE Id = ");
+        sqlRemoveList.add("DELETE FROM firstdishes WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM salats WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM rogerdishes WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM pandishes WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM meat WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM pizza WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM pizza WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM sushi WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM dessert WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM drinks WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM alcohol WHERE Id = ?");
 
     }
 
@@ -127,6 +126,7 @@ public class dbUtils {
             System.out.println("Connection Failed! Check output console - readDBmenu");
         }
     }
+
     public static void readDBCategoryById(int activeCat) {
 
         try (Connection connection = DriverManager
@@ -136,41 +136,39 @@ public class dbUtils {
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             ResultSet rs;
-            
-                rs = statement.executeQuery(sqlSelectList.get(activeCat));
-                if (activeCat == 5) {
-                    while (rs.next()) {
-                        MainForm.listofCat.get(activeCat).add(
-                                new Dish(Integer.parseInt(
-                                                rs.getString("Id")),
-                                        rs.getString("title"),
-                                        rs.getInt("priceS")));
-                    }
-                } else if (activeCat == 6) {
-                    while (rs.next()) {
-                        MainForm.listofCat.get(activeCat).add(
-                                new Dish(Integer.parseInt(
-                                                rs.getString("Id")),
-                                        rs.getString("title"),
-                                        rs.getInt("priceB")));
-                    }
-                } else {
-                    while (rs.next()) {
-                        MainForm.listofCat.get(activeCat).add(
-                                new Dish(Integer.parseInt(
-                                                rs.getString("Id")),
-                                        rs.getString("title"),
-                                        rs.getInt("price")));
-                    }
+
+            rs = statement.executeQuery(sqlSelectList.get(activeCat));
+            if (activeCat == 5) {
+                while (rs.next()) {
+                    MainForm.listofCat.get(activeCat).add(
+                            new Dish(Integer.parseInt(
+                                            rs.getString("Id")),
+                                    rs.getString("title"),
+                                    rs.getInt("priceS")));
                 }
-                rs.close();
-            
+            } else if (activeCat == 6) {
+                while (rs.next()) {
+                    MainForm.listofCat.get(activeCat).add(
+                            new Dish(Integer.parseInt(
+                                            rs.getString("Id")),
+                                    rs.getString("title"),
+                                    rs.getInt("priceB")));
+                }
+            } else {
+                while (rs.next()) {
+                    MainForm.listofCat.get(activeCat).add(
+                            new Dish(Integer.parseInt(
+                                            rs.getString("Id")),
+                                    rs.getString("title"),
+                                    rs.getInt("price")));
+                }
+            }
+            rs.close();
+
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - readDBCategory");
+            System.out.println("Connection Failed! Check output console - readDBCategoryById");
         }
     }
-
-   
 
     public static void addDish(Dish dish, int activeCat) {
         for (int i = 0; i < sqlInsertList.size(); i++) {
@@ -195,7 +193,7 @@ public class dbUtils {
                 }
             }
         }
-        
+
     }
 
     public static void removeDish(int dbId, int activeCat) {
@@ -207,14 +205,20 @@ public class dbUtils {
                     System.out.println(!connection.isClosed() ? "DB connected!"
                             : "Error DB connecting");
 
-                    Statement statement = connection.createStatement();
-                    statement.executeUpdate("" + sqlRemoteList.get(i) + dbId);
+                    PreparedStatement pstatement = connection.prepareStatement(sqlRemoveList.get(i));
+                    pstatement.setInt(1, dbId);
 
+                    int rowsInserted = pstatement.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("A new dish was removed successfully!");
+                    }
+//                    Statement statement = connection.createStatement();
+//                    statement.executeUpdate("" + sqlRemoveList.get(i) + dbId);
                 } catch (SQLException e) {
                     System.out.println("Connection Failed! Check output console - removeDish");
                 }
             }
-        }        
+        }
     }
 
     public static void readStorage() {
@@ -233,7 +237,7 @@ public class dbUtils {
                         ));
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getStorage");
+            System.out.println("Connection Failed! Check output console - readStorage");
         }
 
     }

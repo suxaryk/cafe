@@ -59,39 +59,21 @@ public class EmployeeUtils {
         }
 
     }
-//    public static void setEmployee(int dbId) {
-//        final String SQL = "SELECT Id, name, pass from employee "               
-//                                                 +"where Id = " + (dbId);
-//
-//        try (Connection connection = DriverManager
-//                .getConnection(URL, USERNAME, PASSWORD)) {
-//
-//            System.out.println(!connection.isClosed() ? "DB connected!"
-//                    : "Error DB connecting");
-//
-//            Statement statement = connection.createStatement();
-//            ResultSet rs = statement.executeQuery(SQL);
-//            while (rs.next()) {
-//                employeeList.set(dbId-1, new User(
-//                        rs.getInt("Id"),
-//                        rs.getString("name"),
-//                        rs.getInt("pass")
-//                ));
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Connection Failed! Check output console - setEmployee");
-//        }
-//
-//    }
 
     public static void removeById(int dbId) {
-        final String SQL = "DELETE FROM employee WHERE Id = " + dbId;
+//        final String SQL = "DELETE FROM employee WHERE Id = " + dbId;
+        final String SQL = "DELETE FROM employee WHERE Id = ?";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(SQL);
+            PreparedStatement pst = connection.prepareStatement(SQL);
+            pst.setInt(1, dbId);
+            int rowsInserted = pst.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new Employee was removed successfully!");
+            }
+//            Statement statement = connection.createStatement();
+//            statement.executeUpdate(SQL);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - removeEmployee");
         }
@@ -99,28 +81,43 @@ public class EmployeeUtils {
     }
 
     public static void updateEmployeePass(int dbId, int pass) {
-        final String SQL = "UPDATE employee SET pass = " + pass
-                + " WHERE Id = " + dbId;
+//        final String SQL = "UPDATE employee SET pass = " + pass
+//                + " WHERE Id = " + dbId;
+        final String SQL = "UPDATE employee SET pass = ? WHERE Id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(SQL);
+            PreparedStatement pst = connection.prepareStatement(SQL);
+            pst.setInt(1, pass);
+            pst.setInt(2, dbId);
+            int rowsInserted = pst.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new Employee was updated successfully!");
+            }
+//            Statement statement = connection.createStatement();
+//            statement.executeUpdate(SQL);
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - setEmployeePass");
+            System.out.println("Connection Failed! Check output console - updateEmployeePass");
         }
 
     }
 
     public static void updateEmployeeName(int dbId, String name) {
-        final String SQL = "UPDATE employee SET name = \"" + name
-                + "\" WHERE Id = " + dbId;
+//        final String SQL = "UPDATE employee SET name = \"" + name
+//                + "\" WHERE Id = " + dbId;
+        final String SQL = "UPDATE employee SET name = ? WHERE Id = ?";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(SQL);
+            PreparedStatement pst = connection.prepareStatement(SQL);
+            pst.setString(1, name);
+            pst.setInt(2, dbId);
+            int rowsInserted = pst.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new Employee was updated successfully!");
+            }
+//            Statement statement = connection.createStatement();
+//            statement.executeUpdate(SQL);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - setEmployeeName");
         }

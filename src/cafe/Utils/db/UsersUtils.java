@@ -10,10 +10,8 @@ import static cafe.Utils.db.dbUtils.URL;
 import static cafe.Utils.db.dbUtils.USERNAME;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
-import static cafe.view.MainForm.employeeList;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,7 +22,7 @@ import java.sql.Statement;
  */
 public class UsersUtils {
     
-    public static void setUsers() {
+    public static void readUsers() {
         final String SQL = "SELECT name, pass from users";
 
         try (Connection connection = DriverManager

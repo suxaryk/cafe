@@ -8,7 +8,7 @@ package cafe.Utils.db;
 import static cafe.Utils.db.dbUtils.PASSWORD;
 import static cafe.Utils.db.dbUtils.URL;
 import static cafe.Utils.db.dbUtils.USERNAME;
-import cafe.model.User;
+import cafe.model.Employee;
 import static cafe.view.MainForm.employeeList;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,7 +33,7 @@ public class EmployeeUtils {
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
 
-            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            PreparedStatement pstatement = connection.prepareStatement(SQL);            
             pstatement.setString(1, name);
             pstatement.setInt(2, pass);
 
@@ -47,8 +47,8 @@ public class EmployeeUtils {
         }
     }
 
-    public static void setAllEmployees() {
-        final String SQL = "SELECT Id, name, pass from employee";
+    public static void readAllEmployees() {
+        final String SQL = "SELECT Id, name, pass from employee ORDER BY Id";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -58,8 +58,9 @@ public class EmployeeUtils {
 
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(SQL);
+            
             while (rs.next()) {
-                employeeList.add(new User(
+                employeeList.add(new Employee(
                         rs.getInt("Id"),
                         rs.getString("name"),
                         rs.getInt("pass")
@@ -94,7 +95,7 @@ public class EmployeeUtils {
 //        }
 //
 //    }
-    public static void removeEmployeeFromDB(int dbId) {
+    public static void removeById(int dbId) {
         final String SQL = "DELETE FROM employee WHERE Id = " + dbId;
 
         try (Connection connection = DriverManager
@@ -111,7 +112,7 @@ public class EmployeeUtils {
         }
 
     }
-    public static void setEmployeePass(int  dbId, int pass) {
+    public static void updateEmployeePass(int  dbId, int pass) {
         final String SQL = "UPDATE employee SET pass = " + pass
                                         + " WHERE Id = " + dbId;
 
@@ -125,13 +126,13 @@ public class EmployeeUtils {
             statement.executeUpdate(SQL);
             
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - removeEmployee");
+            System.out.println("Connection Failed! Check output console - setEmployeePass");
         }
 
     }
-    public static void setEmployeeName(int  dbId, String name) {
-        final String SQL = "UPDATE employee SET name = "+ name
-                                        + " WHERE Id = " + dbId;
+    public static void updateEmployeeName(int  dbId, String name) {
+        final String SQL = "UPDATE employee SET name = \""+ name
+                                        + "\" WHERE Id = " + dbId;
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -143,7 +144,7 @@ public class EmployeeUtils {
             statement.executeUpdate(SQL);
             
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - removeEmployee");
+            System.out.println("Connection Failed! Check output console - setEmployeeName");
         }
 
     }

@@ -3,20 +3,17 @@ package cafe.view;
 import static cafe.Utils.db.CheckUtils.addCheck;
 import cafe.Utils.db.EmployeeUtils;
 import static cafe.Utils.db.EmployeeUtils.addEmployeeToDB;
-import static cafe.Utils.db.EmployeeUtils.removeEmployeeFromDB;
-import static cafe.Utils.db.EmployeeUtils.setAllEmployees;
-import static cafe.Utils.db.EmployeeUtils.setEmployeeName;
-import static cafe.Utils.db.EmployeeUtils.setEmployeePass;
 import cafe.model.Check;
 import cafe.Utils.db.dbUtils;
-import static cafe.Utils.db.dbUtils.setStorage;
 import cafe.model.CheckItem;
 import cafe.model.Dish;
+import cafe.model.Employee;
 import cafe.model.Ingredient;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -72,6 +69,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton14.setVisible(false);
         jButton14.setBackground(GREEN);
         jButton15.setVisible(false);
+        jButton17.setVisible(false);
         jButton15.setBackground(RED);
         jTextField3.setVisible(false);
         jButton1.setVisible(false);
@@ -82,6 +80,9 @@ public class MainForm extends javax.swing.JFrame {
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);
         jPanel7.setVisible(false);
+        jButton11.setBackground(GREEN);
+        jButton1.setBackground(RED);
+        
         
 
         initLoginForm();
@@ -203,6 +204,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
+        jButton17 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -1058,7 +1060,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel5.add(jButton11);
         jButton11.setBounds(270, 530, 100, 70);
 
-        jButton12.setBackground(new java.awt.Color(204, 204, 204));
+        jButton12.setBackground(new java.awt.Color(102, 153, 255));
         jButton12.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jButton12.setText("<html>&nbsp;&nbsp;&nbsp;оновити<br/>  калькуляцію </html>\n");
         jButton12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1306,8 +1308,6 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(jPanel3);
         jPanel3.setBounds(650, 0, 490, 680);
 
-        jPanel6.setLayout(null);
-
         jTable2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1341,9 +1341,6 @@ public class MainForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jPanel6.add(jScrollPane2);
-        jScrollPane2.setBounds(0, 10, 594, 419);
-
         jButton8.setBackground(new java.awt.Color(255, 255, 255));
         jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
@@ -1352,8 +1349,6 @@ public class MainForm extends javax.swing.JFrame {
                 goToMainMenu(evt);
             }
         });
-        jPanel6.add(jButton8);
-        jButton8.setBounds(20, 587, 100, 73);
 
         jButton24.setBackground(new java.awt.Color(204, 204, 204));
         jButton24.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1365,8 +1360,6 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton24);
-        jButton24.setBounds(430, 510, 50, 50);
 
         jButton25.setBackground(new java.awt.Color(204, 204, 204));
         jButton25.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
@@ -1378,8 +1371,6 @@ public class MainForm extends javax.swing.JFrame {
                 clearDigit(evt);
             }
         });
-        jPanel6.add(jButton25);
-        jButton25.setBounds(280, 510, 50, 50);
 
         jButton26.setBackground(new java.awt.Color(204, 204, 204));
         jButton26.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1391,8 +1382,6 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton26);
-        jButton26.setBounds(380, 510, 50, 50);
 
         jButton27.setBackground(new java.awt.Color(204, 204, 204));
         jButton27.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1404,8 +1393,6 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton27);
-        jButton27.setBounds(330, 560, 50, 50);
 
         jButton28.setBackground(new java.awt.Color(204, 204, 204));
         jButton28.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1417,8 +1404,6 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton28);
-        jButton28.setBounds(380, 560, 50, 50);
 
         jButton29.setBackground(new java.awt.Color(204, 204, 204));
         jButton29.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1430,8 +1415,6 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton29);
-        jButton29.setBounds(430, 560, 50, 50);
 
         jButton30.setBackground(new java.awt.Color(204, 204, 204));
         jButton30.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1443,8 +1426,6 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton30);
-        jButton30.setBounds(430, 610, 50, 50);
 
         jButton31.setBackground(new java.awt.Color(204, 204, 204));
         jButton31.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1456,8 +1437,6 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton31);
-        jButton31.setBounds(280, 610, 50, 50);
 
         jButton32.setBackground(new java.awt.Color(204, 204, 204));
         jButton32.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1469,8 +1448,6 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton32);
-        jButton32.setBounds(380, 610, 50, 50);
 
         jButton33.setBackground(new java.awt.Color(204, 204, 204));
         jButton33.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1482,8 +1459,6 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton33);
-        jButton33.setBounds(330, 510, 50, 50);
 
         jButton34.setBackground(new java.awt.Color(204, 204, 204));
         jButton34.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1495,14 +1470,10 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
-        jPanel6.add(jButton34);
-        jButton34.setBounds(330, 610, 50, 50);
 
         jPasswordField1.setEditable(false);
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPasswordField1.setToolTipText("");
-        jPanel6.add(jPasswordField1);
-        jPasswordField1.setBounds(440, 440, 154, 28);
 
         jButton13.setBackground(new java.awt.Color(255, 255, 255));
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/check-box2.png"))); // NOI18N
@@ -1512,15 +1483,11 @@ public class MainForm extends javax.swing.JFrame {
                 loginEmployee(evt);
             }
         });
-        jPanel6.add(jButton13);
-        jButton13.setBounds(500, 590, 100, 70);
 
         jLabel7.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 51, 0));
         jLabel7.setText("введіть пароль");
         jLabel7.setToolTipText("");
-        jPanel6.add(jLabel7);
-        jLabel7.setBounds(440, 470, 150, 15);
 
         jButton14.setText("додати");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -1528,8 +1495,6 @@ public class MainForm extends javax.swing.JFrame {
                 addEmployee(evt);
             }
         });
-        jPanel6.add(jButton14);
-        jButton14.setBounds(500, 510, 100, 40);
 
         jButton15.setText("видалити");
         jButton15.addActionListener(new java.awt.event.ActionListener() {
@@ -1537,16 +1502,109 @@ public class MainForm extends javax.swing.JFrame {
                 removeEmployee(evt);
             }
         });
-        jPanel6.add(jButton15);
-        jButton15.setBounds(500, 550, 100, 40);
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
-        jPanel6.add(jTextField3);
-        jTextField3.setBounds(0, 440, 430, 30);
+
+        jButton17.setBackground(new java.awt.Color(102, 153, 255));
+        jButton17.setText("змінити");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateUserAndEmployee(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(170, 170, 170)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton33, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)))
+                .addGap(36, 36, 36))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jButton33, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jButton32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel7)
+                                .addGap(35, 35, 35)
+                                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(3, 3, 3))
+        );
 
         getContentPane().add(jPanel6);
         jPanel6.setBounds(20, 0, 630, 700);
@@ -1863,6 +1921,7 @@ public class MainForm extends javax.swing.JFrame {
             
             jButton14.setVisible(true);
             jButton15.setVisible(true);
+            jButton17.setVisible(true);
             jTextField3.setVisible(true);
             jPasswordField1.setForeground(RED);
             jButton1.setVisible(true);
@@ -2048,70 +2107,31 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_NumberPressed
 
-    private void updateEmpl(int activeRow, String name, String newPass){
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        int dbId = employeeList.get(activeRow - userList.size()).getDbID();
-        System.out.println("dbId" + dbId);
-        if (activeRow < userList.size()) {   
-            
-            userList.get(activeRow).setPass(Integer.parseInt(newPass));
-            System.out.println("value= " + userList.get(activeRow).getPass());
-        } else {
-            if (!name.equals("")) {
-                fixme sql
-                setEmployeeName(dbId, name);                
-            }else if (!newPass.equals("")) {
-                setEmployeePass(dbId, Integer.parseInt(newPass));                              
-            }
-
-           // setEmployeePass(activeRow - userList.size(), name, newPass);
-            employeeList.get(dbId).setPass(Integer.parseInt(newPass));
-            System.out.println("value= " + employeeList.get(activeRow - userList.size()).getPass());
-        }
-        
-    }
+  
     private void loginEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginEmployee
         // TODO add your handling code here:
-        
         int activeRow = jTable2.getSelectedRow();
-        if (User.activeUserOfList == userList.size() - 1){            
-            String name = jTextField3.getText();
-            String newPass = new String(jPasswordField1.getPassword());
-            System.out.println("name" + name);
-            System.out.println("newPAss" + newPass);            
-            
-            updateEmpl(activeRow, name, newPass);
-            
-            
-           // model.setValueAt(newPass, activeRow, 1);           
-            
-            //userList.get(activeRow-1).setEmployeePass(Integer.parseInt(newPass)); 
-            
-        } else{
-            if (jButton13.isEnabled() && !new String(jPasswordField1.
-                    getPassword()).equals("")) {
-                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");                
-                DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-                if (employeeList.get(activeRow)
-                        .getPass() == Integer.parseInt(new String(jPasswordField1.
-                                        getPassword()))) {
-                    if (employeeList.get(activeRow).getActive() == 0) {
-                        model.setValueAt(dateFormat.format(
-                                new Date()), activeRow, 1);
-                        employeeList.get(activeRow).setActive(1);
-                    } else if (employeeList.get(activeRow).getActive() == 1) {
-                        model.setValueAt(dateFormat.format(
-                                new Date()), activeRow, 2);
-                        employeeList.get(activeRow).setActive(2);
-                    }
-
-                } else {
-                    jLabel7.setText("Невірний пароль!");
+        if (jButton13.isEnabled() && !new String(jPasswordField1.
+                getPassword()).equals("")) {
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            if (employeeList.get(activeRow)
+                    .getPass() == Integer.parseInt(new String(jPasswordField1.
+                                    getPassword()))) {
+                if (employeeList.get(activeRow).getActive() == 0) {
+                    model.setValueAt(dateFormat.format(
+                            new Date()), activeRow, 1);
+                    employeeList.get(activeRow).setActive(1);
+                } else if (employeeList.get(activeRow).getActive() == 1) {
+                    model.setValueAt(dateFormat.format(
+                            new Date()), activeRow, 2);
+                    employeeList.get(activeRow).setActive(2);
                 }
+            } else {
+                jLabel7.setText("Невірний пароль!");
             }
-            jPasswordField1.setText("");
         }
-        
+        jPasswordField1.setText("");
     }//GEN-LAST:event_loginEmployee
 
     private void EmployeeSelected(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeeSelected
@@ -2149,39 +2169,22 @@ public class MainForm extends javax.swing.JFrame {
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
         // TODO add your handling code here:
         String name = jTextField3.getText();
-        String pass = new String(jPasswordField1.getPassword());
+        String pass = new String(jPasswordField1.getPassword());        
         
-        if (!name.equals("") && !pass.equals("")) {            
-            employeeList.add(new User(name, Integer.parseInt(pass)));            
-            addEmployeeToDB(name, Integer.parseInt(pass));
+        if (!name.equals("") && !pass.equals("")) {                       
+
+            EmployeeUtils.addEmployeeToDB(name, Integer.parseInt(pass)); 
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-            model.addRow(new Object[]{
-                employeeList.get(employeeList.size() - 1).getName(),
-                employeeList.get(employeeList.size() - 1).getPass()
-            });     
-            jTable2.setRowSelectionInterval(jTable2.getRowCount()-1, jTable2.getRowCount()-1);
+            model.setRowCount(0);  
+            employeeList.clear();
+            initPassTable();
+
+            jTable2.setRowSelectionInterval(jTable2.getRowCount()-1, jTable2.getRowCount()-1);          
+            Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
+            jTable2.scrollRectToVisible(cellRect);
         }
         
     }//GEN-LAST:event_addEmployee
-
-    private void removeEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEmployee
-        // TODO add your handling code here:
-        int activeRow = jTable2.getSelectedRow();
-        System.out.println("activeRow= " + activeRow);
-        if (activeRow > 6) {
-            removeEmployeeFromDB(employeeList.get(activeRow - userList.size()).getDbID());         
-            employeeList.remove(activeRow - userList.size());
-            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();           
-            model.removeRow(activeRow);
-//            for (int i = 0; i < employeeList.size(); i++) {
-//                System.out.println(employeeList.get(i).getName() + " " + employeeList.get(i).getPass());                
-//            }            
-        }
-        jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
-        
-        
-        
-    }//GEN-LAST:event_removeEmployee
 
     private void PriceTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceTyped
         // TODO add your handling code here:
@@ -2196,8 +2199,10 @@ public class MainForm extends javax.swing.JFrame {
         if (!jTextField2.getText().equals("") && !jTextField4.getText().equals("")) {
             String title = jTextField4.getText();
             int price = Integer.parseInt(jTextField2.getText());
-            dbUtils.addDish(new Dish(title, price), activeCat);          
-            //fixme
+            
+            dbUtils.addDish(new Dish(title, price), activeCat);  
+            listofCat.get(activeCat).clear();
+            dbUtils.readDBCategoryById(activeCat);                    
             jList2.clearSelection();
             jList2.setListData(listofCat.get(activeCat).toArray());                     
             jList2.ensureIndexIsVisible(jList2.getModel().getSize()-1);
@@ -2212,6 +2217,8 @@ public class MainForm extends javax.swing.JFrame {
         int activeIndex = jList2.getSelectedIndex();
         if (activeIndex >= 0) {
             dbUtils.removeDish(listofCat.get(activeCat).get(activeIndex).getDbID(), activeCat);
+            listofCat.get(activeCat).clear();
+            dbUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(listofCat.get(activeCat).toArray());
             jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
@@ -2227,7 +2234,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel7.setVisible(true);
         
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        setStorage();
+        dbUtils.readStorage();
         for (Ingredient storageList1 : storageList) {
             model.addRow(new Object[]{
                 storageList1.getId(), 
@@ -2257,6 +2264,58 @@ public class MainForm extends javax.swing.JFrame {
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void removeEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEmployee
+        // TODO add your handling code here:
+        System.out.println("size in remove" + employeeList.size());
+        int activeRow = jTable2.getSelectedRow();
+        int listIndex = activeRow - userList.size();
+        System.out.println("activeRow= " + activeRow);
+        if (activeRow > 5) {       
+            EmployeeUtils.removeById(employeeList.get(listIndex).getDbId());
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            model.setRowCount(0);
+            employeeList.clear();
+            initPassTable();
+            
+            jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
+            Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
+            jTable2.scrollRectToVisible(cellRect);
+    
+        }    
+    }//GEN-LAST:event_removeEmployee
+
+    private void updateUserAndEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserAndEmployee
+        // TODO add your handling code here:
+        int activeRow = jTable2.getSelectedRow();
+        String name = jTextField3.getText();
+        int listIndex = activeRow - userList.size();
+        String newPass = new String(jPasswordField1.getPassword());      
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        if (activeRow < userList.size()) {   
+            
+            userList.get(activeRow).setPass(Integer.parseInt(newPass));
+            
+        
+            
+           
+ 
+        } else {            
+            int dbId = employeeList.get(activeRow - userList.size()).getDbId();          
+            if (!name.equals("")) {               
+                EmployeeUtils.updateEmployeeName(dbId, name);               
+            }
+            if (!newPass.equals("")) {
+                EmployeeUtils.updateEmployeePass(dbId, Integer.parseInt(newPass));   
+            }         
+            model.setRowCount(0);
+            employeeList.clear();
+            initPassTable();                       
+        }    
+        jTable2.setRowSelectionInterval(activeRow, activeRow);
+        Rectangle cellRect = jTable2.getCellRect(activeRow, 0, true);
+        jTable2.scrollRectToVisible(cellRect);
+    }//GEN-LAST:event_updateUserAndEmployee
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -2311,15 +2370,8 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void initPassTable() {  
-//        employeeList.add(new User("Працівник №1", 101));
-//        employeeList.add(new User("Працівник №2", 102));
-//        employeeList.add(new User("Працівник №3", 103));
-//        employeeList.add(new User("Працівник №4", 104));
-//        employeeList.add(new User("Працівник №5", 105));
-//        employeeList.add(new User("Працівник №6", 106));
-//        employeeList.add(new User("Працівник №7", 107));
-//        employeeList.add(new User("Працівник №8", 108));
-        setAllEmployees();
+        EmployeeUtils.readAllEmployees();
+       
         
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         if (User.activeUserOfList == userList.size() - 1) {
@@ -2405,7 +2457,7 @@ public class MainForm extends javax.swing.JFrame {
         listofCat.add(newCat1);
         listofCat.add(newCat2);
 
-        dbUtils.setDBmenu();
+        dbUtils.readDBmenu();
 
     }
 
@@ -2413,7 +2465,7 @@ public class MainForm extends javax.swing.JFrame {
 //        for (int i = 0; i < listofCat.size(); i++) {
 //            listofCat.get(i).clear();
 //        } 
-        dbUtils.setDBmenu();
+        dbUtils.readDBmenu();
 
     }
 
@@ -2452,7 +2504,7 @@ public class MainForm extends javax.swing.JFrame {
 
 
     }
-    public static ArrayList<User> employeeList = new ArrayList<>();
+    public static ArrayList<Employee> employeeList = new ArrayList<>();
     private static Map<Integer, Check> checks = new HashMap<Integer, Check>();
     private static final int tablesCount = 25;
     private static int activeDishes;
@@ -2500,6 +2552,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
@@ -2581,7 +2634,4 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton table9;
     // End of variables declaration//GEN-END:variables
 
-    private void removeEmployee() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

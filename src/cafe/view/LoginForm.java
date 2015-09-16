@@ -1,6 +1,6 @@
 package cafe.view;
 
-import static cafe.Utils.db.UsersUtils.setUsers;
+import static cafe.Utils.db.UsersUtils.readUsers;
 import cafe.model.User;
 import static cafe.view.MainForm.mainForm;
 import java.text.DateFormat;
@@ -35,7 +35,7 @@ public class LoginForm extends javax.swing.JFrame {
 //        userList.add(new User("Оператор №4", 104));
 //        userList.add(new User("Оператор №5", 105));
 //        userList.add(new User("Адміністратор", 1));
-        setUsers();
+        readUsers();
 
     }
 

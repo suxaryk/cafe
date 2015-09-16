@@ -85,7 +85,7 @@ public class dbUtils {
 
     }
 
-    public static void setDBmenu() {
+    public static void readDBmenu() {
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
@@ -124,7 +124,49 @@ public class dbUtils {
                 rs.close();
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getDBmenu");
+            System.out.println("Connection Failed! Check output console - readDBmenu");
+        }
+    }
+    public static void readDBCategoryById(int activeCat) {
+
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD);) {
+
+            System.out.println(!connection.isClosed() ? "DB connected!"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+            ResultSet rs;
+            
+                rs = statement.executeQuery(sqlSelectList.get(activeCat));
+                if (activeCat == 5) {
+                    while (rs.next()) {
+                        MainForm.listofCat.get(activeCat).add(
+                                new Dish(Integer.parseInt(
+                                                rs.getString("Id")),
+                                        rs.getString("title"),
+                                        rs.getInt("priceS")));
+                    }
+                } else if (activeCat == 6) {
+                    while (rs.next()) {
+                        MainForm.listofCat.get(activeCat).add(
+                                new Dish(Integer.parseInt(
+                                                rs.getString("Id")),
+                                        rs.getString("title"),
+                                        rs.getInt("priceB")));
+                    }
+                } else {
+                    while (rs.next()) {
+                        MainForm.listofCat.get(activeCat).add(
+                                new Dish(Integer.parseInt(
+                                                rs.getString("Id")),
+                                        rs.getString("title"),
+                                        rs.getInt("price")));
+                    }
+                }
+                rs.close();
+            
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - readDBCategory");
         }
     }
 
@@ -153,11 +195,7 @@ public class dbUtils {
                 }
             }
         }
-        for (ArrayList<Dish> category : MainForm.listofCat) {
-            category.clear();
-        }
-
-        setDBmenu();
+        
     }
 
     public static void removeDish(int dbId, int activeCat) {
@@ -176,15 +214,10 @@ public class dbUtils {
                     System.out.println("Connection Failed! Check output console - removeDish");
                 }
             }
-        }
-        for (ArrayList<Dish> category : MainForm.listofCat) {
-            category.clear();
-        }
-
-        setDBmenu();
+        }        
     }
 
-    public static void setStorage() {
+    public static void readStorage() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             String SQL = "SELECT * FROM storage ORDER BY title;";

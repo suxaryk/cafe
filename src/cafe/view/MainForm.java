@@ -3,6 +3,7 @@ package cafe.view;
 import static cafe.Utils.db.CheckUtils.addCheck;
 import cafe.Utils.db.EmployeeUtils;
 import static cafe.Utils.db.EmployeeUtils.addEmployeeToDB;
+import cafe.Utils.db.UsersUtils;
 import cafe.model.Check;
 import cafe.Utils.db.dbUtils;
 import cafe.model.CheckItem;
@@ -2292,14 +2293,20 @@ public class MainForm extends javax.swing.JFrame {
         int listIndex = activeRow - userList.size();
         String newPass = new String(jPasswordField1.getPassword());      
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        if (activeRow < userList.size()) {   
+        if (activeRow < userList.size()) { 
+            int dbId = employeeList.get(activeRow).getDbId();
+            if (!name.equals("")) {
+                UsersUtils.updateUserName(dbId, name);
+                System.out.println("name");
+            }
+            if (!newPass.equals("")) {
+                UsersUtils.updateUserPass(dbId, Integer.parseInt(newPass));
+                System.out.println("pass");
+            }  
             
-            userList.get(activeRow).setPass(Integer.parseInt(newPass));
+            userList.clear();
+            UsersUtils.readAllUsers();
             
-        
-            
-           
- 
         } else {            
             int dbId = employeeList.get(activeRow - userList.size()).getDbId();          
             if (!name.equals("")) {               
@@ -2307,11 +2314,12 @@ public class MainForm extends javax.swing.JFrame {
             }
             if (!newPass.equals("")) {
                 EmployeeUtils.updateEmployeePass(dbId, Integer.parseInt(newPass));   
-            }         
-            model.setRowCount(0);
-            employeeList.clear();
-            initPassTable();                       
-        }    
+            }                                       
+        } 
+        
+        model.setRowCount(0);
+        employeeList.clear();
+        initPassTable();
         jTable2.setRowSelectionInterval(activeRow, activeRow);
         Rectangle cellRect = jTable2.getCellRect(activeRow, 0, true);
         jTable2.scrollRectToVisible(cellRect);
@@ -2370,6 +2378,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void initPassTable() {  
+        
         EmployeeUtils.readAllEmployees();
        
         

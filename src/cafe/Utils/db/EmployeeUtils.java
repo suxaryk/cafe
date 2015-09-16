@@ -22,26 +22,19 @@ import java.sql.Statement;
  * @author suxarina
  */
 public class EmployeeUtils {
-   
 
     public static void addEmployeeToDB(String name, int pass) {
         final String SQL = "INSERT INTO employee(name, pass) VALUES(?, ?)";
-
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");
-
-            PreparedStatement pstatement = connection.prepareStatement(SQL);            
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setString(1, name);
             pstatement.setInt(2, pass);
-
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("A new Employee was added successfully!");
             }
-
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - addEmployeeToDB");
         }
@@ -49,16 +42,11 @@ public class EmployeeUtils {
 
     public static void readAllEmployees() {
         final String SQL = "SELECT Id, name, pass from employee ORDER BY Id";
-
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");
-
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(SQL);
-            
             while (rs.next()) {
                 employeeList.add(new Employee(
                         rs.getInt("Id"),
@@ -95,58 +83,48 @@ public class EmployeeUtils {
 //        }
 //
 //    }
+
     public static void removeById(int dbId) {
         final String SQL = "DELETE FROM employee WHERE Id = " + dbId;
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");
-
             Statement statement = connection.createStatement();
             statement.executeUpdate(SQL);
-            
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - removeEmployee");
         }
 
     }
-    public static void updateEmployeePass(int  dbId, int pass) {
-        final String SQL = "UPDATE employee SET pass = " + pass
-                                        + " WHERE Id = " + dbId;
 
+    public static void updateEmployeePass(int dbId, int pass) {
+        final String SQL = "UPDATE employee SET pass = " + pass
+                + " WHERE Id = " + dbId;
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");
-
             Statement statement = connection.createStatement();
             statement.executeUpdate(SQL);
-            
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - setEmployeePass");
         }
 
     }
-    public static void updateEmployeeName(int  dbId, String name) {
-        final String SQL = "UPDATE employee SET name = \""+ name
-                                        + "\" WHERE Id = " + dbId;
+
+    public static void updateEmployeeName(int dbId, String name) {
+        final String SQL = "UPDATE employee SET name = \"" + name
+                + "\" WHERE Id = " + dbId;
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");
-
             Statement statement = connection.createStatement();
             statement.executeUpdate(SQL);
-            
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - setEmployeeName");
         }
 
     }
-    
+
 }

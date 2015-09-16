@@ -21,15 +21,12 @@ import java.sql.Statement;
  * @author suxarina
  */
 public class UsersUtils {
-    
-    public static void readUsers() {
+
+    public static void readAllUsers() {
         final String SQL = "SELECT name, pass from users";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");
 
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(SQL);
@@ -43,9 +40,33 @@ public class UsersUtils {
             System.out.println("Connection Failed! Check output console - getUsers");
         }
     }
-    
-    
-    
-    
-    
+
+    public static void updateUserPass(int dbId, int pass) {
+        final String SQL = "UPDATE users SET pass = " + pass
+                + " WHERE Id = " + dbId;
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(SQL);
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - updateUserPass");
+        }
+
+    }
+
+    public static void updateUserName(int dbId, String name) {
+        final String SQL = "UPDATE users SET name = \"" + name
+                + "\" WHERE Id = " + dbId;
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(SQL);
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - updateUserName");
+        }
+
+    }
+
 }

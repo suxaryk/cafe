@@ -1,5 +1,5 @@
 # cafe
-desktop program based on Java Swing for automation restaurants
+desktop program based on Java Swing for restaurants automatization
 /dist/ - already packaged app
 used:
 all dishes and ingredients storage in MySQL database

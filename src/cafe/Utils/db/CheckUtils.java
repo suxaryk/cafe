@@ -26,6 +26,16 @@ public class CheckUtils {
 
     private static int checkId;
 
+    public static int getCheckId() {
+        return checkId;
+    }
+
+    public static void setCheckId(int checkId) {
+        CheckUtils.checkId = checkId;
+    }
+    
+    
+
     public static void addCheck(Check check, User user) {
         final String sql = "INSERT INTO checks( checkId, sum, datatime, operator)"
                 + " VALUES(?, ?, ?, ?)";

@@ -1,5 +1,6 @@
 package cafe.view;
 
+import cafe.Utils.CustomCellRender;
 import cafe.Utils.db.CheckUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
@@ -2004,10 +2005,25 @@ public class MainForm extends javax.swing.JFrame {
 //        checks.get(activeTable).getCheckList().get(0).getDish().getListOfIngredients().
 
     }
+    public void markCheckItems(){
+//        for (CheckItem item : checks.get(activeCat).getCheckList()) {
+//            item.setCooking(true);
+//        }
+        DefaultTableModel model
+                = (DefaultTableModel) jTable1.getModel();
+        //DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        //cellRenderer.setBackground(GREEN);
+        CustomCellRender cellRender = new CustomCellRender();
+        jTable1.getColumnModel().getColumn(0).setCellRenderer(cellRender);
+        jTable1.getColumnModel().getColumn(1).setCellRenderer(cellRender);
+        jTable1.getColumnModel().getColumn(2).setCellRenderer(cellRender);
+        jTable1.getColumnModel().getColumn(3).setCellRenderer(cellRender);
+        
+    }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         // TODO add your handling code here:
         //  printComponenet(); 
-       
+        markCheckItems();
         
         
 //        if (jButton3.isEnabled()) {
@@ -2338,6 +2354,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void exitSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitSystem
         // TODO add your handling code here:
+        CheckUtils.setCheckId(0);
         mainForm.setVisible(false);
         loginForm.getDate();
         loginForm.setVisible(true);        

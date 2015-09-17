@@ -7,7 +7,6 @@ package cafe.model;
 
 
 import java.util.Date;
-import java.util.Objects;
 
 
 /**
@@ -19,8 +18,9 @@ public class CheckItem {
     private int count;    
     private int sum;
     private Date date;  
+    private boolean cooking;
 
-
+    
     
 
     public CheckItem(Dish dish, int count, Date date) {
@@ -61,40 +61,15 @@ public class CheckItem {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.dish);
-        hash = 97 * hash + this.count;    
-        hash = 97 * hash + this.sum;
-        hash = 97 * hash + Objects.hashCode(this.date);
-        return hash;
+    public boolean isCooking() {
+        return cooking;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final CheckItem other = (CheckItem) obj;
-        if (!Objects.equals(this.dish, other.dish)) {
-            return false;
-        }
-        if (this.count != other.count) {
-            return false;
-        }      
-        if (this.sum != other.sum) {
-            return false;
-        }
-        if (!Objects.equals(this.date, other.date)) {
-            return false;
-        }
-        return true;
+    public void setCooking(boolean cooking) {
+        this.cooking = cooking;
     }
+
+  
    
     
     

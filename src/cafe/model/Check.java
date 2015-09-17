@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author suxarina
  */
-public class Check {
+public class Check {   
     private int totalsum;
     private ArrayList<CheckItem> checkList = new ArrayList<>();
     private ArrayList<Ingredient> ingredients = new ArrayList<>();

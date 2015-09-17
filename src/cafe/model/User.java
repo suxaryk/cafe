@@ -14,7 +14,7 @@ public class User {
     private String name;
     private int pass;
     private int active;
-    public static int activeUserOfList;
+    public static int getActiveUser;
     
     User(){}
 

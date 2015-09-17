@@ -231,7 +231,7 @@ public class LoginForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void getDate() {
+    public void getDate() {
         Locale locale = new Locale("uk", "UA");
         DateFormat dateFormat = new SimpleDateFormat("EEEE", locale);
         DateFormat dateFormat1 = new SimpleDateFormat("HH:mm", locale);
@@ -254,8 +254,9 @@ public class LoginForm extends javax.swing.JFrame {
 
         } else if (userList.get(jComboBox1.getSelectedIndex())
                 .getPass() == Integer.parseInt(pass)) {
-            User.activeUserOfList = jComboBox1.getSelectedIndex();         
-            this.dispose();
+            User.getActiveUser = jComboBox1.getSelectedIndex();         
+            //this.dispose();
+            this.setVisible(false);
 
         } else {
             jLabel1.setText("Невірний пароль!");

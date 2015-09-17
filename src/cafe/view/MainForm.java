@@ -124,7 +124,9 @@ public class MainForm extends javax.swing.JFrame {
         table23 = new javax.swing.JButton();
         table24 = new javax.swing.JButton();
         table25 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jButton18 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         cat5 = new javax.swing.JButton();
         cat6 = new javax.swing.JButton();
@@ -173,7 +175,6 @@ public class MainForm extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -181,6 +182,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -587,11 +589,29 @@ public class MainForm extends javax.swing.JFrame {
         jPanel2.add(table25);
         table25.setBounds(480, 440, 100, 100);
 
-        jLabel10.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel10.setText("0");
-        jPanel2.add(jLabel10);
-        jLabel10.setBounds(290, 560, 90, 30);
+        jTextField5.setEditable(false);
+        jTextField5.setBackground(new java.awt.Color(67, 96, 156));
+        jTextField5.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jTextField5.setForeground(new java.awt.Color(255, 102, 102));
+        jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField5.setText("0");
+        jTextField5.setBorder(null);
+        jPanel2.add(jTextField5);
+        jTextField5.setBounds(80, 570, 90, 30);
+
+        jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel3.setText("грн.");
+        jPanel2.add(jLabel3);
+        jLabel3.setBounds(180, 570, 60, 30);
+
+        jButton18.setBackground(new java.awt.Color(67, 96, 156));
+        jButton18.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jButton18.setForeground(new java.awt.Color(255, 102, 102));
+        jButton18.setText("Каса:");
+        jButton18.setBorder(null);
+        jPanel2.add(jButton18);
+        jButton18.setBounds(0, 560, 80, 40);
 
         jTabbedPane1.addTab("                          ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/two200.png")), jPanel2); // NOI18N
 
@@ -1216,19 +1236,14 @@ public class MainForm extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel2.setText("Сума по чеку:");
         jPanel3.add(jLabel2);
-        jLabel2.setBounds(10, 450, 144, 23);
+        jLabel2.setBounds(10, 430, 144, 23);
 
         jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(255, 51, 51));
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel3.add(jTextField1);
-        jTextField1.setBounds(160, 450, 116, 29);
-
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        jLabel3.setText("грн.");
-        jPanel3.add(jLabel3);
-        jLabel3.setBounds(280, 450, 60, 23);
+        jTextField1.setBounds(160, 430, 116, 29);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Стіл № ");
@@ -1244,12 +1259,12 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/tools6.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Settings(evt);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitSystem(evt);
             }
         });
 
@@ -1302,6 +1317,11 @@ public class MainForm extends javax.swing.JFrame {
 
         jPanel3.add(jPanel1);
         jPanel1.setBounds(0, 600, 500, 80);
+
+        jLabel11.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel11.setText("грн.");
+        jPanel3.add(jLabel11);
+        jLabel11.setBounds(280, 430, 60, 23);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(650, 0, 490, 680);
@@ -1683,7 +1703,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setSelectedIndex(1);
         jLabel4.setText("Cтіл №" + activeTable);
         jLabel4.setForeground(RED);
-        System.out.println("user" + User.activeUserOfList);
+        System.out.println("user" + User.getActiveUser);
         //fixed
 
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
@@ -1909,8 +1929,8 @@ public class MainForm extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        if (User.activeUserOfList == userList.size() - 1) {
-            jLabel5.setText("  " + userList.get(User.activeUserOfList).getName());
+        if (User.getActiveUser == userList.size() - 1) {
+            jLabel5.setText("  " + userList.get(User.getActiveUser).getName());
             jLabel5.setBackground(RED);
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             model.setColumnCount(1);
@@ -1930,19 +1950,13 @@ public class MainForm extends javax.swing.JFrame {
             jLabel9.setVisible(true);
 
         } else {
-            jLabel5.setText("  " + userList.get(User.activeUserOfList).getName());
+            jLabel5.setText("  " + userList.get(User.getActiveUser).getName());
             jLabel5.setForeground(BLUE);
         }
         initMainForm();
         initPassTable();
 
     }//GEN-LAST:event_formComponentShown
-
-    private void Settings(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Settings
-        // TODO add your handling code here:
-        mainForm.setBackground(darkBLUE);
-
-    }//GEN-LAST:event_Settings
 
 //    public void printComponenet() {
 //
@@ -1992,8 +2006,10 @@ public class MainForm extends javax.swing.JFrame {
     }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         // TODO add your handling code here:
-        //  printComponenet();  
-        CheckUtils.addCheck(checks.get(activeTable));
+        //  printComponenet(); 
+       
+        
+        
 //        if (jButton3.isEnabled()) {
 //            if (checks.get(activeTable).getTotalsum() != 0) {
 //                DateFormat dateFormat = new SimpleDateFormat(
@@ -2001,7 +2017,7 @@ public class MainForm extends javax.swing.JFrame {
 //                MessageFormat header = new MessageFormat(
 //                                                dateFormat.format(new Date()));
 //                MessageFormat footer = new MessageFormat(LoginForm.userList.
-//                        get(User.activeUserOfList).getName() 
+//                        get(User.getActiveUser).getName() 
 //                        + "\t" + "Сума по чеку: "
 //                        + String.valueOf(checks.get(activeTable).getTotalsum())
 //                        + " грн.");
@@ -2061,8 +2077,11 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jButton10.isEnabled()) {
             if (checks.get(activeTable).getTotalsum() != 0) {
+                CheckUtils.addCheck(checks.get(activeTable), userList.get(User.getActiveUser));
+                dayCash += checks.get(activeTable).getTotalsum();
+                jTextField5.setText(String.valueOf(dayCash));
 
-              //  fixme
+                //  fixme
                 // jLabel10.setText(String.valueOf(getDaySum())); 
                 jButton10.setBackground(GREEN);
                 jButton10.setEnabled(false);
@@ -2089,7 +2108,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void NumberPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberPressed
         // TODO add your handling code here:
-        if (User.activeUserOfList == userList.size() - 1) {
+        if (User.getActiveUser == userList.size() - 1) {
             jPasswordField1.setEchoChar((char) 0);
 
         }
@@ -2317,6 +2336,13 @@ public class MainForm extends javax.swing.JFrame {
         jTable2.scrollRectToVisible(cellRect);
     }//GEN-LAST:event_updateUserAndEmployee
 
+    private void exitSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitSystem
+        // TODO add your handling code here:
+        mainForm.setVisible(false);
+        loginForm.getDate();
+        loginForm.setVisible(true);        
+    }//GEN-LAST:event_exitSystem
+
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
         jCheckBox1.setBackground(RED);
@@ -2344,7 +2370,7 @@ public class MainForm extends javax.swing.JFrame {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                mainForm.setEnabled(true);
+               // mainForm.setEnabled(true);
             }
 
             @Override
@@ -2361,7 +2387,7 @@ public class MainForm extends javax.swing.JFrame {
 
             @Override
             public void windowDeactivated(WindowEvent e) {
-
+                mainForm.setEnabled(true);
             }
 
         });
@@ -2373,7 +2399,7 @@ public class MainForm extends javax.swing.JFrame {
         EmployeeUtils.readAllEmployees();
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        if (User.activeUserOfList == userList.size() - 1) {
+        if (User.getActiveUser == userList.size() - 1) {
             for (int i = 0; i < userList.size(); i++) {
                 model.addRow(new Object[]{
                     userList.get(i).getName(),
@@ -2498,6 +2524,7 @@ public class MainForm extends javax.swing.JFrame {
         mainForm.setIconImage(null);
 
     }
+    private static int dayCash;
     public static ArrayList<Employee> employeeList = new ArrayList<>();
     private static Map<Integer, Check> checks = new HashMap<Integer, Check>();
     private static final int tablesCount = 25;
@@ -2547,6 +2574,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
@@ -2569,7 +2597,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2601,6 +2629,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JButton table01;
     private javax.swing.JButton table02;
     private javax.swing.JButton table03;

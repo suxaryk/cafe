@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author suxarina
  */
 public class Check {   
+    private int cookCount;
     private int totalsum;
     private ArrayList<CheckItem> checkList = new ArrayList<>();
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
@@ -22,10 +23,23 @@ public class Check {
 
     public int getTotalsum() {
         int sum = 0;
-        for (int i = 0; i < checkList.size(); i++) {
-            sum += checkList.get(i).getSum();            
+        for (CheckItem checkList1 : checkList) {
+            sum += checkList1.getSum();            
         }
         return totalsum = sum;
+    }
+
+    public int getCookCount() {        
+        for (CheckItem checkList1 : checkList) {
+            if (checkList1.getDish().isCook()) {
+                cookCount+=checkList1.getCount();                  
+            }
+        }
+        return cookCount;
+    }
+
+    public void setCookCount(int totalCount) {
+        this.cookCount = totalCount;
     }
 
     public void setTotalsum(int totalsum) {

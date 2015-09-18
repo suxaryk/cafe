@@ -1803,7 +1803,7 @@ public class MainForm extends javax.swing.JFrame {
         int price = listofCat.get(activeCat).get(activeDishes).getPrice();
 
         checks.get(activeTable).getCheckList().add(new CheckItem(
-                new Dish(dbId, title, price), count, new Date()));
+                new Dish(dbId, title, price, true), count, new Date()));
         jTextField1.setText(String.valueOf(checks.get(activeTable).getTotalsum()));
         int addedIndex = checks.get(activeTable).getCheckList().size() - 1;
 

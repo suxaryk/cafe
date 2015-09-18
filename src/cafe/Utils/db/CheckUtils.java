@@ -37,8 +37,8 @@ public class CheckUtils {
     
 
     public static void addCheck(Check check, User user) {
-        final String sql = "INSERT INTO checks( checkId, sum, datatime, operator)"
-                + " VALUES(?, ?, ?, ?)";
+        final String sql = "INSERT INTO checks( checkId, sum, cookCount, datatime, operator)"
+                + " VALUES(?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -50,8 +50,9 @@ public class CheckUtils {
             //pstatement.setInt(1, (count+1));
             pstatement.setInt(1, ++checkId);
             pstatement.setInt(2, check.getTotalsum());
-            pstatement.setTimestamp(3, getCurrentTimeStamp());
-            pstatement.setString(4, user.getName());
+            pstatement.setInt(3, check.getCookCount());
+            pstatement.setTimestamp(4, getCurrentTimeStamp());
+            pstatement.setString(5, user.getName());
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {

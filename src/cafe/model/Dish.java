@@ -11,19 +11,22 @@ public class Dish {
     private int dbID;
     private String title = "";
     private int price = 0;
+    private boolean cook;
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     
     
     public Dish(){} 
 
-    public Dish(int dbID, String title, int price) {
+    public Dish(int dbID, String title, int price, boolean cook) {
         this.dbID = dbID;
         this.title = title;
         this.price = price;        
+        this.cook = cook;
     }
     public Dish(String title, int price) {        
         this.title = title;
         this.price = price;
+        this.cook = true;
     }
     
 
@@ -58,6 +61,15 @@ public class Dish {
     public void setListOfIngredients(ArrayList<Ingredient> list) {
         this.ingredients = list;
     }
+
+    public boolean isCook() {
+        return cook;
+    }
+
+    public void setCook(boolean cook) {
+        this.cook = cook;
+    }
+    
     
 
     @Override

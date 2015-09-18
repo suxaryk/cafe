@@ -4,7 +4,7 @@ import cafe.Utils.db.CheckUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Check;
-import cafe.Utils.db.dbUtils;
+import cafe.Utils.db.DishUtils;
 import cafe.model.CheckItem;
 import cafe.model.Dish;
 import cafe.model.Employee;
@@ -164,6 +164,7 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jButton19 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -1064,7 +1065,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel5.add(jButton1);
-        jButton1.setBounds(370, 530, 100, 70);
+        jButton1.setBounds(270, 530, 100, 70);
 
         jButton11.setBackground(new java.awt.Color(204, 204, 204));
         jButton11.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -1076,7 +1077,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel5.add(jButton11);
-        jButton11.setBounds(270, 530, 100, 70);
+        jButton11.setBounds(170, 530, 100, 70);
 
         jButton12.setBackground(new java.awt.Color(102, 153, 255));
         jButton12.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -1104,6 +1105,19 @@ public class MainForm extends javax.swing.JFrame {
         jLabel9.setText(" Назва");
         jPanel5.add(jLabel9);
         jLabel9.setBounds(130, 470, 90, 16);
+
+        jButton19.setBackground(new java.awt.Color(102, 153, 255));
+        jButton19.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton19.setText("<html>&nbsp;&nbsp;оновити<br/>  назву/ціну </html>\n");
+        jButton19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateTitleAndPrice(evt);
+            }
+        });
+        jPanel5.add(jButton19);
+        jButton19.setBounds(370, 530, 100, 70);
 
         jTabbedPane1.addTab("                        ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), jPanel5); // NOI18N
 
@@ -1760,12 +1774,17 @@ public class MainForm extends javax.swing.JFrame {
 
     private void getListItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getListItem
         clearCountButton();
+        activeDishes = jList2.getSelectedIndex();
         System.out.println("selected index " + jList2.getSelectedIndex());
+        String title = listofCat.get(activeCat).get(activeDishes).getTitle();
+        int price = listofCat.get(activeCat).get(activeDishes).getPrice();
+        jTextField4.setText(title);
+        jTextField2.setText(String.valueOf(price));
 //        if (evt.getClickCount() == 1) {
 //            activeDishes = jList2.locationToIndex(evt.getPoint());
 //            refreshListOfPrices();
 //        }
-        activeDishes = jList2.getSelectedIndex();
+        
         refreshListOfPrices();
 
 
@@ -2260,9 +2279,9 @@ public class MainForm extends javax.swing.JFrame {
             String title = jTextField4.getText();
             int price = Integer.parseInt(jTextField2.getText());
 
-            dbUtils.addDish(new Dish(title, price), activeCat);
+            DishUtils.addDish(new Dish(title, price), activeCat);
             listofCat.get(activeCat).clear();
-            dbUtils.readDBCategoryById(activeCat);
+            DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(listofCat.get(activeCat).toArray());
             jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
@@ -2276,9 +2295,9 @@ public class MainForm extends javax.swing.JFrame {
         System.out.println("selectd index = " + jList2.getSelectedIndex());
         int activeIndex = jList2.getSelectedIndex();
         if (activeIndex >= 0) {
-            dbUtils.removeDish(listofCat.get(activeCat).get(activeIndex).getDbID(), activeCat);
             listofCat.get(activeCat).clear();
-            dbUtils.readDBCategoryById(activeCat);
+            listofCat.get(activeCat).clear();
+            DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(listofCat.get(activeCat).toArray());
             jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
@@ -2294,7 +2313,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel7.setVisible(true);
 
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        dbUtils.readStorage();
+        DishUtils.readStorage();
         for (Ingredient storageList1 : storageList) {
             model.addRow(new Object[]{
                 storageList1.getId(),
@@ -2390,6 +2409,28 @@ public class MainForm extends javax.swing.JFrame {
         loginForm.getDate();
         loginForm.setVisible(true);        
     }//GEN-LAST:event_exitSystem
+
+    private void updateTitleAndPrice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTitleAndPrice
+        // TODO add your handling code here:
+        int index = jList2.getSelectedIndex();
+        int dbId = listofCat.get(activeCat).get(index).getDbID();
+        String title = jTextField4.getText();      
+        System.out.println("title = " + title);
+        int price = Integer.parseInt(jTextField2.getText());
+        if (!title.equals("")){           
+            DishUtils.updateDishTitle(dbId, title, activeCat);                
+        }
+        if (price != 0) {
+            DishUtils.updateDishPrice(dbId, price, activeCat);            
+        }
+        listofCat.get(activeCat).clear();
+        DishUtils.readDBCategoryById(activeCat);
+        jList2.clearSelection();
+        jList2.setListData(listofCat.get(activeCat).toArray());
+        jList2.ensureIndexIsVisible(index);
+        jList2.setSelectedIndex(index);
+        getListItem(null);
+    }//GEN-LAST:event_updateTitleAndPrice
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -2526,7 +2567,7 @@ public class MainForm extends javax.swing.JFrame {
         listofCat.add(newCat1);
         listofCat.add(newCat2);
 
-        dbUtils.readDBmenu();
+        DishUtils.readDBmenu();
 
     }
 
@@ -2534,7 +2575,7 @@ public class MainForm extends javax.swing.JFrame {
 //        for (int i = 0; i < listofCat.size(); i++) {
 //            listofCat.get(i).clear();
 //        } 
-        dbUtils.readDBmenu();
+        DishUtils.readDBmenu();
 
     }
 
@@ -2623,6 +2664,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;

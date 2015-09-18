@@ -5,9 +5,9 @@
  */
 package cafe.Utils.db;
 
-import static cafe.Utils.db.dbUtils.PASSWORD;
-import static cafe.Utils.db.dbUtils.URL;
-import static cafe.Utils.db.dbUtils.USERNAME;
+import static cafe.Utils.db.DishUtils.PASSWORD;
+import static cafe.Utils.db.DishUtils.URL;
+import static cafe.Utils.db.DishUtils.USERNAME;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.sql.Connection;

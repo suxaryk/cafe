@@ -5,9 +5,9 @@
  */
 package cafe.Utils.db;
 
-import static cafe.Utils.db.dbUtils.PASSWORD;
-import static cafe.Utils.db.dbUtils.URL;
-import static cafe.Utils.db.dbUtils.USERNAME;
+import static cafe.Utils.db.DishUtils.PASSWORD;
+import static cafe.Utils.db.DishUtils.URL;
+import static cafe.Utils.db.DishUtils.USERNAME;
 import cafe.model.Employee;
 import static cafe.view.MainForm.employeeList;
 import java.sql.Connection;
@@ -69,7 +69,7 @@ public class EmployeeUtils {
             pst.setInt(1, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Employee was removed successfully!");
+                System.out.println("Employee was removed successfully!");
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - removeEmployee");
@@ -87,7 +87,7 @@ public class EmployeeUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Employee was updated successfully!");
+                System.out.println("Employee was updated successfully!");
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateEmployeePass");
@@ -105,10 +105,10 @@ public class EmployeeUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Employee was updated successfully!");
+                System.out.println("Employee was updated successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - setEmployeeName");
+            System.out.println("Connection Failed! Check output console - updateEmployeeName");
         }
 
     }

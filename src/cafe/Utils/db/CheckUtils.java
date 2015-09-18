@@ -5,10 +5,10 @@
  */
 package cafe.Utils.db;
 
-import static cafe.Utils.db.dbUtils.PASSWORD;
-import static cafe.Utils.db.dbUtils.URL;
-import static cafe.Utils.db.dbUtils.USERNAME;
-import static cafe.Utils.db.dbUtils.getCurrentTimeStamp;
+import static cafe.Utils.db.DishUtils.PASSWORD;
+import static cafe.Utils.db.DishUtils.URL;
+import static cafe.Utils.db.DishUtils.USERNAME;
+import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
 import cafe.model.Check;
 import cafe.model.User;
 import java.sql.Connection;
@@ -86,7 +86,7 @@ public class CheckUtils {
             return sum;
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getSumOfChecks");
+            System.out.println("Connection Failed! Check output console - getDaySum");
             return 0;
         }
 

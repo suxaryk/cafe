@@ -17,7 +17,7 @@ import java.util.Date;
  *
  * @author suxarina
  */
-public class dbUtils {
+public class DishUtils {
 
     public static final String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static final String USERNAME = "root";
@@ -29,13 +29,15 @@ public class dbUtils {
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
     private static final ArrayList<String> sqlRemoveList = new ArrayList<>();
+    private static final ArrayList<String> sqlUpdateTitleList = new ArrayList<>();
+    private static final ArrayList<String> sqlUpdatePriceList = new ArrayList<>();
 
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         System.out.println("MySQL JDBC Driver Registered!");
 
@@ -74,6 +76,31 @@ public class dbUtils {
         sqlRemoveList.add("DELETE FROM dessert WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM drinks WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM alcohol WHERE Id = ?");
+
+        sqlUpdateTitleList.add("UPDATE firstdishes SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE salats SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE rogerdishes SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE pandishes SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE meat SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE pizza SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE pizza SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE sushi SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE dessert SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE drinks SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE alcohol SET title = ? WHERE Id = ?");
+
+        sqlUpdatePriceList.add("UPDATE firstdishes SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE salats SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE rogerdishes SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE pandishes SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE meat SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE pizza SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE pizza SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE sushi SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE dessert SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE drinks SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE alcohol SET price = ? WHERE Id = ?");
+        
 
     }
 
@@ -197,7 +224,7 @@ public class dbUtils {
     }
 
     public static void removeDish(int dbId, int activeCat) {
-        for (int i = 0; i < sqlInsertList.size(); i++) {
+        for (int i = 0; i < sqlRemoveList.size(); i++) {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
@@ -216,6 +243,46 @@ public class dbUtils {
 //                    statement.executeUpdate("" + sqlRemoveList.get(i) + dbId);
                 } catch (SQLException e) {
                     System.out.println("Connection Failed! Check output console - removeDish");
+                }
+            }
+        }
+    }
+
+    public static void updateDishTitle(int dbId, String name, int activeCat) {
+        for (int i = 0; i < sqlUpdateTitleList.size(); i++) {
+            if (i == activeCat) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
+                    PreparedStatement pst = connection.prepareStatement(sqlUpdateTitleList.get(i));
+                    pst.setString(1, name);
+                    pst.setInt(2, dbId);
+                    int rowsInserted = pst.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("Name was updated successfully!");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console - updateDishTitle");
+                }
+            }
+        }
+
+    }
+
+    public static void updateDishPrice(int dbId, int pass, int activeCat) {
+        for (int i = 0; i < sqlUpdatePriceList.size(); i++) {
+            if (i == activeCat) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
+
+                    PreparedStatement pst = connection.prepareStatement(sqlUpdatePriceList.get(i));
+                    pst.setInt(1, pass);
+                    pst.setInt(2, dbId);
+                    int rowsInserted = pst.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("Price was updated successfully!");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console - updateDishPrice");
                 }
             }
         }

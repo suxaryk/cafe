@@ -70,11 +70,9 @@ public class MainForm extends javax.swing.JFrame {
         jButton14.setBackground(GREEN);
         jButton15.setVisible(false);
         jButton17.setVisible(false);
+        jButton19.setVisible(false);
         jButton15.setBackground(RED);
-        jTextField3.setVisible(false);
-        jButton1.setVisible(false);
-        jButton11.setVisible(false);
-        jButton12.setVisible(false);
+        jTextField3.setVisible(false);     
         jTextField2.setVisible(false);
         jTextField4.setVisible(false);
         jLabel8.setVisible(false);
@@ -1977,10 +1975,10 @@ public class MainForm extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         if (User.getActiveUser == userList.size() - 1) {
             jLabel5.setText("  " + userList.get(User.getActiveUser).getName());
-            jLabel5.setBackground(RED);
-            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            jLabel5.setBackground(RED);            
             model.setColumnCount(1);
             model.addColumn("пароль");
 
@@ -1992,6 +1990,7 @@ public class MainForm extends javax.swing.JFrame {
             jButton1.setVisible(true);
             jButton11.setVisible(true);
             jButton12.setVisible(true);
+            jButton19.setVisible(true);
             jTextField2.setVisible(true);
             jTextField4.setVisible(true);
             jLabel8.setVisible(true);
@@ -2000,6 +1999,9 @@ public class MainForm extends javax.swing.JFrame {
         } else {
             jLabel5.setText("  " + userList.get(User.getActiveUser).getName());
             jLabel5.setForeground(BLUE);
+            model.setColumnCount(1);
+            model.addColumn("Початок");
+            model.addColumn("Кінець");
         }
         initMainForm();
         initPassTable();
@@ -2406,8 +2408,29 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         CheckUtils.setCheckId(0);
         mainForm.setVisible(false);
+        mainForm.setEnabled(false);
         loginForm.getDate();
-        loginForm.setVisible(true);        
+        loginForm.setVisible(true);   
+        
+        jButton1.setVisible(false);
+        jButton11.setVisible(false);
+        jButton12.setVisible(false);
+        jButton19.setVisible(false);
+        jTextField2.setVisible(false);
+        jTextField4.setVisible(false);
+        jLabel8.setVisible(false);
+        jLabel9.setVisible(false);
+        
+        jButton14.setVisible(false);
+        jButton15.setVisible(false);
+        jButton17.setVisible(false);
+        
+        jTextField3.setVisible(false);
+        
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        employeeList.clear();
+        jTabbedPane1.setSelectedIndex(0);
     }//GEN-LAST:event_exitSystem
 
     private void updateTitleAndPrice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTitleAndPrice
@@ -2459,7 +2482,7 @@ public class MainForm extends javax.swing.JFrame {
 
             @Override
             public void windowClosed(WindowEvent e) {
-               // mainForm.setEnabled(true);
+               //mainForm.setEnabled(true);
             }
 
             @Override
@@ -2476,7 +2499,7 @@ public class MainForm extends javax.swing.JFrame {
 
             @Override
             public void windowDeactivated(WindowEvent e) {
-                mainForm.setEnabled(true);
+                //mainForm.setEnabled(true);
             }
 
         });

@@ -257,6 +257,7 @@ public class LoginForm extends javax.swing.JFrame {
             User.getActiveUser = jComboBox1.getSelectedIndex();         
             //this.dispose();
             this.setVisible(false);
+            mainForm.setEnabled(true);
 
         } else {
             jLabel1.setText("Невірний пароль!");

@@ -597,7 +597,7 @@ public class MainForm extends javax.swing.JFrame {
         jTextField5.setText("0");
         jTextField5.setBorder(null);
         jPanel2.add(jTextField5);
-        jTextField5.setBounds(80, 570, 90, 30);
+        jTextField5.setBounds(80, 560, 90, 40);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 102, 102));
@@ -1729,14 +1729,18 @@ public class MainForm extends javax.swing.JFrame {
         if (checks.get(activeTable).isPayed()) {
             jButton10.setEnabled(false);
             jButton3.setEnabled(false);
+            jButton7.setEnabled(false);
             jButton10.setBackground(GREEN);
             jButton3.setBackground(GREEN);
+            jButton7.setBackground(GREEN);
             jTable1.setBackground(GREEN);
         }else {
             jButton10.setEnabled(true);
             jButton3.setEnabled(true);
+            jButton7.setEnabled(true);
             jButton10.setBackground(WHITE);
             jButton3.setBackground(WHITE);
+            jButton7.setBackground(WHITE);
             jTable1.setBackground(WHITE);
             
         }
@@ -1926,24 +1930,29 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         System.out.println("selectedRow" + jTable1.getSelectedRow());
-        int activeRow = jTable1.getSelectedRow();
-//        System.out.println("=" + jTable1.getValueAt(jTable1.getRowCount() - 1, 0));
-//        if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
-//            if (jTable1.getRowCount() != 0) {
-//                if (activeRow == -1) {
-//                    model.removeRow(jTable1.getRowCount() - 1);
-//                    checks.get(activeTable).getCheckList().
-//                            remove(checks.get(activeTable).
-//                                    getCheckList().size() - 1);
-//                } else {
-        if (activeRow != -1){model.removeRow(activeRow);
-            checks.get(activeTable).getCheckList().remove(activeRow);
-            
+        int activeRow = jTable1.getSelectedRow(); 
+
+        if (jTable1.getRowCount() != 0) {
+            if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
+                if (activeRow == -1) {
+
+                    model.removeRow(jTable1.getRowCount() - 1);
+                    checks.get(activeTable).getCheckList().
+                            remove(checks.get(activeTable).
+                                    getCheckList().size() - 1);
+                } else {                   
+                    model.removeRow(activeRow);
+                    int emptyRow = 0;
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        if (model.getValueAt(i, 0).equals("")) {
+                            emptyRow++;
+                        }
+                    }
+                    checks.get(activeTable).getCheckList().remove(activeRow - emptyRow);
+                }
+            }
         }
-                    
-//                }
-//            }
-//        }        
+
         jTextField1.setText("" + checks.get(activeTable).getTotalsum());
     }//GEN-LAST:event_removeCheckItem
 
@@ -2027,11 +2036,9 @@ public class MainForm extends javax.swing.JFrame {
     public void markCheckItems(){     
         DefaultTableModel model  = (DefaultTableModel) jTable1.getModel();
         model.addRow(new Object[]{
-            null, null, null, null
+            "", null, null, null
         });
-        model.addRow(new Object[]{
-            null, null, null, null
-        });        
+             
     }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         // TODO add your handling code here:
@@ -2109,18 +2116,22 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jButton10.isEnabled()) {
             if (checks.get(activeTable).getTotalsum() != 0) {
-                CheckUtils.addCheck(checks.get(activeTable), userList.get(User.getActiveUser));
-                checks.get(activeTable).setPayed(true);
-                jTable1.setBackground(GREEN);
-                dayCash += checks.get(activeTable).getTotalsum();
-                jTextField5.setText(String.valueOf(dayCash));
+                if (jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") || activeCat == 9 || activeCat == 10 ) {
+                    CheckUtils.addCheck(checks.get(activeTable), userList.get(User.getActiveUser));
+                    checks.get(activeTable).setPayed(true);
+                    jTable1.setBackground(GREEN);
+                    dayCash += checks.get(activeTable).getTotalsum();
+                    jTextField5.setText(String.valueOf(dayCash));
 
                 //  fixme
-                // jLabel10.setText(String.valueOf(getDaySum())); 
-                jButton10.setBackground(GREEN);
-                jButton3.setBackground(GREEN);
-                jButton10.setEnabled(false);
-                jButton3.setEnabled(false);
+                    // jLabel10.setText(String.valueOf(getDaySum())); 
+                    jButton10.setBackground(GREEN);
+                    jButton3.setBackground(GREEN);
+                    jButton7.setBackground(GREEN);
+                    jButton10.setEnabled(false);
+                    jButton3.setEnabled(false);
+                    jButton7.setEnabled(false);
+                }
             }
         }
     }//GEN-LAST:event_payCheck

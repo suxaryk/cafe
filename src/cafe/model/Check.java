@@ -16,8 +16,9 @@ public class Check {
     private int totalsum;
     private ArrayList<CheckItem> checkList = new ArrayList<>();
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private boolean payed;
 
- 
+     
 
     public int getTotalsum() {
         int sum = 0;
@@ -38,7 +39,14 @@ public class Check {
     public void setCheckList(ArrayList<CheckItem> checkList) {
         this.checkList = checkList;
     }
+    
+    public boolean isPayed() {
+        return payed;
+    }
 
+    public void setPayed(boolean payed) {
+        this.payed = payed;
+    }
    
     
     

@@ -2213,8 +2213,8 @@
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jPasswordField1" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="jLabel7" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jButton13" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jLabel7" min="-2" pref="114" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
@@ -2222,7 +2222,7 @@
                           <Component id="jScrollPane2" alignment="0" pref="594" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

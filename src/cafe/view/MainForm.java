@@ -1,6 +1,5 @@
 package cafe.view;
 
-import cafe.Utils.CustomCellRender;
 import cafe.Utils.db.CheckUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
@@ -1567,12 +1566,12 @@ public class MainForm extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)))
-                .addGap(36, 36, 36))
+                .addGap(26, 26, 26))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1708,6 +1707,7 @@ public class MainForm extends javax.swing.JFrame {
         //fixed
 
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
+            
             jTextField1.setText(String.valueOf(checks.get(activeTable)
                     .getTotalsum()));
             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -1726,11 +1726,24 @@ public class MainForm extends javax.swing.JFrame {
             checks.put(activeTable, new Check());
             jTextField1.setText("0");
         }
-        evt.getComponent().setBackground(Color.yellow);
-        jButton3.setEnabled(true);
+        if (checks.get(activeTable).isPayed()) {
+            jButton10.setEnabled(false);
+            jButton3.setEnabled(false);
+            jButton10.setBackground(GREEN);
+            jButton3.setBackground(GREEN);
+            jTable1.setBackground(GREEN);
+        }else {
+            jButton10.setEnabled(true);
+            jButton3.setEnabled(true);
+            jButton10.setBackground(WHITE);
+            jButton3.setBackground(WHITE);
+            jTable1.setBackground(WHITE);
+            
+        }
+        evt.getComponent().setBackground(Color.yellow);       
         jButton7.setEnabled(true);
         jButton9.setEnabled(true);
-        jButton10.setEnabled(true);
+        
 
     }//GEN-LAST:event_chooseTable
 
@@ -1914,17 +1927,23 @@ public class MainForm extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         System.out.println("selectedRow" + jTable1.getSelectedRow());
         int activeRow = jTable1.getSelectedRow();
-        if (jTable1.getRowCount() != 0) {
-            if (activeRow == -1) {
-                model.removeRow(jTable1.getRowCount() - 1);
-                checks.get(activeTable).getCheckList().
-                        remove(checks.get(activeTable).
-                                getCheckList().size() - 1);
-            } else {
-                model.removeRow(activeRow);
-                checks.get(activeTable).getCheckList().remove(activeRow);
-            }
+//        System.out.println("=" + jTable1.getValueAt(jTable1.getRowCount() - 1, 0));
+//        if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
+//            if (jTable1.getRowCount() != 0) {
+//                if (activeRow == -1) {
+//                    model.removeRow(jTable1.getRowCount() - 1);
+//                    checks.get(activeTable).getCheckList().
+//                            remove(checks.get(activeTable).
+//                                    getCheckList().size() - 1);
+//                } else {
+        if (activeRow != -1){model.removeRow(activeRow);
+            checks.get(activeTable).getCheckList().remove(activeRow);
+            
         }
+                    
+//                }
+//            }
+//        }        
         jTextField1.setText("" + checks.get(activeTable).getTotalsum());
     }//GEN-LAST:event_removeCheckItem
 
@@ -2005,20 +2024,14 @@ public class MainForm extends javax.swing.JFrame {
 //        checks.get(activeTable).getCheckList().get(0).getDish().getListOfIngredients().
 
     }
-    public void markCheckItems(){
-//        for (CheckItem item : checks.get(activeCat).getCheckList()) {
-//            item.setCooking(true);
-//        }
-        DefaultTableModel model
-                = (DefaultTableModel) jTable1.getModel();
-        //DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
-        //cellRenderer.setBackground(GREEN);
-        CustomCellRender cellRender = new CustomCellRender();
-        jTable1.getColumnModel().getColumn(0).setCellRenderer(cellRender);
-        jTable1.getColumnModel().getColumn(1).setCellRenderer(cellRender);
-        jTable1.getColumnModel().getColumn(2).setCellRenderer(cellRender);
-        jTable1.getColumnModel().getColumn(3).setCellRenderer(cellRender);
-        
+    public void markCheckItems(){     
+        DefaultTableModel model  = (DefaultTableModel) jTable1.getModel();
+        model.addRow(new Object[]{
+            null, null, null, null
+        });
+        model.addRow(new Object[]{
+            null, null, null, null
+        });        
     }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         // TODO add your handling code here:
@@ -2056,6 +2069,9 @@ public class MainForm extends javax.swing.JFrame {
 //            }
 //
 //        }
+        for (CheckItem item : checks.get(activeTable).getCheckList()) {
+            item.setCooking(true);
+        }
 
 
     }//GEN-LAST:event_PrintCheck
@@ -2094,13 +2110,17 @@ public class MainForm extends javax.swing.JFrame {
         if (jButton10.isEnabled()) {
             if (checks.get(activeTable).getTotalsum() != 0) {
                 CheckUtils.addCheck(checks.get(activeTable), userList.get(User.getActiveUser));
+                checks.get(activeTable).setPayed(true);
+                jTable1.setBackground(GREEN);
                 dayCash += checks.get(activeTable).getTotalsum();
                 jTextField5.setText(String.valueOf(dayCash));
 
                 //  fixme
                 // jLabel10.setText(String.valueOf(getDaySum())); 
                 jButton10.setBackground(GREEN);
+                jButton3.setBackground(GREEN);
                 jButton10.setEnabled(false);
+                jButton3.setEnabled(false);
             }
         }
     }//GEN-LAST:event_payCheck

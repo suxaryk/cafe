@@ -72,7 +72,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton17.setVisible(false);
         jButton19.setVisible(false);
         jButton15.setBackground(RED);
-        jTextField3.setVisible(false);     
+        jTextField3.setVisible(false);
         jTextField2.setVisible(false);
         jTextField4.setVisible(false);
         jLabel8.setVisible(false);
@@ -1709,17 +1709,17 @@ public class MainForm extends javax.swing.JFrame {
     private void chooseTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseTable
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        jTabbedPane1.setEnabledAt(1, true);
+
         activeTable = getButtonId(evt);
         System.out.println("table=" + activeTable);
-        jTabbedPane1.setSelectedIndex(1);
+
         jLabel4.setText("Cтіл №" + activeTable);
         jLabel4.setForeground(RED);
         System.out.println("user" + User.getActiveUser);
         //fixed
 
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
-            
+
             jTextField1.setText(String.valueOf(checks.get(activeTable)
                     .getTotalsum()));
             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -1746,7 +1746,9 @@ public class MainForm extends javax.swing.JFrame {
             jButton3.setBackground(GREEN);
             jButton7.setBackground(GREEN);
             jTable1.setBackground(GREEN);
-        }else {
+        } else {
+            jTabbedPane1.setEnabledAt(1, true);
+            jTabbedPane1.setSelectedIndex(1);
             jButton10.setEnabled(true);
             jButton3.setEnabled(true);
             jButton7.setEnabled(true);
@@ -1754,12 +1756,12 @@ public class MainForm extends javax.swing.JFrame {
             jButton3.setBackground(WHITE);
             jButton7.setBackground(WHITE);
             jTable1.setBackground(WHITE);
-            
+
         }
-        evt.getComponent().setBackground(Color.yellow);       
+        evt.getComponent().setBackground(Color.yellow);
         jButton7.setEnabled(true);
         jButton9.setEnabled(true);
-        
+
 
     }//GEN-LAST:event_chooseTable
 
@@ -1782,7 +1784,7 @@ public class MainForm extends javax.swing.JFrame {
 //            activeDishes = jList2.locationToIndex(evt.getPoint());
 //            refreshListOfPrices();
 //        }
-        
+
         refreshListOfPrices();
 
 
@@ -1795,15 +1797,17 @@ public class MainForm extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
-        int dbId = listofCat.get(activeCat).get(activeDishes).getDbID();
+//        int dbId = listofCat.get(activeCat).get(activeDishes).getDbID();
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
+        //boolean 
         if (jCheckBox1.isSelected()) {
-            title = "(Вел.)" + title;
+            listofCat.get(activeCat).get(activeDishes).setTitle("(Вел.)" + title);
         }
-        int price = listofCat.get(activeCat).get(activeDishes).getPrice();
 
-        checks.get(activeTable).getCheckList().add(new CheckItem(
-                new Dish(dbId, title, price, true), count, new Date()));
+//        int price = listofCat.get(activeCat).get(activeDishes).getPrice();
+//        checks.get(activeTable).getCheckList().add(new CheckItem(
+//                new Dish(dbId, title, price, true), count, new Date()));
+        checks.get(activeTable).getCheckList().add(new CheckItem(listofCat.get(activeCat).get(activeDishes), count, new Date()));
         jTextField1.setText(String.valueOf(checks.get(activeTable).getTotalsum()));
         int addedIndex = checks.get(activeTable).getCheckList().size() - 1;
 
@@ -1914,32 +1918,34 @@ public class MainForm extends javax.swing.JFrame {
 
     private void clearTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearTable
         if (jButton9.isEnabled()) {
-            checks.get(activeTable).getCheckList().clear();
-            jTabbedPane1.setSelectedIndex(0);
-            for (int i = 0; i < tablesCount; i++) {
-                if (Integer.parseInt(jPanel2.getComponent(i).getName().
-                        substring(3)) == activeTable) {
-                    jPanel2.getComponent(i).setBackground(GREEN);
-                    jTabbedPane1.setEnabledAt(1, false);
-                    jTabbedPane1.setEnabledAt(2, false);
-                    jLabel4.setText("Стіл № ");
-                    DefaultTableModel model
-                            = (DefaultTableModel) jTable1.getModel();
-                    model.setRowCount(0);
-                    jTextField1.setText("0");
-                    jButton10.setBackground(WHITE);
+            if (checks.get(activeTable).isPayed()) {
+
+                checks.get(activeTable).getCheckList().clear();
+                jTabbedPane1.setSelectedIndex(0);
+                for (int i = 0; i < tablesCount; i++) {
+                    if (Integer.parseInt(jPanel2.getComponent(i).getName().
+                            substring(3)) == activeTable) {
+                        jPanel2.getComponent(i).setBackground(GREEN);
+                        jTabbedPane1.setEnabledAt(1, false);
+                        jTabbedPane1.setEnabledAt(2, false);
+                        jLabel4.setText("Стіл № ");
+                        DefaultTableModel model
+                                = (DefaultTableModel) jTable1.getModel();
+                        model.setRowCount(0);
+                        jTextField1.setText("0");
+                        jButton10.setBackground(WHITE);
 //todo add to dayList
 
+                    }
                 }
+                jButton10.setBackground(WHITE);
+                jButton10.setEnabled(true);
+                System.out.println("actTable=" + activeTable);
+                jButton3.setEnabled(false);
+                jButton7.setEnabled(false);
+                jButton9.setEnabled(false);
+                jButton10.setEnabled(false);
             }
-            jButton10.setBackground(WHITE);
-            jButton10.setEnabled(true);
-            System.out.println("actTable=" + activeTable);
-            jButton3.setEnabled(false);
-            jButton7.setEnabled(false);
-            jButton9.setEnabled(false);
-            jButton10.setEnabled(false);
-
         }
     }//GEN-LAST:event_clearTable
 
@@ -1947,26 +1953,27 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         System.out.println("selectedRow" + jTable1.getSelectedRow());
-        int activeRow = jTable1.getSelectedRow(); 
+        int activeRow = jTable1.getSelectedRow();
 
         if (jTable1.getRowCount() != 0) {
             if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
-                if (activeRow == -1) {
+//                if (activeRow == -1) {
 
-                    model.removeRow(jTable1.getRowCount() - 1);
-                    checks.get(activeTable).getCheckList().
-                            remove(checks.get(activeTable).
-                                    getCheckList().size() - 1);
-                } else {                   
-                    model.removeRow(activeRow);
-                    int emptyRow = 0;
-                    for (int i = 0; i < model.getRowCount(); i++) {
-                        if (model.getValueAt(i, 0).equals("")) {
-                            emptyRow++;
-                        }
-                    }
-                    checks.get(activeTable).getCheckList().remove(activeRow - emptyRow);
-                }
+                model.removeRow(jTable1.getRowCount() - 1);
+                checks.get(activeTable).getCheckList().
+                        remove(checks.get(activeTable).
+                                getCheckList().size() - 1);
+//                }
+//                else {                   
+//                    model.removeRow(activeRow);
+//                    int emptyRow = 0;
+//                    for (int i = 0; i < model.getRowCount(); i++) {
+//                        if (model.getValueAt(i, 0).equals("")) {
+//                            emptyRow++;
+//                        }
+//                    }
+//                    checks.get(activeTable).getCheckList().remove(activeRow - emptyRow);
+//                }
             }
         }
 
@@ -1978,7 +1985,7 @@ public class MainForm extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         if (User.getActiveUser == userList.size() - 1) {
             jLabel5.setText("  " + userList.get(User.getActiveUser).getName());
-            jLabel5.setBackground(RED);            
+            jLabel5.setBackground(RED);
             model.setColumnCount(1);
             model.addColumn("пароль");
 
@@ -2054,19 +2061,20 @@ public class MainForm extends javax.swing.JFrame {
 //        checks.get(activeTable).getCheckList().get(0).getDish().getListOfIngredients().
 
     }
-    public void markCheckItems(){     
-        DefaultTableModel model  = (DefaultTableModel) jTable1.getModel();
+
+    public void markCheckItems() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(new Object[]{
             "", null, null, null
         });
-             
+
     }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         // TODO add your handling code here:
         //  printComponenet(); 
-        markCheckItems();
-        
-        
+        if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
+            markCheckItems();
+
 //        if (jButton3.isEnabled()) {
 //            if (checks.get(activeTable).getTotalsum() != 0) {
 //                DateFormat dateFormat = new SimpleDateFormat(
@@ -2097,11 +2105,7 @@ public class MainForm extends javax.swing.JFrame {
 //            }
 //
 //        }
-        for (CheckItem item : checks.get(activeTable).getCheckList()) {
-            item.setCooking(true);
         }
-
-
     }//GEN-LAST:event_PrintCheck
     private void sortList(List list, final int orderArg) {
         Collections.sort(list, new Comparator<Dish>() {
@@ -2137,14 +2141,14 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jButton10.isEnabled()) {
             if (checks.get(activeTable).getTotalsum() != 0) {
-                if (jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") || activeCat == 9 || activeCat == 10 ) {
+                if (jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") || activeCat == 9 || activeCat == 10) {
                     CheckUtils.addCheck(checks.get(activeTable), userList.get(User.getActiveUser));
                     checks.get(activeTable).setPayed(true);
                     jTable1.setBackground(GREEN);
                     dayCash += checks.get(activeTable).getTotalsum();
                     jTextField5.setText(String.valueOf(dayCash));
 
-                //  fixme
+                    //  fixme
                     // jLabel10.setText(String.valueOf(getDaySum())); 
                     jButton10.setBackground(GREEN);
                     jButton3.setBackground(GREEN);
@@ -2152,6 +2156,9 @@ public class MainForm extends javax.swing.JFrame {
                     jButton10.setEnabled(false);
                     jButton3.setEnabled(false);
                     jButton7.setEnabled(false);
+                    jTabbedPane1.setEnabledAt(1, false);
+                    jTabbedPane1.setEnabledAt(2, false);
+                    jTabbedPane1.setSelectedIndex(0);
                 }
             }
         }
@@ -2299,7 +2306,7 @@ public class MainForm extends javax.swing.JFrame {
         int dbId = listofCat.get(activeCat).get(activeIndex).getDbID();
         if (activeIndex >= 0) {
             DishUtils.removeDishById(dbId, activeCat);
-            listofCat.get(activeCat).clear();         
+            listofCat.get(activeCat).clear();
             DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(listofCat.get(activeCat).toArray());
@@ -2411,8 +2418,8 @@ public class MainForm extends javax.swing.JFrame {
         mainForm.setVisible(false);
         mainForm.setEnabled(false);
         loginForm.getDate();
-        loginForm.setVisible(true);   
-        
+        loginForm.setVisible(true);
+
         jButton1.setVisible(false);
         jButton11.setVisible(false);
         jButton12.setVisible(false);
@@ -2421,13 +2428,13 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4.setVisible(false);
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);
-        
+
         jButton14.setVisible(false);
         jButton15.setVisible(false);
         jButton17.setVisible(false);
-        
+
         jTextField3.setVisible(false);
-        
+
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
         employeeList.clear();
@@ -2438,14 +2445,14 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int index = jList2.getSelectedIndex();
         int dbId = listofCat.get(activeCat).get(index).getDbID();
-        String title = jTextField4.getText();      
+        String title = jTextField4.getText();
         System.out.println("title = " + title);
         int price = Integer.parseInt(jTextField2.getText());
-        if (!title.equals("")){           
-            DishUtils.updateDishTitle(dbId, title, activeCat);                
+        if (!title.equals("")) {
+            DishUtils.updateDishTitle(dbId, title, activeCat);
         }
         if (price != 0) {
-            DishUtils.updateDishPrice(dbId, price, activeCat);            
+            DishUtils.updateDishPrice(dbId, price, activeCat);
         }
         listofCat.get(activeCat).clear();
         DishUtils.readDBCategoryById(activeCat);
@@ -2483,7 +2490,7 @@ public class MainForm extends javax.swing.JFrame {
 
             @Override
             public void windowClosed(WindowEvent e) {
-               //mainForm.setEnabled(true);
+                //mainForm.setEnabled(true);
             }
 
             @Override

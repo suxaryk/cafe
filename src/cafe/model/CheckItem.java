@@ -18,7 +18,7 @@ public class CheckItem {
     private int count;    
     private int sum;
     private Date date;  
-    private boolean cooking;
+
 
     
     
@@ -60,13 +60,6 @@ public class CheckItem {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-    public boolean isCooking() {
-        return cooking;
-    }
-
-    public void setCooking(boolean cooking) {
-        this.cooking = cooking;
     }
 
   

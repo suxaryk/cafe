@@ -2296,9 +2296,10 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println("selectd index = " + jList2.getSelectedIndex());
         int activeIndex = jList2.getSelectedIndex();
+        int dbId = listofCat.get(activeCat).get(activeIndex).getDbID();
         if (activeIndex >= 0) {
-            listofCat.get(activeCat).clear();
-            listofCat.get(activeCat).clear();
+            DishUtils.removeDishById(dbId, activeCat);
+            listofCat.get(activeCat).clear();         
             DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(listofCat.get(activeCat).toArray());

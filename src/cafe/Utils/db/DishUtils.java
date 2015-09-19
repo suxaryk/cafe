@@ -53,17 +53,17 @@ public class DishUtils {
         sqlSelectList.add("select * from drinks");
         sqlSelectList.add("select * from alcohol");
 
-        sqlInsertList.add("INSERT INTO firstdishes(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO salats(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO rogerdishes(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO pandishes(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO meat(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO pizza(title, priceS) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO pizza(title, pricB) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO sushi(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO dessert(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO drinks(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO alcohol(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO firstdishes(title, price, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO salats(title, price, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO rogerdishes(title, price, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pandishes(title, price, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO meat(title, price, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pizza(title, priceS, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pizza(title, pricB, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO sushi(title, price, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO dessert(title, price, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO drinks(title, price, isCook) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO alcohol(title, price, isCook) VALUES(?, ?, ?)");
 
         sqlRemoveList.add("DELETE FROM firstdishes WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM salats WHERE Id = ?");
@@ -215,6 +215,7 @@ public class DishUtils {
                     PreparedStatement pstatement = connection.prepareStatement(sqlInsertList.get(i));
                     pstatement.setString(1, dish.getTitle());
                     pstatement.setInt(2, dish.getPrice());
+                    pstatement.setBoolean(3, dish.isCook());
 
                     int rowsInserted = pstatement.executeUpdate();
                     if (rowsInserted > 0) {
@@ -229,7 +230,7 @@ public class DishUtils {
 
     }
 
-    public static void removeDish(int dbId, int activeCat) {
+    public static void removeDishById(int dbId, int activeCat) {
         for (int i = 0; i < sqlRemoveList.size(); i++) {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
@@ -248,7 +249,7 @@ public class DishUtils {
 //                    Statement statement = connection.createStatement();
 //                    statement.executeUpdate("" + sqlRemoveList.get(i) + dbId);
                 } catch (SQLException e) {
-                    System.out.println("Connection Failed! Check output console - removeDish");
+                    System.out.println("Connection Failed! Check output console - removeDishById");
                 }
             }
         }

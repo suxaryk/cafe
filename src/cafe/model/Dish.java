@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author suxarina
  */
 public class Dish {
-    private int dbID;
+    private int dbId;
     private String title = "";
     private int price = 0;
     private boolean cook;
@@ -18,7 +18,7 @@ public class Dish {
     public Dish(){} 
 
     public Dish(int dbID, String title, int price, boolean cook) {
-        this.dbID = dbID;
+        this.dbId = dbID;
         this.title = title;
         this.price = price;        
         this.cook = cook;
@@ -31,11 +31,11 @@ public class Dish {
     
 
     public int getDbID() {
-        return dbID;
+        return dbId;
     }
 
     public void setDbID(int dbID) {
-        this.dbID = dbID;
+        this.dbId = dbID;
     }  
     
     public String getTitle() {

@@ -40,5 +40,29 @@ public class RecepiesUtils {
             System.out.println("Connection Failed! Check output console - addRecepies");
         }
         
-    }    
+    } 
+    public static void updateRecipes(int dishDbId, String ingredients){
+//        final String sql = "INSERT INTO recipes(dishId, ingredients)"
+//                                                    + " VALUES(?, ?)";
+        System.out.println("dvID" + dishDbId);
+        final String SQL = "UPDATE sushi SET ingredients = ? WHERE Id = ?";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected!"
+                    : "Error DB connecting");
+            PreparedStatement pstatement = connection.prepareStatement(SQL);  
+            
+            pstatement.setString(1, ingredients);
+            pstatement.setInt(2, dishDbId);  
+            
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new recipes was added successfully!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - updateRecipes");
+        }
+        
+    } 
+    
 }

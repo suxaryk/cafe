@@ -16,8 +16,8 @@ public class Ingredient implements Serializable{
     public Ingredient() {
     }
 
-    public Ingredient(int Id, double count) {
-        this.dbId = Id;
+    public Ingredient(int dbId, double count) {
+        this.dbId = dbId;
         this.count = count;
     }
 

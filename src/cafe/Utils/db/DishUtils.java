@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -154,7 +155,7 @@ public class DishUtils {
                                                 rs.getString("Id")),
                                         rs.getString("title"),
                                         rs.getInt("price"),
-                                        rs.getString("ingredients")));
+                                        rs.getString("ingredients")));                       
                     }
                 }
                 rs.close();

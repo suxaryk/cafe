@@ -10,6 +10,7 @@ import cafe.Utils.db.RecepiesUtils;
 import cafe.model.Dish;
 import cafe.model.Ingredient;
 import static cafe.view.MainForm.listofCat;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -21,15 +22,22 @@ public class JSONUtils {
         System.out.println("catSize+ " + listofCat.get(7).size());
         FileUtils.fillIngredients();
         
-        JSONObject recipes = new JSONObject();
-        for (Dish dish : listofCat.get(7)) {           
-            for (Ingredient ingredient : dish.getListOfIngredients()) {                
-                recipes.put("ingredientId", ingredient.getId());  
-                recipes.put("count", ingredient.getCount());                 
+        
+        
+        for (Dish dish : listofCat.get(7)) {  
+            JSONArray recipes = new JSONArray();
+            for (Ingredient ing : dish.getListOfIngredients()) { 
+                JSONObject ingrObj = new JSONObject();
+//                ingrObj.put(ing.getId(), ing.getCount());
+                ingrObj.put("ingId", ing.getId());                
+                ingrObj.put("count", ing.getCount());   
+                recipes.add(ingrObj);              
             }
+            
+            
             System.out.println("json" + recipes.toJSONString());
-            RecepiesUtils.addRecipes(dish.getDbID(), recipes.toJSONString());
-            recipes.clear();
+            RecepiesUtils.updateRecipes(dish.getDbID(), recipes.toJSONString());
+            //recipes.clear();
         }
     }
 

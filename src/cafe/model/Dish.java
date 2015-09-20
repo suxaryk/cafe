@@ -1,9 +1,11 @@
 package cafe.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -28,22 +30,30 @@ public class Dish {
         this.dbId = dbID;
         this.title = title;
         this.price = price;   
-//        if (!"".equals(recipes)) {
-//            try {
-//                JSONParser parser = new JSONParser();
-//                
-//                Object obj = parser.parse(recipes);
-//                JSONObject jsonObj = (JSONObject) obj;
-//                for (int i = 0; i < ingredients.size(); i++) {
-//                    ingredients.add(new Ingredient(i, i));
-//                }
-//                jsonObj.ge
-//                System.out.println(jsonObj.get("paramsStr"));
-//            } catch (ParseException ex) {
-//                Logger.getLogger(Dish.class.getName()).log(Level.SEVERE, null, ex);
-//                System.out.println("Error parse =" + Dish.class.getName());
-//            }
-//        }
+        if (!"".equals(recipes)) {
+            try {
+                System.out.println("size="  + recipes.length());
+                JSONParser parser = new JSONParser();                
+                Object obj = parser.parse(recipes);
+                JSONArray jsonArr = (JSONArray) obj;
+                
+                for (int i = 0; i < jsonArr.size(); i++) {
+                    JSONObject jsonObj = (JSONObject) jsonArr.get(i);
+                    int Id = Integer.parseInt(jsonObj.get("ingId").toString());                 
+                    double count = Double.parseDouble(jsonObj.get("count").toString());
+                    ingredients.add(new Ingredient(Id, count));
+//                    Ingredient a = (Ingredient) jsonArr.get(i);
+//                    ingredients.add(a);
+//                    ingredients.add(new Ingredient(i, i));                    
+                }
+                System.out.println("title" + title);
+                System.out.println("size ingr=" + ingredients.size());
+                
+            } catch (ParseException ex) {
+                Logger.getLogger(Dish.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error parse =" + Dish.class.getName());
+            }
+        }
         
     }
 

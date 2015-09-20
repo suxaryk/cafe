@@ -5,6 +5,8 @@ import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Check;
 import cafe.Utils.db.DishUtils;
+import cafe.Utils.db.RecepiesUtils;
+import cafe.Utils.json.JSONUtils;
 import cafe.model.CheckItem;
 import cafe.model.Dish;
 import cafe.model.Employee;
@@ -1291,6 +1293,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/coin.png"))); // NOI18N
         jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(255, 255, 255));
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -1721,8 +1728,7 @@ public class MainForm extends javax.swing.JFrame {
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
 
             jTextField1.setText(String.valueOf(checks.get(activeTable)
-                    .getTotalsum()));
-            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                    .getTotalsum()));           
             for (int i = 0; i < checks.get(activeTable)
                     .getCheckList().size(); i++) {
                 model.addRow(new Object[]{
@@ -1918,7 +1924,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void clearTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearTable
         if (jButton9.isEnabled()) {
-            if (checks.get(activeTable).isPayed()) {
+            //if (checks.get(activeTable).isPayed()) {
 
                 checks.get(activeTable).getCheckList().clear();
                 jTabbedPane1.setSelectedIndex(0);
@@ -1946,7 +1952,7 @@ public class MainForm extends javax.swing.JFrame {
                 jButton9.setEnabled(false);
                 jButton10.setEnabled(false);
             }
-        }
+       // }
     }//GEN-LAST:event_clearTable
 
     private void removeCheckItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCheckItem
@@ -2462,6 +2468,11 @@ public class MainForm extends javax.swing.JFrame {
         jList2.setSelectedIndex(index);
         getListItem(null);
     }//GEN-LAST:event_updateTitleAndPrice
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        JSONUtils.writeAllIngredients();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);

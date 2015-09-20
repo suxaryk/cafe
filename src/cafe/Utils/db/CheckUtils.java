@@ -47,10 +47,10 @@ public class CheckUtils {
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(sql);
-            //pstatement.setInt(1, (count+1));
+         
             pstatement.setInt(1, ++checkId);
             pstatement.setInt(2, check.getTotalsum());
-            pstatement.setInt(3, check.getCookCount());
+//            pstatement.setInt(3, check.getCookCount());
             pstatement.setTimestamp(4, getCurrentTimeStamp());
             pstatement.setString(5, user.getName());
 

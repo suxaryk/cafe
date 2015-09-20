@@ -2,6 +2,11 @@ package cafe.model;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -16,12 +21,36 @@ public class Dish {
     
     
     public Dish(){} 
+    
+    
 
-    public Dish(int dbID, String title, int price, boolean cook) {
+    public Dish(int dbID, String title, int price, String  recipes) {
         this.dbId = dbID;
         this.title = title;
-        this.price = price;        
-        this.cook = cook;
+        this.price = price;   
+//        if (!"".equals(recipes)) {
+//            try {
+//                JSONParser parser = new JSONParser();
+//                
+//                Object obj = parser.parse(recipes);
+//                JSONObject jsonObj = (JSONObject) obj;
+//                for (int i = 0; i < ingredients.size(); i++) {
+//                    ingredients.add(new Ingredient(i, i));
+//                }
+//                jsonObj.ge
+//                System.out.println(jsonObj.get("paramsStr"));
+//            } catch (ParseException ex) {
+//                Logger.getLogger(Dish.class.getName()).log(Level.SEVERE, null, ex);
+//                System.out.println("Error parse =" + Dish.class.getName());
+//            }
+//        }
+        
+    }
+
+    public Dish(int dbID, String title, int price) {
+        this.dbId = dbID;
+        this.title = title;
+        this.price = price;   
     }
     public Dish(String title, int price) {        
         this.title = title;

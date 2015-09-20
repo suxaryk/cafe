@@ -129,7 +129,7 @@ public class DishUtils {
                                                 rs.getString("Id")),
                                         rs.getString("title"),
                                         rs.getInt("priceS"),
-                                        rs.getBoolean("isCook")));
+                                        rs.getString("ingredientsS")));
                     }
                 } else if (i == 6) {
                     while (rs.next()) {
@@ -138,8 +138,15 @@ public class DishUtils {
                                                 rs.getString("Id")),
                                         rs.getString("title"),
                                         rs.getInt("priceB"),
-                                        rs.getBoolean("isCook")));
-                    }
+                                        rs.getString("ingredientsB")));                   }                                  
+                } else if (i == 10) {
+                    while (rs.next()) {
+                        MainForm.listofCat.get(i).add(
+                                new Dish(Integer.parseInt(
+                                                rs.getString("Id")),
+                                        rs.getString("title"),
+                                        rs.getInt("price")));
+                    }                    
                 } else {
                     while (rs.next()) {
                         MainForm.listofCat.get(i).add(
@@ -147,7 +154,7 @@ public class DishUtils {
                                                 rs.getString("Id")),
                                         rs.getString("title"),
                                         rs.getInt("price"),
-                                        rs.getBoolean("isCook")));
+                                        rs.getString("ingredients")));
                     }
                 }
                 rs.close();
@@ -175,7 +182,7 @@ public class DishUtils {
                                             rs.getString("Id")),
                                     rs.getString("title"),
                                     rs.getInt("priceS"),
-                                    rs.getBoolean("isCook")));
+                                    rs.getString("ingredientsS")));
                 }
             } else if (activeCat == 6) {
                 while (rs.next()) {
@@ -184,7 +191,7 @@ public class DishUtils {
                                             rs.getString("Id")),
                                     rs.getString("title"),
                                     rs.getInt("priceB"),
-                                    rs.getBoolean("isCook")));
+                                    rs.getString("ingredientsB")));
                 }
             } else {
                 while (rs.next()) {
@@ -193,7 +200,7 @@ public class DishUtils {
                                             rs.getString("Id")),
                                     rs.getString("title"),
                                     rs.getInt("price"),
-                                    rs.getBoolean("isCook")));
+                                    rs.getString("ingredients")));
                 }
             }
             rs.close();

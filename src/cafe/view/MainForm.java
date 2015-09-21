@@ -1672,9 +1672,9 @@ public class MainForm extends javax.swing.JFrame {
         jTable3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(jTable3);
         if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setMinWidth(50);
-            jTable3.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jTable3.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTable3.getColumnModel().getColumn(0).setMinWidth(40);
+            jTable3.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTable3.getColumnModel().getColumn(0).setMaxWidth(40);
             jTable3.getColumnModel().getColumn(2).setMinWidth(100);
             jTable3.getColumnModel().getColumn(2).setPreferredWidth(100);
             jTable3.getColumnModel().getColumn(2).setMaxWidth(100);
@@ -2153,7 +2153,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (orderArg == 0) {
                     return ((Integer) o1.getId()).compareTo(o2.getId());
                 } else if (orderArg == 1) {
-                    return ((Double) o1.getCount()).compareTo(o2.getCount());
+                    return ((Double) o2.getCount()).compareTo(o1.getCount());
                 } else {
                     return o1.getTitle().compareToIgnoreCase(o2.getTitle());
                 }
@@ -2354,6 +2354,17 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_removeDish
 
+    private void showCalcTable(){        
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0);
+        for (Ingredient storageList1 : storageList) {
+            model.addRow(new Object[]{
+                storageList1.getId(),
+                storageList1.getTitle(),
+                storageList1.getCount()
+            });
+        }
+    }
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
         // TODO add your handling code here:
         jTabbedPane1.setVisible(false);
@@ -2361,8 +2372,8 @@ public class MainForm extends javax.swing.JFrame {
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
         jLabel12.setText(title);
 
-        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        model.setRowCount(0);
+        
+        
 
         ArrayList<Ingredient> tmpList = new ArrayList<>();
         tmpList.addAll(listofCat.get(activeCat).get(activeDishes).getListOfIngredients());
@@ -2370,30 +2381,19 @@ public class MainForm extends javax.swing.JFrame {
         for (Ingredient storageList1 : storageList) {
             for (int j = 0; j < tmpList.size(); j++) {
                 if (storageList1.getId() == tmpList.get(j).getId()) {
-                    model.addRow(new Object[]{
-                        storageList1.getId(),
-                        storageList1.getTitle(),
-                        tmpList.get(j).getCount()
-                    });
+                    storageList1.setCount(tmpList.get(j).getCount());
                     break;
                 }
                 if (j == tmpList.size() - 1) {
-                    model.addRow(new Object[]{
-                        storageList1.getId(),
-                        storageList1.getTitle(),
-                        zero
-                    });
+                    storageList1.setCount(zero);
                 }
             }
             if (tmpList.isEmpty()) {
-                model.addRow(new Object[]{
-                    storageList1.getId(),
-                    storageList1.getTitle(),
-                    zero
-                });
+                storageList1.setCount(zero);
             }
         }
-
+        showCalcTable();
+        
     }//GEN-LAST:event_refreshCalc
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
@@ -2531,21 +2531,17 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:        
-        sortListOfIngredients(storageList, jComboBox2.getSelectedIndex());
-        DefaultTableModel model
-                = (DefaultTableModel) jTable3.getModel();
-        model.setRowCount(0);
-        refreshCalc(null);
-//        for (int i = 0; i < storageList.size(); i++) {
-//            
-//            
-//        }
-//        
-//        jList2.setListData(listofCat.get(activeCat).toArray());
-//        jList2.ensureIndexIsVisible(0);
-////        refreshListOfPrices();
-//        jPanel5ComponentShown(null);
+        // TODO add your handling code here:  
+        int index = jComboBox2.getSelectedIndex();
+        sortListOfIngredients(storageList, index);       
+        showCalcTable();
+        if (index == 1 || index == 2) {
+            jTable3.setRowSelectionInterval(0, 0);
+            Rectangle cellRect = jTable3.getCellRect(0, 0, true);
+            jTable3.scrollRectToVisible(cellRect);
+            
+        }
+
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void clearCheckboxs() {

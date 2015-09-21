@@ -41,10 +41,7 @@ public class Dish {
                     JSONObject jsonObj = (JSONObject) jsonArr.get(i);
                     int Id = Integer.parseInt(jsonObj.get("ingId").toString());                 
                     double count = Double.parseDouble(jsonObj.get("count").toString());
-                    ingredients.add(new Ingredient(Id, count));
-//                    Ingredient a = (Ingredient) jsonArr.get(i);
-//                    ingredients.add(a);
-//                    ingredients.add(new Ingredient(i, i));                    
+                    ingredients.add(new Ingredient(Id, count));                  
                 }
                 System.out.println("title" + title);
                 System.out.println("size ingr=" + ingredients.size());

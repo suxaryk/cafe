@@ -144,7 +144,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
         btn10 = new javax.swing.JButton();
         btn6 = new javax.swing.JButton();
         btn7 = new javax.swing.JButton();
@@ -213,6 +212,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton16 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -833,14 +833,6 @@ public class MainForm extends javax.swing.JFrame {
 
         jPanel5.add(jScrollPane3);
         jScrollPane3.setBounds(0, 0, 570, 450);
-
-        jLabel1.setBackground(new java.awt.Color(0, 153, 204));
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText(" Інформація");
-        jLabel1.setOpaque(true);
-        jPanel5.add(jLabel1);
-        jLabel1.setBounds(0, 450, 570, 23);
 
         btn10.setBackground(new java.awt.Color(0, 153, 204));
         btn10.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -1657,7 +1649,7 @@ public class MainForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "№", "Назва", "Кількість"
+                "№", "Назва", "Вага ( кг/ шт )"
             }
         ) {
             Class[] types = new Class [] {
@@ -1689,7 +1681,7 @@ public class MainForm extends javax.swing.JFrame {
         }
 
         jPanel7.add(jScrollPane4);
-        jScrollPane4.setBounds(2, 2, 650, 540);
+        jScrollPane4.setBounds(0, 30, 650, 510);
 
         jButton16.setBackground(new java.awt.Color(255, 255, 255));
         jButton16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1717,6 +1709,14 @@ public class MainForm extends javax.swing.JFrame {
         jLabel10.setText("Сортування:");
         jPanel7.add(jLabel10);
         jLabel10.setBounds(510, 550, 120, 18);
+
+        jLabel12.setBackground(new java.awt.Color(0, 153, 204));
+        jLabel12.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel12.setText(" Інформація");
+        jLabel12.setOpaque(true);
+        jPanel7.add(jLabel12);
+        jLabel12.setBounds(0, 0, 650, 30);
 
         getContentPane().add(jPanel7);
         jPanel7.setBounds(0, 0, 650, 700);
@@ -1777,10 +1777,10 @@ public class MainForm extends javax.swing.JFrame {
             jButton10.setEnabled(true);
             jButton3.setEnabled(true);
             jButton7.setEnabled(true);
-            jButton10.setBackground(WHITE);
-            jButton3.setBackground(WHITE);
-            jButton7.setBackground(WHITE);
-            jTable1.setBackground(WHITE);
+            jButton10.setBackground(Color.WHITE);
+            jButton3.setBackground(Color.WHITE);
+            jButton7.setBackground(Color.WHITE);
+            jTable1.setBackground(Color.WHITE);
 
         }
         evt.getComponent().setBackground(Color.yellow);
@@ -1816,7 +1816,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_getListItem
 
     private void addRecordToTable(int count) {
-        jLabel1.setBackground(RED);
         clearCountButton();
 //        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -1851,7 +1850,6 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void fillPrices(String title, int price) {
-        jLabel1.setText("Інформація: " + title);
         btn1.setText("<html> 1 <br/> " + price + " грн. </html>");
         btn2.setText("<html> 2 <br/> " + price * 2 + " грн. </html>");
         btn3.setText("<html> 3 <br/> " + price * 3 + " грн. </html>");
@@ -1883,7 +1881,6 @@ public class MainForm extends javax.swing.JFrame {
         clearCountButton();
         int price = listofCat.get(activeCat).get(0).getPrice();
         String title = listofCat.get(activeCat).get(0).getTitle();
-        jLabel1.setText("Інформація: " + title);
         fillPrices(title, price);
         clearCheckboxs();
     }//GEN-LAST:event_jPanel5ComponentShown
@@ -1932,7 +1929,6 @@ public class MainForm extends javax.swing.JFrame {
         if (activeCat == 5) {
             jCheckBox1.setVisible(true);
             jCheckBox1.setSelected(false);
-            jLabel1.setBackground(BLUE);
         }
     }//GEN-LAST:event_chooseCat
 
@@ -1958,12 +1954,12 @@ public class MainForm extends javax.swing.JFrame {
                             = (DefaultTableModel) jTable1.getModel();
                     model.setRowCount(0);
                     jTextField1.setText("0");
-                    jButton10.setBackground(WHITE);
+                    jButton10.setBackground(Color.WHITE);
 //todo add to dayList
 
                 }
             }
-            jButton10.setBackground(WHITE);
+            jButton10.setBackground(Color.WHITE);
             jButton10.setEnabled(true);
             System.out.println("actTable=" + activeTable);
             jButton3.setEnabled(false);
@@ -2209,7 +2205,6 @@ public class MainForm extends javax.swing.JFrame {
     private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
         if (jTabbedPane1.getSelectedIndex() != 2) {
             jCheckBox1.setVisible(false);
-            jLabel1.setBackground(BLUE);
             clearCountButton();
         }
     }//GEN-LAST:event_jTabbedPane1MousePressed
@@ -2363,6 +2358,8 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTabbedPane1.setVisible(false);
         jPanel7.setVisible(true);
+        String title = listofCat.get(activeCat).get(activeDishes).getTitle();
+        jLabel12.setText(title);
 
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
@@ -2370,26 +2367,31 @@ public class MainForm extends javax.swing.JFrame {
         ArrayList<Ingredient> tmpList = new ArrayList<>();
         tmpList.addAll(listofCat.get(activeCat).get(activeDishes).getListOfIngredients());
         final int zero = 0;
-        for (int i = 0; i < storageList.size(); i++) {            
+        for (Ingredient storageList1 : storageList) {
             for (int j = 0; j < tmpList.size(); j++) {
-                if (storageList.get(i).getId() == tmpList.get(j).getId()) {
+                if (storageList1.getId() == tmpList.get(j).getId()) {
                     model.addRow(new Object[]{
-                        storageList.get(i).getId(),
-                        storageList.get(i).getTitle(),
+                        storageList1.getId(),
+                        storageList1.getTitle(),
                         tmpList.get(j).getCount()
                     });
-                    System.out.println("1");
-                    System.out.println("title" + storageList.get(i).getTitle());
-                    break;                   
-                } 
-                if (j == tmpList.size()-1) {
+                    break;
+                }
+                if (j == tmpList.size() - 1) {
                     model.addRow(new Object[]{
-                        storageList.get(i).getId(),
-                        storageList.get(i).getTitle(),
+                        storageList1.getId(),
+                        storageList1.getTitle(),
                         zero
                     });
                 }
-            }        
+            }
+            if (tmpList.isEmpty()) {
+                model.addRow(new Object[]{
+                    storageList1.getId(),
+                    storageList1.getTitle(),
+                    zero
+                });
+            }
         }
 
     }//GEN-LAST:event_refreshCalc
@@ -2534,6 +2536,7 @@ public class MainForm extends javax.swing.JFrame {
         DefaultTableModel model
                 = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
+        refreshCalc(null);
 //        for (int i = 0; i < storageList.size(); i++) {
 //            
 //            
@@ -2742,9 +2745,9 @@ public class MainForm extends javax.swing.JFrame {
     private static LoginForm loginForm;
     private static final Color RED = new Color(255, 102, 102);
     private static final Color BLUE = new Color(0, 153, 204);
-    private static final Color darkBLUE = new Color(51, 153, 255);
+//    private static final Color darkBLUE = new Color(51, 153, 255);
     private static final Color GREEN = new Color(0, 153, 102);
-    private static final Color WHITE = new Color(255, 255, 255);
+//    private static final Color WHITE = new Color(255, 255, 255);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn10;
@@ -2801,9 +2804,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

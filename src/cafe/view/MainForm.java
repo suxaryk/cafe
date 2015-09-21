@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultRowSorter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -210,6 +211,8 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jButton16 = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -1699,6 +1702,22 @@ public class MainForm extends javax.swing.JFrame {
         jPanel7.add(jButton16);
         jButton16.setBounds(20, 560, 100, 73);
 
+        jComboBox2.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jComboBox2);
+        jComboBox2.setBounds(510, 570, 120, 30);
+
+        jLabel10.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel10.setText("Сортування:");
+        jPanel7.add(jLabel10);
+        jLabel10.setBounds(510, 550, 120, 18);
+
         getContentPane().add(jPanel7);
         jPanel7.setBounds(0, 0, 650, 700);
 
@@ -1728,7 +1747,7 @@ public class MainForm extends javax.swing.JFrame {
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
 
             jTextField1.setText(String.valueOf(checks.get(activeTable)
-                    .getTotalsum()));           
+                    .getTotalsum()));
             for (int i = 0; i < checks.get(activeTable)
                     .getCheckList().size(); i++) {
                 model.addRow(new Object[]{
@@ -1926,33 +1945,33 @@ public class MainForm extends javax.swing.JFrame {
         if (jButton9.isEnabled()) {
             //if (checks.get(activeTable).isPayed()) {
 
-                checks.get(activeTable).getCheckList().clear();
-                jTabbedPane1.setSelectedIndex(0);
-                for (int i = 0; i < tablesCount; i++) {
-                    if (Integer.parseInt(jPanel2.getComponent(i).getName().
-                            substring(3)) == activeTable) {
-                        jPanel2.getComponent(i).setBackground(GREEN);
-                        jTabbedPane1.setEnabledAt(1, false);
-                        jTabbedPane1.setEnabledAt(2, false);
-                        jLabel4.setText("Стіл № ");
-                        DefaultTableModel model
-                                = (DefaultTableModel) jTable1.getModel();
-                        model.setRowCount(0);
-                        jTextField1.setText("0");
-                        jButton10.setBackground(WHITE);
+            checks.get(activeTable).getCheckList().clear();
+            jTabbedPane1.setSelectedIndex(0);
+            for (int i = 0; i < tablesCount; i++) {
+                if (Integer.parseInt(jPanel2.getComponent(i).getName().
+                        substring(3)) == activeTable) {
+                    jPanel2.getComponent(i).setBackground(GREEN);
+                    jTabbedPane1.setEnabledAt(1, false);
+                    jTabbedPane1.setEnabledAt(2, false);
+                    jLabel4.setText("Стіл № ");
+                    DefaultTableModel model
+                            = (DefaultTableModel) jTable1.getModel();
+                    model.setRowCount(0);
+                    jTextField1.setText("0");
+                    jButton10.setBackground(WHITE);
 //todo add to dayList
 
-                    }
                 }
-                jButton10.setBackground(WHITE);
-                jButton10.setEnabled(true);
-                System.out.println("actTable=" + activeTable);
-                jButton3.setEnabled(false);
-                jButton7.setEnabled(false);
-                jButton9.setEnabled(false);
-                jButton10.setEnabled(false);
             }
-       // }
+            jButton10.setBackground(WHITE);
+            jButton10.setEnabled(true);
+            System.out.println("actTable=" + activeTable);
+            jButton3.setEnabled(false);
+            jButton7.setEnabled(false);
+            jButton9.setEnabled(false);
+            jButton10.setEnabled(false);
+        }
+        // }
     }//GEN-LAST:event_clearTable
 
     private void removeCheckItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCheckItem
@@ -2113,11 +2132,11 @@ public class MainForm extends javax.swing.JFrame {
 //        }
         }
     }//GEN-LAST:event_PrintCheck
-    private void sortList(List list, final int orderArg) {
+    private void sortListOfDish(List list, final int orderArg) {
         Collections.sort(list, new Comparator<Dish>() {
             @Override
             public int compare(Dish o1, Dish o2) {
-                String sortArg = "title";
+                //String sortArg = "title";
                 if (orderArg == 0) {
                     return ((Integer) o1.getDbID()).compareTo(o2.getDbID());
                 } else if (orderArg == 1) {
@@ -2130,10 +2149,27 @@ public class MainForm extends javax.swing.JFrame {
 
     }
 
+    private void sortListOfIngredients(List list, final int orderArg) {
+        Collections.sort(list, new Comparator<Ingredient>() {
+            @Override
+            public int compare(Ingredient o1, Ingredient o2) {
+                //String sortArg = "title";
+                if (orderArg == 0) {
+                    return ((Integer) o1.getId()).compareTo(o2.getId());
+                } else if (orderArg == 1) {
+                    return ((Double) o1.getCount()).compareTo(o2.getCount());
+                } else {
+                    return o1.getTitle().compareToIgnoreCase(o2.getTitle());
+                }
+            }
+        });
+
+    }
+
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 
         for (int i = 0; i < listofCat.size(); i++) {
-            sortList(listofCat.get(i), jComboBox1.getSelectedIndex());
+            sortListOfDish(listofCat.get(i), jComboBox1.getSelectedIndex());
         }
         jList2.setListData(listofCat.get(activeCat).toArray());
         jList2.ensureIndexIsVisible(0);
@@ -2329,14 +2365,32 @@ public class MainForm extends javax.swing.JFrame {
         jPanel7.setVisible(true);
 
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        DishUtils.readStorage();
-        for (Ingredient storageList1 : storageList) {
-            model.addRow(new Object[]{
-                storageList1.getId(),
-                storageList1.getTitle(),
-                0.000});
-        }
+        model.setRowCount(0);
 
+        ArrayList<Ingredient> tmpList = new ArrayList<>();
+        tmpList.addAll(listofCat.get(activeCat).get(activeDishes).getListOfIngredients());
+        final int zero = 0;
+        for (int i = 0; i < storageList.size(); i++) {            
+            for (int j = 0; j < tmpList.size(); j++) {
+                if (storageList.get(i).getId() == tmpList.get(j).getId()) {
+                    model.addRow(new Object[]{
+                        storageList.get(i).getId(),
+                        storageList.get(i).getTitle(),
+                        tmpList.get(j).getCount()
+                    });
+                    System.out.println("1");
+                    System.out.println("title" + storageList.get(i).getTitle());
+                    break;                   
+                } 
+                if (j == tmpList.size()-1) {
+                    model.addRow(new Object[]{
+                        storageList.get(i).getId(),
+                        storageList.get(i).getTitle(),
+                        zero
+                    });
+                }
+            }        
+        }
 
     }//GEN-LAST:event_refreshCalc
 
@@ -2471,8 +2525,25 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        JSONUtils.writeAllIngredients();
+        //  JSONUtils.writeAllIngredients();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:        
+        sortListOfIngredients(storageList, jComboBox2.getSelectedIndex());
+        DefaultTableModel model
+                = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0);
+//        for (int i = 0; i < storageList.size(); i++) {
+//            
+//            
+//        }
+//        
+//        jList2.setListData(listofCat.get(activeCat).toArray());
+//        jList2.ensureIndexIsVisible(0);
+////        refreshListOfPrices();
+//        jPanel5ComponentShown(null);
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -2610,6 +2681,7 @@ public class MainForm extends javax.swing.JFrame {
         listofCat.add(newCat2);
 
         DishUtils.readDBmenu();
+        DishUtils.readStorage();
 
     }
 
@@ -2728,7 +2800,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

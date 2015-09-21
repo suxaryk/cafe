@@ -24,9 +24,9 @@ public class DishUtils {
     public static final String USERNAME = "root";
     public static final String PASSWORD = "root";
 
-//    private static final String URL = "jdbc:mysql://db4free.net:3306/luckyroger";
-//    private static final String USERNAME = "luckyroger";
-//    private static final String PASSWORD = "luckyroger";
+//    public static final String URL = "jdbc:mysql://db4free.net:3306/luckyroger";
+//    public static final String USERNAME = "luckyroger";
+//    public static final String PASSWORD = "luckyroger";
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
     private static final ArrayList<String> sqlRemoveList = new ArrayList<>();
@@ -306,7 +306,7 @@ public class DishUtils {
     public static void readStorage() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            String SQL = "SELECT * FROM storage ORDER BY title;";
+            String SQL = "SELECT * FROM storage";
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();

@@ -1805,10 +1805,6 @@ public class MainForm extends javax.swing.JFrame {
         int price = listofCat.get(activeCat).get(activeDishes).getPrice();
         jTextField4.setText(title);
         jTextField2.setText(String.valueOf(price));
-//        if (evt.getClickCount() == 1) {
-//            activeDishes = jList2.locationToIndex(evt.getPoint());
-//            refreshListOfPrices();
-//        }
 
         refreshListOfPrices();
 
@@ -1821,16 +1817,12 @@ public class MainForm extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
-//        int dbId = listofCat.get(activeCat).get(activeDishes).getDbID();
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
         //boolean 
         if (jCheckBox1.isSelected()) {
             listofCat.get(activeCat).get(activeDishes).setTitle("(Вел.)" + title);
         }
 
-//        int price = listofCat.get(activeCat).get(activeDishes).getPrice();
-//        checks.get(activeTable).getCheckList().add(new CheckItem(
-//                new Dish(dbId, title, price, true), count, new Date()));
         checks.get(activeTable).getCheckList().add(new CheckItem(listofCat.get(activeCat).get(activeDishes), count, new Date()));
         jTextField1.setText(String.valueOf(checks.get(activeTable).getTotalsum()));
         int addedIndex = checks.get(activeTable).getCheckList().size() - 1;
@@ -1955,7 +1947,6 @@ public class MainForm extends javax.swing.JFrame {
                     model.setRowCount(0);
                     jTextField1.setText("0");
                     jButton10.setBackground(Color.WHITE);
-//todo add to dayList
 
                 }
             }
@@ -1967,7 +1958,6 @@ public class MainForm extends javax.swing.JFrame {
             jButton9.setEnabled(false);
             jButton10.setEnabled(false);
         }
-        // }
     }//GEN-LAST:event_clearTable
 
     private void removeCheckItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCheckItem
@@ -1978,23 +1968,12 @@ public class MainForm extends javax.swing.JFrame {
 
         if (jTable1.getRowCount() != 0) {
             if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
-//                if (activeRow == -1) {
 
                 model.removeRow(jTable1.getRowCount() - 1);
                 checks.get(activeTable).getCheckList().
                         remove(checks.get(activeTable).
                                 getCheckList().size() - 1);
-//                }
-//                else {                   
-//                    model.removeRow(activeRow);
-//                    int emptyRow = 0;
-//                    for (int i = 0; i < model.getRowCount(); i++) {
-//                        if (model.getValueAt(i, 0).equals("")) {
-//                            emptyRow++;
-//                        }
-//                    }
-//                    checks.get(activeTable).getCheckList().remove(activeRow - emptyRow);
-//                }
+
             }
         }
 
@@ -2078,11 +2057,6 @@ public class MainForm extends javax.swing.JFrame {
 //            // handle exception
 //        }
 //    }
-    private void CalculFromDB() {
-//        checks.get(activeTable).getCheckList().get(0).getDish().getListOfIngredients().
-
-    }
-
     public void markCheckItems() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(new Object[]{
@@ -2132,7 +2106,6 @@ public class MainForm extends javax.swing.JFrame {
         Collections.sort(list, new Comparator<Dish>() {
             @Override
             public int compare(Dish o1, Dish o2) {
-                //String sortArg = "title";
                 if (orderArg == 0) {
                     return ((Integer) o1.getDbID()).compareTo(o2.getDbID());
                 } else if (orderArg == 1) {
@@ -2149,7 +2122,6 @@ public class MainForm extends javax.swing.JFrame {
         Collections.sort(list, new Comparator<Ingredient>() {
             @Override
             public int compare(Ingredient o1, Ingredient o2) {
-                //String sortArg = "title";
                 if (orderArg == 0) {
                     return ((Integer) o1.getId()).compareTo(o2.getId());
                 } else if (orderArg == 1) {
@@ -2164,12 +2136,11 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 
-        for (int i = 0; i < listofCat.size(); i++) {
-            sortListOfDish(listofCat.get(i), jComboBox1.getSelectedIndex());
+        for (ArrayList<Dish> listofCat1 : listofCat) {
+            sortListOfDish(listofCat1, jComboBox1.getSelectedIndex());
         }
         jList2.setListData(listofCat.get(activeCat).toArray());
         jList2.ensureIndexIsVisible(0);
-//        refreshListOfPrices();
         jPanel5ComponentShown(null);
 
 
@@ -2186,8 +2157,6 @@ public class MainForm extends javax.swing.JFrame {
                     dayCash += checks.get(activeTable).getTotalsum();
                     jTextField5.setText(String.valueOf(dayCash));
 
-                    //  fixme
-                    // jLabel10.setText(String.valueOf(getDaySum())); 
                     jButton10.setBackground(GREEN);
                     jButton3.setBackground(GREEN);
                     jButton7.setBackground(GREEN);
@@ -2354,7 +2323,7 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_removeDish
 
-    private void showCalcTable(){        
+    private void showCalcTable() {
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
         for (Ingredient storageList1 : storageList) {
@@ -2371,9 +2340,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel7.setVisible(true);
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
         jLabel12.setText(title);
-
-        
-        
 
         ArrayList<Ingredient> tmpList = new ArrayList<>();
         tmpList.addAll(listofCat.get(activeCat).get(activeDishes).getListOfIngredients());
@@ -2393,7 +2359,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
         showCalcTable();
-        
+
     }//GEN-LAST:event_refreshCalc
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
@@ -2533,13 +2499,13 @@ public class MainForm extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:  
         int index = jComboBox2.getSelectedIndex();
-        sortListOfIngredients(storageList, index);       
+        sortListOfIngredients(storageList, index);
         showCalcTable();
         if (index == 1 || index == 2) {
             jTable3.setRowSelectionInterval(0, 0);
             Rectangle cellRect = jTable3.getCellRect(0, 0, true);
             jTable3.scrollRectToVisible(cellRect);
-            
+
         }
 
     }//GEN-LAST:event_jComboBox2ActionPerformed
@@ -2549,10 +2515,6 @@ public class MainForm extends javax.swing.JFrame {
         jCheckBox1.setBackground(RED);
     }
 
-//    private void clearBackgroundAndCheckboxs() {
-//        clearCheckboxs();
-//        clearCountButton();
-//    }
     private void initLoginForm() {
         loginForm = new LoginForm();
         loginForm.setVisible(true);
@@ -2639,9 +2601,7 @@ public class MainForm extends javax.swing.JFrame {
         MaskFormatter mf2 = new MaskFormatter("#.###");
         JFormattedTextField formattedTextField = new JFormattedTextField(mf2);
         formattedTextField.setFont(new Font("Verdana", 0, 18));
-//        formattedTextField.setCaretPosition(1);
 
-//        textField.setBorder(new LineBorder(Color.BLACK));
         DefaultCellEditor dce = new DefaultCellEditor(formattedTextField);
         jTable3.getColumnModel().getColumn(2).setCellEditor(dce);
 
@@ -2663,8 +2623,6 @@ public class MainForm extends javax.swing.JFrame {
         ArrayList<Dish> newCat1 = new ArrayList();
         ArrayList<Dish> newCat2 = new ArrayList();
 
-        // fdishes.get(0)
-        //dishes wich don`t need to cook 
         listofCat.add(fdishes);
         listofCat.add(salads);
         listofCat.add(rogerdishes);
@@ -2685,9 +2643,6 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     public void refreshBDmenu(int orderArg) {
-//        for (int i = 0; i < listofCat.size(); i++) {
-//            listofCat.get(i).clear();
-//        } 
         DishUtils.readDBmenu();
 
     }

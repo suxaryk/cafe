@@ -1018,9 +1018,9 @@ public class MainForm extends javax.swing.JFrame {
         jCheckBox1.setBackground(new java.awt.Color(255, 102, 102));
         jCheckBox1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jCheckBox1.setText("велика");
-        jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCheckBox1MouseClicked(evt);
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePizzaSize(evt);
             }
         });
         jPanel5.add(jCheckBox1);
@@ -1905,24 +1905,6 @@ public class MainForm extends javax.swing.JFrame {
         btn10.setBackground(BLUE);
     }
 
-    //refresh listofCat into big pizza
-    private void jCheckBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox1MouseClicked
-        clearCountButton();
-        if (jCheckBox1.isSelected()) {
-            jList2.setListData(listofCat.get(6).toArray());
-            jCheckBox1.setBackground(GREEN);
-            activeCat = 6;
-        } else {
-            jCheckBox1.setBackground(RED);
-            jList2.setListData(listofCat.get(5).toArray());
-            activeCat = 5;
-        }
-        if (activeDishes != -1) {
-            jList2.setSelectedIndex(activeDishes);
-        }
-        refreshListOfPrices();
-    }//GEN-LAST:event_jCheckBox1MouseClicked
-
     private void chooseCat(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseCat
         jTabbedPane1.setEnabledAt(2, true);
         jTabbedPane1.setSelectedIndex(2);
@@ -2354,7 +2336,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setVisible(false);
         jPanel7.setVisible(true);
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
-        jLabel12.setText(title);    
+        jLabel12.setText(title);
         //left join between tmpList and storageList
         ArrayList<Ingredient> tmpList = new ArrayList<>();
         tmpList.addAll(listofCat.get(activeCat).get(activeDishes).getListOfIngredients());
@@ -2527,26 +2509,43 @@ public class MainForm extends javax.swing.JFrame {
 
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
         // TODO add your handling code here:
-        ArrayList<Ingredient> changedList = new ArrayList<>();        
+        ArrayList<Ingredient> changedList = new ArrayList<>();
 
-        for (int i = 0; i < jTable3.getRowCount(); i++) { 
+        for (int i = 0; i < jTable3.getRowCount(); i++) {
             int dbId = Integer.parseInt(jTable3.getValueAt(i, 0).toString());
             String title = jTable3.getValueAt(i, 1).toString();
-            double count = Double.parseDouble(jTable3.getValueAt(i, 2).toString()); 
+            double count = Double.parseDouble(jTable3.getValueAt(i, 2).toString());
             if (count != 0.0) {
-                changedList.add(new Ingredient(dbId, title, count));                                          
-            }              
-        }      
-        
-        JSONUtils.updateDishIngredients(changedList,activeCat, activeDishes);
-        String JSONString = RecepiesUtils.readRecipesFromDB(activeCat, 
-                        listofCat.get(activeCat).get(activeDishes).getDbID()); 
+                changedList.add(new Ingredient(dbId, title, count));
+            }
+        }
+
+        JSONUtils.updateDishIngredients(changedList, activeCat, activeDishes);
+        String JSONString = RecepiesUtils.readRecipesFromDB(activeCat,
+                listofCat.get(activeCat).get(activeDishes).getDbID());
         System.out.println("JSONString=" + JSONString);
         JSONUtils.JSONToRecipes(JSONString, activeCat, activeDishes);
- 
+
         refreshCalc(null);
 
     }//GEN-LAST:event_saveCalculation
+
+    private void changePizzaSize(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePizzaSize
+        clearCountButton();
+        if (jCheckBox1.isSelected()) {
+            jList2.setListData(listofCat.get(6).toArray());
+            jCheckBox1.setBackground(GREEN);
+            activeCat = 6;
+        } else {
+            jCheckBox1.setBackground(RED);
+            jList2.setListData(listofCat.get(5).toArray());
+            activeCat = 5;
+        }
+        if (activeDishes != -1) {
+            jList2.setSelectedIndex(activeDishes);
+        }
+        refreshListOfPrices();
+    }//GEN-LAST:event_changePizzaSize
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -2675,9 +2674,8 @@ public class MainForm extends javax.swing.JFrame {
         listofCat.add(newCat1);
         listofCat.add(newCat2);
 
-        DishUtils.readDBmenu();        
+        DishUtils.readDBmenu();
         StorageUtils.readStorage();
-
 
     }
 

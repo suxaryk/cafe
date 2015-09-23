@@ -25,10 +25,8 @@ public class UsersUtils {
 
     public static void readAllUsers() {
         final String SQL = "SELECT name, pass from users";
-
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
@@ -57,7 +55,6 @@ public class UsersUtils {
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateUserPass");
         }
-
     }
 
     public static void updateUserName(int dbId, String name) {
@@ -74,7 +71,6 @@ public class UsersUtils {
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateUserName");
         }
-
     }
 
 }

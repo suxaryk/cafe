@@ -36,8 +36,7 @@ public class DishUtils {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Where is your MySQL JDBC Driver?");
-            //e.printStackTrace();
+            System.out.println("Where is your MySQL JDBC Driver?");           
         }
         System.out.println("MySQL JDBC Driver Registered!");
 
@@ -100,21 +99,16 @@ public class DishUtils {
         sqlUpdatePriceList.add("UPDATE dessert SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE drinks SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE alcohol SET price = ? WHERE Id = ?");
-
     }
 
     public static java.sql.Timestamp getCurrentTimeStamp() {
-
         Date today = new Date();
         return new java.sql.Timestamp(today.getTime());
-
     }
 
     public static void readDBmenu() {
-
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
@@ -130,7 +124,8 @@ public class DishUtils {
                                         rs.getString("title"),
                                         rs.getInt("priceS")                                       
                         ));
-                        JSONUtils.JSONToRecipes(rs.getString("ingredientsS"), i, activeDish++);
+                        JSONUtils.JSONToRecipes(
+                                rs.getString("ingredientsS"), i, activeDish++);
                     }
                 } else if (i == 6) {
                     while (rs.next()) {
@@ -141,7 +136,8 @@ public class DishUtils {
                                         rs.getInt("priceB")
                                         
                                 ));
-                        JSONUtils.JSONToRecipes(rs.getString("ingredientsB"), i, activeDish++);
+                        JSONUtils.JSONToRecipes(
+                                rs.getString("ingredientsB"), i, activeDish++);
                     }
                 } else if (i == 10) {
                     while (rs.next()) {
@@ -151,7 +147,8 @@ public class DishUtils {
                                         rs.getString("title"),
                                         rs.getInt("price")
                                 ));
-//                        JSONUtils.JSONToRecipes(rs.getString("ingredients"), i, activeDish++);
+//                        JSONUtils.JSONToRecipes(
+//                              rs.getString("ingredients"), i, activeDish++);
                     }
                 } else {                
                     while (rs.next()) {                                               
@@ -161,7 +158,8 @@ public class DishUtils {
                                         rs.getString("title"),
                                         rs.getInt("price")
                                 ));
-                        JSONUtils.JSONToRecipes(rs.getString("ingredients"), i, activeDish++);
+                        JSONUtils.JSONToRecipes(
+                                rs.getString("ingredients"), i, activeDish++);
                     }               
                 }
                 activeDish = 0;
@@ -212,7 +210,6 @@ public class DishUtils {
                 }
             }
             rs.close();
-
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - readDBCategoryById");
         }
@@ -223,7 +220,6 @@ public class DishUtils {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
-
                     System.out.println(!connection.isClosed() ? "DB connected!"
                             : "Error DB connecting");
 
@@ -231,12 +227,10 @@ public class DishUtils {
                     pstatement.setString(1, dish.getTitle());
                     pstatement.setInt(2, dish.getPrice());
                     pstatement.setBoolean(3, dish.isCook());
-
                     int rowsInserted = pstatement.executeUpdate();
                     if (rowsInserted > 0) {
                         System.out.println("A new dish was added successfully!");
                     }
-
                 } catch (SQLException e) {
                     System.out.println("Connection Failed! Check output console - addDish");
                 }
@@ -250,10 +244,8 @@ public class DishUtils {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
-
                     System.out.println(!connection.isClosed() ? "DB connected!"
                             : "Error DB connecting");
-
                     PreparedStatement pstatement = connection.prepareStatement(sqlRemoveList.get(i));
                     pstatement.setInt(1, dbId);
 
@@ -261,8 +253,6 @@ public class DishUtils {
                     if (rowsInserted > 0) {
                         System.out.println("A new dish was removed successfully!");
                     }
-//                    Statement statement = connection.createStatement();
-//                    statement.executeUpdate("" + sqlRemoveList.get(i) + dbId);
                 } catch (SQLException e) {
                     System.out.println("Connection Failed! Check output console - removeDishById");
                 }
@@ -295,7 +285,6 @@ public class DishUtils {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
-
                     PreparedStatement pst = connection.prepareStatement(sqlUpdatePriceList.get(i));
                     pst.setInt(1, pass);
                     pst.setInt(2, dbId);

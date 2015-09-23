@@ -63,11 +63,8 @@ public class JSONUtils {
     //JSON String to data
     public static void JSONToRecipes(String jsonRecipes, int activeCat, 
                                                        int activeDish){
-//        System.out.println("activeCat" + activeCat);
-//        System.out.println("activeDish" + activeDish);
         if (!"".equals(jsonRecipes)) {
             try {
-//                System.out.println("size="  + jsonArr.length());
                 JSONParser parser = new JSONParser();
                 Object obj = parser.parse(jsonRecipes);
                 JSONArray jsonArr = (JSONArray) obj;
@@ -75,12 +72,9 @@ public class JSONUtils {
                         .getListOfIngredients().clear();
                 for (int i = 0; i < jsonArr.size(); i++) {
                     JSONObject jsonObj = (JSONObject) jsonArr.get(i);
-                    int Id = Integer.parseInt(jsonObj.get("id").toString());
-                    System.out.println("id=" + Id);
+                    int Id = Integer.parseInt(jsonObj.get("id").toString());                    
                     double count = Double.parseDouble(jsonObj.
-                                                        get("c").toString());                    
-                    System.out.println("count=" + count);
-                    
+                                                        get("c").toString());                  
                     listofCat.get(activeCat).get(activeDish)
                             .getListOfIngredients().add(new Ingredient(Id, count));                                    
                 }
@@ -91,31 +85,5 @@ public class JSONUtils {
         }
     }
 
-//    public static String getJsonString() {       
-//        
-//        
-//        
-//        
-//        
-//        JSONObject recipes = new JSONObject();
-//        recipes.put(1, 0.069);
-//        recipes.put(2, 0.002);
-//        recipes.put(3, 0.012);
-//        recipes.put(4, 0.008);
-//        recipes.put(5, 0.001);
-//        recipes.put(6, 0.5);
-//        recipes.put(7, 0.020);
-//        recipes.put(16, 0.015);
-//        recipes.put(14, 0.015);
-//        recipes.put(11, 0.018);
-//        recipes.put(12, 0.010);
-//        
-//        
-//        System.out.println(recipes.toJSONString());             
-//        System.out.println("JSON size" + recipes.toJSONString().length());
-//
-//        return recipes.toJSONString();
-//       
-//    }
 
 }

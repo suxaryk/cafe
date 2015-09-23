@@ -8,7 +8,6 @@ package cafe.Utils.db.Dish;
 import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
 import static cafe.Utils.db.Dish.DishUtils.URL;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
-import cafe.view.MainForm;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -36,9 +35,7 @@ public class RecepiesUtils {
         sqlSelectList.add("select * from sushi where Id = ?");
         sqlSelectList.add("select * from dessert where Id = ?");
         sqlSelectList.add("select * from drinks where Id = ?");
-        sqlSelectList.add("select * from alcohol where Id = ?");
-
-        
+        sqlSelectList.add("select * from alcohol where Id = ?");        
         
         sqlUpdateRecepiesList.add("UPDATE firstdishes SET ingredients = ? WHERE Id = ?");
         sqlUpdateRecepiesList.add("UPDATE salats SET ingredients = ? WHERE Id = ?");
@@ -55,8 +52,6 @@ public class RecepiesUtils {
     }
     
     public static void addRecipes(int dishDbId, String ingredients){
-//        final String sql = "INSERT INTO recipes(dishId, ingredients)"
-//                                                    + " VALUES(?, ?)";
         System.out.println("dvID" + dishDbId);
         final String SQL = "INSERT INTO recipes(dishId, ingredients) VALUES(?, ?)";
         try (Connection connection = DriverManager
@@ -74,8 +69,7 @@ public class RecepiesUtils {
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - addRecepies");
-        }
-        
+        }        
     }
 
     public static void updateRecipes(int activeCat, int dishDbId, String ingredients) {
@@ -109,31 +103,23 @@ public class RecepiesUtils {
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             PreparedStatement pst = connection.prepareStatement(sqlSelectList.get(activeCat));
-            pst.setInt(1, dishDbId);
-            
+            pst.setInt(1, dishDbId);           
             
             String jsonRecepies = "";
             try (ResultSet rs = pst.executeQuery()) {                 
                 while (rs.next()) {
                     if (activeCat == 5) {
-                        jsonRecepies += rs.getString("ingredientsS");
-                        
+                        jsonRecepies += rs.getString("ingredientsS");                        
                     }else if(activeCat == 6){
-                        jsonRecepies += rs.getString("ingredientsB");
-                        
+                        jsonRecepies += rs.getString("ingredientsB");                        
                     } else{
                         jsonRecepies += rs.getString("ingredients");
-                    }
-                    
-                    
+                    }                                     
                 }
-            }
-            System.out.println("jsonRecepies" + jsonRecepies);
-            return jsonRecepies;          
-           
-            
+            }           
+            return jsonRecepies;                            
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - readRecipes");
+            System.out.println("Connection Failed! Check output console - readRecipesFromDB");
             return null;            
         }
     }

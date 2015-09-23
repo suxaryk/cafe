@@ -4,8 +4,8 @@ import cafe.Utils.db.CheckUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Check;
-import cafe.Utils.db.DishUtils;
-import cafe.Utils.db.RecepiesUtils;
+import cafe.Utils.db.Dish.DishUtils;
+import cafe.Utils.db.Dish.RecepiesUtils;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
 import cafe.model.CheckItem;
@@ -2354,7 +2354,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setVisible(false);
         jPanel7.setVisible(true);
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
-        jLabel12.setText(title);
+        jLabel12.setText(title);    
         //left join between tmpList and storageList
         ArrayList<Ingredient> tmpList = new ArrayList<>();
         tmpList.addAll(listofCat.get(activeCat).get(activeDishes).getListOfIngredients());
@@ -2508,7 +2508,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        //  JSONUtils.writeAllIngredients();
+//          JSONUtils.writeAllIngredients();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -2527,19 +2527,23 @@ public class MainForm extends javax.swing.JFrame {
 
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
         // TODO add your handling code here:
-        ArrayList<Ingredient> changedList = new ArrayList<>();
-        changedList.addAll(storageList);
+        ArrayList<Ingredient> changedList = new ArrayList<>();        
 
-        for (int i = 0; i < jTable3.getRowCount(); i++) {
+        for (int i = 0; i < jTable3.getRowCount(); i++) { 
+            int dbId = Integer.parseInt(jTable3.getValueAt(i, 0).toString());
+            String title = jTable3.getValueAt(i, 1).toString();
             double count = Double.parseDouble(jTable3.getValueAt(i, 2).toString()); 
             if (count != 0.0) {
-                changedList.get(i).setCount(count);                
-            }             
-        }
-        JSONUtils.updateDishIngredients(activeCat, activeDishes);
-        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        model.setRowCount(0);
-        showCalcTable();     
+                changedList.add(new Ingredient(dbId, title, count));                                          
+            }              
+        }      
+        
+        JSONUtils.updateDishIngredients(changedList,activeCat, activeDishes);
+        String JSONString = RecepiesUtils.readRecipes(activeCat, 
+                        listofCat.get(activeCat).get(activeDishes).getDbID());        
+        JSONUtils.readRecipes(JSONString, activeCat, activeDishes);
+ 
+        refreshCalc(null);
 
     }//GEN-LAST:event_saveCalculation
 
@@ -2670,7 +2674,7 @@ public class MainForm extends javax.swing.JFrame {
         listofCat.add(newCat1);
         listofCat.add(newCat2);
 
-        DishUtils.readDBmenu();
+        DishUtils.readDBmenu();        
         StorageUtils.readStorage();
 
 
@@ -2719,8 +2723,8 @@ public class MainForm extends javax.swing.JFrame {
     public static ArrayList<Employee> employeeList = new ArrayList<>();
     private static Map<Integer, Check> checks = new HashMap<Integer, Check>();
     private static final int tablesCount = 25;
-    private static int activeDishes;
-    private static int activeCat;
+    public static int activeDishes;
+    public static int activeCat;
     private static int activeTable;
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
     public static ArrayList<ArrayList<Dish>> listofCat = new ArrayList<>();

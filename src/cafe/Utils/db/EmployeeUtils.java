@@ -6,9 +6,9 @@
 package cafe.Utils.db;
 
 
-import static cafe.Utils.db.DishUtils.PASSWORD;
-import static cafe.Utils.db.DishUtils.URL;
-import static cafe.Utils.db.DishUtils.USERNAME;
+import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
+import static cafe.Utils.db.Dish.DishUtils.URL;
+import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import cafe.model.Employee;
 import static cafe.view.MainForm.employeeList;
 import java.sql.Connection;
@@ -47,13 +47,14 @@ public class EmployeeUtils {
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
-            while (rs.next()) {
-                employeeList.add(new Employee(
-                        rs.getInt("Id"),
-                        rs.getString("name"),
-                        rs.getInt("pass")
-                ));
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    employeeList.add(new Employee(
+                            rs.getInt("Id"),
+                            rs.getString("name"),
+                            rs.getInt("pass")
+                    ));
+                }
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - setAllEmployees");

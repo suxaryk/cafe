@@ -25,6 +25,13 @@ public class Ingredient implements Serializable{
         this.dbId = dbId;
         this.title = title;
     }
+
+    public Ingredient(int dbId, String title, double count) {
+        this.dbId = dbId;
+        this.title = title;
+        this.count = count;
+    }
+    
     
     
 

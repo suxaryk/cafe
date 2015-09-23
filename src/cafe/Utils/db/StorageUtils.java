@@ -5,14 +5,13 @@
  */
 package cafe.Utils.db;
 
-import static cafe.Utils.db.DishUtils.PASSWORD;
-import static cafe.Utils.db.DishUtils.URL;
-import static cafe.Utils.db.DishUtils.USERNAME;
+import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
+import static cafe.Utils.db.Dish.DishUtils.URL;
+import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import cafe.model.Ingredient;
 import cafe.view.MainForm;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,13 +29,14 @@ public class StorageUtils {
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
-            while (rs.next()) {
-                MainForm.storageList.add(
-                        new Ingredient(
-                                rs.getInt("Id"),
-                                rs.getString("title")
-                        ));
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    MainForm.storageList.add(
+                            new Ingredient(
+                                    rs.getInt("Id"),
+                                    rs.getString("title")
+                            ));
+                }
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - readStorage");

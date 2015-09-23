@@ -1,11 +1,9 @@
 package cafe.model;
 
+import cafe.Utils.json.JSONUtils;
+import cafe.view.MainForm;
 import java.util.ArrayList;
 import java.util.Objects;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -16,7 +14,7 @@ public class Dish {
     private String title = "";
     private int price = 0;
     private boolean cook;
-    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private ArrayList<Ingredient> recipes = new ArrayList<>();
     
     
     public Dish(){} 
@@ -26,28 +24,10 @@ public class Dish {
     public Dish(int dbID, String title, int price, String  recipes) {
         this.dbId = dbID;
         this.title = title;
-        this.price = price;   
-        if (!"".equals(recipes)) {
-            try {
-//                System.out.println("size="  + recipes.length());
-                JSONParser parser = new JSONParser();                
-                Object obj = parser.parse(recipes);
-                JSONArray jsonArr = (JSONArray) obj;
-                
-                for (int i = 0; i < jsonArr.size(); i++) {
-                    JSONObject jsonObj = (JSONObject) jsonArr.get(i);
-                    int Id = Integer.parseInt(jsonObj.get("ingId").toString());                 
-                    double count = Double.parseDouble(jsonObj.get("count").toString());
-                    ingredients.add(new Ingredient(Id, count));                  
-                }
-//                System.out.println("title" + title);
-//                System.out.println("size ingr=" + ingredients.size());
-                
-            } catch (ParseException ex) {
-//                Logger.getLogger(Dish.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("Error parse =" + Dish.class.getName());
-            }
-        }
+        this.price = price;         
+       // System.out.println("cat=" + MainForm.activeCat);
+       // System.out.println("Dish=" +MainForm.activeDishes);
+        //JSONUtils.readRecipes(recipes, MainForm.activeCat, MainForm.activeDishes);
         
     }
 
@@ -88,11 +68,11 @@ public class Dish {
     }
 
     public ArrayList<Ingredient> getListOfIngredients() {
-        return ingredients;
+        return recipes;
     }
 
     public void setListOfIngredients(ArrayList<Ingredient> list) {
-        this.ingredients = list;
+        this.recipes = list;
     }
 
     public boolean isCook() {
@@ -126,7 +106,7 @@ public class Dish {
         if (this.price != other.price) {
             return false;
         }
-        if (!Objects.equals(this.ingredients, other.ingredients)) {
+        if (!Objects.equals(this.recipes, other.recipes)) {
             return false;
         }
         return true;
@@ -135,6 +115,12 @@ public class Dish {
     @Override
     public String toString() {
         return title;
+    }
+    
+    private void clearRecipes(){
+        for (Ingredient ing : recipes) {
+            ing.setCount(0);
+        }   
     }
     
 

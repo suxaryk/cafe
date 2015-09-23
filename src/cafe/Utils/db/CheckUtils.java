@@ -5,10 +5,10 @@
  */
 package cafe.Utils.db;
 
-import static cafe.Utils.db.DishUtils.PASSWORD;
-import static cafe.Utils.db.DishUtils.URL;
-import static cafe.Utils.db.DishUtils.USERNAME;
-import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
+import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
+import static cafe.Utils.db.Dish.DishUtils.URL;
+import static cafe.Utils.db.Dish.DishUtils.USERNAME;
+import static cafe.Utils.db.Dish.DishUtils.getCurrentTimeStamp;
 import cafe.model.Check;
 import cafe.model.User;
 import java.sql.Connection;
@@ -79,10 +79,12 @@ public class CheckUtils {
                     : "Error DB connecting");
             PreparedStatement pst = connection.prepareStatement(SQL);
             pst.setInt(1, getDayCount());
-            ResultSet rs = pst.executeQuery();
-            int sum = 0;
-            while (rs.next()) {
-                sum = rs.getInt(1);
+            int sum;
+            try (ResultSet rs = pst.executeQuery()) {  //??????????????????????????s
+                sum = 0;
+                while (rs.next()) {
+                    sum = rs.getInt(1);
+                }
             }
             return sum;
 
@@ -93,7 +95,7 @@ public class CheckUtils {
 
     }
 
-    public static int getLastCheck() {
+    public static int getLastCheckId() {
         final String SQL = "SELECT checkId FROM checks"
                 + "order by id desc limit 1";
 
@@ -104,14 +106,16 @@ public class CheckUtils {
                     : "Error DB connecting");
 
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
-            int last = 0;
-            while (rs.next()) {
-                last = rs.getInt(1);
+            int last;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                last = 0;
+                while (rs.next()) {
+                    last = rs.getInt(1);
+                }
             }
             return last;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getCountOfChecks");
+            System.out.println("Connection Failed! Check output console - getLastCheckId");
             return 0;
         }
     }
@@ -128,10 +132,12 @@ public class CheckUtils {
                     : "Error DB connecting");
 
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
-            int count = 0;
-            while (rs.next()) {
-                count = rs.getInt(1);
+            int count;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                count = 0;
+                while (rs.next()) {
+                    count = rs.getInt(1);
+                }
             }
             return count;
         } catch (SQLException e) {

@@ -1,7 +1,9 @@
-package cafe.Utils.db;
+package cafe.Utils.db.Dish;
 
+import cafe.Utils.json.JSONUtils;
 import cafe.view.MainForm;
 import cafe.model.Dish;
+import static cafe.view.MainForm.listofCat;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -92,13 +94,12 @@ public class DishUtils {
         sqlUpdatePriceList.add("UPDATE rogerdishes SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE pandishes SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE meat SET price = ? WHERE Id = ?");
-        sqlUpdatePriceList.add("UPDATE pizza SET price = ? WHERE Id = ?");
-        sqlUpdatePriceList.add("UPDATE pizza SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE pizza SET priceS = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE pizza SET priceB = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE sushi SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE dessert SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE drinks SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE alcohol SET price = ? WHERE Id = ?");
-        
 
     }
 
@@ -118,6 +119,7 @@ public class DishUtils {
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             ResultSet rs;
+            int activeDish = 0;
             for (int i = 0; i < sqlSelectList.size(); i++) {
                 rs = statement.executeQuery(sqlSelectList.get(i));
                 if (i == 5) {
@@ -126,8 +128,9 @@ public class DishUtils {
                                 new Dish(Integer.parseInt(
                                                 rs.getString("Id")),
                                         rs.getString("title"),
-                                        rs.getInt("priceS"),
-                                        rs.getString("ingredientsS")));
+                                        rs.getInt("priceS")                                       
+                        ));
+                        JSONUtils.readRecipes(rs.getString("ingredientsS"), i, activeDish++);
                     }
                 } else if (i == 6) {
                     while (rs.next()) {
@@ -135,26 +138,33 @@ public class DishUtils {
                                 new Dish(Integer.parseInt(
                                                 rs.getString("Id")),
                                         rs.getString("title"),
-                                        rs.getInt("priceB"),
-                                        rs.getString("ingredientsB")));                   }                                  
+                                        rs.getInt("priceB")
+                                        
+                                ));
+                        JSONUtils.readRecipes(rs.getString("ingredientsB"), i, activeDish++);
+                    }
                 } else if (i == 10) {
                     while (rs.next()) {
                         MainForm.listofCat.get(i).add(
                                 new Dish(Integer.parseInt(
                                                 rs.getString("Id")),
                                         rs.getString("title"),
-                                        rs.getInt("price")));
-                    }                    
-                } else {
-                    while (rs.next()) {
+                                        rs.getInt("price")
+                                ));
+//                        JSONUtils.readRecipes(rs.getString("ingredients"), i, activeDish++);
+                    }
+                } else {                
+                    while (rs.next()) {                                               
                         MainForm.listofCat.get(i).add(
                                 new Dish(Integer.parseInt(
                                                 rs.getString("Id")),
                                         rs.getString("title"),
-                                        rs.getInt("price"),
-                                        rs.getString("ingredients")));                       
-                    }
+                                        rs.getInt("price")
+                                ));
+                        JSONUtils.readRecipes(rs.getString("ingredients"), i, activeDish++);
+                    }               
                 }
+                activeDish = 0;
                 rs.close();
             }
         } catch (SQLException e) {
@@ -299,6 +309,5 @@ public class DishUtils {
             }
         }
     }
-
 
 }

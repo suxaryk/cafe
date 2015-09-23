@@ -101,7 +101,7 @@ public class RecepiesUtils {
             }
         }
     }
-    public static String readRecipes(int activeCat, int dishDbId) {
+    public static String readRecipesFromDB(int activeCat, int dishDbId) {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
 
@@ -115,7 +115,16 @@ public class RecepiesUtils {
             String jsonRecepies = "";
             try (ResultSet rs = pst.executeQuery()) {                 
                 while (rs.next()) {
-                    jsonRecepies += rs.getString("ingredients");
+                    if (activeCat == 5) {
+                        jsonRecepies += rs.getString("ingredientsS");
+                        
+                    }else if(activeCat == 6){
+                        jsonRecepies += rs.getString("ingredientsB");
+                        
+                    } else{
+                        jsonRecepies += rs.getString("ingredients");
+                    }
+                    
                     
                 }
             }

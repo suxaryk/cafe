@@ -61,7 +61,7 @@ public class JSONUtils {
         
     }
     //JSON String to data
-    public static void readRecipes(String jsonRecipes, int activeCat, 
+    public static void JSONToRecipes(String jsonRecipes, int activeCat, 
                                                        int activeDish){
 //        System.out.println("activeCat" + activeCat);
 //        System.out.println("activeDish" + activeDish);

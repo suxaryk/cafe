@@ -2539,9 +2539,10 @@ public class MainForm extends javax.swing.JFrame {
         }      
         
         JSONUtils.updateDishIngredients(changedList,activeCat, activeDishes);
-        String JSONString = RecepiesUtils.readRecipes(activeCat, 
-                        listofCat.get(activeCat).get(activeDishes).getDbID());        
-        JSONUtils.readRecipes(JSONString, activeCat, activeDishes);
+        String JSONString = RecepiesUtils.readRecipesFromDB(activeCat, 
+                        listofCat.get(activeCat).get(activeDishes).getDbID()); 
+        System.out.println("JSONString=" + JSONString);
+        JSONUtils.JSONToRecipes(JSONString, activeCat, activeDishes);
  
         refreshCalc(null);
 

@@ -130,7 +130,7 @@ public class DishUtils {
                                         rs.getString("title"),
                                         rs.getInt("priceS")                                       
                         ));
-                        JSONUtils.readRecipes(rs.getString("ingredientsS"), i, activeDish++);
+                        JSONUtils.JSONToRecipes(rs.getString("ingredientsS"), i, activeDish++);
                     }
                 } else if (i == 6) {
                     while (rs.next()) {
@@ -141,7 +141,7 @@ public class DishUtils {
                                         rs.getInt("priceB")
                                         
                                 ));
-                        JSONUtils.readRecipes(rs.getString("ingredientsB"), i, activeDish++);
+                        JSONUtils.JSONToRecipes(rs.getString("ingredientsB"), i, activeDish++);
                     }
                 } else if (i == 10) {
                     while (rs.next()) {
@@ -151,7 +151,7 @@ public class DishUtils {
                                         rs.getString("title"),
                                         rs.getInt("price")
                                 ));
-//                        JSONUtils.readRecipes(rs.getString("ingredients"), i, activeDish++);
+//                        JSONUtils.JSONToRecipes(rs.getString("ingredients"), i, activeDish++);
                     }
                 } else {                
                     while (rs.next()) {                                               
@@ -161,7 +161,7 @@ public class DishUtils {
                                         rs.getString("title"),
                                         rs.getInt("price")
                                 ));
-                        JSONUtils.readRecipes(rs.getString("ingredients"), i, activeDish++);
+                        JSONUtils.JSONToRecipes(rs.getString("ingredients"), i, activeDish++);
                     }               
                 }
                 activeDish = 0;

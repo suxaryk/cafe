@@ -19,12 +19,13 @@ import org.json.simple.JSONObject;
  */
 public class JSONUtils {
     public static void writeAllIngredients(){
-        System.out.println("catSize+ " + listofCat.get(7).size());
+        int Cat = 7;
+        System.out.println("catSize+ " + listofCat.get(Cat).size());
         FileUtils.fillIngredients();
         
         
         
-        for (Dish dish : listofCat.get(7)) {  
+        for (Dish dish : listofCat.get(Cat)) {  
             JSONArray recipes = new JSONArray();
             for (Ingredient ing : dish.getListOfIngredients()) { 
                 JSONObject ingrObj = new JSONObject();
@@ -39,6 +40,22 @@ public class JSONUtils {
             RecepiesUtils.updateRecipes(dish.getDbID(), recipes.toJSONString());
             //recipes.clear();
         }
+    }
+    public static void updateDishIngredients(int activeCat, int activeDish){
+        JSONArray recipes = new JSONArray();
+        for (Ingredient ing : listofCat.get(activeCat)
+                                                    .get(activeDish)
+                                                    .getListOfIngredients()) {
+            JSONObject ingrObj = new JSONObject();
+            ingrObj.put("ingId", ing.getId());
+            ingrObj.put("count", ing.getCount());
+            recipes.add(ingrObj);            
+        }
+        RecepiesUtils.updateRecipes(listofCat.get(activeCat)
+                                             .get(activeDish)
+                                             .getDbID(), recipes.toJSONString());
+        
+        
     }
 
     public static String getJsonString() {       

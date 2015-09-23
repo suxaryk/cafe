@@ -1,10 +1,7 @@
 package cafe.model;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -32,7 +29,7 @@ public class Dish {
         this.price = price;   
         if (!"".equals(recipes)) {
             try {
-                System.out.println("size="  + recipes.length());
+//                System.out.println("size="  + recipes.length());
                 JSONParser parser = new JSONParser();                
                 Object obj = parser.parse(recipes);
                 JSONArray jsonArr = (JSONArray) obj;
@@ -43,11 +40,11 @@ public class Dish {
                     double count = Double.parseDouble(jsonObj.get("count").toString());
                     ingredients.add(new Ingredient(Id, count));                  
                 }
-                System.out.println("title" + title);
-                System.out.println("size ingr=" + ingredients.size());
+//                System.out.println("title" + title);
+//                System.out.println("size ingr=" + ingredients.size());
                 
             } catch (ParseException ex) {
-                Logger.getLogger(Dish.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(Dish.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("Error parse =" + Dish.class.getName());
             }
         }

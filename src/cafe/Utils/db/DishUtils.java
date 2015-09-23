@@ -1,9 +1,7 @@
 package cafe.Utils.db;
 
-import cafe.model.Check;
 import cafe.view.MainForm;
 import cafe.model.Dish;
-import cafe.model.Ingredient;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -303,24 +300,5 @@ public class DishUtils {
         }
     }
 
-    public static void readStorage() {
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            String SQL = "SELECT * FROM storage";
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(SQL);
-            while (rs.next()) {
-                MainForm.storageList.add(
-                        new Ingredient(
-                                rs.getInt("Id"),
-                                rs.getString("title")
-                        ));
-            }
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - readStorage");
-        }
 
-    }
 }

@@ -12,12 +12,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
  * @author suxarina
  */
 public class RecepiesUtils {
+    private static final ArrayList<String> sqlUpdateRecepiesList = new ArrayList<>();
+    
+    static {
+        
+    }
     public static void addRecipes(int dishDbId, String ingredients){
 //        final String sql = "INSERT INTO recipes(dishId, ingredients)"
 //                                                    + " VALUES(?, ?)";

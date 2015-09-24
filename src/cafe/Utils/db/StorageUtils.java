@@ -29,13 +29,15 @@ public class StorageUtils {
             String SQL = "SELECT * FROM storage";
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
+            MainForm.storageList.clear();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
                     MainForm.storageList.add(
                             new Ingredient(
                                     rs.getInt("Id"),
-                                    rs.getString("title")
+                                    rs.getString("title"),
+                                    rs.getInt("count")
                             ));
                 }
             }

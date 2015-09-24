@@ -37,13 +37,16 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -58,40 +61,12 @@ public class MainForm extends javax.swing.JFrame {
         initBDmenu();
         initIcons();
 
-        jPanel6.setVisible(false);
-
-        jCheckBox1.setVisible(false);
-        jTabbedPane1.setEnabledAt(1, false);
-        jTabbedPane1.setEnabledAt(2, false);
-        jTextField2.setLayout(new AbsoluteLayout());
-        jTextField2.setVisible(false);
-        jTable4.setVisible(false);
-        jButton1.setVisible(false);
-        jButton11.setVisible(false);
-        jButton12.setVisible(false);
-        jButton14.setVisible(false);
-        jButton14.setBackground(GREEN);
-        jButton15.setVisible(false);
-        jButton17.setVisible(false);
-        jButton19.setVisible(false);
-        jButton15.setBackground(RED);
-        jTextField3.setVisible(false);
-        jTextField2.setVisible(false);
-        jTextField4.setVisible(false);
-        jLabel8.setVisible(false);
-        jLabel9.setVisible(false);
-        jPanel7.setVisible(false);
-        jPanel8.setVisible(false);
-        jButton11.setBackground(GREEN);
-        jButton1.setBackground(RED);
+        InitComonentsProperty();
+        
 
         initLoginForm();
-        initMainForm(); 
-        try {
-            initCalculationTable();
-        } catch (ParseException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        initMainForm();
+        initCalculationTable();
 
     }
 
@@ -225,6 +200,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton35 = new javax.swing.JButton();
         jButton36 = new javax.swing.JButton();
         jButton37 = new javax.swing.JButton();
+        jTextField6 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -1064,7 +1041,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton1.setText("видалити");
+        jButton1.setText("<html>&nbsp;видалити<br/>&nbsp; страву </html> ");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1076,7 +1053,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton11.setBackground(new java.awt.Color(204, 204, 204));
         jButton11.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton11.setText("додати");
+        jButton11.setText("<html>&nbsp;&nbsp;додати<br/>&nbsp; страву </html> ");
         jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1188,7 +1165,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jButton3);
-        jButton3.setBounds(10, 490, 100, 70);
+        jButton3.setBounds(0, 490, 100, 70);
 
         jButton7.setBackground(new java.awt.Color(255, 102, 102));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/delete101.png"))); // NOI18N
@@ -1241,7 +1218,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jButton9);
-        jButton9.setBounds(230, 490, 100, 70);
+        jButton9.setBounds(260, 490, 100, 70);
 
         jButton10.setBackground(new java.awt.Color(255, 255, 255));
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/payment7.png"))); // NOI18N
@@ -1252,7 +1229,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jButton10);
-        jButton10.setBounds(120, 490, 100, 70);
+        jButton10.setBounds(130, 490, 100, 70);
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel2.setText("Сума по чеку:");
@@ -1277,72 +1254,62 @@ public class MainForm extends javax.swing.JFrame {
         jLabel5.setBounds(0, 0, 360, 22);
 
         jPanel1.setBackground(new java.awt.Color(255, 153, 153));
+        jPanel1.setLayout(null);
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.setBorder(btn3.getBorder());
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitSystem(evt);
             }
         });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(390, 0, 100, 70);
 
         jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/money405.png"))); // NOI18N
-        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/boxes37.png"))); // NOI18N
+        jButton4.setBorder(btn3.getBorder());
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goToStorage(evt);
+            }
+        });
+        jPanel1.add(jButton4);
+        jButton4.setBounds(130, 0, 100, 70);
 
         jButton5.setBackground(new java.awt.Color(255, 255, 255));
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/coin.png"))); // NOI18N
-        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.setBorder(btn3.getBorder());
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton5);
+        jButton5.setBounds(260, 0, 100, 70);
 
         jButton6.setBackground(new java.awt.Color(255, 255, 255));
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/login.png"))); // NOI18N
-        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton6.setBorder(btn3.getBorder());
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 PersonalLogining(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        jPanel1.add(jButton6);
+        jButton6.setBounds(0, 0, 100, 70);
 
         jPanel3.add(jPanel1);
-        jPanel1.setBounds(0, 600, 500, 80);
+        jPanel1.setBounds(0, 600, 500, 90);
 
         jLabel11.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel11.setText("грн.");
@@ -1754,14 +1721,14 @@ public class MainForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "№", "Назва", "Вага ( кг/ шт )"
+                "№", "Назва", "Вага ( кг/ шт )", "Списування"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1782,6 +1749,9 @@ public class MainForm extends javax.swing.JFrame {
             jTable5.getColumnModel().getColumn(2).setMinWidth(100);
             jTable5.getColumnModel().getColumn(2).setPreferredWidth(100);
             jTable5.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTable5.getColumnModel().getColumn(3).setMinWidth(100);
+            jTable5.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jTable5.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         jPanel8.add(jScrollPane6);
@@ -1803,7 +1773,7 @@ public class MainForm extends javax.swing.JFrame {
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                jComboBox3ActionPerformed(evt);
             }
         });
         jPanel8.add(jComboBox3);
@@ -1817,7 +1787,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel14.setBackground(new java.awt.Color(0, 153, 204));
         jLabel14.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel14.setText(" Інформація");
+        jLabel14.setText("Склад");
         jLabel14.setOpaque(true);
         jPanel8.add(jLabel14);
         jLabel14.setBounds(0, 0, 650, 30);
@@ -1859,10 +1829,19 @@ public class MainForm extends javax.swing.JFrame {
         jPanel8.add(jButton37);
         jButton37.setBounds(430, 600, 100, 70);
 
+        jTextField6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jPanel8.add(jTextField6);
+        jTextField6.setBounds(170, 560, 360, 30);
+
+        jLabel15.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel15.setText(" Назва");
+        jPanel8.add(jLabel15);
+        jLabel15.setBounds(170, 540, 90, 16);
+
         getContentPane().add(jPanel8);
         jPanel8.setBounds(0, 0, 650, 700);
 
-        setSize(new java.awt.Dimension(1152, 705));
+        setSize(new java.awt.Dimension(1149, 697));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1883,7 +1862,6 @@ public class MainForm extends javax.swing.JFrame {
         jLabel4.setText("Cтіл №" + activeTable);
         jLabel4.setForeground(RED);
         System.out.println("user" + User.getActiveUser);
-        //fixed
 
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
 
@@ -1923,19 +1901,16 @@ public class MainForm extends javax.swing.JFrame {
             jButton3.setBackground(Color.WHITE);
             jButton7.setBackground(Color.WHITE);
             jTable1.setBackground(Color.WHITE);
-
         }
         evt.getComponent().setBackground(Color.yellow);
         jButton7.setEnabled(true);
         jButton9.setEnabled(true);
-
-
     }//GEN-LAST:event_chooseTable
 
     private void PersonalLogining(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalLogining
         jTabbedPane1.setVisible(false);
         jPanel6.setVisible(true);
-        mainForm.setSize(630, 705);
+        mainForm.setSize(630, 697);
     }//GEN-LAST:event_PersonalLogining
 
 
@@ -1994,7 +1969,6 @@ public class MainForm extends javax.swing.JFrame {
         btn8.setText("<html> 8 <br/> " + price * 8 + " грн. </html>");
         btn9.setText("<html> 9 <br/> " + price * 9 + " грн. </html>");
         btn10.setText("<html> 10 <br/> " + price * 10 + " грн. </html>");
-
     }
 
     private void refreshListOfPrices() {
@@ -2091,7 +2065,6 @@ public class MainForm extends javax.swing.JFrame {
                                 getCheckList().size() - 1);
             }
         }
-
         jTextField1.setText("" + checks.get(activeTable).getTotalsum());
     }//GEN-LAST:event_removeCheckItem
 
@@ -2103,6 +2076,8 @@ public class MainForm extends javax.swing.JFrame {
             model.setColumnCount(1);
             model.addColumn("пароль");
 
+            jButton4.setVisible(true);
+            jButton5.setVisible(true);
             jButton14.setVisible(true);
             jButton15.setVisible(true);
             jButton17.setVisible(true);
@@ -2249,8 +2224,6 @@ public class MainForm extends javax.swing.JFrame {
         jList2.setListData(listofCat.get(activeCat).toArray());
         jList2.ensureIndexIsVisible(0);
         jPanel5ComponentShown(null);
-
-
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void payCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_payCheck
@@ -2389,7 +2362,7 @@ public class MainForm extends javax.swing.JFrame {
         if (!jTextField2.getText().equals("") && !jTextField4.getText().equals("")) {
             String title = jTextField4.getText();
             int price = Integer.parseInt(jTextField2.getText());
-            
+
             DishUtils.addDish(new Dish(title, price), activeCat);
             listofCat.get(activeCat).clear();
             DishUtils.readDBCategoryById(activeCat);
@@ -2417,20 +2390,32 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeDish
 
-    private void showCalcTable() {
-        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+    private void showCalcTable(JTable jTable) {
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
-        for (Ingredient storageList1 : storageList) {
-            model.addRow(new Object[]{
-                storageList1.getId(),
-                storageList1.getTitle(),
-                storageList1.getCount()
-            });
-        }
+        if (jTable.getColumnCount() == 3) {
+            for (Ingredient storageList1 : storageList) {
+                model.addRow(new Object[]{
+                    storageList1.getId(),
+                    storageList1.getTitle(),
+                    storageList1.getCount()
+                });
+            }
+        }else if (jTable.getColumnCount() == 4) {
+            for (Ingredient storageList1 : storageList) {
+                model.addRow(new Object[]{
+                    storageList1.getId(),
+                    storageList1.getTitle(),
+                    storageList1.getCount(),
+                    0.0
+                });
+            }            
+        }             
     }
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
         jTabbedPane1.setVisible(false);
         jPanel7.setVisible(true);
+        mainForm.setSize(655, 700);
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
         jLabel12.setText(title);
         //join between storageList(all count = 0) and exist recipes into storageList
@@ -2451,18 +2436,20 @@ public class MainForm extends javax.swing.JFrame {
                 storageList1.setCount(zero);
             }
         }
-        showCalcTable();
+        showCalcTable(jTable3);
+        
     }//GEN-LAST:event_refreshCalc
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
         jPanel6.setVisible(false);
         jTabbedPane1.setVisible(true);
-        mainForm.setSize(1140, 705);
+        mainForm.setSize(1149, 697);
     }//GEN-LAST:event_goToMainMenu
 
     private void exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromCalculation
         jPanel7.setVisible(false);
         jTabbedPane1.setVisible(true);
+        mainForm.setSize(1149, 697);
     }//GEN-LAST:event_exitFromCalculation
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -2538,7 +2525,9 @@ public class MainForm extends javax.swing.JFrame {
         jButton15.setVisible(false);
         jButton17.setVisible(false);
         jTextField3.setVisible(false);
-        
+        jButton4.setVisible(false);
+        jButton5.setVisible(false);
+
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
         employeeList.clear();
@@ -2570,15 +2559,19 @@ public class MainForm extends javax.swing.JFrame {
 //          JSONUtils.writeAllIngredients();
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        int index = jComboBox2.getSelectedIndex();
+    private void setSort(JComboBox comboBox, JTable table){
+        int index = comboBox.getSelectedIndex();
         sortListOfIngredients(storageList, index);
-        showCalcTable();
+        showCalcTable(table);
         if (index == 1 || index == 2) {
-            jTable3.setRowSelectionInterval(0, 0);
+            table.setRowSelectionInterval(0, 0);
             Rectangle cellRect = jTable3.getCellRect(0, 0, true);
-            jTable3.scrollRectToVisible(cellRect);
+            table.scrollRectToVisible(cellRect);
         }
+        
+    }
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        setSort(jComboBox2, jTable3);
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
@@ -2595,8 +2588,7 @@ public class MainForm extends javax.swing.JFrame {
         String JSONString = RecepiesUtils.readRecipesFromDB(activeCat,
                 listofCat.get(activeCat).get(activeDishes).getDbID());
         System.out.println("JSONString=" + JSONString);
-        JSONUtils.JSONToRecipes(JSONString, activeCat, activeDishes);
-
+        JSONUtils.setJSONToRecipes(JSONString, activeCat, activeDishes);
         refreshCalc(null);
 
     }//GEN-LAST:event_saveCalculation
@@ -2619,16 +2611,47 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_changePizzaSize
 
     private void jButton23exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23exitFromCalculation
+        jPanel8.setVisible(false);
+        jTabbedPane1.setVisible(true);
+        mainForm.setSize(1149, 697);
     }//GEN-LAST:event_jButton23exitFromCalculation
 
     private void jButton35saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35saveCalculation
     }//GEN-LAST:event_jButton35saveCalculation
 
     private void addIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addIngredient
+        String title = jTextField6.getText();
+        if (!title.equals("")) {
+            StorageUtils.addIngredientToDB(new Ingredient(title));
+            StorageUtils.readStorage();
+            showCalcTable(jTable5);
+        }
+        
+        
+        
+
     }//GEN-LAST:event_addIngredient
 
     private void removeIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIngredient
+        int index = jTable5.getSelectedRow();
+        if (index != -1) {
+            StorageUtils.removeIngredientFromDB(storageList.get(index).getId());
+            StorageUtils.readStorage();
+            showCalcTable(jTable5);            
+        }        
     }//GEN-LAST:event_removeIngredient
+
+    private void goToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToStorage
+        jPanel8.setVisible(true);
+        jTabbedPane1.setVisible(false);
+        StorageUtils.readStorage();
+        showCalcTable(jTable5);
+        mainForm.setSize(655, 700);
+    }//GEN-LAST:event_goToStorage
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        setSort(jComboBox3, jTable5);
+    }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -2700,24 +2723,33 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public void initMainForm() {
         Locale locale = new Locale("uk", "UA");
         DateFormat dateFormat = new SimpleDateFormat("EEEE, dd/MM/yyyy", locale);
         this.setTitle("SmartCafe " + dateFormat.format(new Date()));
     }
-
-    private void initCalculationTable() throws ParseException {
+    private void initCalculationTable(){
+        try {
+            setColumnRender(jTable3.getColumnModel().getColumn(2));
+            setColumnRender(jTable5.getColumnModel().getColumn(2));
+            setColumnRender(jTable5.getColumnModel().getColumn(3));
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    //initCalculationTable
+    private void setColumnRender(TableColumn column) throws ParseException {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
-        jTable3.getColumnModel().getColumn(2).setCellRenderer(leftRenderer);
-
+        column.setCellRenderer(leftRenderer);
         MaskFormatter mf2 = new MaskFormatter("#.###");
         JFormattedTextField formattedTextField = new JFormattedTextField(mf2);
         formattedTextField.setFont(new Font("Verdana", 0, 18));
-
         DefaultCellEditor dce = new DefaultCellEditor(formattedTextField);
-        jTable3.getColumnModel().getColumn(2).setCellEditor(dce);
+        column.setCellEditor(dce);
     }
 
     public void initBDmenu() {
@@ -2747,15 +2779,47 @@ public class MainForm extends javax.swing.JFrame {
         listofCat.add(alcohols);
         listofCat.add(newCat1);
         listofCat.add(newCat2);
-        
+
         DishUtils.readDBmenu();
         StorageUtils.readStorage();
 
     }
-
-    public void refreshBDmenu(int orderArg) {
-        DishUtils.readDBmenu();
+    private void InitComonentsProperty(){
+        
+        jPanel6.setVisible(false);
+        jCheckBox1.setVisible(false);
+        jTabbedPane1.setEnabledAt(1, false);
+        jTabbedPane1.setEnabledAt(2, false);
+        jTextField2.setLayout(new AbsoluteLayout());
+        jTextField2.setVisible(false);
+        jTable4.setVisible(false);
+        jButton4.setVisible(false);
+        jButton5.setVisible(false);
+        jButton1.setVisible(false);
+        jButton11.setVisible(false);
+        jButton12.setVisible(false);
+        jButton14.setVisible(false);
+        jButton14.setBackground(GREEN);
+        jButton15.setVisible(false);
+        jButton17.setVisible(false);
+        jButton19.setVisible(false);
+        jButton15.setBackground(RED);
+        jTextField3.setVisible(false);
+        jTextField2.setVisible(false);
+        jTextField4.setVisible(false);
+        jLabel8.setVisible(false);
+        jLabel9.setVisible(false);
+        jPanel7.setVisible(false);
+        jPanel8.setVisible(false);
+        jButton11.setBackground(GREEN);
+        jButton1.setBackground(RED);
+        jButton36.setBackground(GREEN);
+        jButton37.setBackground(RED);
     }
+
+//    public void refreshBDmenu(int orderArg) {
+//        DishUtils.readDBmenu();
+//    }
 
     public void initIcons() {
         icons.add(new ImageIcon(getClass().
@@ -2874,6 +2938,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2909,6 +2974,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     private javax.swing.JButton table01;
     private javax.swing.JButton table02;
     private javax.swing.JButton table03;

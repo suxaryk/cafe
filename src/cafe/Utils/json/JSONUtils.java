@@ -61,7 +61,7 @@ public class JSONUtils {
         
     }
     //JSON String to data
-    public static void JSONToRecipes(String jsonRecipes, int activeCat, 
+    public static void setJSONToRecipes(String jsonRecipes, int activeCat, 
                                                        int activeDish){
         if (!"".equals(jsonRecipes)) {
             try {

@@ -1779,13 +1779,14 @@ public class MainForm extends javax.swing.JFrame {
             jTextField1.setText("0");
         }
         if (checks.get(activeTable).isPayed()) {
+            markCheckItems();
             jButton10.setEnabled(false);
             jButton3.setEnabled(false);
             jButton7.setEnabled(false);
-            jButton10.setBackground(Color.YELLOW);
-            jButton3.setBackground(Color.YELLOW);
-            jButton7.setBackground(Color.YELLOW);
-            jTable1.setBackground(Color.YELLOW);
+            jButton10.setBackground(lightRed);
+            jButton3.setBackground(lightRed);
+            jButton7.setBackground(lightRed);
+            jTable1.setBackground(lightRed);
         } else {
             jTabbedPane1.setEnabledAt(1, true);
             jTabbedPane1.setSelectedIndex(1);
@@ -2150,13 +2151,13 @@ public class MainForm extends javax.swing.JFrame {
                 if (jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") || activeCat == 9 || activeCat == 10) {
                     CheckUtils.addCheck(checks.get(activeTable), userList.get(User.getActiveUser));
                     checks.get(activeTable).setPayed(true);
-                    jTable1.setBackground(Color.YELLOW);
+                    jTable1.setBackground(lightRed);
                     dayCash += checks.get(activeTable).getTotalsum();
                     jTextField5.setText(String.valueOf(dayCash));
 
-                    jButton10.setBackground(Color.YELLOW);
-                    jButton3.setBackground(Color.YELLOW);
-                    jButton7.setBackground(Color.YELLOW);
+                    jButton10.setBackground(lightRed);
+                    jButton3.setBackground(lightRed);
+                    jButton7.setBackground(lightRed);
                     jButton10.setEnabled(false);
                     jButton3.setEnabled(false);
                     jButton7.setEnabled(false);
@@ -2733,7 +2734,7 @@ public class MainForm extends javax.swing.JFrame {
     private static LoginForm loginForm;
     private static final Color RED = new Color(255, 102, 102);
     private static final Color BLUE = new Color(0, 153, 204);
-//    private static final Color darkBLUE = new Color(51, 153, 255);
+    private static final Color lightRed = new Color(255, 102, 102);
     private static final Color GREEN = new Color(0, 153, 102);
 //    private static final Color WHITE = new Color(255, 255, 255);
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -21,15 +21,15 @@ public class Dish {
     
     
 
-    public Dish(int dbID, String title, int price, String  recipes) {
-        this.dbId = dbID;
-        this.title = title;
-        this.price = price;         
-       // System.out.println("cat=" + MainForm.activeCat);
-       // System.out.println("Dish=" +MainForm.activeDishes);
-        //JSONUtils.readRecipes(recipes, MainForm.activeCat, MainForm.activeDishes);
-        
-    }
+//    public Dish(int dbID, String title, int price, String  recipes) {
+//        this.dbId = dbID;
+//        this.title = title;
+//        this.price = price;         
+//       // System.out.println("cat=" + MainForm.activeCat);
+//       // System.out.println("Dish=" +MainForm.activeDishes);
+//        //JSONUtils.readRecipes(recipes, MainForm.activeCat, MainForm.activeDishes);
+//        
+//    }
 
     public Dish(int dbID, String title, int price) {
         this.dbId = dbID;
@@ -38,9 +38,9 @@ public class Dish {
     }
     public Dish(String title, int price) {        
         this.title = title;
-        this.price = price;
-        this.cook = true;
+        this.price = price;        
     }
+    
     
 
     public int getDbID() {
@@ -76,7 +76,10 @@ public class Dish {
     }
 
     public boolean isCook() {
-        return cook;
+        if (recipes.size() > 1) {
+            return cook = true;
+        }
+        else return cook = false;        
     }
 
     public void setCook(boolean cook) {

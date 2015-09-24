@@ -1782,10 +1782,10 @@ public class MainForm extends javax.swing.JFrame {
             jButton10.setEnabled(false);
             jButton3.setEnabled(false);
             jButton7.setEnabled(false);
-            jButton10.setBackground(GREEN);
-            jButton3.setBackground(GREEN);
-            jButton7.setBackground(GREEN);
-            jTable1.setBackground(GREEN);
+            jButton10.setBackground(Color.YELLOW);
+            jButton3.setBackground(Color.YELLOW);
+            jButton7.setBackground(Color.YELLOW);
+            jTable1.setBackground(Color.YELLOW);
         } else {
             jTabbedPane1.setEnabledAt(1, true);
             jTabbedPane1.setSelectedIndex(1);
@@ -2150,13 +2150,13 @@ public class MainForm extends javax.swing.JFrame {
                 if (jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") || activeCat == 9 || activeCat == 10) {
                     CheckUtils.addCheck(checks.get(activeTable), userList.get(User.getActiveUser));
                     checks.get(activeTable).setPayed(true);
-                    jTable1.setBackground(GREEN);
+                    jTable1.setBackground(Color.YELLOW);
                     dayCash += checks.get(activeTable).getTotalsum();
                     jTextField5.setText(String.valueOf(dayCash));
 
-                    jButton10.setBackground(GREEN);
-                    jButton3.setBackground(GREEN);
-                    jButton7.setBackground(GREEN);
+                    jButton10.setBackground(Color.YELLOW);
+                    jButton3.setBackground(Color.YELLOW);
+                    jButton7.setBackground(Color.YELLOW);
                     jButton10.setEnabled(false);
                     jButton3.setEnabled(false);
                     jButton7.setEnabled(false);

@@ -50,7 +50,7 @@ public class CheckUtils {
          
             pstatement.setInt(1, ++checkId);
             pstatement.setInt(2, check.getTotalsum());
-//            pstatement.setInt(3, check.getCookCount());
+            pstatement.setInt(3, check.getCookCount());
             pstatement.setTimestamp(4, getCurrentTimeStamp());
             pstatement.setString(5, user.getName());
 
@@ -80,7 +80,7 @@ public class CheckUtils {
             PreparedStatement pst = connection.prepareStatement(SQL);
             pst.setInt(1, getDayCount());
             int sum;
-            try (ResultSet rs = pst.executeQuery()) {  //??????????????????????????s
+            try (ResultSet rs = pst.executeQuery()) {  
                 sum = 0;
                 while (rs.next()) {
                     sum = rs.getInt(1);

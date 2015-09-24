@@ -5,7 +5,6 @@
  */
 package cafe.model;
 
-import cafe.model.CheckItem;
 import java.util.ArrayList;
 
 /**
@@ -29,14 +28,14 @@ public class Check {
         return totalsum = sum;
     }
 
-//    public int getCookCount() {        
-//        for (CheckItem checkList1 : checkList) {
-//            if (checkList1.getDish().isCook()) {
-//                cookCount+=checkList1.getCount();                  
-//            }
-//        }
-//        return cookCount;
-//    }
+    public int getCookCount() {        
+        for (CheckItem checkList1 : checkList) {
+            if (checkList1.getDish().isCook()) {
+                cookCount+=checkList1.getCount();                  
+            }
+        }
+        return cookCount;
+    }
 
     public void setCookCount(int totalCount) {
         this.cookCount = totalCount;

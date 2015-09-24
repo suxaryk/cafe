@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultRowSorter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -82,11 +81,12 @@ public class MainForm extends javax.swing.JFrame {
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);
         jPanel7.setVisible(false);
+        jPanel8.setVisible(false);
         jButton11.setBackground(GREEN);
         jButton1.setBackground(RED);
 
         initLoginForm();
-        initMainForm();
+        initMainForm(); 
         try {
             initCalculationTable();
         } catch (ParseException ex) {
@@ -215,6 +215,16 @@ public class MainForm extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jButton22 = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable5 = new javax.swing.JTable();
+        jButton23 = new javax.swing.JButton();
+        jComboBox3 = new javax.swing.JComboBox();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jButton35 = new javax.swing.JButton();
+        jButton36 = new javax.swing.JButton();
+        jButton37 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -1736,6 +1746,122 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(jPanel7);
         jPanel7.setBounds(0, 0, 650, 700);
 
+        jPanel8.setLayout(null);
+
+        jTable5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "№", "Назва", "Вага ( кг/ шт )"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable5.setRowHeight(20);
+        jTable5.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane6.setViewportView(jTable5);
+        if (jTable5.getColumnModel().getColumnCount() > 0) {
+            jTable5.getColumnModel().getColumn(0).setMinWidth(40);
+            jTable5.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTable5.getColumnModel().getColumn(0).setMaxWidth(40);
+            jTable5.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable5.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTable5.getColumnModel().getColumn(2).setMaxWidth(100);
+        }
+
+        jPanel8.add(jScrollPane6);
+        jScrollPane6.setBounds(0, 30, 650, 510);
+
+        jButton23.setBackground(new java.awt.Color(255, 255, 255));
+        jButton23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton23exitFromCalculation(evt);
+            }
+        });
+        jPanel8.add(jButton23);
+        jButton23.setBounds(0, 600, 100, 73);
+
+        jComboBox3.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jComboBox3);
+        jComboBox3.setBounds(530, 560, 120, 30);
+
+        jLabel13.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel13.setText("Сортування:");
+        jPanel8.add(jLabel13);
+        jLabel13.setBounds(530, 540, 120, 18);
+
+        jLabel14.setBackground(new java.awt.Color(0, 153, 204));
+        jLabel14.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel14.setText(" Інформація");
+        jLabel14.setOpaque(true);
+        jPanel8.add(jLabel14);
+        jLabel14.setBounds(0, 0, 650, 30);
+
+        jButton35.setBackground(new java.awt.Color(153, 153, 255));
+        jButton35.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton35.setText("<html> &nbsp;зберегти<br/> &nbsp;&nbsp; зміни</html> ");
+        jButton35.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton35.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton35saveCalculation(evt);
+            }
+        });
+        jPanel8.add(jButton35);
+        jButton35.setBounds(530, 600, 120, 70);
+
+        jButton36.setBackground(new java.awt.Color(204, 204, 204));
+        jButton36.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton36.setText("додати");
+        jButton36.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addIngredient(evt);
+            }
+        });
+        jPanel8.add(jButton36);
+        jButton36.setBounds(330, 600, 100, 70);
+
+        jButton37.setBackground(new java.awt.Color(204, 204, 204));
+        jButton37.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton37.setText("видалити");
+        jButton37.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton37.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeIngredient(evt);
+            }
+        });
+        jPanel8.add(jButton37);
+        jButton37.setBounds(430, 600, 100, 70);
+
+        getContentPane().add(jPanel8);
+        jPanel8.setBounds(0, 0, 650, 700);
+
         setSize(new java.awt.Dimension(1152, 705));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -1857,7 +1983,7 @@ public class MainForm extends javax.swing.JFrame {
         });
     }
 
-    private void fillPrices(String title, int price) {
+    private void fillPrices(int price) {
         btn1.setText("<html> 1 <br/> " + price + " грн. </html>");
         btn2.setText("<html> 2 <br/> " + price * 2 + " грн. </html>");
         btn3.setText("<html> 3 <br/> " + price * 3 + " грн. </html>");
@@ -1877,19 +2003,17 @@ public class MainForm extends javax.swing.JFrame {
         if (jCheckBox1.isSelected()) {
             title = "(Вел.)" + title;
         }
-        fillPrices(title, price);
+        fillPrices(price);
     }
 
-
     private void jPanel5ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel5ComponentShown
-        // TODO add your handling code here: 
         jList2.setSelectedIndex(0);
         activeDishes = 0;
         jList2.ensureIndexIsVisible(jList2.getSelectedIndex());
         clearCountButton();
         int price = listofCat.get(activeCat).get(0).getPrice();
         String title = listofCat.get(activeCat).get(0).getTitle();
-        fillPrices(title, price);
+        fillPrices(price);
         clearCheckboxs();
     }//GEN-LAST:event_jPanel5ComponentShown
 
@@ -1929,8 +2053,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void clearTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearTable
         if (jButton9.isEnabled()) {
-            //if (checks.get(activeTable).isPayed()) {
-
             checks.get(activeTable).getCheckList().clear();
             jTabbedPane1.setSelectedIndex(0);
             for (int i = 0; i < tablesCount; i++) {
@@ -1945,7 +2067,6 @@ public class MainForm extends javax.swing.JFrame {
                     model.setRowCount(0);
                     jTextField1.setText("0");
                     jButton10.setBackground(Color.WHITE);
-
                 }
             }
             jButton10.setBackground(Color.WHITE);
@@ -1959,19 +2080,15 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearTable
 
     private void removeCheckItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCheckItem
-        // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         System.out.println("selectedRow" + jTable1.getSelectedRow());
         int activeRow = jTable1.getSelectedRow();
-
         if (jTable1.getRowCount() != 0) {
             if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
-
                 model.removeRow(jTable1.getRowCount() - 1);
                 checks.get(activeTable).getCheckList().
                         remove(checks.get(activeTable).
                                 getCheckList().size() - 1);
-
             }
         }
 
@@ -1979,7 +2096,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_removeCheckItem
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         if (User.getActiveUser == userList.size() - 1) {
             jLabel5.setText("  " + userList.get(User.getActiveUser).getName());
@@ -2000,7 +2116,6 @@ public class MainForm extends javax.swing.JFrame {
             jTextField4.setVisible(true);
             jLabel8.setVisible(true);
             jLabel9.setVisible(true);
-
         } else {
             jLabel5.setText("  " + userList.get(User.getActiveUser).getName());
             jLabel5.setForeground(BLUE);
@@ -2010,7 +2125,6 @@ public class MainForm extends javax.swing.JFrame {
         }
         initMainForm();
         initPassTable();
-
     }//GEN-LAST:event_formComponentShown
 
 //    public void printComponenet() {
@@ -2060,10 +2174,8 @@ public class MainForm extends javax.swing.JFrame {
         model.addRow(new Object[]{
             "", null, null, null
         });
-
     }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
-        // TODO add your handling code here:
         //  printComponenet(); 
         if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
             markCheckItems();
@@ -2113,7 +2225,6 @@ public class MainForm extends javax.swing.JFrame {
                 }
             }
         });
-
     }
 
     private void sortListOfIngredients(List list, final int orderArg) {
@@ -2129,11 +2240,9 @@ public class MainForm extends javax.swing.JFrame {
                 }
             }
         });
-
     }
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-
         for (ArrayList<Dish> listofCat1 : listofCat) {
             sortListOfDish(listofCat1, jComboBox1.getSelectedIndex());
         }
@@ -2145,10 +2254,12 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void payCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_payCheck
-        // TODO add your handling code here:
         if (jButton10.isEnabled()) {
             if (checks.get(activeTable).getTotalsum() != 0) {
                 if (jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") || activeCat == 9 || activeCat == 10) {
+                    if (activeCat == 9 || activeCat == 10) {
+                        markCheckItems();
+                    }
                     CheckUtils.addCheck(checks.get(activeTable), userList.get(User.getActiveUser));
                     checks.get(activeTable).setPayed(true);
                     jTable1.setBackground(lightRed);
@@ -2177,7 +2288,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1MousePressed
 
     private void clearDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDigit
-        // TODO add your handling code here:
         if (jPasswordField1.getPassword().length > 0) {
             jPasswordField1.setText("" + new String(jPasswordField1.
                     getPassword()).
@@ -2186,22 +2296,18 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearDigit
 
     private void NumberPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberPressed
-        // TODO add your handling code here:
         if (User.getActiveUser == userList.size() - 1) {
             jPasswordField1.setEchoChar((char) 0);
-
         }
         JButton myButton = (JButton) evt.getSource();
         if (myButton.isEnabled()) {
             jPasswordField1.setText("" + new String(jPasswordField1.
                     getPassword()) + myButton.getText());
         }
-
     }//GEN-LAST:event_NumberPressed
 
 
     private void loginEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginEmployee
-        // TODO add your handling code here:
         int activeRow = jTable2.getSelectedRow();
         if (jButton13.isEnabled() && !new String(jPasswordField1.
                 getPassword()).equals("")) {
@@ -2227,7 +2333,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_loginEmployee
 
     private void EmployeeSelected(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeeSelected
-        // TODO add your handling code here:
         jPasswordField1.setText("");
         jLabel7.setText("введіть пароль");
         jButton24.setEnabled(true);
@@ -2245,7 +2350,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_EmployeeSelected
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
         JFrame frame = new JFrame();
         String[] options = new String[2];
         options[0] = "Так";
@@ -2259,18 +2363,14 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
-        // TODO add your handling code here:
         String name = jTextField3.getText();
         String pass = new String(jPasswordField1.getPassword());
-
         if (!name.equals("") && !pass.equals("")) {
-
             EmployeeUtils.addEmployeeToDB(name, Integer.parseInt(pass));
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             model.setRowCount(0);
             employeeList.clear();
             initPassTable();
-
             jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
             Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
             jTable2.scrollRectToVisible(cellRect);
@@ -2279,7 +2379,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addEmployee
 
     private void PriceTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceTyped
-        // TODO add your handling code here:
         char c = evt.getKeyChar();
         if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || c == KeyEvent.VK_DELETE)) {
             evt.consume();
@@ -2287,11 +2386,10 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_PriceTyped
 
     private void addDish(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDish
-        // TODO add your handling code here:
         if (!jTextField2.getText().equals("") && !jTextField4.getText().equals("")) {
             String title = jTextField4.getText();
             int price = Integer.parseInt(jTextField2.getText());
-
+            
             DishUtils.addDish(new Dish(title, price), activeCat);
             listofCat.get(activeCat).clear();
             DishUtils.readDBCategoryById(activeCat);
@@ -2304,7 +2402,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addDish
 
     private void removeDish(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeDish
-        // TODO add your handling code here:
         System.out.println("selectd index = " + jList2.getSelectedIndex());
         int activeIndex = jList2.getSelectedIndex();
         int dbId = listofCat.get(activeCat).get(activeIndex).getDbID();
@@ -2318,7 +2415,6 @@ public class MainForm extends javax.swing.JFrame {
             jList2.setSelectedIndex(jList2.getModel().getSize() - 1);
             getListItem(null);
         }
-
     }//GEN-LAST:event_removeDish
 
     private void showCalcTable() {
@@ -2333,12 +2429,11 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
-        // TODO add your handling code here:
         jTabbedPane1.setVisible(false);
         jPanel7.setVisible(true);
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
         jLabel12.setText(title);
-        //left join between tmpList and storageList
+        //join between storageList(all count = 0) and exist recipes into storageList
         ArrayList<Ingredient> tmpList = new ArrayList<>();
         tmpList.addAll(listofCat.get(activeCat).get(activeDishes).getListOfIngredients());
         final int zero = 0;
@@ -2357,30 +2452,23 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
         showCalcTable();
-
     }//GEN-LAST:event_refreshCalc
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
-        // TODO add your handling code here:
         jPanel6.setVisible(false);
         jTabbedPane1.setVisible(true);
         mainForm.setSize(1140, 705);
-
     }//GEN-LAST:event_goToMainMenu
 
     private void exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromCalculation
-        // TODO add your handling code here:
         jPanel7.setVisible(false);
         jTabbedPane1.setVisible(true);
-
     }//GEN-LAST:event_exitFromCalculation
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void removeEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEmployee
-        // TODO add your handling code here:
         System.out.println("size in remove" + employeeList.size());
         int activeRow = jTable2.getSelectedRow();
         int listIndex = activeRow - userList.size();
@@ -2391,16 +2479,13 @@ public class MainForm extends javax.swing.JFrame {
             model.setRowCount(0);
             employeeList.clear();
             initPassTable();
-
             jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
             Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
             jTable2.scrollRectToVisible(cellRect);
-
         }
     }//GEN-LAST:event_removeEmployee
 
     private void updateUserAndEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserAndEmployee
-        // TODO add your handling code here:
         int activeRow = jTable2.getSelectedRow();
         String name = jTextField3.getText();
         int listIndex = activeRow - userList.size();
@@ -2416,10 +2501,8 @@ public class MainForm extends javax.swing.JFrame {
                 UsersUtils.updateUserPass(dbId, Integer.parseInt(newPass));
                 System.out.println("pass");
             }
-
             userList.clear();
             UsersUtils.readAllUsers();
-
         } else {
             int dbId = employeeList.get(activeRow - userList.size()).getDbId();
             if (!name.equals("")) {
@@ -2429,7 +2512,6 @@ public class MainForm extends javax.swing.JFrame {
                 EmployeeUtils.updateEmployeePass(dbId, Integer.parseInt(newPass));
             }
         }
-
         model.setRowCount(0);
         employeeList.clear();
         initPassTable();
@@ -2439,13 +2521,11 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateUserAndEmployee
 
     private void exitSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitSystem
-        // TODO add your handling code here:
         CheckUtils.setCheckId(0);
         mainForm.setVisible(false);
         mainForm.setEnabled(false);
         loginForm.getDate();
         loginForm.setVisible(true);
-
         jButton1.setVisible(false);
         jButton11.setVisible(false);
         jButton12.setVisible(false);
@@ -2454,13 +2534,11 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4.setVisible(false);
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);
-
         jButton14.setVisible(false);
         jButton15.setVisible(false);
         jButton17.setVisible(false);
-
         jTextField3.setVisible(false);
-
+        
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
         employeeList.clear();
@@ -2468,7 +2546,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_exitSystem
 
     private void updateTitleAndPrice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTitleAndPrice
-        // TODO add your handling code here:
         int index = jList2.getSelectedIndex();
         int dbId = listofCat.get(activeCat).get(index).getDbID();
         String title = jTextField4.getText();
@@ -2490,12 +2567,10 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateTitleAndPrice
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
 //          JSONUtils.writeAllIngredients();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:  
         int index = jComboBox2.getSelectedIndex();
         sortListOfIngredients(storageList, index);
         showCalcTable();
@@ -2503,15 +2578,11 @@ public class MainForm extends javax.swing.JFrame {
             jTable3.setRowSelectionInterval(0, 0);
             Rectangle cellRect = jTable3.getCellRect(0, 0, true);
             jTable3.scrollRectToVisible(cellRect);
-
         }
-
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
-        // TODO add your handling code here:
         ArrayList<Ingredient> changedList = new ArrayList<>();
-
         for (int i = 0; i < jTable3.getRowCount(); i++) {
             int dbId = Integer.parseInt(jTable3.getValueAt(i, 0).toString());
             String title = jTable3.getValueAt(i, 1).toString();
@@ -2520,7 +2591,6 @@ public class MainForm extends javax.swing.JFrame {
                 changedList.add(new Ingredient(dbId, title, count));
             }
         }
-
         JSONUtils.updateDishIngredients(changedList, activeCat, activeDishes);
         String JSONString = RecepiesUtils.readRecipesFromDB(activeCat,
                 listofCat.get(activeCat).get(activeDishes).getDbID());
@@ -2548,6 +2618,18 @@ public class MainForm extends javax.swing.JFrame {
         refreshListOfPrices();
     }//GEN-LAST:event_changePizzaSize
 
+    private void jButton23exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23exitFromCalculation
+    }//GEN-LAST:event_jButton23exitFromCalculation
+
+    private void jButton35saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35saveCalculation
+    }//GEN-LAST:event_jButton35saveCalculation
+
+    private void addIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addIngredient
+    }//GEN-LAST:event_addIngredient
+
+    private void removeIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIngredient
+    }//GEN-LAST:event_removeIngredient
+
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
         jCheckBox1.setBackground(RED);
@@ -2556,7 +2638,6 @@ public class MainForm extends javax.swing.JFrame {
     private void initLoginForm() {
         loginForm = new LoginForm();
         loginForm.setVisible(true);
-        // loginForm.
         loginForm.toFront();
         loginForm.setAlwaysOnTop(true);
         loginForm.addWindowListener(new WindowListener() {
@@ -2596,9 +2677,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void initPassTable() {
-
         EmployeeUtils.readAllEmployees();
-
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         if (User.getActiveUser == userList.size() - 1) {
             for (int i = 0; i < userList.size(); i++) {
@@ -2619,15 +2698,12 @@ public class MainForm extends javax.swing.JFrame {
                     employeeList.get(i).getName(), null, null
                 });
             }
-
         }
-
     }
-
+    
     public void initMainForm() {
         Locale locale = new Locale("uk", "UA");
         DateFormat dateFormat = new SimpleDateFormat("EEEE, dd/MM/yyyy", locale);
-
         this.setTitle("SmartCafe " + dateFormat.format(new Date()));
     }
 
@@ -2642,11 +2718,9 @@ public class MainForm extends javax.swing.JFrame {
 
         DefaultCellEditor dce = new DefaultCellEditor(formattedTextField);
         jTable3.getColumnModel().getColumn(2).setCellEditor(dce);
-
     }
 
     public void initBDmenu() {
-
         ArrayList<Dish> fdishes = new ArrayList();
         ArrayList<Dish> salads = new ArrayList();
         ArrayList<Dish> rogerdishes = new ArrayList();
@@ -2660,7 +2734,6 @@ public class MainForm extends javax.swing.JFrame {
         ArrayList<Dish> alcohols = new ArrayList();
         ArrayList<Dish> newCat1 = new ArrayList();
         ArrayList<Dish> newCat2 = new ArrayList();
-
         listofCat.add(fdishes);
         listofCat.add(salads);
         listofCat.add(rogerdishes);
@@ -2674,7 +2747,7 @@ public class MainForm extends javax.swing.JFrame {
         listofCat.add(alcohols);
         listofCat.add(newCat1);
         listofCat.add(newCat2);
-
+        
         DishUtils.readDBmenu();
         StorageUtils.readStorage();
 
@@ -2682,7 +2755,6 @@ public class MainForm extends javax.swing.JFrame {
 
     public void refreshBDmenu(int orderArg) {
         DishUtils.readDBmenu();
-
     }
 
     public void initIcons() {
@@ -2714,10 +2786,8 @@ public class MainForm extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
         mainForm = new MainForm();
         mainForm.setIconImage(null);
-
     }
     private static int dayCash;
     public static ArrayList<Employee> employeeList = new ArrayList<>();
@@ -2773,6 +2843,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
@@ -2785,6 +2856,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton32;
     private javax.swing.JButton jButton33;
     private javax.swing.JButton jButton34;
+    private javax.swing.JButton jButton35;
+    private javax.swing.JButton jButton36;
+    private javax.swing.JButton jButton37;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -2794,9 +2868,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2813,17 +2890,20 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTable5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

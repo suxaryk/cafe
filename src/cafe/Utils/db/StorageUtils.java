@@ -12,6 +12,7 @@ import cafe.model.Ingredient;
 import cafe.view.MainForm;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,23 +45,39 @@ public class StorageUtils {
 
     }
 
-//    public static void addIngredientToDB(Ingredient ingredient) {
-//        final String SQL = "INSERT INTO storage(title) VALUES(?)";
-//        try (Connection connection = DriverManager
-//                .getConnection(URL, USERNAME, PASSWORD)) {
-//
-//            PreparedStatement pstatement = connection.prepareStatement(SQL);
-//            pstatement.setString(1, name);
-//            pstatement.setInt(2, pass);
-//            int rowsInserted = pstatement.executeUpdate();
-//            if (rowsInserted > 0) {
-//                System.out.println("A new Ingredient was added successfully!");
-//                
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Connection Failed! Check output console - addIngredientToDB");
-//        }
-//
-//    }
+    public static void addIngredientToDB(Ingredient ingredient) {
+        final String SQL = "INSERT INTO storage(title) VALUES(?)";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            pstatement.setString(1, ingredient.getTitle());       
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new Ingredient was added successfully!");
+                
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addIngredientToDB");
+        }
+
+    }
+    
+    public static void removeIngredientFromDB(int dbId) {
+        final String SQL = "DELETE FROM storage WHERE Id = ?";
+
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            PreparedStatement pst = connection.prepareStatement(SQL);
+            pst.setInt(1, dbId);
+            int rowsInserted = pst.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Ingredient was removed successfully!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - removeIngredientFromDB");
+        }
+
+    }
 
 }

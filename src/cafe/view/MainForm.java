@@ -185,11 +185,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton16 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox();
-        jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jButton22 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
@@ -203,6 +199,39 @@ public class MainForm extends javax.swing.JFrame {
         jTextField6 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jButton38 = new javax.swing.JButton();
+        jPanel10Recipes = new javax.swing.JPanel();
+        jButton53 = new javax.swing.JButton();
+        jButton54 = new javax.swing.JButton();
+        jButton55 = new javax.swing.JButton();
+        jButton56 = new javax.swing.JButton();
+        jButton57 = new javax.swing.JButton();
+        jButton58 = new javax.swing.JButton();
+        jButton59 = new javax.swing.JButton();
+        jButton60 = new javax.swing.JButton();
+        jButton61 = new javax.swing.JButton();
+        jButton62 = new javax.swing.JButton();
+        jButton63 = new javax.swing.JButton();
+        jButton20 = new javax.swing.JButton();
+        jButton39 = new javax.swing.JButton();
+        jComboBox4 = new javax.swing.JComboBox();
+        jLabel16 = new javax.swing.JLabel();
+        jButton64 = new javax.swing.JButton();
+        jPanel11Storage = new javax.swing.JPanel();
+        jButton65 = new javax.swing.JButton();
+        jButton66 = new javax.swing.JButton();
+        jButton67 = new javax.swing.JButton();
+        jButton68 = new javax.swing.JButton();
+        jButton69 = new javax.swing.JButton();
+        jButton70 = new javax.swing.JButton();
+        jButton71 = new javax.swing.JButton();
+        jButton72 = new javax.swing.JButton();
+        jButton73 = new javax.swing.JButton();
+        jButton74 = new javax.swing.JButton();
+        jButton75 = new javax.swing.JButton();
+        jButton21 = new javax.swing.JButton();
+        jComboBox5 = new javax.swing.JComboBox();
+        jLabel17 = new javax.swing.JLabel();
+        jButton76 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -1375,7 +1404,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton25.setBackground(new java.awt.Color(204, 204, 204));
         jButton25.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
-        jButton25.setText("C");
+        jButton25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/left145.png"))); // NOI18N
         jButton25.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton25.setEnabled(false);
         jButton25.addActionListener(new java.awt.event.ActionListener() {
@@ -1636,7 +1665,7 @@ public class MainForm extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1650,6 +1679,11 @@ public class MainForm extends javax.swing.JFrame {
         jTable3.setFocusable(false);
         jTable3.setRowHeight(20);
         jTable3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                IngredientSelected(evt);
+            }
+        });
         jScrollPane4.setViewportView(jTable3);
         if (jTable3.getColumnModel().getColumnCount() > 0) {
             jTable3.getColumnModel().getColumn(0).setMinWidth(40);
@@ -1661,34 +1695,7 @@ public class MainForm extends javax.swing.JFrame {
         }
 
         jPanel7.add(jScrollPane4);
-        jScrollPane4.setBounds(0, 30, 650, 510);
-
-        jButton16.setBackground(new java.awt.Color(255, 255, 255));
-        jButton16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitFromCalculation(evt);
-            }
-        });
-        jPanel7.add(jButton16);
-        jButton16.setBounds(0, 600, 100, 73);
-
-        jComboBox2.setBackground(new java.awt.Color(240, 240, 240));
-        jComboBox2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jComboBox2);
-        jComboBox2.setBounds(530, 560, 120, 30);
-
-        jLabel10.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabel10.setText("Сортування:");
-        jPanel7.add(jLabel10);
-        jLabel10.setBounds(530, 540, 120, 18);
+        jScrollPane4.setBounds(0, 30, 650, 640);
 
         jLabel12.setBackground(new java.awt.Color(0, 153, 204));
         jLabel12.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -1697,19 +1704,6 @@ public class MainForm extends javax.swing.JFrame {
         jLabel12.setOpaque(true);
         jPanel7.add(jLabel12);
         jLabel12.setBounds(0, 0, 650, 30);
-
-        jButton22.setBackground(new java.awt.Color(153, 153, 255));
-        jButton22.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton22.setText("<html> &nbsp;зберегти<br/> &nbsp;&nbsp; зміни</html> ");
-        jButton22.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveCalculation(evt);
-            }
-        });
-        jPanel7.add(jButton22);
-        jButton22.setBounds(530, 600, 120, 70);
 
         getContentPane().add(jPanel7);
         jPanel7.setBounds(0, 0, 650, 700);
@@ -1729,7 +1723,7 @@ public class MainForm extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1844,6 +1838,331 @@ public class MainForm extends javax.swing.JFrame {
 
         getContentPane().add(jPanel8);
         jPanel8.setBounds(0, 0, 650, 700);
+
+        jPanel10Recipes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel10Recipes.setToolTipText("");
+        jPanel10Recipes.setLayout(null);
+
+        jButton53.setBackground(new java.awt.Color(204, 204, 204));
+        jButton53.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton53.setText("9");
+        jButton53.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton53.setEnabled(false);
+        jButton53.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton53);
+        jButton53.setBounds(151, 1, 50, 50);
+
+        jButton54.setBackground(new java.awt.Color(204, 204, 204));
+        jButton54.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
+        jButton54.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/left145.png"))); // NOI18N
+        jButton54.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton54.setEnabled(false);
+        jButton54.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteDigit(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton54);
+        jButton54.setBounds(1, 1, 50, 50);
+
+        jButton55.setBackground(new java.awt.Color(204, 204, 204));
+        jButton55.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton55.setText("8");
+        jButton55.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton55.setEnabled(false);
+        jButton55.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton55);
+        jButton55.setBounds(101, 1, 50, 50);
+
+        jButton56.setBackground(new java.awt.Color(204, 204, 204));
+        jButton56.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton56.setText("4");
+        jButton56.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton56.setEnabled(false);
+        jButton56.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton56);
+        jButton56.setBounds(51, 51, 50, 50);
+
+        jButton57.setBackground(new java.awt.Color(204, 204, 204));
+        jButton57.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton57.setText("5");
+        jButton57.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton57.setEnabled(false);
+        jButton57.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton57);
+        jButton57.setBounds(101, 51, 50, 50);
+
+        jButton58.setBackground(new java.awt.Color(204, 204, 204));
+        jButton58.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton58.setText("6");
+        jButton58.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton58.setEnabled(false);
+        jButton58.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton58);
+        jButton58.setBounds(151, 51, 50, 50);
+
+        jButton59.setBackground(new java.awt.Color(204, 204, 204));
+        jButton59.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton59.setText("3");
+        jButton59.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton59.setEnabled(false);
+        jButton59.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton59);
+        jButton59.setBounds(151, 101, 50, 50);
+
+        jButton60.setBackground(new java.awt.Color(204, 204, 204));
+        jButton60.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton60.setText("0");
+        jButton60.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton60.setEnabled(false);
+        jButton60.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton60);
+        jButton60.setBounds(1, 101, 50, 50);
+
+        jButton61.setBackground(new java.awt.Color(204, 204, 204));
+        jButton61.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton61.setText("2");
+        jButton61.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton61.setEnabled(false);
+        jButton61.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton61);
+        jButton61.setBounds(101, 101, 50, 50);
+
+        jButton62.setBackground(new java.awt.Color(204, 204, 204));
+        jButton62.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton62.setText("7");
+        jButton62.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton62.setEnabled(false);
+        jButton62.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton62);
+        jButton62.setBounds(51, 1, 50, 50);
+
+        jButton63.setBackground(new java.awt.Color(204, 204, 204));
+        jButton63.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton63.setText("1");
+        jButton63.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton63.setEnabled(false);
+        jButton63.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton63);
+        jButton63.setBounds(51, 101, 50, 50);
+
+        jButton20.setBackground(new java.awt.Color(255, 255, 255));
+        jButton20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitFromCalculation(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton20);
+        jButton20.setBounds(0, 600, 100, 73);
+
+        jButton39.setBackground(new java.awt.Color(153, 153, 255));
+        jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton39.setText("<html> &nbsp;зберегти<br/> &nbsp;&nbsp; зміни</html> ");
+        jButton39.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton39.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton39.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveCalculation(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton39);
+        jButton39.setBounds(370, 60, 120, 70);
+
+        jComboBox4.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
+        jPanel10Recipes.add(jComboBox4);
+        jComboBox4.setBounds(370, 20, 120, 30);
+
+        jLabel16.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel16.setText("Сортування:");
+        jPanel10Recipes.add(jLabel16);
+        jLabel16.setBounds(370, 0, 120, 18);
+
+        jButton64.setBackground(new java.awt.Color(204, 204, 204));
+        jButton64.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
+        jButton64.setText("C");
+        jButton64.setToolTipText("");
+        jButton64.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton64.setEnabled(false);
+        jButton64.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearDigitLine(evt);
+            }
+        });
+        jPanel10Recipes.add(jButton64);
+        jButton64.setBounds(1, 51, 50, 50);
+
+        getContentPane().add(jPanel10Recipes);
+        jPanel10Recipes.setBounds(650, 0, 490, 680);
+
+        jPanel11Storage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel11Storage.setToolTipText("");
+        jPanel11Storage.setLayout(null);
+
+        jButton65.setBackground(new java.awt.Color(204, 204, 204));
+        jButton65.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton65.setText("9");
+        jButton65.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton65.setEnabled(false);
+        jPanel11Storage.add(jButton65);
+        jButton65.setBounds(151, 1, 50, 50);
+
+        jButton66.setBackground(new java.awt.Color(204, 204, 204));
+        jButton66.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
+        jButton66.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/left145.png"))); // NOI18N
+        jButton66.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton66.setEnabled(false);
+        jPanel11Storage.add(jButton66);
+        jButton66.setBounds(1, 1, 50, 50);
+
+        jButton67.setBackground(new java.awt.Color(204, 204, 204));
+        jButton67.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton67.setText("8");
+        jButton67.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton67.setEnabled(false);
+        jPanel11Storage.add(jButton67);
+        jButton67.setBounds(101, 1, 50, 50);
+
+        jButton68.setBackground(new java.awt.Color(204, 204, 204));
+        jButton68.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton68.setText("4");
+        jButton68.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton68.setEnabled(false);
+        jPanel11Storage.add(jButton68);
+        jButton68.setBounds(51, 51, 50, 50);
+
+        jButton69.setBackground(new java.awt.Color(204, 204, 204));
+        jButton69.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton69.setText("5");
+        jButton69.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton69.setEnabled(false);
+        jPanel11Storage.add(jButton69);
+        jButton69.setBounds(101, 51, 50, 50);
+
+        jButton70.setBackground(new java.awt.Color(204, 204, 204));
+        jButton70.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton70.setText("6");
+        jButton70.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton70.setEnabled(false);
+        jPanel11Storage.add(jButton70);
+        jButton70.setBounds(151, 51, 50, 50);
+
+        jButton71.setBackground(new java.awt.Color(204, 204, 204));
+        jButton71.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton71.setText("3");
+        jButton71.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton71.setEnabled(false);
+        jPanel11Storage.add(jButton71);
+        jButton71.setBounds(151, 101, 50, 50);
+
+        jButton72.setBackground(new java.awt.Color(204, 204, 204));
+        jButton72.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton72.setText("0");
+        jButton72.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton72.setEnabled(false);
+        jPanel11Storage.add(jButton72);
+        jButton72.setBounds(1, 101, 50, 50);
+
+        jButton73.setBackground(new java.awt.Color(204, 204, 204));
+        jButton73.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton73.setText("2");
+        jButton73.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton73.setEnabled(false);
+        jPanel11Storage.add(jButton73);
+        jButton73.setBounds(101, 101, 50, 50);
+
+        jButton74.setBackground(new java.awt.Color(204, 204, 204));
+        jButton74.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton74.setText("7");
+        jButton74.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton74.setEnabled(false);
+        jPanel11Storage.add(jButton74);
+        jButton74.setBounds(51, 1, 50, 50);
+
+        jButton75.setBackground(new java.awt.Color(204, 204, 204));
+        jButton75.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton75.setText("1");
+        jButton75.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton75.setEnabled(false);
+        jPanel11Storage.add(jButton75);
+        jButton75.setBounds(51, 101, 50, 50);
+
+        jButton21.setBackground(new java.awt.Color(255, 255, 255));
+        jButton21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
+        jPanel11Storage.add(jButton21);
+        jButton21.setBounds(0, 600, 100, 73);
+
+        jComboBox5.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox5.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
+        jPanel11Storage.add(jComboBox5);
+        jComboBox5.setBounds(370, 20, 120, 30);
+
+        jLabel17.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel17.setText("Сортування:");
+        jPanel11Storage.add(jLabel17);
+        jLabel17.setBounds(370, 0, 120, 18);
+
+        jButton76.setBackground(new java.awt.Color(204, 204, 204));
+        jButton76.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
+        jButton76.setText("C");
+        jButton76.setToolTipText("");
+        jButton76.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton76.setEnabled(false);
+        jPanel11Storage.add(jButton76);
+        jButton76.setBounds(1, 51, 50, 50);
+
+        getContentPane().add(jPanel11Storage);
+        jPanel11Storage.setBounds(650, 0, 490, 680);
 
         setSize(new java.awt.Dimension(1149, 697));
         setLocationRelativeTo(null);
@@ -2309,23 +2628,6 @@ public class MainForm extends javax.swing.JFrame {
         jPasswordField1.setText("");
     }//GEN-LAST:event_loginEmployee
 
-    private void EmployeeSelected(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeeSelected
-        jPasswordField1.setText("");
-        jLabel7.setText("введіть пароль");
-        jButton24.setEnabled(true);
-        jButton25.setEnabled(true);
-        jButton26.setEnabled(true);
-        jButton27.setEnabled(true);
-        jButton28.setEnabled(true);
-        jButton29.setEnabled(true);
-        jButton30.setEnabled(true);
-        jButton31.setEnabled(true);
-        jButton32.setEnabled(true);
-        jButton33.setEnabled(true);
-        jButton34.setEnabled(true);
-        jButton13.setEnabled(true);
-    }//GEN-LAST:event_EmployeeSelected
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         JFrame frame = new JFrame();
         String[] options = new String[2];
@@ -2338,22 +2640,6 @@ public class MainForm extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_formWindowClosing
-
-    private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
-        String name = jTextField3.getText();
-        String pass = new String(jPasswordField1.getPassword());
-        if (!name.equals("") && !pass.equals("")) {
-            EmployeeUtils.addEmployeeToDB(name, Integer.parseInt(pass));
-            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-            model.setRowCount(0);
-            employeeList.clear();
-            initPassTable();
-            jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
-            Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
-            jTable2.scrollRectToVisible(cellRect);
-        }
-
-    }//GEN-LAST:event_addEmployee
 
     private void PriceTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceTyped
         char c = evt.getKeyChar();
@@ -2418,8 +2704,9 @@ public class MainForm extends javax.swing.JFrame {
     }
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
         jTabbedPane1.setVisible(false);
+        jPanel3.setVisible(false);
         jPanel7.setVisible(true);
-        mainForm.setSize(655, 700);
+        jPanel10Recipes.setVisible(true);       
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
         jLabel12.setText(title);
         //join between storageList(all count = 0) and exist recipes into storageList
@@ -2452,64 +2739,10 @@ public class MainForm extends javax.swing.JFrame {
 
     private void exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromCalculation
         jPanel7.setVisible(false);
-        jTabbedPane1.setVisible(true);
-        mainForm.setSize(1149, 697);
+        jPanel10Recipes.setVisible(false);
+        jPanel3.setVisible(true);
+        jTabbedPane1.setVisible(true);        
     }//GEN-LAST:event_exitFromCalculation
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void removeEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEmployee
-        System.out.println("size in remove" + employeeList.size());
-        int activeRow = jTable2.getSelectedRow();
-        int listIndex = activeRow - userList.size();
-        System.out.println("activeRow= " + activeRow);
-        if (activeRow > 5) {
-            EmployeeUtils.removeById(employeeList.get(listIndex).getDbId());
-            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-            model.setRowCount(0);
-            employeeList.clear();
-            initPassTable();
-            jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
-            Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
-            jTable2.scrollRectToVisible(cellRect);
-        }
-    }//GEN-LAST:event_removeEmployee
-
-    private void updateUserAndEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserAndEmployee
-        int activeRow = jTable2.getSelectedRow();
-        String name = jTextField3.getText();
-        int listIndex = activeRow - userList.size();
-        String newPass = new String(jPasswordField1.getPassword());
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        if (activeRow < userList.size()) {
-            int dbId = employeeList.get(activeRow).getDbId();
-            if (!name.equals("")) {
-                UsersUtils.updateUserName(dbId, name);
-                System.out.println("name");
-            }
-            if (!newPass.equals("")) {
-                UsersUtils.updateUserPass(dbId, Integer.parseInt(newPass));
-                System.out.println("pass");
-            }
-            userList.clear();
-            UsersUtils.readAllUsers();
-        } else {
-            int dbId = employeeList.get(activeRow - userList.size()).getDbId();
-            if (!name.equals("")) {
-                EmployeeUtils.updateEmployeeName(dbId, name);
-            }
-            if (!newPass.equals("")) {
-                EmployeeUtils.updateEmployeePass(dbId, Integer.parseInt(newPass));
-            }
-        }
-        model.setRowCount(0);
-        employeeList.clear();
-        initPassTable();
-        jTable2.setRowSelectionInterval(activeRow, activeRow);
-        Rectangle cellRect = jTable2.getCellRect(activeRow, 0, true);
-        jTable2.scrollRectToVisible(cellRect);
-    }//GEN-LAST:event_updateUserAndEmployee
 
     private void exitSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitSystem
         CheckUtils.setCheckId(0);
@@ -2573,10 +2806,6 @@ public class MainForm extends javax.swing.JFrame {
             table.scrollRectToVisible(cellRect);
         }
     }
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        setSort(jComboBox2, jTable3);
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
         ArrayList<Ingredient> changedList = new ArrayList<>();
         for (int i = 0; i < jTable3.getRowCount(); i++) {
@@ -2657,6 +2886,152 @@ public class MainForm extends javax.swing.JFrame {
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         setSort(jComboBox3, jTable5);
     }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void EmployeeSelected(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeeSelected
+        jPasswordField1.setText("");
+        jLabel7.setText("введіть пароль");
+        jButton24.setEnabled(true);
+        jButton25.setEnabled(true);
+        jButton26.setEnabled(true);
+        jButton27.setEnabled(true);
+        jButton28.setEnabled(true);
+        jButton29.setEnabled(true);
+        jButton30.setEnabled(true);
+        jButton31.setEnabled(true);
+        jButton32.setEnabled(true);
+        jButton33.setEnabled(true);
+        jButton34.setEnabled(true);
+        jButton13.setEnabled(true);
+    }//GEN-LAST:event_EmployeeSelected
+
+    private void updateUserAndEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserAndEmployee
+        int activeRow = jTable2.getSelectedRow();
+        String name = jTextField3.getText();
+        int listIndex = activeRow - userList.size();
+        String newPass = new String(jPasswordField1.getPassword());
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        if (activeRow < userList.size()) {
+            int dbId = employeeList.get(activeRow).getDbId();
+            if (!name.equals("")) {
+                UsersUtils.updateUserName(dbId, name);
+                System.out.println("name");
+            }
+            if (!newPass.equals("")) {
+                UsersUtils.updateUserPass(dbId, Integer.parseInt(newPass));
+                System.out.println("pass");
+            }
+            userList.clear();
+            UsersUtils.readAllUsers();
+        } else {
+            int dbId = employeeList.get(activeRow - userList.size()).getDbId();
+            if (!name.equals("")) {
+                EmployeeUtils.updateEmployeeName(dbId, name);
+            }
+            if (!newPass.equals("")) {
+                EmployeeUtils.updateEmployeePass(dbId, Integer.parseInt(newPass));
+            }
+        }
+        model.setRowCount(0);
+        employeeList.clear();
+        initPassTable();
+        jTable2.setRowSelectionInterval(activeRow, activeRow);
+        Rectangle cellRect = jTable2.getCellRect(activeRow, 0, true);
+        jTable2.scrollRectToVisible(cellRect);
+    }//GEN-LAST:event_updateUserAndEmployee
+
+    private void removeEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEmployee
+        System.out.println("size in remove" + employeeList.size());
+        int activeRow = jTable2.getSelectedRow();
+        int listIndex = activeRow - userList.size();
+        System.out.println("activeRow= " + activeRow);
+        if (activeRow > 5) {
+            EmployeeUtils.removeById(employeeList.get(listIndex).getDbId());
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            model.setRowCount(0);
+            employeeList.clear();
+            initPassTable();
+            jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
+            Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
+            jTable2.scrollRectToVisible(cellRect);
+        }
+    }//GEN-LAST:event_removeEmployee
+
+    private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
+        String name = jTextField3.getText();
+        String pass = new String(jPasswordField1.getPassword());
+        if (!name.equals("") && !pass.equals("")) {
+            EmployeeUtils.addEmployeeToDB(name, Integer.parseInt(pass));
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            model.setRowCount(0);
+            employeeList.clear();
+            initPassTable();
+            jTable2.setRowSelectionInterval(jTable2.getRowCount() - 1, jTable2.getRowCount() - 1);
+            Rectangle cellRect = jTable2.getCellRect(jTable2.getRowCount() - 1, 0, true);
+            jTable2.scrollRectToVisible(cellRect);
+        }
+    }//GEN-LAST:event_addEmployee
+
+    private void setNumber(JButton button, JTable table, int columnIndex){
+        int index = table.getSelectedRow();        
+          String old =  table.getValueAt(index, columnIndex).toString();
+          old = old.trim();
+          if (old.equals("0.0")) {
+            old = "";
+        }
+          String newLine = old + button.getText();
+          if (newLine.length() < 7) {
+              if (newLine.length() == 2) {
+                  newLine +=".";
+              }
+              table.setValueAt(newLine, index, columnIndex);            
+        } 
+    }
+    private void PressNumber(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PressNumber
+        JButton myButton = (JButton) evt.getSource();
+        setNumber(myButton, jTable3, 2);  
+        System.out.println("parent" + myButton.getParent());        
+    }//GEN-LAST:event_PressNumber
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        setSort(jComboBox4, jTable3);
+    }//GEN-LAST:event_jComboBox4ActionPerformed
+
+    private void IngredientSelected(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IngredientSelected
+        jButton53.setEnabled(true);
+        jButton54.setEnabled(true);
+        jButton55.setEnabled(true);
+        jButton56.setEnabled(true);
+        jButton57.setEnabled(true);
+        jButton58.setEnabled(true);
+        jButton59.setEnabled(true);
+        jButton60.setEnabled(true);
+        jButton61.setEnabled(true);
+        jButton62.setEnabled(true);
+        jButton63.setEnabled(true);
+        jButton64.setEnabled(true);
+    }//GEN-LAST:event_IngredientSelected
+
+    private void deleteDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDigit
+        int index = jTable3.getSelectedRow();
+        String old = jTable3.getValueAt(index, 2).toString();
+        if (old.length() > 0) {
+            old = old.substring(0, old.length() - 1);
+            System.out.println("old" + old);
+            jTable3.setValueAt(old, index, 2);
+        }
+
+        
+        
+    }//GEN-LAST:event_deleteDigit
+
+    private void clearDigitLine(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDigitLine
+        int index = jTable3.getSelectedRow();
+        jTable3.setValueAt("", index, 2);        
+    }//GEN-LAST:event_clearDigitLine
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -2749,12 +3124,14 @@ public class MainForm extends javax.swing.JFrame {
     private void setColumnRender(TableColumn column) throws ParseException {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
-        column.setCellRenderer(leftRenderer);
+        column.setCellRenderer(leftRenderer);       
         MaskFormatter mf2 = new MaskFormatter("#.###");
         JFormattedTextField formattedTextField = new JFormattedTextField(mf2);
         formattedTextField.setFont(new Font("Verdana", 0, 18));
         DefaultCellEditor dce = new DefaultCellEditor(formattedTextField);
         column.setCellEditor(dce);
+    
+                
     }
 
     public void initBDmenu() {
@@ -2908,12 +3285,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
@@ -2931,22 +3308,49 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton36;
     private javax.swing.JButton jButton37;
     private javax.swing.JButton jButton38;
+    private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton53;
+    private javax.swing.JButton jButton54;
+    private javax.swing.JButton jButton55;
+    private javax.swing.JButton jButton56;
+    private javax.swing.JButton jButton57;
+    private javax.swing.JButton jButton58;
+    private javax.swing.JButton jButton59;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton60;
+    private javax.swing.JButton jButton61;
+    private javax.swing.JButton jButton62;
+    private javax.swing.JButton jButton63;
+    private javax.swing.JButton jButton64;
+    private javax.swing.JButton jButton65;
+    private javax.swing.JButton jButton66;
+    private javax.swing.JButton jButton67;
+    private javax.swing.JButton jButton68;
+    private javax.swing.JButton jButton69;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton70;
+    private javax.swing.JButton jButton71;
+    private javax.swing.JButton jButton72;
+    private javax.swing.JButton jButton73;
+    private javax.swing.JButton jButton74;
+    private javax.swing.JButton jButton75;
+    private javax.swing.JButton jButton76;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JComboBox jComboBox4;
+    private javax.swing.JComboBox jComboBox5;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2957,6 +3361,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10Recipes;
+    private javax.swing.JPanel jPanel11Storage;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

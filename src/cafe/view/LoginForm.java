@@ -105,7 +105,7 @@ public class LoginForm extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
-        jButton3.setText("C");
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/left145.png"))); // NOI18N
         jButton3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

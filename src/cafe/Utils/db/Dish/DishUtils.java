@@ -3,7 +3,6 @@ package cafe.Utils.db.Dish;
 import cafe.Utils.json.JSONUtils;
 import cafe.view.MainForm;
 import cafe.model.Dish;
-import static cafe.view.MainForm.listofCat;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,13 +18,13 @@ import java.util.Date;
  */
 public class DishUtils {
 
-    public static final String URL = "jdbc:mysql://localhost:3306/luckyroger";
-    public static final String USERNAME = "root";
-    public static final String PASSWORD = "root";
+    public static  String URL = "jdbc:mysql://localhost:3306/luckyroger";
+    public static  String USERNAME = "root";
+    public static  String PASSWORD = "root";
 
-//    public static final String URL = "jdbc:mysql://db4free.net:3306/luckyroger";
-//    public static final String USERNAME = "luckyroger";
-//    public static final String PASSWORD = "luckyroger";
+    public static final String URL1 = "jdbc:mysql://db4free.net:3306/luckyroger";
+    public static final String USERNAME1 = "luckyroger";
+    public static final String PASSWORD1 = "luckyroger";
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
     private static final ArrayList<String> sqlRemoveList = new ArrayList<>();
@@ -38,6 +37,21 @@ public class DishUtils {
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");           
         }
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD);) {
+            System.out.println(!connection.isClosed() ? "DB connected to " +URL
+                    : "Error DB connecting");
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Redirection to another SERVER");
+            URL = URL1;
+            USERNAME = USERNAME1;
+            PASSWORD = PASSWORD1;
+        } catch (Exception e) {
+            
+            
+        }
+
         System.out.println("MySQL JDBC Driver Registered!");
 
         sqlSelectList.add("select * from firstdishes");

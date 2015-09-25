@@ -1,9 +1,6 @@
 package cafe.model;
 
-import cafe.Utils.json.JSONUtils;
-import cafe.view.MainForm;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  *
@@ -11,44 +8,30 @@ import java.util.Objects;
  */
 public class Dish {
     private int dbId;
-    private String title = "";
-    private int price = 0;
+    private String title;
+    private int price;
     private boolean cook;
-    private ArrayList<Ingredient> recipes = new ArrayList<>();
+    private ArrayList<Ingredient> recipes = new ArrayList<>();  
+    public static int activeDish;
     
-    
-    public Dish(){} 
-    
-    
+    public Dish(){}      
 
-//    public Dish(int dbID, String title, int price, String  recipes) {
-//        this.dbId = dbID;
-//        this.title = title;
-//        this.price = price;         
-//       // System.out.println("cat=" + MainForm.activeCat);
-//       // System.out.println("Dish=" +MainForm.activeDishes);
-//        //JSONUtils.readRecipes(recipes, MainForm.activeCat, MainForm.activeDishes);
-//        
-//    }
-
-    public Dish(int dbID, String title, int price) {
-        this.dbId = dbID;
+    public Dish(int dbId, String title, int price) {
+        this.dbId = dbId;
         this.title = title;
         this.price = price;   
     }
     public Dish(String title, int price) {        
         this.title = title;
         this.price = price;        
-    }
-    
-    
+    }   
 
     public int getDbID() {
         return dbId;
     }
 
-    public void setDbID(int dbID) {
-        this.dbId = dbID;
+    public void setDbID(int dbId) {
+        this.dbId = dbId;
     }  
     
     public String getTitle() {
@@ -84,54 +67,10 @@ public class Dish {
 
     public void setCook(boolean cook) {
         this.cook = cook;
-    }
-    
-    
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Dish other = (Dish) obj;
-        if (!Objects.equals(this.title, other.title)) {
-            return false;
-        }
-        if (this.price != other.price) {
-            return false;
-        }
-        if (!Objects.equals(this.recipes, other.recipes)) {
-            return false;
-        }
-        return true;
-    }
-
+    }   
     @Override
     public String toString() {
         return title;
-    }
-    
-    private void clearRecipes(){
-        for (Ingredient ing : recipes) {
-            ing.setCount(0);
-        }   
-    }
-    
-
- 
-
-
-    
-    
-    
+    } 
     
 }

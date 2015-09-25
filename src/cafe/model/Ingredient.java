@@ -35,10 +35,7 @@ public class Ingredient implements Serializable{
         this.dbId = dbId;
         this.title = title;
         this.count = count;
-    }
-    
-    
-    
+    }   
 
     public int getId() {
         return dbId;

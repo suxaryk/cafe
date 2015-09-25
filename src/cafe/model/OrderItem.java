@@ -6,28 +6,20 @@
 package cafe.model;
 
 
-import java.util.Date;
-
-
 /**
  *
  * @author suxarina
  */
-public class CheckItem {
+public class OrderItem {
     private Dish dish;
     private int count;    
-    private int sum;
-    private Date date;  
-
+    private int itemSum;
 
     
-    
-
-    public CheckItem(Dish dish, int count, Date date) {
+    public OrderItem(Dish dish, int count) {
         this.dish = dish;
-        this.count = count;       
-        this.date = date;
-        sum = dish.getPrice() * count;
+        this.count = count;         
+        itemSum = dish.getPrice() * count;
     }
 
     public Dish getDish() {
@@ -47,26 +39,11 @@ public class CheckItem {
     }
 
     public int getSum() {
-        return sum;
+        return itemSum;
     }
 
     public void setSum(int sum) {
-        this.sum = sum;
+        this.itemSum = sum;
     }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-  
-   
-    
-    
-
-   
     
 }

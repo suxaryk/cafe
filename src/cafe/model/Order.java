@@ -11,27 +11,28 @@ import java.util.ArrayList;
  *
  * @author suxarina
  */
-public class Check {   
+public class Order {   
     private int cookCount;
-    private int totalsum;
-    private ArrayList<CheckItem> checkList = new ArrayList<>();
-    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private int orderSum;
     private boolean payed;
+    private ArrayList<OrderItem> items = new ArrayList<>();
+    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    
 
      
 
     public int getTotalsum() {
         int sum = 0;
-        for (CheckItem checkList1 : checkList) {
-            sum += checkList1.getSum();            
+        for (OrderItem orderItem : items) {
+            sum += orderItem.getSum();            
         }
-        return totalsum = sum;
+        return orderSum = sum;
     }
 
     public int getCookCount() {        
-        for (CheckItem checkList1 : checkList) {
-            if (checkList1.getDish().isCook()) {
-                cookCount+=checkList1.getCount();                  
+        for (OrderItem checkItem : items) {
+            if (checkItem.getDish().isCook()) {
+                cookCount+=checkItem.getCount();                  
             }
         }
         return cookCount;
@@ -41,16 +42,16 @@ public class Check {
         this.cookCount = totalCount;
     }
 
-    public void setTotalsum(int totalsum) {
-        this.totalsum = totalsum;
+    public void setTotalsum(int orderSum) {
+        this.orderSum = orderSum;
     }
 
-    public ArrayList<CheckItem> getCheckList() {
-        return checkList;
+    public ArrayList<OrderItem> getCheckList() {
+        return items;
     }
 
-    public void setCheckList(ArrayList<CheckItem> checkList) {
-        this.checkList = checkList;
+    public void setCheckList(ArrayList<OrderItem> checkList) {
+        this.items = checkList;
     }
     
     public boolean isPayed() {

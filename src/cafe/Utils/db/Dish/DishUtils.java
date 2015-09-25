@@ -25,6 +25,7 @@ public class DishUtils {
     public static final String URL1 = "jdbc:mysql://db4free.net:3306/luckyroger";
     public static final String USERNAME1 = "luckyroger";
     public static final String PASSWORD1 = "luckyroger";
+    
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
     private static final ArrayList<String> sqlRemoveList = new ArrayList<>();
@@ -47,8 +48,7 @@ public class DishUtils {
             URL = URL1;
             USERNAME = USERNAME1;
             PASSWORD = PASSWORD1;
-        } catch (Exception e) {
-            
+        } catch (Exception e) {            
             
         }
 
@@ -66,17 +66,17 @@ public class DishUtils {
         sqlSelectList.add("select * from drinks");
         sqlSelectList.add("select * from alcohol");
 
-        sqlInsertList.add("INSERT INTO firstdishes(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO salats(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO rogerdishes(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO pandishes(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO meat(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO pizza(title, priceS) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO pizza(title, pricB) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO sushi(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO dessert(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO drinks(title, price) VALUES(?, ?)");
-        sqlInsertList.add("INSERT INTO alcohol(title, price) VALUES(?, ?)");
+        sqlInsertList.add("INSERT INTO firstdishes(title, price, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO salats(title, price, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO rogerdishes(title, price, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pandishes(title, price, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO meat(title, price, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pizza(title, priceS, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pizza(title, pricB, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO sushi(title, price, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO dessert(title, price, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO drinks(title, price, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO alcohol(title, price, ingredients) VALUES(?, ?, ?)");
 
         sqlRemoveList.add("DELETE FROM firstdishes WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM salats WHERE Id = ?");
@@ -236,10 +236,14 @@ public class DishUtils {
                         .getConnection(URL, USERNAME, PASSWORD)) {
                     System.out.println(!connection.isClosed() ? "DB connected!"
                             : "Error DB connecting");
+                    System.out.println("activeCat" + activeCat);
+                    System.out.println("title" + dish.getTitle());
+                    System.out.println("price" + dish.getPrice());
 
                     PreparedStatement pstatement = connection.prepareStatement(sqlInsertList.get(i));
                     pstatement.setString(1, dish.getTitle());
-                    pstatement.setInt(2, dish.getPrice());                   
+                    pstatement.setInt(2, dish.getPrice());   
+                    pstatement.setString(3, "");
                     int rowsInserted = pstatement.executeUpdate();
                     if (rowsInserted > 0) {
                         System.out.println("A new dish was added successfully!");

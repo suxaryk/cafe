@@ -10,7 +10,7 @@ import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
 import static cafe.Utils.db.Dish.DishUtils.URL;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import cafe.model.Employee;
-import static cafe.view.MainForm.employeeList;
+import static cafe.view.MainForm.employees;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -49,7 +49,7 @@ public class EmployeeUtils {
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-                    employeeList.add(new Employee(
+                    employees.add(new Employee(
                             rs.getInt("Id"),
                             rs.getString("name"),
                             rs.getInt("pass")

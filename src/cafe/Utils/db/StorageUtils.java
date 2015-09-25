@@ -37,7 +37,7 @@ public class StorageUtils {
                             new Ingredient(
                                     rs.getInt("Id"),
                                     rs.getString("title"),
-                                    rs.getInt("count")
+                                    rs.getDouble("count")
                             ));
                 }
             }
@@ -81,13 +81,13 @@ public class StorageUtils {
         }
 
     }
-    public static void updateCount(int dbId, int count){
+    public static void updateCount(int dbId, double count){
         
         final String SQL = "UPDATE storage SET count = ? WHERE Id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, count);
+            pst.setDouble(1, count);
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {

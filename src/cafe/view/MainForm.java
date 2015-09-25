@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -2126,7 +2127,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel11.add(jButton21);
-        jButton21.setBounds(1, 600, 200, 73);
+        jButton21.setBounds(1, 598, 200, 73);
 
         jComboBox5.setBackground(new java.awt.Color(240, 240, 240));
         jComboBox5.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2137,12 +2138,12 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel11.add(jComboBox5);
-        jComboBox5.setBounds(0, 20, 120, 30);
+        jComboBox5.setBounds(1, 20, 120, 30);
 
         jLabel17.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel17.setText("Сортування:");
         jPanel11.add(jLabel17);
-        jLabel17.setBounds(0, 0, 120, 18);
+        jLabel17.setBounds(1, 0, 120, 18);
 
         jButton76.setBackground(new java.awt.Color(204, 204, 204));
         jButton76.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
@@ -2160,12 +2161,12 @@ public class MainForm extends javax.swing.JFrame {
 
         jTextField6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jPanel11.add(jTextField6);
-        jTextField6.setBounds(0, 70, 160, 30);
+        jTextField6.setBounds(1, 70, 160, 30);
 
         jLabel15.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel15.setText(" Назва");
         jPanel11.add(jLabel15);
-        jLabel15.setBounds(0, 50, 90, 16);
+        jLabel15.setBounds(1, 50, 90, 16);
 
         jButton36.setBackground(new java.awt.Color(204, 204, 204));
         jButton36.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2196,6 +2197,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton38.setText("<html>поповнити<br/>&nbsp; (додати)</html> ");
         jButton38.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton38.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton38.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addToStorage(evt);
+            }
+        });
         jPanel11.add(jButton38);
         jButton38.setBounds(1, 390, 100, 70);
 
@@ -2204,6 +2210,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton35.setText("<html> &nbsp;списати<br/> (відняти)</html> ");
         jButton35.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton35.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFromStorage(evt);
+            }
+        });
         jPanel11.add(jButton35);
         jButton35.setBounds(100, 390, 100, 70);
 
@@ -2855,26 +2866,28 @@ public class MainForm extends javax.swing.JFrame {
             table.scrollRectToVisible(cellRect);
         }
     }
-    private ArrayList<Ingredient> getListFromTable(JTable table){
+    private ArrayList<Ingredient> getListFromTable(JTable table, int countColumn, boolean includeZERO){
         ArrayList<Ingredient> changedList = new ArrayList<>();
         for (int i = 0; i < table.getRowCount(); i++) {
             int dbId = Integer.parseInt(table.getValueAt(i, 0).toString());
             String title = table.getValueAt(i, 1).toString();
             double count;
             try {
-                count = Double.parseDouble(table.getValueAt(i, 2).toString());
+                count = Double.parseDouble(table.getValueAt(i, countColumn).toString());
             } catch (NumberFormatException e) {
                 count = 0.0;
             }
-            if (count != 0.0) {
+            if (includeZERO) {
+                changedList.add(new Ingredient(dbId, title, count));
+            } else if (count != 0.0) {
                 changedList.add(new Ingredient(dbId, title, count));
             }
         }
         return changedList;       
     } 
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
-        
-        JSONUtils.updateDishIngredients(getListFromTable(jTable3), activeCat, activeDishes);
+        JSONUtils.updateDishIngredients(getListFromTable(jTable3, 2, false), 
+                                                    activeCat, activeDishes);
         String JSONString = RecepiesUtils.readRecipesFromDB(activeCat,
                 listofCat.get(activeCat).get(activeDishes).getDbID());
         System.out.println("JSONString=" + JSONString);
@@ -3118,6 +3131,37 @@ public class MainForm extends javax.swing.JFrame {
     private void deleteRecipesFieldDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRecipesFieldDigit
         deleteDigit(jTable3, 2);
     }//GEN-LAST:event_deleteRecipesFieldDigit
+
+    private void changeStorageCount(boolean  isAdd){
+        DecimalFormat df = new DecimalFormat("##.###");
+        ArrayList<Ingredient> changeList = new ArrayList<>();
+        changeList.addAll(getListFromTable(jTable5, 3, true));
+        for (int i = 0; i < storageList.size(); i++) {
+            double old = storageList.get(i).getCount();
+            double diff = changeList.get(i).getCount();
+            if (diff != 0.0) {
+                if (isAdd) {                    
+                    storageList.get(i).setCount(Double.valueOf(df.format(old + diff)));
+                    StorageUtils.updateCount(storageList.get(i).getId(),
+                            storageList.get(i).getCount());
+                } else if (old >= diff) {
+                    storageList.get(i).setCount(Double.valueOf(df.format(old - diff)));
+                    StorageUtils.updateCount(storageList.get(i).getId(),
+                            storageList.get(i).getCount());
+                }                
+            }
+        }
+        StorageUtils.readStorage();
+        showCalcTable(jTable5);
+    }
+    private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
+        changeStorageCount(true);
+        
+    }//GEN-LAST:event_addToStorage
+
+    private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
+        changeStorageCount(false);
+    }//GEN-LAST:event_removeFromStorage
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);

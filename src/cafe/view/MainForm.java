@@ -202,6 +202,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton37 = new javax.swing.JButton();
         jTextField6 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        jButton38 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -1721,14 +1722,14 @@ public class MainForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "№", "Назва", "Вага ( кг/ шт )", "Списування"
+                "№", "Назва", "Вага ( кг/ шт )", "Різниця"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1787,27 +1788,22 @@ public class MainForm extends javax.swing.JFrame {
         jLabel14.setBackground(new java.awt.Color(0, 153, 204));
         jLabel14.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel14.setText("Склад");
+        jLabel14.setText("Склад - наявність продуктів ");
         jLabel14.setOpaque(true);
         jPanel8.add(jLabel14);
         jLabel14.setBounds(0, 0, 650, 30);
 
-        jButton35.setBackground(new java.awt.Color(153, 153, 255));
+        jButton35.setBackground(new java.awt.Color(204, 204, 204));
         jButton35.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton35.setText("<html> &nbsp;зберегти<br/> &nbsp;&nbsp; зміни</html> ");
+        jButton35.setText("<html> &nbsp;списати<br/> (відняти)</html> ");
         jButton35.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton35.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton35.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton35saveCalculation(evt);
-            }
-        });
         jPanel8.add(jButton35);
-        jButton35.setBounds(530, 600, 120, 70);
+        jButton35.setBounds(550, 600, 100, 70);
 
         jButton36.setBackground(new java.awt.Color(204, 204, 204));
         jButton36.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton36.setText("додати");
+        jButton36.setText("<html>&nbsp;&nbsp;додати<br/>  інгредієнт </html>\n");
         jButton36.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton36.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1815,11 +1811,11 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel8.add(jButton36);
-        jButton36.setBounds(330, 600, 100, 70);
+        jButton36.setBounds(170, 600, 100, 70);
 
         jButton37.setBackground(new java.awt.Color(204, 204, 204));
         jButton37.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton37.setText("видалити");
+        jButton37.setText("<html>&nbsp;&nbsp;видалити<br/>&nbsp;  інгредієнт </html> ");
         jButton37.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton37.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1827,7 +1823,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel8.add(jButton37);
-        jButton37.setBounds(430, 600, 100, 70);
+        jButton37.setBounds(270, 600, 100, 70);
 
         jTextField6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jPanel8.add(jTextField6);
@@ -1837,6 +1833,14 @@ public class MainForm extends javax.swing.JFrame {
         jLabel15.setText(" Назва");
         jPanel8.add(jLabel15);
         jLabel15.setBounds(170, 540, 90, 16);
+
+        jButton38.setBackground(new java.awt.Color(204, 204, 204));
+        jButton38.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton38.setText("<html>поповнити<br/>&nbsp; (додати)</html> ");
+        jButton38.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton38.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel8.add(jButton38);
+        jButton38.setBounds(450, 600, 100, 70);
 
         getContentPane().add(jPanel8);
         jPanel8.setBounds(0, 0, 650, 700);
@@ -2568,7 +2572,6 @@ public class MainForm extends javax.swing.JFrame {
             Rectangle cellRect = jTable3.getCellRect(0, 0, true);
             table.scrollRectToVisible(cellRect);
         }
-        
     }
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         setSort(jComboBox2, jTable3);
@@ -2579,7 +2582,12 @@ public class MainForm extends javax.swing.JFrame {
         for (int i = 0; i < jTable3.getRowCount(); i++) {
             int dbId = Integer.parseInt(jTable3.getValueAt(i, 0).toString());
             String title = jTable3.getValueAt(i, 1).toString();
-            double count = Double.parseDouble(jTable3.getValueAt(i, 2).toString());
+            double count;
+            try {
+                 count = Double.parseDouble(jTable3.getValueAt(i, 2).toString());
+            } catch (NumberFormatException e) {
+                count = 0.0;
+            }                   
             if (count != 0.0) {
                 changedList.add(new Ingredient(dbId, title, count));
             }
@@ -2615,9 +2623,6 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setVisible(true);
         mainForm.setSize(1149, 697);
     }//GEN-LAST:event_jButton23exitFromCalculation
-
-    private void jButton35saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35saveCalculation
-    }//GEN-LAST:event_jButton35saveCalculation
 
     private void addIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addIngredient
         String title = jTextField6.getText();
@@ -2815,6 +2820,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton1.setBackground(RED);
         jButton36.setBackground(GREEN);
         jButton37.setBackground(RED);
+        jButton38.setBackground(GREEN);
+        jButton35.setBackground(RED);
     }
 
 //    public void refreshBDmenu(int orderArg) {
@@ -2923,6 +2930,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton35;
     private javax.swing.JButton jButton36;
     private javax.swing.JButton jButton37;
+    private javax.swing.JButton jButton38;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

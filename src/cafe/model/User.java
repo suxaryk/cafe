@@ -12,9 +12,8 @@ package cafe.model;
 public class User {
     
     private String name;
-    private int pass;
-    private int active;
-    public static int getActiveUser;
+    private int pass;    
+    public static int activeUser;
     
     User(){}
 
@@ -40,12 +39,6 @@ public class User {
         this.pass = pass;
     }
 
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
+    
 
 }

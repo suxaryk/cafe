@@ -49,7 +49,7 @@ public class OrderUtils {
             PreparedStatement pstatement = connection.prepareStatement(sql);
          
             pstatement.setInt(1, ++dbId);
-            pstatement.setInt(2, order.getTotalsum());
+            pstatement.setInt(2, order.getOrderSum());
             pstatement.setInt(3, order.getCookCount());
             pstatement.setTimestamp(4, getCurrentTimeStamp());
             pstatement.setString(5, user.getName());

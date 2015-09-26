@@ -11,6 +11,7 @@ package cafe.model;
  */
 public class Employee extends User{
     private int dbId;
+  
 
     public Employee(String name, int pass) {
         super(name, pass);
@@ -28,8 +29,7 @@ public class Employee extends User{
     public void setDbId(int dbId) {
         this.dbId = dbId;
     }
-    
-    
+
      
 
     

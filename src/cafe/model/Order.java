@@ -16,12 +16,12 @@ public class Order {
     private int orderSum;
     private boolean payed;
     private ArrayList<OrderItem> items = new ArrayList<>();
-    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+   // private ArrayList<Ingredient> ingredients = new ArrayList<>();
     
 
      
 
-    public int getTotalsum() {
+    public int getOrderSum() {
         int sum = 0;
         for (OrderItem orderItem : items) {
             sum += orderItem.getSum();            
@@ -38,8 +38,8 @@ public class Order {
         return cookCount;
     }
 
-    public void setCookCount(int totalCount) {
-        this.cookCount = totalCount;
+    public void setCookCount(int cookCount) {
+        this.cookCount = cookCount;
     }
 
     public void setTotalsum(int orderSum) {

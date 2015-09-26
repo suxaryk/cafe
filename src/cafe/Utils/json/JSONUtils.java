@@ -30,7 +30,7 @@ public class JSONUtils {
 //        
 //        for (Dish dish : listofCat.get(Cat)) {  
 //            JSONArray jsonArr = new JSONArray();
-//            for (Ingredient ing : dish.getListOfIngredients()) { 
+//            for (Ingredient ing : dish.getRecipe()) { 
 //                JSONObject ingrObj = new JSONObject();
 ////                ingrObj.put(ing.getId(), ing.getCount());
 //                ingrObj.put("id", ing.getId());                
@@ -61,7 +61,7 @@ public class JSONUtils {
         
     }
     //JSON String to data
-    public static void setJSONToRecipes(String jsonRecipes, int activeCat, 
+    public static void setJSONToRecipe(String jsonRecipes, int activeCat, 
                                                        int activeDish){
         if (!"".equals(jsonRecipes)) {
             try {
@@ -69,14 +69,14 @@ public class JSONUtils {
                 Object obj = parser.parse(jsonRecipes);
                 JSONArray jsonArr = (JSONArray) obj;
                 listofCat.get(activeCat).get(activeDish)
-                        .getListOfIngredients().clear();
+                        .getRecipe().clear();
                 for (int i = 0; i < jsonArr.size(); i++) {
                     JSONObject jsonObj = (JSONObject) jsonArr.get(i);
                     int Id = Integer.parseInt(jsonObj.get("id").toString());                    
                     double count = Double.parseDouble(jsonObj.
                                                         get("c").toString());                  
                     listofCat.get(activeCat).get(activeDish)
-                            .getListOfIngredients().add(new Ingredient(Id, count));                                    
+                            .getRecipe().add(new Ingredient(Id, count));                                    
                 }
             } catch (ParseException ex) {
 

@@ -95,7 +95,7 @@ public class RecepiesUtils {
             }
         }
     }
-    public static String readRecipesFromDB(int activeCat, int dishDbId) {
+    public static String readRecipeFromDB(int activeCat, int dishDbId) {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
 

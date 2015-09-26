@@ -255,10 +255,11 @@ public class LoginForm extends javax.swing.JFrame {
 
         } else if (userList.get(jComboBox1.getSelectedIndex())
                 .getPass() == Integer.parseInt(pass)) {
-            User.getActiveUser = jComboBox1.getSelectedIndex();         
+            User.activeUser = jComboBox1.getSelectedIndex();         
             //this.dispose();
             this.setVisible(false);
             mainForm.setEnabled(true);
+            
 
         } else {
             jLabel1.setText("Невірний пароль!");

@@ -11,8 +11,7 @@ public class Dish {
     private String title;
     private int price;
     private boolean cook;
-    private ArrayList<Ingredient> recipes = new ArrayList<>();  
-    public static int activeDish;
+    private ArrayList<Ingredient> recipe = new ArrayList<>();     
     
     public Dish(){}      
 
@@ -50,16 +49,16 @@ public class Dish {
         this.price = price;
     }
 
-    public ArrayList<Ingredient> getListOfIngredients() {
-        return recipes;
+    public ArrayList<Ingredient> getRecipe() {
+        return recipe;
     }
 
-    public void setListOfIngredients(ArrayList<Ingredient> list) {
-        this.recipes = list;
+    public void setRecipe(ArrayList<Ingredient> list) {
+        this.recipe = list;
     }
 
     public boolean isCook() {
-        if (recipes.size() > 1) {
+        if (recipe.size() > 1) {
             return cook = true;
         }
         else return cook = false;        

@@ -138,7 +138,7 @@ public class DishUtils {
                                         rs.getString("title"),
                                         rs.getInt("priceS")                                       
                         ));
-                        JSONUtils.setJSONToRecipes(
+                        JSONUtils.setJSONToRecipe(
                                 rs.getString("ingredientsS"), i, activeDish++);
                     }
                 } else if (i == 6) {
@@ -150,7 +150,7 @@ public class DishUtils {
                                         rs.getInt("priceB")
                                         
                                 ));
-                        JSONUtils.setJSONToRecipes(
+                        JSONUtils.setJSONToRecipe(
                                 rs.getString("ingredientsB"), i, activeDish++);
                     }
                 } else if (i == 10) {
@@ -161,7 +161,7 @@ public class DishUtils {
                                         rs.getString("title"),
                                         rs.getInt("price")
                                 ));
-//                        JSONUtils.setJSONToRecipes(
+//                        JSONUtils.setJSONToRecipe(
 //                              rs.getString("ingredients"), i, activeDish++);
                     }
                 } else {                
@@ -172,7 +172,7 @@ public class DishUtils {
                                         rs.getString("title"),
                                         rs.getInt("price")
                                 ));
-                        JSONUtils.setJSONToRecipes(
+                        JSONUtils.setJSONToRecipe(
                                 rs.getString("ingredients"), i, activeDish++);
                     }               
                 }

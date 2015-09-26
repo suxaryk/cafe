@@ -245,9 +245,6 @@ public class LoginForm extends javax.swing.JFrame {
 
     }
     private void enterToSystem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enterToSystem
-        // TODO add your handling code here:       
-        System.out.println("index= " + jComboBox1.getSelectedIndex());
-
         jLabel1.setText("");
         String pass = new String(jPasswordField1.getPassword());
         if (pass.equals("пароль") || pass.equals("")) {
@@ -255,12 +252,9 @@ public class LoginForm extends javax.swing.JFrame {
 
         } else if (userList.get(jComboBox1.getSelectedIndex())
                 .getPass() == Integer.parseInt(pass)) {
-            User.activeUser = jComboBox1.getSelectedIndex();         
-            //this.dispose();
+            User.active = jComboBox1.getSelectedIndex();            
             this.setVisible(false);
-            mainForm.setEnabled(true);
-            
-
+            mainForm.setEnabled(true);           
         } else {
             jLabel1.setText("Невірний пароль!");
         }
@@ -269,26 +263,21 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_enterToSystem
 
     private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
-        // TODO add your handling code here:
         mainForm.setVisible(true);
 
     }//GEN-LAST:event_formWindowDeactivated
 
     private void NumberPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberPressed
-        // TODO add your handling code here:
         JButton myButton = (JButton) evt.getSource();
         jPasswordField1.setText("" + new String(jPasswordField1.getPassword())
                                                         + myButton.getText());
     }//GEN-LAST:event_NumberPressed
 
     private void clearDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDigit
-        // TODO add your handling code here:
-        if (jPasswordField1.getPassword().length > 0) {
-            jPasswordField1.setText("" + jPasswordField1.getPassword().
-                    toString().substring(0, jPasswordField1.
-                            getPassword().length - 1));
+       String pass = new String(jPasswordField1.getPassword());
+        if (pass.length() > 0) {
+            jPasswordField1.setText("" + pass.substring(0, pass.length() - 1));
         }
-
     }//GEN-LAST:event_clearDigit
 
     /**

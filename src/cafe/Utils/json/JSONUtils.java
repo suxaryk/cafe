@@ -9,7 +9,7 @@ import cafe.Utils.FileUtils;
 import cafe.Utils.db.Dish.RecepiesUtils;
 import cafe.model.Dish;
 import cafe.model.Ingredient;
-import static cafe.view.MainForm.listofCat;
+import static cafe.view.MainForm.menu;
 import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -54,7 +54,7 @@ public class JSONUtils {
             ingrObj.put("c", ing.getCount());
             jsonArr.add(ingrObj);            
         }
-        RecepiesUtils.updateRecipes(activeCat, listofCat.get(activeCat)
+        RecepiesUtils.updateRecipes(activeCat, menu.get(activeCat).getDishes()
                                              .get(activeDish)
                                              .getDbID(), jsonArr.toJSONString());
         
@@ -68,14 +68,14 @@ public class JSONUtils {
                 JSONParser parser = new JSONParser();
                 Object obj = parser.parse(jsonRecipes);
                 JSONArray jsonArr = (JSONArray) obj;
-                listofCat.get(activeCat).get(activeDish)
+                menu.get(activeCat).getDishes().get(activeDish)
                         .getRecipe().clear();
                 for (int i = 0; i < jsonArr.size(); i++) {
                     JSONObject jsonObj = (JSONObject) jsonArr.get(i);
                     int Id = Integer.parseInt(jsonObj.get("id").toString());                    
                     double count = Double.parseDouble(jsonObj.
                                                         get("c").toString());                  
-                    listofCat.get(activeCat).get(activeDish)
+                    menu.get(activeCat).getDishes().get(activeDish)
                             .getRecipe().add(new Ingredient(Id, count));                                    
                 }
             } catch (ParseException ex) {

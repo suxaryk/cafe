@@ -13,7 +13,7 @@ public class User {
     
     private String name;
     private int pass;    
-    public static int activeUser;
+    public static int active;
     
     User(){}
 

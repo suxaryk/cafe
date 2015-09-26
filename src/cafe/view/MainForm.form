@@ -38,6 +38,7 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="e8" green="e8" red="e8" type="rgb"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="1"/>
         </Property>
@@ -68,8 +69,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="                          ">
-                <Property name="tabTitle" type="java.lang.String" value="                          "/>
+              <JTabbedPaneConstraints tabName="           ">
+                <Property name="tabTitle" type="java.lang.String" value="           "/>
                 <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/cafe/icons/small/two200.png"/>
                 </Property>
@@ -804,8 +805,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="                       " toolTip="">
-                <Property name="tabTitle" type="java.lang.String" value="                       "/>
+              <JTabbedPaneConstraints tabName="             " toolTip="">
+                <Property name="tabTitle" type="java.lang.String" value="             "/>
                 <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/cafe/icons/plate24.png"/>
                 </Property>
@@ -1184,8 +1185,8 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="                        ">
-                <Property name="tabTitle" type="java.lang.String" value="                        "/>
+              <JTabbedPaneConstraints tabName="                 ">
+                <Property name="tabTitle" type="java.lang.String" value="                 "/>
                 <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/cafe/icons/small/hot-food.png"/>
                 </Property>

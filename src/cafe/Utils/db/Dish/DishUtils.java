@@ -3,6 +3,7 @@ package cafe.Utils.db.Dish;
 import cafe.Utils.json.JSONUtils;
 import cafe.view.MainForm;
 import cafe.model.Dish;
+import static cafe.view.MainForm.menu;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -132,7 +133,7 @@ public class DishUtils {
                 rs = statement.executeQuery(sqlSelectList.get(i));
                 if (i == 5) {
                     while (rs.next()) {
-                        MainForm.listofCat.get(i).add(
+                            menu.get(i).getDishes().add(
                                 new Dish(Integer.parseInt(
                                                 rs.getString("Id")),
                                         rs.getString("title"),
@@ -143,7 +144,7 @@ public class DishUtils {
                     }
                 } else if (i == 6) {
                     while (rs.next()) {
-                        MainForm.listofCat.get(i).add(
+                            menu.get(i).getDishes().add(
                                 new Dish(Integer.parseInt(
                                                 rs.getString("Id")),
                                         rs.getString("title"),
@@ -155,7 +156,7 @@ public class DishUtils {
                     }
                 } else if (i == 10) {
                     while (rs.next()) {
-                        MainForm.listofCat.get(i).add(
+                            menu.get(i).getDishes().add(
                                 new Dish(Integer.parseInt(
                                                 rs.getString("Id")),
                                         rs.getString("title"),
@@ -166,7 +167,7 @@ public class DishUtils {
                     }
                 } else {                
                     while (rs.next()) {                                               
-                        MainForm.listofCat.get(i).add(
+                            menu.get(i).getDishes().add(
                                 new Dish(Integer.parseInt(
                                                 rs.getString("Id")),
                                         rs.getString("title"),
@@ -197,7 +198,7 @@ public class DishUtils {
             rs = statement.executeQuery(sqlSelectList.get(activeCat));
             if (activeCat == 5) {
                 while (rs.next()) {
-                    MainForm.listofCat.get(activeCat).add(
+                        menu.get(activeCat).getDishes().add(
                             new Dish(Integer.parseInt(
                                             rs.getString("Id")),
                                     rs.getString("title"),
@@ -206,7 +207,7 @@ public class DishUtils {
                 }
             } else if (activeCat == 6) {
                 while (rs.next()) {
-                    MainForm.listofCat.get(activeCat).add(
+                        menu.get(activeCat).getDishes().add(
                             new Dish(Integer.parseInt(
                                             rs.getString("Id")),
                                     rs.getString("title"),
@@ -215,7 +216,7 @@ public class DishUtils {
                 }
             } else {
                 while (rs.next()) {
-                    MainForm.listofCat.get(activeCat).add(
+                        menu.get(activeCat).getDishes().add(
                             new Dish(Integer.parseInt(
                                             rs.getString("Id")),
                                     rs.getString("title"),

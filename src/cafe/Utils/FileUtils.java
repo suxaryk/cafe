@@ -2,7 +2,7 @@
 package cafe.Utils;
 
 import cafe.model.Ingredient;
-import static cafe.view.MainForm.listofCat;
+import static cafe.view.MainForm.menu;
 import java.util.ArrayList;
 
 /**
@@ -23,9 +23,9 @@ public class FileUtils {
         
       
     public static void readFile(){
-//        for (int i = 0; i < listofCat.size(); i++) {
-//            for (int j = 0; j < listofCat.get(i).size(); j++) {
-//                listofCat.get(i).get(j).getRecipe().add(new Ingredient(1, 0.002));                
+//        for (int i = 0; i < menu.size(); i++) {
+//            for (int j = 0; j < menu.get(i).size(); j++) {
+//                menu.get(i).get(j).getRecipe().add(new Ingredient(1, 0.002));                
 //            }            
 //        }
         
@@ -34,353 +34,351 @@ public class FileUtils {
     }
     public static void fillIngredients(){
         //Sushi
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(1, 0.069)); //w kunrz z wugrem
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(7, 0.020));
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(16, 0.015));
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(14, 0.015)); //Wugor
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(11, 0.018));
-        listofCat.get(7).get(0).getRecipe().add(new Ingredient(12, 0.010));
-
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(1, 0.069)); //w kunrz z lososem
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(7, 0.020));
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(16, 0.015));
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(11, 0.017));
-        listofCat.get(7).get(1).getRecipe().add(new Ingredient(10, 0.015));
-
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(1, 0.069)); //w kunrz z tuncem
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(7, 0.020));
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(16, 0.015));
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(11, 0.017));
-        listofCat.get(7).get(2).getRecipe().add(new Ingredient(13, 0.015));
-
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(1, 0.069)); //z ikr z wugrem
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(7, 0.020));
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(16, 0.015));
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(9, 0.010));
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(14, 0.015));
-        listofCat.get(7).get(3).getRecipe().add(new Ingredient(12, 0.010));
-
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(1, 0.069)); //z ikr z losossem
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(7, 0.020));
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(16, 0.015));
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(9, 0.010));
-        listofCat.get(7).get(4).getRecipe().add(new Ingredient(10, 0.015));
-
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(1, 0.069)); //z ikr z tuncem
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(7, 0.020));
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(16, 0.015));
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(9, 0.010));
-        listofCat.get(7).get(5).getRecipe().add(new Ingredient(13, 0.015));
-
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(1, 0.069)); // Dragon
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(7, 0.025));
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(16, 0.035));
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(9, 0.005));//Ikra
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(14, 0.020));//Wugor
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(12, 0.010));//Unagi
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
-        listofCat.get(7).get(6).getRecipe().add(new Ingredient(8, 0.015)); //Syr Filad
-
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(1, 0.069)); // Black Dragon
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(7, 0.020));
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(16, 0.035));
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(9, 0.005)); //Ikra
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(10, 0.010)); //Losos`
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(12, 0.010));//Unagi
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(11, 0.005)); //Kunrz
-        listofCat.get(7).get(7).getRecipe().add(new Ingredient(8, 0.015)); //Syr Filad
-
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(1, 0.069)); // Filadelfia
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(7, 0.025));//Ogirok
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(16, 0.015));//Awokado
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(10, 0.030)); //Losos`
-        listofCat.get(7).get(8).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
-
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(1, 0.087)); // Hot roll tunec
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(3, 0.014));
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(4, 0.011));
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(5, 0.002));
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(6, 1));
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(13, 0.020)); //Tunec`
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(9, 0.010)); //Ikra                                                                            
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(58, 0.200)); //Boroshno      //Kliar
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(63, 0.0125)); //Пиво
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(22, 0.030)); //Соєвий соус
-        listofCat.get(7).get(9).getRecipe().add(new Ingredient(5, 0.020)); //Сіль
-
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(1, 0.087)); // Hot roll losos
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(3, 0.014));
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(4, 0.011));
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(5, 0.002));
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(6, 1));
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(10, 0.020)); //Losos`
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(9, 0.010)); //Ikra                                                                            
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(58, 0.200)); //Boroshno      //Kliar
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(63, 0.0125)); //Пиво
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(23, 0.030)); //Соєвий соус
-        listofCat.get(7).get(10).getRecipe().add(new Ingredient(5, 0.020)); //Сіль
-
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(1, 0.087)); // Hot roll wugor
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(3, 0.014));
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(4, 0.011));
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(5, 0.002));
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(6, 1));
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(14, 0.020)); //Wugor
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(9, 0.010)); //Ikra                                                                            
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(58, 0.200)); //Boroshno      //Kliar
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(63, 0.0125)); //Пиво
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(23, 0.030)); //Соєвий соус
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(5, 0.020)); //Сіль
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(12, 0.010));//Unagi
-        listofCat.get(7).get(11).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
-
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(1, 0.069)); // White dragon
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(7, 0.015));//Ogirok
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(16, 0.035));//Awokado
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(8, 0.015)); //Syr Filad
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(9, 0.010)); //Ikra       
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(23, 0.060)); //Krevetky                                                                     
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(12, 0.010));//Unagi
-        listofCat.get(7).get(12).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
-
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(1, 0.069)); // Fitajger
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(16, 0.015));//Awokado
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(8, 0.015)); //Syr Filad
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(14, 0.012)); //Wugor
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(9, 0.005)); //Ikra       
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(23, 0.060)); //Krevetky                                                                     
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(12, 0.010));//Unagi
-        listofCat.get(7).get(13).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
-
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(1, 0.069)); // Maguro
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(3, 0.012));
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(4, 0.008));
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(16, 0.020));//Awokado
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(18, 0.025)); //Czyka
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(13, 0.015)); //Tunec`
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(14, 0.040)); //Wugor                                                                       
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(12, 0.015));//Sous gorichowyj
-        listofCat.get(7).get(14).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
-
-        listofCat.get(7).get(15).getRecipe().add(new Ingredient(1, 0.047)); // Czuka
-        listofCat.get(7).get(15).getRecipe().add(new Ingredient(2, 0.001));
-        listofCat.get(7).get(15).getRecipe().add(new Ingredient(3, 0.008));
-        listofCat.get(7).get(15).getRecipe().add(new Ingredient(4, 0.006));
-        listofCat.get(7).get(15).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(15).getRecipe().add(new Ingredient(18, 0.010)); //Czyka                                                                         
-        listofCat.get(7).get(15).getRecipe().add(new Ingredient(12, 0.015));//Sous gorichowyj
-
-        listofCat.get(7).get(16).getRecipe().add(new Ingredient(1, 0.047)); // Z ogirkom
-        listofCat.get(7).get(16).getRecipe().add(new Ingredient(2, 0.001));
-        listofCat.get(7).get(16).getRecipe().add(new Ingredient(3, 0.008));
-        listofCat.get(7).get(16).getRecipe().add(new Ingredient(4, 0.006));
-        listofCat.get(7).get(16).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(16).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(16).getRecipe().add(new Ingredient(7, 0.020));//Ogirok                                                                        
-        listofCat.get(7).get(16).getRecipe().add(new Ingredient(12, 0.010));//Unagi
-
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(1, 0.047)); // Z wosmyn i chukoju
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(2, 0.001));
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(3, 0.008));
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(4, 0.006));
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(24, 0.020)); //Wosmyn
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(18, 0.010)); //Czyka 
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(12, 0.010));//Sous gorichowyj
-        listofCat.get(7).get(17).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
-
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(1, 0.081)); // Asorti
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(3, 0.014));
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(4, 0.007));
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(6, 1));
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(7, 0.020));//Ogirok  
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(9, 0.006)); //Ikra  
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(13, 0.006)); //Tunec`     
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(23, 0.020)); //Krevetky                                                                     
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(12, 0.010));//Unagi
-        listofCat.get(7).get(18).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
-
-        listofCat.get(7).get(19).getRecipe().add(new Ingredient(1, 0.047)); // z tuncem
-        listofCat.get(7).get(19).getRecipe().add(new Ingredient(2, 0.001));
-        listofCat.get(7).get(19).getRecipe().add(new Ingredient(3, 0.008));
-        listofCat.get(7).get(19).getRecipe().add(new Ingredient(4, 0.006));
-        listofCat.get(7).get(19).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(19).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(19).getRecipe().add(new Ingredient(13, 0.015)); //tunec
-
-        listofCat.get(7).get(20).getRecipe().add(new Ingredient(1, 0.047)); // z wugrem
-        listofCat.get(7).get(20).getRecipe().add(new Ingredient(2, 0.001));
-        listofCat.get(7).get(20).getRecipe().add(new Ingredient(3, 0.008));
-        listofCat.get(7).get(20).getRecipe().add(new Ingredient(4, 0.006));
-        listofCat.get(7).get(20).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(20).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(20).getRecipe().add(new Ingredient(14, 0.015)); //Wugor      
-        listofCat.get(7).get(20).getRecipe().add(new Ingredient(12, 0.010));
-
-        listofCat.get(7).get(21).getRecipe().add(new Ingredient(1, 0.047)); // z lososem
-        listofCat.get(7).get(21).getRecipe().add(new Ingredient(2, 0.001));
-        listofCat.get(7).get(21).getRecipe().add(new Ingredient(3, 0.008));
-        listofCat.get(7).get(21).getRecipe().add(new Ingredient(4, 0.006));
-        listofCat.get(7).get(21).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(21).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(21).getRecipe().add(new Ingredient(10, 0.015)); //losos
-
-        listofCat.get(7).get(22).getRecipe().add(new Ingredient(1, 0.012)); // sushi z tuncem
-        listofCat.get(7).get(22).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(22).getRecipe().add(new Ingredient(3, 0.002));
-        listofCat.get(7).get(22).getRecipe().add(new Ingredient(4, 0.002));
-        listofCat.get(7).get(22).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(22).getRecipe().add(new Ingredient(13, 0.006)); //tunec
-
-        listofCat.get(7).get(23).getRecipe().add(new Ingredient(1, 0.012)); // sushi z wugrem
-        listofCat.get(7).get(23).getRecipe().add(new Ingredient(2, 0.001));
-        listofCat.get(7).get(23).getRecipe().add(new Ingredient(3, 0.008));
-        listofCat.get(7).get(23).getRecipe().add(new Ingredient(4, 0.006));
-        listofCat.get(7).get(23).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(23).getRecipe().add(new Ingredient(6, 0.5));
-        listofCat.get(7).get(23).getRecipe().add(new Ingredient(14, 0.015)); //Wugor      
-        listofCat.get(7).get(23).getRecipe().add(new Ingredient(12, 0.010));
-
-        listofCat.get(7).get(24).getRecipe().add(new Ingredient(1, 0.012)); // sushi z lososem
-        listofCat.get(7).get(24).getRecipe().add(new Ingredient(2, 0.002));
-        listofCat.get(7).get(24).getRecipe().add(new Ingredient(3, 0.002));
-        listofCat.get(7).get(24).getRecipe().add(new Ingredient(4, 0.002));
-        listofCat.get(7).get(24).getRecipe().add(new Ingredient(5, 0.001));
-        listofCat.get(7).get(24).getRecipe().add(new Ingredient(10, 0.006)); //losos
-
-        listofCat.get(7).get(25).getRecipe().add(new Ingredient(18, 0.050)); //Salat Czuka
-        listofCat.get(7).get(25).getRecipe().add(new Ingredient(17, 0.015));
-        listofCat.get(7).get(25).getRecipe().add(new Ingredient(15, 0.010));
-
-        listofCat.get(7).get(26).getRecipe().add(new Ingredient(19, 0.050)); //Rysowa wermishel
-        listofCat.get(7).get(26).getRecipe().add(new Ingredient(17, 0.015));
-
-        listofCat.get(7).get(27).getRecipe().add(new Ingredient(21, 0.010));
-        listofCat.get(7).get(28).getRecipe().add(new Ingredient(22, 0.010));
-        listofCat.get(7).get(29).getRecipe().add(new Ingredient(20, 0.010));
-        listofCat.get(7).get(30).getRecipe().add(new Ingredient(17, 0.020));
-
-
-        for (int i = 0; i <= 21; i++) {
-            listofCat.get(7).get(i).getRecipe().addAll(rollAdds);
-        }
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(1, 0.069)); //w kunrz z wugrem
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(7, 0.020));
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(16, 0.015));
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(14, 0.015)); //Wugor
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(11, 0.018));
+//        menu.get(7).getDishes().get(0).getRecipe().add(new Ingredient(12, 0.010));
+//
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(1, 0.069)); //w kunrz z lososem
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(7, 0.020));
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(16, 0.015));
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(11, 0.017));
+//        menu.get(7).getDishes().get(1).getRecipe().add(new Ingredient(10, 0.015));
+//
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(1, 0.069)); //w kunrz z tuncem
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(7, 0.020));
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(16, 0.015));
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(11, 0.017));
+//        menu.get(7).getDishes().get(2).getRecipe().add(new Ingredient(13, 0.015));
+//        
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(1, 0.069)); //z ikr z wugrem
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(7, 0.020));
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(16, 0.015));
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(9, 0.010));
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(14, 0.015));
+//        menu.get(7).getDishes().get(3).getRecipe().add(new Ingredient(12, 0.010));
+//        
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(1, 0.069)); //z ikr z losossem
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(7, 0.020));
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(16, 0.015));
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(9, 0.010));
+//        menu.get(7).getDishes().get(4).getRecipe().add(new Ingredient(10, 0.015));
+//        
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(1, 0.069)); //z ikr z tuncem
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(7, 0.020));
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(16, 0.015));
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(9, 0.010));
+//        menu.get(7).getDishes().get(5).getRecipe().add(new Ingredient(13, 0.015));
+//        
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(1, 0.069)); // Dragon
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(7, 0.025));
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(16, 0.035));
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(9, 0.005));//Ikra
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(14, 0.020));//Wugor
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(12, 0.010));//Unagi
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
+//        menu.get(7).getDishes().get(6).getRecipe().add(new Ingredient(8, 0.015)); //Syr Filad
+//        
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(1, 0.069)); // Black Dragon
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(7, 0.020));
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(16, 0.035));
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(9, 0.005)); //Ikra
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(10, 0.010)); //Losos`
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(12, 0.010));//Unagi
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(11, 0.005)); //Kunrz
+//        menu.get(7).getDishes().get(7).getRecipe().add(new Ingredient(8, 0.015)); //Syr Filad
+//        
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(1, 0.069)); // Filadelfia
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(7, 0.025));//Ogirok
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(16, 0.015));//Awokado
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(10, 0.030)); //Losos`
+//        menu.get(7).getDishes().get(8).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
+//        
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(1, 0.087)); // Hot roll tunec
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(3, 0.014));
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(4, 0.011));
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(5, 0.002));
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(6, 1));
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(13, 0.020)); //Tunec`
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(9, 0.010)); //Ikra                                                                            
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(58, 0.200)); //Boroshno      //Kliar
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(63, 0.0125)); //Пиво
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(22, 0.030)); //Соєвий соус
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(5, 0.020)); //Сіль
+//        
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(1, 0.087)); // Hot roll losos
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(3, 0.014));
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(4, 0.011));
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(5, 0.002));
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(6, 1));
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(10, 0.020)); //Losos`
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(9, 0.010)); //Ikra                                                                            
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(58, 0.200)); //Boroshno      //Kliar
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(63, 0.0125)); //Пиво
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(23, 0.030)); //Соєвий соус
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(5, 0.020)); //Сіль
+//        
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(1, 0.087)); // Hot roll wugor
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(3, 0.014));
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(4, 0.011));
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(5, 0.002));
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(6, 1));
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(14, 0.020)); //Wugor
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(9, 0.010)); //Ikra                                                                            
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(58, 0.200)); //Boroshno      //Kliar
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(63, 0.0125)); //Пиво
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(23, 0.030)); //Соєвий соус
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(5, 0.020)); //Сіль
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(12, 0.010));//Unagi
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
+//        
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(1, 0.069)); // White dragon
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(7, 0.015));//Ogirok
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(16, 0.035));//Awokado
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(8, 0.015)); //Syr Filad
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(9, 0.010)); //Ikra       
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(23, 0.060)); //Krevetky                                                                     
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(12, 0.010));//Unagi
+//        menu.get(7).getDishes().get(12).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
+//        
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(1, 0.069)); // Fitajger
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(16, 0.015));//Awokado
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(8, 0.015)); //Syr Filad
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(14, 0.012)); //Wugor
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(9, 0.005)); //Ikra       
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(23, 0.060)); //Krevetky                                                                     
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(12, 0.010));//Unagi
+//        menu.get(7).getDishes().get(13).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
+//        
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(1, 0.069)); // Maguro
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(3, 0.012));
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(4, 0.008));
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(16, 0.020));//Awokado
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(18, 0.025)); //Czyka
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(13, 0.015)); //Tunec`
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(14, 0.040)); //Wugor                                                                       
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(12, 0.015));//Sous gorichowyj
+//        menu.get(7).getDishes().get(14).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
+//        
+//        menu.get(7).getDishes().get(15).getRecipe().add(new Ingredient(1, 0.047)); // Czuka
+//        menu.get(7).getDishes().get(15).getRecipe().add(new Ingredient(2, 0.001));
+//        menu.get(7).getDishes().get(15).getRecipe().add(new Ingredient(3, 0.008));
+//        menu.get(7).getDishes().get(15).getRecipe().add(new Ingredient(4, 0.006));
+//        menu.get(7).getDishes().get(15).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(15).getRecipe().add(new Ingredient(18, 0.010)); //Czyka                                                                         
+//        menu.get(7).getDishes().get(15).getRecipe().add(new Ingredient(12, 0.015));//Sous gorichowyj
+//        
+//        menu.get(7).getDishes().get(16).getRecipe().add(new Ingredient(1, 0.047)); // Z ogirkom
+//        menu.get(7).getDishes().get(16).getRecipe().add(new Ingredient(2, 0.001));
+//        menu.get(7).getDishes().get(16).getRecipe().add(new Ingredient(3, 0.008));
+//        menu.get(7).getDishes().get(16).getRecipe().add(new Ingredient(4, 0.006));
+//        menu.get(7).getDishes().get(16).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(16).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(16).getRecipe().add(new Ingredient(7, 0.020));//Ogirok                                                                        
+//        menu.get(7).getDishes().get(16).getRecipe().add(new Ingredient(12, 0.010));//Unagi
+//        
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(1, 0.047)); // Z wosmyn i chukoju
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(2, 0.001));
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(3, 0.008));
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(4, 0.006));
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(24, 0.020)); //Wosmyn
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(18, 0.010)); //Czyka 
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(12, 0.010));//Sous gorichowyj
+//        menu.get(7).getDishes().get(17).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
+//        
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(1, 0.081)); // Asorti
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(3, 0.014));
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(4, 0.007));
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(6, 1));
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(7, 0.020));//Ogirok  
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(9, 0.006)); //Ikra  
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(13, 0.006)); //Tunec`     
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(23, 0.020)); //Krevetky                                                                     
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(12, 0.010));//Unagi
+//        menu.get(7).getDishes().get(18).getRecipe().add(new Ingredient(11, 0.005));//Kunrz
+//        
+//        menu.get(7).getDishes().get(19).getRecipe().add(new Ingredient(1, 0.047)); // z tuncem
+//        menu.get(7).getDishes().get(19).getRecipe().add(new Ingredient(2, 0.001));
+//        menu.get(7).getDishes().get(19).getRecipe().add(new Ingredient(3, 0.008));
+//        menu.get(7).getDishes().get(19).getRecipe().add(new Ingredient(4, 0.006));
+//        menu.get(7).getDishes().get(19).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(19).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(19).getRecipe().add(new Ingredient(13, 0.015)); //tunec
+//        
+//        menu.get(7).getDishes().get(20).getRecipe().add(new Ingredient(1, 0.047)); // z wugrem
+//        menu.get(7).getDishes().get(20).getRecipe().add(new Ingredient(2, 0.001));
+//        menu.get(7).getDishes().get(20).getRecipe().add(new Ingredient(3, 0.008));
+//        menu.get(7).getDishes().get(20).getRecipe().add(new Ingredient(4, 0.006));
+//        menu.get(7).getDishes().get(20).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(20).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(20).getRecipe().add(new Ingredient(14, 0.015)); //Wugor      
+//        menu.get(7).getDishes().get(20).getRecipe().add(new Ingredient(12, 0.010));
+//        
+//        menu.get(7).getDishes().get(21).getRecipe().add(new Ingredient(1, 0.047)); // z lososem
+//        menu.get(7).getDishes().get(21).getRecipe().add(new Ingredient(2, 0.001));
+//        menu.get(7).getDishes().get(21).getRecipe().add(new Ingredient(3, 0.008));
+//        menu.get(7).getDishes().get(21).getRecipe().add(new Ingredient(4, 0.006));
+//        menu.get(7).getDishes().get(21).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(21).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(21).getRecipe().add(new Ingredient(10, 0.015)); //losos
+//        
+//        menu.get(7).getDishes().get(22).getRecipe().add(new Ingredient(1, 0.012)); // sushi z tuncem
+//        menu.get(7).getDishes().get(22).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(22).getRecipe().add(new Ingredient(3, 0.002));
+//        menu.get(7).getDishes().get(22).getRecipe().add(new Ingredient(4, 0.002));
+//        menu.get(7).getDishes().get(22).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(22).getRecipe().add(new Ingredient(13, 0.006)); //tunec
+//        
+//        menu.get(7).getDishes().get(23).getRecipe().add(new Ingredient(1, 0.012)); // sushi z wugrem
+//        menu.get(7).getDishes().get(23).getRecipe().add(new Ingredient(2, 0.001));
+//        menu.get(7).getDishes().get(23).getRecipe().add(new Ingredient(3, 0.008));
+//        menu.get(7).getDishes().get(23).getRecipe().add(new Ingredient(4, 0.006));
+//        menu.get(7).getDishes().get(23).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(23).getRecipe().add(new Ingredient(6, 0.5));
+//        menu.get(7).getDishes().get(23).getRecipe().add(new Ingredient(14, 0.015)); //Wugor      
+//        menu.get(7).getDishes().get(23).getRecipe().add(new Ingredient(12, 0.010));
+//        
+//        menu.get(7).getDishes().get(24).getRecipe().add(new Ingredient(1, 0.012)); // sushi z lososem
+//        menu.get(7).getDishes().get(24).getRecipe().add(new Ingredient(2, 0.002));
+//        menu.get(7).getDishes().get(24).getRecipe().add(new Ingredient(3, 0.002));
+//        menu.get(7).getDishes().get(24).getRecipe().add(new Ingredient(4, 0.002));
+//        menu.get(7).getDishes().get(24).getRecipe().add(new Ingredient(5, 0.001));
+//        menu.get(7).getDishes().get(24).getRecipe().add(new Ingredient(10, 0.006)); //losos
+//        
+//        menu.get(7).getDishes().get(25).getRecipe().add(new Ingredient(18, 0.050)); //Salat Czuka
+//        menu.get(7).getDishes().get(25).getRecipe().add(new Ingredient(17, 0.015));
+//        menu.get(7).getDishes().get(25).getRecipe().add(new Ingredient(15, 0.010));
+//        
+//        menu.get(7).getDishes().get(26).getRecipe().add(new Ingredient(19, 0.050)); //Rysowa wermishel
+//        menu.get(7).getDishes().get(26).getRecipe().add(new Ingredient(17, 0.015));
+//        menu.get(7).getDishes().get(27).getRecipe().add(new Ingredient(21, 0.010));
+//        menu.get(7).getDishes().get(28).getRecipe().add(new Ingredient(22, 0.010));
+//        menu.get(7).getDishes().get(29).getRecipe().add(new Ingredient(20, 0.010));
+//        menu.get(7).getDishes().get(30).getRecipe().add(new Ingredient(17, 0.020));
+//
+//        for (int i = 0; i <= 21; i++) {
+//            menu.get(7).getDishes().get(i).getRecipe().addAll(rollAdds);
+//        }
         //SmallPizza
-        listofCat.get(5).get(0).getRecipe().add(new Ingredient(55, 0.159));
-        listofCat.get(5).get(0).getRecipe().add(new Ingredient(5, 0.002));
-        listofCat.get(5).get(0).getRecipe().add(new Ingredient(4, 0.002));
-        listofCat.get(5).get(0).getRecipe().add(new Ingredient(71, 0.002));
-        listofCat.get(5).get(0).getRecipe().add(new Ingredient(53, 0.014));
-        listofCat.get(5).get(0).getRecipe().add(new Ingredient(98, 0.085));
-        listofCat.get(5).get(0).getRecipe().add(new Ingredient(11, 0.005));
-        listofCat.get(5).get(0).getRecipe().add(new Ingredient(43, 0.100));
+        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(55, 0.159));
+        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(5, 0.002));
+        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(4, 0.002));
+        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(71, 0.002));
+        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(53, 0.014));
+        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(98, 0.085));
+        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(11, 0.005));
+        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(43, 0.100));
+
+        menu.get(5).getDishes().get(1).getRecipe().add(new Ingredient(72, 0.030));
+        menu.get(5).getDishes().get(2).getRecipe().add(new Ingredient(72, 0.030));
+        menu.get(5).getDishes().get(3).getRecipe().add(new Ingredient(73, 0.030));
+        menu.get(5).getDishes().get(4).getRecipe().add(new Ingredient(36, 0.030));
+        menu.get(5).getDishes().get(5).getRecipe().add(new Ingredient(69, 0.030));
+        menu.get(5).getDishes().get(6).getRecipe().add(new Ingredient(47, 0.030));
+        menu.get(5).getDishes().get(7).getRecipe().add(new Ingredient(48, 0.030));
+        menu.get(5).getDishes().get(8).getRecipe().add(new Ingredient(54, 0.040));
+        menu.get(5).getDishes().get(9).getRecipe().add(new Ingredient(63, 0.040));
+        menu.get(5).getDishes().get(10).getRecipe().add(new Ingredient(42, 0.040));
+        menu.get(5).getDishes().get(11).getRecipe().add(new Ingredient(66, 0.030));
+        menu.get(5).getDishes().get(12).getRecipe().add(new Ingredient(74, 0.010));
+        menu.get(5).getDishes().get(13).getRecipe().add(new Ingredient(75, 0.100));
+        menu.get(5).getDishes().get(14).getRecipe().add(new Ingredient(76, 0.030));
+        menu.get(5).getDishes().get(15).getRecipe().add(new Ingredient(68, 0.200));
         
-        listofCat.get(5).get(1).getRecipe().add(new Ingredient(72, 0.030));
-        listofCat.get(5).get(2).getRecipe().add(new Ingredient(72, 0.030));
-        listofCat.get(5).get(3).getRecipe().add(new Ingredient(73, 0.030));
-        listofCat.get(5).get(4).getRecipe().add(new Ingredient(36, 0.030));
-        listofCat.get(5).get(5).getRecipe().add(new Ingredient(69, 0.030));
-        listofCat.get(5).get(6).getRecipe().add(new Ingredient(47, 0.030));
-        listofCat.get(5).get(7).getRecipe().add(new Ingredient(48, 0.030));
-        listofCat.get(5).get(8).getRecipe().add(new Ingredient(54, 0.040));
-        listofCat.get(5).get(9).getRecipe().add(new Ingredient(63, 0.040));
-        listofCat.get(5).get(10).getRecipe().add(new Ingredient(42, 0.040));
-        listofCat.get(5).get(11).getRecipe().add(new Ingredient(66, 0.030));
-        listofCat.get(5).get(12).getRecipe().add(new Ingredient(74, 0.010));
-        listofCat.get(5).get(13).getRecipe().add(new Ingredient(75, 0.100));
-        listofCat.get(5).get(14).getRecipe().add(new Ingredient(76, 0.030));
-        listofCat.get(5).get(15).getRecipe().add(new Ingredient(68, 0.200));
-        
-        listofCat.get(6).get(0).getRecipe().add(new Ingredient(56, 0.177));  //Big pizza
-        listofCat.get(6).get(0).getRecipe().add(new Ingredient(5, 0.003));
-        listofCat.get(6).get(0).getRecipe().add(new Ingredient(4, 0.003));
-        listofCat.get(6).get(0).getRecipe().add(new Ingredient(71, 0.003));
-        listofCat.get(6).get(0).getRecipe().add(new Ingredient(53, 0.016));
-        listofCat.get(6).get(0).getRecipe().add(new Ingredient(98, 0.135));
-        listofCat.get(6).get(0).getRecipe().add(new Ingredient(11, 0.005));
-        listofCat.get(6).get(0).getRecipe().add(new Ingredient(43, 0.150));
-        
-        listofCat.get(6).get(1).getRecipe().add(new Ingredient(72, 0.050));
-        listofCat.get(6).get(2).getRecipe().add(new Ingredient(72, 0.050));
-        listofCat.get(6).get(3).getRecipe().add(new Ingredient(73, 0.050));
-        listofCat.get(6).get(4).getRecipe().add(new Ingredient(36, 0.050));
-        listofCat.get(6).get(5).getRecipe().add(new Ingredient(69, 0.050));
-        listofCat.get(6).get(6).getRecipe().add(new Ingredient(47, 0.050));
-        listofCat.get(6).get(7).getRecipe().add(new Ingredient(48, 0.050));
-        listofCat.get(6).get(8).getRecipe().add(new Ingredient(54, 0.060));
-        listofCat.get(6).get(9).getRecipe().add(new Ingredient(63, 0.060));
-        listofCat.get(6).get(10).getRecipe().add(new Ingredient(42, 0.060));
-        listofCat.get(6).get(11).getRecipe().add(new Ingredient(66, 0.050));
-        listofCat.get(6).get(12).getRecipe().add(new Ingredient(74, 0.015));
-        listofCat.get(6).get(13).getRecipe().add(new Ingredient(75, 0.150));
-        listofCat.get(6).get(14).getRecipe().add(new Ingredient(76, 0.050));
-        listofCat.get(6).get(15).getRecipe().add(new Ingredient(68, 0.300));
+        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(56, 0.177));  //Big pizza
+        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(5, 0.003));
+        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(4, 0.003));
+        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(71, 0.003));
+        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(53, 0.016));
+        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(98, 0.135));
+        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(11, 0.005));
+        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(43, 0.150));
+
+        menu.get(6).getDishes().get(1).getRecipe().add(new Ingredient(72, 0.050));
+        menu.get(6).getDishes().get(2).getRecipe().add(new Ingredient(72, 0.050));
+        menu.get(6).getDishes().get(3).getRecipe().add(new Ingredient(73, 0.050));
+        menu.get(6).getDishes().get(4).getRecipe().add(new Ingredient(36, 0.050));
+        menu.get(6).getDishes().get(5).getRecipe().add(new Ingredient(69, 0.050));
+        menu.get(6).getDishes().get(6).getRecipe().add(new Ingredient(47, 0.050));
+        menu.get(6).getDishes().get(7).getRecipe().add(new Ingredient(48, 0.050));
+        menu.get(6).getDishes().get(8).getRecipe().add(new Ingredient(54, 0.060));
+        menu.get(6).getDishes().get(9).getRecipe().add(new Ingredient(63, 0.060));
+        menu.get(6).getDishes().get(10).getRecipe().add(new Ingredient(42, 0.060));
+        menu.get(6).getDishes().get(11).getRecipe().add(new Ingredient(66, 0.050));
+        menu.get(6).getDishes().get(12).getRecipe().add(new Ingredient(74, 0.015));
+        menu.get(6).getDishes().get(13).getRecipe().add(new Ingredient(75, 0.150));
+        menu.get(6).getDishes().get(14).getRecipe().add(new Ingredient(76, 0.050));
+   
 
 
     }

@@ -2226,12 +2226,11 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private int getButtonId(java.awt.event.MouseEvent evt) {
-        JButton myButton = (JButton) evt.getSource();
-        int a = 0;
+        JButton myButton = (JButton) evt.getSource();        
         String btnName = myButton.getName();
-        a = Integer.parseInt(btnName.substring(3));
-        return a;
+        return Integer.parseInt(btnName.substring(3));        
     }
+    
     private void chooseTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseTable
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
@@ -2258,12 +2257,14 @@ public class MainForm extends javax.swing.JFrame {
                     checks.get(activeTable).getCheckList().get(i).getSum()
                 });
             }
-            markCheckItems();
+            if (checks.get(activeTable).getCheckList().size() > 0) {
+                markDishesAsCooked();                
+            }
         } else {
             checks.put(activeTable, new Order());
             jTextField1.setText("0");
         }
-        if (checks.get(activeTable).isPayed()) {            
+        if (checks.get(activeTable).isPayed()) {
             jButton10.setEnabled(false);
             jButton3.setEnabled(false);
             jButton7.setEnabled(false);
@@ -2310,8 +2311,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void addRecordToTable(int count) {
         clearCountButton();
-//        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
         String title = listofCat.get(activeCat).get(activeDishes).getTitle();
@@ -2332,10 +2331,10 @@ public class MainForm extends javax.swing.JFrame {
             checks.get(activeTable).getCheckList().get(addedIndex)
             .getDish().getPrice(),
             checks.get(activeTable).getCheckList().get(addedIndex)
-            .getSum()          
+            .getSum()
         });
     }
- 
+
     private void refreshListOfPrices() {
         int price = listofCat.get(activeCat).get(activeDishes).getPrice();
         btn1.setText("<html> 1 <br/> " + price + " грн. </html>");
@@ -2354,7 +2353,7 @@ public class MainForm extends javax.swing.JFrame {
         jList2.setSelectedIndex(0);
         activeDishes = 0;
         jList2.ensureIndexIsVisible(jList2.getSelectedIndex());
-        clearCountButton();             
+        clearCountButton();
         refreshListOfPrices();
         clearCheckboxs();
     }//GEN-LAST:event_jPanel5ComponentShown
@@ -2511,7 +2510,7 @@ public class MainForm extends javax.swing.JFrame {
 //            // handle exception
 //        }
 //    }
-    public void markCheckItems() {
+    public void markDishesAsCooked() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(new Object[]{
             "", null, null, null
@@ -2519,9 +2518,9 @@ public class MainForm extends javax.swing.JFrame {
     }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         //  printComponenet(); 
-        if (activeCat != 9 || activeCat != 10) {
+        if (activeCat != 9 && activeCat != 10) {
             if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
-                markCheckItems();
+                markDishesAsCooked();
                 System.out.println("activeCat" + activeCat);
 
 //        if (jButton3.isEnabled()) {
@@ -2601,7 +2600,7 @@ public class MainForm extends javax.swing.JFrame {
             if (checks.get(activeTable).getTotalsum() != 0) {
                 if (jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") || activeCat == 9 || activeCat == 10) {
                     if (activeCat == 9 || activeCat == 10) {
-                        markCheckItems();
+                        markDishesAsCooked();
                     }
                     OrderUtils.addOrder(checks.get(activeTable), userList.get(User.getActiveUser));
                     checks.get(activeTable).setPayed(true);

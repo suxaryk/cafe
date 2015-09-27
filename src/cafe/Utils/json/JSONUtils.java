@@ -21,29 +21,29 @@ import org.json.simple.parser.ParseException;
  * @author suxarina
  */
 public class JSONUtils {
-//    public static void writeAllIngredients(){
-//        int Cat = 7;
-//        System.out.println("catSize+ " + listofCat.get(Cat).size());
-//        FileUtils.fillIngredients();
-//        
-//        
-//        
-//        for (Dish dish : listofCat.get(Cat)) {  
-//            JSONArray jsonArr = new JSONArray();
-//            for (Ingredient ing : dish.getRecipe()) { 
-//                JSONObject ingrObj = new JSONObject();
-////                ingrObj.put(ing.getId(), ing.getCount());
-//                ingrObj.put("id", ing.getId());                
-//                ingrObj.put("c", ing.getCount());   
-//                jsonArr.add(ingrObj);              
-//            }
-//            
-//            
-//            System.out.println("json" + jsonArr.toJSONString());
-//            RecepiesUtils.updateRecipes(Cat, dish.getDbID(), jsonArr.toJSONString());
-//            //recipes.clear();
-//        }
-//    }
+    public static void writeAllIngredients(){
+        int Cat = 7;
+        System.out.println("catSize+ " + menu.get(Cat).getDishes().size());
+        FileUtils.fillIngredients();
+        
+        
+        
+        for (Dish dish : menu.get(Cat).getDishes()) {  
+            JSONArray jsonArr = new JSONArray();
+            for (Ingredient ing : dish.getRecipe()) { 
+                JSONObject ingrObj = new JSONObject();
+//                ingrObj.put(ing.getId(), ing.getCount());
+                ingrObj.put("id", ing.getId());                
+                ingrObj.put("c", ing.getCount());   
+                jsonArr.add(ingrObj);              
+            }
+            
+            
+            System.out.println("json" + jsonArr.toJSONString());
+            RecepiesUtils.updateRecipes(Cat, dish.getDbID(), jsonArr.toJSONString());
+            //recipes.clear();
+        }
+    }
     //data to JSON
     public static void updateDishIngredients(List<Ingredient> recipes, 
                                                 int activeCat, int activeDish){

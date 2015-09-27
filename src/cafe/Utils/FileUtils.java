@@ -150,8 +150,8 @@ public class FileUtils {
 //        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(13, 0.020)); //Tunec`
 //        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
 //        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(9, 0.010)); //Ikra                                                                            
-//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(58, 0.200)); //Boroshno      //Kliar
-//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(63, 0.0125)); //Пиво
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(54, 0.200)); //Boroshno      //Kliar
+//        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(57, 0.0125)); //Пиво
 //        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(22, 0.030)); //Соєвий соус
 //        menu.get(7).getDishes().get(9).getRecipe().add(new Ingredient(5, 0.020)); //Сіль
 //        
@@ -164,8 +164,8 @@ public class FileUtils {
 //        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(10, 0.020)); //Losos`
 //        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
 //        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(9, 0.010)); //Ikra                                                                            
-//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(58, 0.200)); //Boroshno      //Kliar
-//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(63, 0.0125)); //Пиво
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(54, 0.200)); //Boroshno      //Kliar
+//        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(57, 0.0125)); //Пиво
 //        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(23, 0.030)); //Соєвий соус
 //        menu.get(7).getDishes().get(10).getRecipe().add(new Ingredient(5, 0.020)); //Сіль
 //        
@@ -178,8 +178,8 @@ public class FileUtils {
 //        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(14, 0.020)); //Wugor
 //        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(8, 0.020)); //Syr Filad
 //        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(9, 0.010)); //Ikra                                                                            
-//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(58, 0.200)); //Boroshno      //Kliar
-//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(63, 0.0125)); //Пиво
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(54, 0.200)); //Boroshno      //Kliar
+//        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(57, 0.0125)); //Пиво
 //        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(23, 0.030)); //Соєвий соус
 //        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(5, 0.020)); //Сіль
 //        menu.get(7).getDishes().get(11).getRecipe().add(new Ingredient(12, 0.010));//Unagi
@@ -325,60 +325,60 @@ public class FileUtils {
 //        menu.get(7).getDishes().get(28).getRecipe().add(new Ingredient(22, 0.010));
 //        menu.get(7).getDishes().get(29).getRecipe().add(new Ingredient(20, 0.010));
 //        menu.get(7).getDishes().get(30).getRecipe().add(new Ingredient(17, 0.020));
+
+        for (int i = 0; i <= 24; i++) {
+            menu.get(7).getDishes().get(i).getRecipe().addAll(rollAdds);
+        }
+//        //SmallPizza
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(55, 0.159));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(5, 0.002));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(4, 0.002));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(71, 0.002));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(53, 0.014));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(98, 0.085));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(11, 0.005));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(43, 0.100));
 //
-//        for (int i = 0; i <= 21; i++) {
-//            menu.get(7).getDishes().get(i).getRecipe().addAll(rollAdds);
-//        }
-        //SmallPizza
-        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(55, 0.159));
-        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(5, 0.002));
-        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(4, 0.002));
-        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(71, 0.002));
-        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(53, 0.014));
-        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(98, 0.085));
-        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(11, 0.005));
-        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(43, 0.100));
-
-        menu.get(5).getDishes().get(1).getRecipe().add(new Ingredient(72, 0.030));
-        menu.get(5).getDishes().get(2).getRecipe().add(new Ingredient(72, 0.030));
-        menu.get(5).getDishes().get(3).getRecipe().add(new Ingredient(73, 0.030));
-        menu.get(5).getDishes().get(4).getRecipe().add(new Ingredient(36, 0.030));
-        menu.get(5).getDishes().get(5).getRecipe().add(new Ingredient(69, 0.030));
-        menu.get(5).getDishes().get(6).getRecipe().add(new Ingredient(47, 0.030));
-        menu.get(5).getDishes().get(7).getRecipe().add(new Ingredient(48, 0.030));
-        menu.get(5).getDishes().get(8).getRecipe().add(new Ingredient(54, 0.040));
-        menu.get(5).getDishes().get(9).getRecipe().add(new Ingredient(63, 0.040));
-        menu.get(5).getDishes().get(10).getRecipe().add(new Ingredient(42, 0.040));
-        menu.get(5).getDishes().get(11).getRecipe().add(new Ingredient(66, 0.030));
-        menu.get(5).getDishes().get(12).getRecipe().add(new Ingredient(74, 0.010));
-        menu.get(5).getDishes().get(13).getRecipe().add(new Ingredient(75, 0.100));
-        menu.get(5).getDishes().get(14).getRecipe().add(new Ingredient(76, 0.030));
-        menu.get(5).getDishes().get(15).getRecipe().add(new Ingredient(68, 0.200));
-        
-        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(56, 0.177));  //Big pizza
-        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(5, 0.003));
-        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(4, 0.003));
-        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(71, 0.003));
-        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(53, 0.016));
-        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(98, 0.135));
-        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(11, 0.005));
-        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(43, 0.150));
-
-        menu.get(6).getDishes().get(1).getRecipe().add(new Ingredient(72, 0.050));
-        menu.get(6).getDishes().get(2).getRecipe().add(new Ingredient(72, 0.050));
-        menu.get(6).getDishes().get(3).getRecipe().add(new Ingredient(73, 0.050));
-        menu.get(6).getDishes().get(4).getRecipe().add(new Ingredient(36, 0.050));
-        menu.get(6).getDishes().get(5).getRecipe().add(new Ingredient(69, 0.050));
-        menu.get(6).getDishes().get(6).getRecipe().add(new Ingredient(47, 0.050));
-        menu.get(6).getDishes().get(7).getRecipe().add(new Ingredient(48, 0.050));
-        menu.get(6).getDishes().get(8).getRecipe().add(new Ingredient(54, 0.060));
-        menu.get(6).getDishes().get(9).getRecipe().add(new Ingredient(63, 0.060));
-        menu.get(6).getDishes().get(10).getRecipe().add(new Ingredient(42, 0.060));
-        menu.get(6).getDishes().get(11).getRecipe().add(new Ingredient(66, 0.050));
-        menu.get(6).getDishes().get(12).getRecipe().add(new Ingredient(74, 0.015));
-        menu.get(6).getDishes().get(13).getRecipe().add(new Ingredient(75, 0.150));
-        menu.get(6).getDishes().get(14).getRecipe().add(new Ingredient(76, 0.050));
-   
+//        menu.get(5).getDishes().get(1).getRecipe().add(new Ingredient(72, 0.030));
+//        menu.get(5).getDishes().get(2).getRecipe().add(new Ingredient(72, 0.030));
+//        menu.get(5).getDishes().get(3).getRecipe().add(new Ingredient(73, 0.030));
+//        menu.get(5).getDishes().get(4).getRecipe().add(new Ingredient(36, 0.030));
+//        menu.get(5).getDishes().get(5).getRecipe().add(new Ingredient(69, 0.030));
+//        menu.get(5).getDishes().get(6).getRecipe().add(new Ingredient(47, 0.030));
+//        menu.get(5).getDishes().get(7).getRecipe().add(new Ingredient(48, 0.030));
+//        menu.get(5).getDishes().get(8).getRecipe().add(new Ingredient(54, 0.040));
+//        menu.get(5).getDishes().get(9).getRecipe().add(new Ingredient(63, 0.040));
+//        menu.get(5).getDishes().get(10).getRecipe().add(new Ingredient(42, 0.040));
+//        menu.get(5).getDishes().get(11).getRecipe().add(new Ingredient(66, 0.030));
+//        menu.get(5).getDishes().get(12).getRecipe().add(new Ingredient(74, 0.010));
+//        menu.get(5).getDishes().get(13).getRecipe().add(new Ingredient(75, 0.100));
+//        menu.get(5).getDishes().get(14).getRecipe().add(new Ingredient(76, 0.030));
+//        menu.get(5).getDishes().get(15).getRecipe().add(new Ingredient(68, 0.200));
+//        
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(56, 0.177));  //Big pizza
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(5, 0.003));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(4, 0.003));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(71, 0.003));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(53, 0.016));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(98, 0.135));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(11, 0.005));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(43, 0.150));
+//
+//        menu.get(6).getDishes().get(1).getRecipe().add(new Ingredient(72, 0.050));
+//        menu.get(6).getDishes().get(2).getRecipe().add(new Ingredient(72, 0.050));
+//        menu.get(6).getDishes().get(3).getRecipe().add(new Ingredient(73, 0.050));
+//        menu.get(6).getDishes().get(4).getRecipe().add(new Ingredient(36, 0.050));
+//        menu.get(6).getDishes().get(5).getRecipe().add(new Ingredient(69, 0.050));
+//        menu.get(6).getDishes().get(6).getRecipe().add(new Ingredient(47, 0.050));
+//        menu.get(6).getDishes().get(7).getRecipe().add(new Ingredient(48, 0.050));
+//        menu.get(6).getDishes().get(8).getRecipe().add(new Ingredient(54, 0.060));
+//        menu.get(6).getDishes().get(9).getRecipe().add(new Ingredient(63, 0.060));
+//        menu.get(6).getDishes().get(10).getRecipe().add(new Ingredient(42, 0.060));
+//        menu.get(6).getDishes().get(11).getRecipe().add(new Ingredient(66, 0.050));
+//        menu.get(6).getDishes().get(12).getRecipe().add(new Ingredient(74, 0.015));
+//        menu.get(6).getDishes().get(13).getRecipe().add(new Ingredient(75, 0.150));
+//        menu.get(6).getDishes().get(14).getRecipe().add(new Ingredient(76, 0.050));
+//   
 
 
     }

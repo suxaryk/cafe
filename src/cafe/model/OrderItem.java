@@ -5,6 +5,9 @@
  */
 package cafe.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -44,6 +47,13 @@ public class OrderItem {
 
     public void setSum(int sum) {
         this.itemSum = sum;
+    }
+    public List<Ingredient> getOrderItemRecipe(){
+        List<Ingredient> itemRecipe = new ArrayList<>();        
+        for (Ingredient ingredient : dish.getRecipe()) {
+            itemRecipe.add(new Ingredient(ingredient.getId(), ingredient.getCount() * count));          
+        }
+        return itemRecipe;
     }
     
 }

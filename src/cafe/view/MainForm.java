@@ -2513,7 +2513,14 @@ public class MainForm extends javax.swing.JFrame {
 //            // handle exception
 //        }
 //    }
-    public void markDishesAsCooked() {
+    private void subOrderIngredientsFromDB(){
+        ArrayList<Ingredient> subList = new ArrayList<>();
+        subList.addAll(storageList);
+        for (Ingredient ingredient : subList) {
+            ingredient.setCount(0.0);
+        }
+    } 
+    private void markDishesAsCooked() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(new Object[]{
             "", null, null, null
@@ -2928,8 +2935,8 @@ public class MainForm extends javax.swing.JFrame {
         int index = jTable5.getSelectedRow();
         StringBuilder message = new StringBuilder("Інгридієнт № " 
                                     + storageList.get(index).getId() + " - "
-                                    + storageList.get(index).getTitle() 
-                                    + " буде видалено в настпуних стравах:\n" );         
+                                    + storageList.get(index).getTitle().toUpperCase()
+                                    + "\nбуде видалено в настпуних стравах:\n" );         
         for (int i = 0; i < menu.size(); i++) {
             for (int j = 0; j < menu.get(i).getDishes().size(); j++) {
                 for (int k = 0; k < menu.get(i).getDishes().get(j).getRecipe().size(); k++) {                            
@@ -2948,17 +2955,17 @@ public class MainForm extends javax.swing.JFrame {
         if (index != -1) {            
             JFrame frame = new JFrame();
             String[] options = new String[2];
-            options[0] = "Так";
-            options[1] = "Ні";
+            options[0] = "Підтвердити";
+            options[1] = "Відмінити";
             
             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
                     getRemovedDisheTitles(), "Видалення інгридієнта", 0,
                     JOptionPane.YES_NO_OPTION, null, options, null);
             if (reply == JOptionPane.YES_OPTION) {
+                removeIngredientInAllDishes();
                 StorageUtils.removeIngredientFromDB(storageList.get(index).getId());
                 StorageUtils.readStorage();
-                showCalcTable(jTable5);
-                removeIngredientInAllDishes();                
+                showCalcTable(jTable5);                              
             }            
         }        
     }//GEN-LAST:event_removeIngredient

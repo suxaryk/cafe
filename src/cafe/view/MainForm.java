@@ -2906,24 +2906,60 @@ public class MainForm extends javax.swing.JFrame {
         }           
     }//GEN-LAST:event_addIngredient
 
-//    private void removeIngredientInAllDishes(){
-//        int index = jTable5.getSelectedRow();
-//        for (int i = 0; i < menu.size(); i++) {
-//            for (int j = 0; j < menu.get(i).size(); j++) {
-//                for (int k = 0; k < menu.get(i).get(j).getRecipe().size(); k++) {
-//                    if (menu.get(i).get(j).getRecipe().get(k).getId() == storageList.get(index).getId()) {
-//                        menu.get(i).get(j).getRecipe().remove(k);
-//                    }
-//                }
-//            }
-//        }
-//    } 
+    private void removeIngredientInAllDishes(){
+        int index = jTable5.getSelectedRow();
+        
+        for (int i = 0; i < menu.size(); i++) {
+            for (int j = 0; j < menu.get(i).getDishes().size(); j++) {
+                for (int k = 0; k < menu.get(i).getDishes().get(j).getRecipe().size(); k++) {                            
+                    if (menu.get(i).getDishes().get(j).getRecipe().get(k).getId() == storageList.get(index).getId()) {                  
+                        List<Ingredient> tmpRecipe = new ArrayList<>();
+                        tmpRecipe.addAll(menu.get(i).getDishes().get(j).getRecipe());
+                        tmpRecipe.remove(k);
+                        JSONUtils.updateDishIngredients(tmpRecipe, i, j); 
+                        RecepiesUtils.readRecipeFromDB(i, menu.get(i)
+                                                .getDishes().get(j).getDbID());                        
+                    }
+                }
+            }
+        }
+    } 
+    private String getRemovedDisheTitles(){
+        int index = jTable5.getSelectedRow();
+        StringBuilder message = new StringBuilder("Інгридієнт № " 
+                                    + storageList.get(index).getId() + " - "
+                                    + storageList.get(index).getTitle() 
+                                    + " буде видалено в настпуних стравах:\n" );         
+        for (int i = 0; i < menu.size(); i++) {
+            for (int j = 0; j < menu.get(i).getDishes().size(); j++) {
+                for (int k = 0; k < menu.get(i).getDishes().get(j).getRecipe().size(); k++) {                            
+                    if (menu.get(i).getDishes().get(j).getRecipe().get(k).getId() == storageList.get(index).getId()) {
+                        System.out.println("remove=" + storageList.get(index).getTitle());
+                        System.out.println("dish----------" + menu.get(i).getDishes().get(j).getTitle());
+                        message.append("-- ").append(menu.get(i).getDishes().get(j).getTitle()).append("\n");                        
+                    }
+                }
+            }
+        }
+        return message.toString();
+    } 
     private void removeIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIngredient
         int index = jTable5.getSelectedRow();
-        if (index != -1) {
-            StorageUtils.removeIngredientFromDB(storageList.get(index).getId());
-            StorageUtils.readStorage();
-            showCalcTable(jTable5);            
+        if (index != -1) {            
+            JFrame frame = new JFrame();
+            String[] options = new String[2];
+            options[0] = "Так";
+            options[1] = "Ні";
+            
+            int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
+                    getRemovedDisheTitles(), "Видалення інгридієнта", 0,
+                    JOptionPane.YES_NO_OPTION, null, options, null);
+            if (reply == JOptionPane.YES_OPTION) {
+                StorageUtils.removeIngredientFromDB(storageList.get(index).getId());
+                StorageUtils.readStorage();
+                showCalcTable(jTable5);
+                removeIngredientInAllDishes();                
+            }            
         }        
     }//GEN-LAST:event_removeIngredient
 

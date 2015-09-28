@@ -2513,13 +2513,23 @@ public class MainForm extends javax.swing.JFrame {
 //            // handle exception
 //        }
 //    }
-    private void subOrderIngredientsFromDB(){
-        ArrayList<Ingredient> subList = new ArrayList<>();
-        subList.addAll(storageList);
-        for (Ingredient ingredient : subList) {
-            ingredient.setCount(0.0);
+    private void subOrderIngredientsFromDB() {
+        System.out.println("----- remove Order ingredients from DB-----------");
+        for (Ingredient ingredient : storageList) {
+            DecimalFormat df = new DecimalFormat("##.###");
+            double old = ingredient.getCount();
+            double diff = Double.valueOf(df.format(orders.get(activeTable)
+                    .getOrderIngredients().get(ingredient.getId())));
+            
+            if (diff != 0.0) {
+                ingredient.setCount(Double.valueOf(df.format(old - diff)));  
+                StorageUtils.updateCount(ingredient.getId(), ingredient.getCount());
+                System.out.println("title " + ingredient.getTitle());
+                System.out.println("difference " + diff);
+            }
         }
-    } 
+        
+    }
     private void markDishesAsCooked() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(new Object[]{
@@ -2528,8 +2538,10 @@ public class MainForm extends javax.swing.JFrame {
     }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         //  printComponenet(); 
+        if (jTable1.getRowCount() > 0) {                 
         if (activeCat != 9 && activeCat != 10) {
             if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
+                subOrderIngredientsFromDB();
                 markDishesAsCooked();
                 System.out.println("activeCat" + activeCat);
 
@@ -2563,7 +2575,7 @@ public class MainForm extends javax.swing.JFrame {
 //            }
 //
 //        }
-            }
+            }}
         }
     }//GEN-LAST:event_PrintCheck
     private void sortListOfDish(List list, final int orderArg) {

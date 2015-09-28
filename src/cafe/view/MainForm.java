@@ -2445,7 +2445,7 @@ public class MainForm extends javax.swing.JFrame {
             model.setColumnCount(1);
             model.addColumn("пароль");
 
-            jButton4.setVisible(true);
+            
             jButton5.setVisible(true);
             jButton14.setVisible(true);
             jButton15.setVisible(true);
@@ -2824,9 +2824,13 @@ public class MainForm extends javax.swing.JFrame {
         jButton14.setVisible(false);
         jButton15.setVisible(false);
         jButton17.setVisible(false);
-        jTextField3.setVisible(false);
-        jButton4.setVisible(false);
+        jTextField3.setVisible(false);        
         jButton5.setVisible(false);
+        jLabel15.setVisible(false);
+        jTextField6.setVisible(false);
+        jButton36.setVisible(false);
+        jButton37.setVisible(false);
+        jButton38.setVisible(false);
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
@@ -2982,12 +2986,21 @@ public class MainForm extends javax.swing.JFrame {
             }            
         }        
     }//GEN-LAST:event_removeIngredient
-
+    private void setComponentsVisible(){
+        if (User.active == userList.size() - 1) {
+            jLabel15.setVisible(true);
+            jTextField6.setVisible(true);
+            jButton36.setVisible(true);
+            jButton37.setVisible(true);
+            jButton38.setVisible(true);
+        }
+    }
     private void goToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToStorage
         jPanel8.setVisible(true);
         jPanel11.setVisible(true);
         jTabbedPane1.setVisible(false);
         jPanel3.setVisible(false);
+        setComponentsVisible();
         StorageUtils.readStorage();
         showCalcTable(jTable5);       
     }//GEN-LAST:event_goToStorage
@@ -3338,8 +3351,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(2, false);
         jTextField2.setLayout(new AbsoluteLayout());
         jTextField2.setVisible(false);
-        jTable4.setVisible(false);
-        jButton4.setVisible(false);
+        jTable4.setVisible(false);       
         jButton5.setVisible(false);
         jButton1.setVisible(false);
         jButton11.setVisible(false);
@@ -3353,6 +3365,11 @@ public class MainForm extends javax.swing.JFrame {
         jTextField3.setVisible(false);
         jTextField2.setVisible(false);
         jTextField4.setVisible(false);
+        jLabel15.setVisible(false);
+        jTextField6.setVisible(false);
+        jButton36.setVisible(false);
+        jButton37.setVisible(false);
+        jButton38.setVisible(false);
         jPanel6.setVisible(false);
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);

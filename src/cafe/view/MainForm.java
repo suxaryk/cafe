@@ -2541,7 +2541,7 @@ public class MainForm extends javax.swing.JFrame {
         if (jTable1.getRowCount() > 0) {                 
         if (activeCat != 9 && activeCat != 10) {
             if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
-                subOrderIngredientsFromDB();
+                
                 markDishesAsCooked();
                 System.out.println("activeCat" + activeCat);
 
@@ -2624,6 +2624,7 @@ public class MainForm extends javax.swing.JFrame {
                     if (activeCat == 9 || activeCat == 10) {
                         markDishesAsCooked();
                     }
+                    subOrderIngredientsFromDB();
                     OrderUtils.addOrder(orders.get(activeTable), userList.get(User.active));
                     orders.get(activeTable).setPayed(true);
                     jTable1.setBackground(lightRed);
@@ -3083,18 +3084,21 @@ public class MainForm extends javax.swing.JFrame {
 
     private void setNumber(JButton button, JTable table, int columnIndex){
         int index = table.getSelectedRow();        
-          String old =  table.getValueAt(index, columnIndex).toString();
-          old = old.trim();
-          if (old.equals("0.0")) {
-            old = "";
+        if (index != -1) {
+            String old = table.getValueAt(index, columnIndex).toString();
+            old = old.trim();
+            if (old.equals("0.0")) {
+                old = "";
+            }
+            String newLine = old + button.getText();
+            if (newLine.length() < 7) {
+                if (newLine.length() == 2) {
+                    newLine += ".";
+                }
+                table.setValueAt(newLine, index, columnIndex);
+            }
+            
         }
-          String newLine = old + button.getText();
-          if (newLine.length() < 7) {
-              if (newLine.length() == 2) {
-                  newLine +=".";
-              }
-              table.setValueAt(newLine, index, columnIndex);            
-        } 
     }
     private void PressNumber(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PressNumber
         JButton myButton = (JButton) evt.getSource();      
@@ -3122,11 +3126,13 @@ public class MainForm extends javax.swing.JFrame {
 
     private void deleteDigit(JTable table, int columnIndex){
         int index = table.getSelectedRow();
-        String old = table.getValueAt(index, columnIndex).toString();
-        if (old.length() > 0) {
-            old = old.substring(0, old.length() - 1);
-            System.out.println("old" + old);
-            table.setValueAt(old, index, columnIndex);
+        if (index != -1) {
+            String old = table.getValueAt(index, columnIndex).toString();
+            if (old.length() > 0) {
+                old = old.substring(0, old.length() - 1);
+                System.out.println("old" + old);
+                table.setValueAt(old, index, columnIndex);
+            }            
         }
     }
     private void clearDigitLine(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDigitLine
@@ -3167,7 +3173,10 @@ public class MainForm extends javax.swing.JFrame {
 
     private void clearStorageTableFiled(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearStorageTableFiled
         int index = jTable5.getSelectedRow();
-        jTable5.setValueAt("", index, 3);
+        if (index != -1) {
+            jTable5.setValueAt("", index, 3);
+        }
+        
     }//GEN-LAST:event_clearStorageTableFiled
 
     private void deleteStorageFiledDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStorageFiledDigit

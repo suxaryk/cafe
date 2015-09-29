@@ -2426,13 +2426,14 @@ public class MainForm extends javax.swing.JFrame {
     private void removeCheckItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCheckItem
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         System.out.println("selectedRow" + jTable1.getSelectedRow());      
-        if (jTable1.getRowCount() != 0) {
-            if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
+        if (jTable1.getRowCount() != 0 && 
+                !orders.get(activeTable).isPayed() &&
+                !jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals(""))  {            
                 model.removeRow(jTable1.getRowCount() - 1);
                 orders.get(activeTable).getCheckList().
-                        remove(orders.get(activeTable).
-                                getCheckList().size() - 1);
-            }
+                remove(orders.get(activeTable).
+                getCheckList().size() - 1);
+            
         }
         jTextField1.setText("" + orders.get(activeTable).getOrderSum());
     }//GEN-LAST:event_removeCheckItem
@@ -2540,7 +2541,7 @@ public class MainForm extends javax.swing.JFrame {
         //  printComponenet(); 
         if (jTable1.getRowCount() > 0) {                 
         if (activeCat != 9 && activeCat != 10) {
-            if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
+            if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") && !orders.get(activeTable).isPayed()) {
                 
                 markDishesAsCooked();
                 System.out.println("activeCat" + activeCat);
@@ -2618,12 +2619,12 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void payCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_payCheck
-        if (jButton10.isEnabled()) {
+        if (jButton10.isEnabled()) {            
             if (orders.get(activeTable).getOrderSum() != 0) {
-                if (jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") || activeCat == 9 || activeCat == 10) {
-                    if (activeCat == 9 || activeCat == 10) {
-                        markDishesAsCooked();
-                    }
+
+//                if (activeCat == 9 || activeCat == 10) {
+//                    markDishesAsCooked();
+
                     subOrderIngredientsFromDB();
                     OrderUtils.addOrder(orders.get(activeTable), userList.get(User.active));
                     orders.get(activeTable).setPayed(true);
@@ -2640,7 +2641,7 @@ public class MainForm extends javax.swing.JFrame {
                     jTabbedPane1.setEnabledAt(1, false);
                     jTabbedPane1.setEnabledAt(2, false);
                     jTabbedPane1.setSelectedIndex(0);
-                }
+//                }
             }
         }
     }//GEN-LAST:event_payCheck

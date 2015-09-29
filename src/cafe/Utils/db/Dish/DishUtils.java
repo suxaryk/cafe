@@ -27,6 +27,12 @@ public class DishUtils {
     public static final String USERNAME1 = "luckyroger";
     public static final String PASSWORD1 = "luckyroger";
     
+    public static final String URL2 = "jdbc:mysql://suharina.ddns.net:3306/luckyroger";
+    public static final String USERNAME2 = "root";
+    public static final String PASSWORD2 = "root";
+    
+    
+    
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
     private static final ArrayList<String> sqlRemoveList = new ArrayList<>();
@@ -39,6 +45,9 @@ public class DishUtils {
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");           
         }
+//        URL = URL2;
+//        USERNAME = USERNAME2;
+//        PASSWORD = PASSWORD2;
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
             System.out.println(!connection.isClosed() ? "DB connected to " +URL
@@ -46,9 +55,9 @@ public class DishUtils {
 
         } catch (SQLException e) {
             System.out.println("Connection Failed! Redirection to another SERVER");
-            URL = URL1;
-            USERNAME = USERNAME1;
-            PASSWORD = PASSWORD1;
+            URL = URL2;
+            USERNAME = USERNAME2;
+            PASSWORD = PASSWORD2;
         } catch (Exception e) {            
             
         }

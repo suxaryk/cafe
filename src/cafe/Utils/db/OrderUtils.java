@@ -24,7 +24,7 @@ import java.sql.Statement;
  */
 public class OrderUtils {
 
-    private static int dbId;
+    private static int dbId = 1;
 
     public static int getOrderId() {
         return dbId;
@@ -48,7 +48,7 @@ public class OrderUtils {
 
             PreparedStatement pstatement = connection.prepareStatement(sql);
          
-            pstatement.setInt(1, ++dbId);
+            pstatement.setInt(1, dbId++);
             pstatement.setInt(2, order.getOrderSum());
             pstatement.setInt(3, order.getCookCount());
             pstatement.setTimestamp(4, getCurrentTimeStamp());

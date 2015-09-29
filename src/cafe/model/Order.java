@@ -5,7 +5,10 @@
  */
 package cafe.model;
 
+import cafe.view.MainForm;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -61,7 +64,24 @@ public class Order {
     public void setPayed(boolean payed) {
         this.payed = payed;
     }
-   
+    
+    public Map<Integer, Double> getOrderIngredients() {
+        Map<Integer, Double> diffMap = new HashMap<>();
+        for (Ingredient ingredient : MainForm.storageList) {
+            diffMap.put(ingredient.getId(), 0.0);
+        }
+        for (OrderItem item : items) {
+            for (Ingredient ingredient : item.getOrderItemRecipe()) {
+                double oldCount = diffMap.get(ingredient.getId());
+                diffMap.put(ingredient.getId(), oldCount + ingredient.getCount());
+            }
+        }
+//        for (Entry<Integer, Double> entry: diffMap.entrySet()) {
+//            System.out.println(entry.getKey() + " " + entry.getValue());
+//            
+//        }
+        return diffMap;
+    }
     
     
 }

@@ -1211,7 +1211,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jButton7);
-        jButton7.setBounds(394, 460, 100, 70);
+        jButton7.setBounds(395, 460, 100, 70);
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -3251,8 +3251,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void changeTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTable
         int index = jComboBox2.getSelectedIndex();
-        System.out.println("index-" + index);
-        System.out.println("activeTable---" + activeTable);
         if (index != 0) {
             if (!orders.get(activeTable).getItems().isEmpty()) {
                 if (!orders.containsKey(index)) {
@@ -3262,16 +3260,13 @@ public class MainForm extends javax.swing.JFrame {
                     jPanel2.getComponent(index - 1).setBackground(Color.yellow);
                     jPanel2.getComponent(activeTable - 1).setBackground(GREEN);
                     activeTable = index;
-
                 } else {
                     jComboBox2.setSelectedIndex(0);
                 }
             } else {
                 jComboBox2.setSelectedIndex(0);
-
             }
         }
-
     }//GEN-LAST:event_changeTable
 
     private void clearCheckboxs() {

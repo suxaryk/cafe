@@ -2250,7 +2250,7 @@ public class MainForm extends javax.swing.JFrame {
     private void chooseTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseTable
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-
+        jComboBox2.setSelectedIndex(0);
         activeTable = getButtonId(evt);
         System.out.println("table=" + activeTable);
         
@@ -3252,21 +3252,24 @@ public class MainForm extends javax.swing.JFrame {
     private void changeTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTable
         int index = jComboBox2.getSelectedIndex();
         System.out.println("index-" + index);
-        if (index != 0 && !orders.containsKey(index)) {
+        System.out.println("activeTable---" + activeTable);
+        if (index != 0) {
             if (!orders.get(activeTable).getItems().isEmpty()) {
-                orders.put(index, orders.get(activeTable));
-                orders.remove(activeTable);
-                jLabel4.setText("Стіл № " + index);
-                jPanel2.getComponent(index - 1).setBackground(Color.yellow);
-                jPanel2.getComponent(activeTable - 1).setBackground(GREEN);
-                activeTable = index;
+                if (!orders.containsKey(index)) {
+                    orders.put(index, orders.get(activeTable));
+                    orders.remove(activeTable);
+                    jLabel4.setText("Стіл № " + index);
+                    jPanel2.getComponent(index - 1).setBackground(Color.yellow);
+                    jPanel2.getComponent(activeTable - 1).setBackground(GREEN);
+                    activeTable = index;
 
-            }else{
-                jComboBox2.setSelectedIndex(activeTable+1);
-                System.out.println("111");
-                
+                } else {
+                    jComboBox2.setSelectedIndex(0);
+                }
+            } else {
+                jComboBox2.setSelectedIndex(0);
+
             }
-
         }
 
     }//GEN-LAST:event_changeTable

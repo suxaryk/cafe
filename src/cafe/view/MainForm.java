@@ -2619,7 +2619,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (orderArg == 0) {
                     return ((Integer) o1.getId()).compareTo(o2.getId());
                 } else if (orderArg == 1) {
-                    return ((Double) o2.getCount()).compareTo(o1.getCount());
+                    return ((Double) o1.getCount()).compareTo(o2.getCount());
                 } else {
                     return o1.getTitle().compareToIgnoreCase(o2.getTitle());
                 }
@@ -2883,12 +2883,17 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void setSort(JComboBox comboBox, JTable table){
+        int activeRow = -1;
+        activeRow =  table.getSelectedRow();
         int index = comboBox.getSelectedIndex();
         sortListOfIngredients(storageList, index);
         showCalcTable(table);
-        if (index == 1 || index == 2) {
-            table.setRowSelectionInterval(0, 0);
-            Rectangle cellRect = jTable3.getCellRect(0, 0, true);
+//        if (index == 1 || index == 2) {
+        
+            //table.setRowSelectionInterval(activeRow, activeRow);
+        if (activeRow != -1) {
+            table.setRowSelectionInterval(activeRow, activeRow);
+            Rectangle cellRect = table.getCellRect(activeRow, 0, true);
             table.scrollRectToVisible(cellRect);
         }
     }
@@ -3021,7 +3026,8 @@ public class MainForm extends javax.swing.JFrame {
         jPanel3.setVisible(false);
         setComponentsVisible();
         StorageUtils.readStorage();
-        showCalcTable(jTable5);       
+        setSort(jComboBox5, jTable5);
+        //showCalcTable(jTable5);       
     }//GEN-LAST:event_goToStorage
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -3240,13 +3246,13 @@ public class MainForm extends javax.swing.JFrame {
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
         changeStorageCount(true);
         StorageUtils.readStorage();
-        showCalcTable(jTable5);
+        setSort(jComboBox5, jTable5);
     }//GEN-LAST:event_addToStorage
 
     private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
         changeStorageCount(false);
         StorageUtils.readStorage();
-        showCalcTable(jTable5);
+        setSort(jComboBox5, jTable5);
     }//GEN-LAST:event_removeFromStorage
 
     private void changeTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTable

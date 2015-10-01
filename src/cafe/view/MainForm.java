@@ -3228,25 +3228,25 @@ public class MainForm extends javax.swing.JFrame {
             double diff = changeList.get(i).getCount();
             if (diff != 0.0) {
                 if (isAdd) {                    
-                    storageList.get(i).setCount(Double.valueOf(df.format(old + diff)));
-                    StorageUtils.updateCount(storageList.get(i).getId(),
-                            storageList.get(i).getCount());
-                } else if (old >= diff) {
-                    storageList.get(i).setCount(Double.valueOf(df.format(old - diff)));
-                    StorageUtils.updateCount(storageList.get(i).getId(),
-                            storageList.get(i).getCount());
-                }                
+                    storageList.get(i).setCount(Double.valueOf(df.format(old + diff)));                   
+                } else {
+                    storageList.get(i).setCount(Double.valueOf(df.format(old - diff)));                    
+                }
+                StorageUtils.updateCount(storageList.get(i).getId(),
+                        storageList.get(i).getCount());
             }
-        }
-        StorageUtils.readStorage();
-        showCalcTable(jTable5);
+        }            
     }
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
-        changeStorageCount(true);        
+        changeStorageCount(true);
+        StorageUtils.readStorage();
+        showCalcTable(jTable5);
     }//GEN-LAST:event_addToStorage
 
     private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
         changeStorageCount(false);
+        StorageUtils.readStorage();
+        showCalcTable(jTable5);
     }//GEN-LAST:event_removeFromStorage
 
     private void changeTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTable

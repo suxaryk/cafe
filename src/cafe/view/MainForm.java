@@ -149,6 +149,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jButton19 = new javax.swing.JButton();
+        jCheckBox2 = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -1145,6 +1146,17 @@ public class MainForm extends javax.swing.JFrame {
         });
         jPanel5.add(jButton19);
         jButton19.setBounds(370, 530, 100, 70);
+
+        jCheckBox2.setBackground(new java.awt.Color(255, 102, 102));
+        jCheckBox2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jCheckBox2.setText("по грамах");
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chengeScaleToGrams(evt);
+            }
+        });
+        jPanel5.add(jCheckBox2);
+        jCheckBox2.setBounds(0, 530, 120, 31);
 
         jTabbedPane1.addTab("                 ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), jPanel5); // NOI18N
 
@@ -2419,17 +2431,23 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void refreshListOfPrices() {
+        String unit = "шт.";
+        int minValue = 1;
+        if (activeCat == 10 && jCheckBox2.isSelected()) {
+            unit = "грам"; 
+            minValue = 50;
+        }
         int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
-        btn1.setText("<html> 1 <br/> " + price + " грн. </html>");
-        btn2.setText("<html> 2 <br/> " + price * 2 + " грн. </html>");
-        btn3.setText("<html> 3 <br/> " + price * 3 + " грн. </html>");
-        btn4.setText("<html> 4 <br/> " + price * 4 + " грн. </html>");
-        btn5.setText("<html> 5 <br/> " + price * 5 + " грн. </html>");
-        btn6.setText("<html> 6 <br/> " + price * 6 + " грн. </html>");
-        btn7.setText("<html> 7 <br/> " + price * 7 + " грн. </html>");
-        btn8.setText("<html> 8 <br/> " + price * 8 + " грн. </html>");
-        btn9.setText("<html> 9 <br/> " + price * 9 + " грн. </html>");
-        btn10.setText("<html> 10 <br/> " + price * 10 + " грн. </html>");
+        btn1.setText("<html>" +(minValue * 1)+ unit + "<br/> " + price + " грн. </html>");
+        btn2.setText("<html>" + (minValue * 2) + unit + "<br/> " + price * 2 + " грн. </html>");
+        btn3.setText("<html>" + (minValue * 3) + unit + "<br/> " + price * 3 + " грн. </html>");
+        btn4.setText("<html>" + (minValue * 4) + unit + "<br/> " + price * 4 + " грн. </html>");
+        btn5.setText("<html>" + (minValue * 5) + unit + "<br/> " + price * 5 + " грн. </html>");
+        btn6.setText("<html>" + (minValue * 6) + unit + "<br/> " + price * 6 + " грн. </html>");
+        btn7.setText("<html>" + (minValue * 7) + unit + "<br/> " + price * 7 + " грн. </html>");
+        btn8.setText("<html>" + (minValue * 8) + unit + "<br/> " + price * 8 + " грн. </html>");
+        btn9.setText("<html>" + (minValue * 9) + unit + "<br/> " + price * 9 + " грн. </html>");
+        btn10.setText("<html>" + (minValue * 10) + unit + "<br/> " + price * 10 + " грн. </html>");
     }
 
     private void jPanel5ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel5ComponentShown
@@ -2457,6 +2475,7 @@ public class MainForm extends javax.swing.JFrame {
     private void chooseCat(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseCat
         jTabbedPane1.setEnabledAt(2, true);
         jTabbedPane1.setSelectedIndex(2);
+        
         int catId = getButtonId(evt);
         if (catId > 5) {
             catId++;
@@ -2469,6 +2488,11 @@ public class MainForm extends javax.swing.JFrame {
             jCheckBox1.setSelected(false);
         }else{
             jCheckBox1.setVisible(false);
+        }
+        if (activeCat == 10) {            
+            jCheckBox2.setVisible(true);
+        } else {            
+            jCheckBox2.setVisible(false);
         }
     }//GEN-LAST:event_chooseCat
 
@@ -2511,14 +2535,12 @@ public class MainForm extends javax.swing.JFrame {
         if (jTable1.getRowCount() != 0) {
             if (!orders.get(activeTable).isPayed()
                     && !jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
-
                 model.removeRow(jTable1.getRowCount() - 1);
                 orders.get(activeTable).getItems().
                         remove(orders.get(activeTable).getItems().size() - 1);
             }
             jTextField1.setText("" + orders.get(activeTable).getOrderSum());
-        }
-       
+        }       
     }//GEN-LAST:event_removeCheckItem
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -2612,6 +2634,7 @@ public class MainForm extends javax.swing.JFrame {
                     .getOrderIngredients().get(ingredient.getId())));
             
             if (diff != 0.0) {
+                System.out.println("old-diff = " + df.format(old - diff));
                 ingredient.setCount(Double.valueOf(df.format(old - diff)));  
                 StorageUtils.updateCount(ingredient.getId(), ingredient.getCount());
                 System.out.println("title " + ingredient.getTitle());
@@ -2710,10 +2733,6 @@ public class MainForm extends javax.swing.JFrame {
     private void payCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_payCheck
         if (jButton10.isEnabled()) {            
             if (orders.get(activeTable).getOrderSum() != 0) {
-
-//                if (activeCat == 9 || activeCat == 10) {
-//                    markDishesAsCooked();
-
                     subOrderIngredientsFromDB();
                     OrderUtils.addOrder(orders.get(activeTable), userList.get(User.active));
                     orders.get(activeTable).setPayed(true);
@@ -2730,7 +2749,6 @@ public class MainForm extends javax.swing.JFrame {
                     jTabbedPane1.setEnabledAt(1, false);
                     jTabbedPane1.setEnabledAt(2, false);
                     jTabbedPane1.setSelectedIndex(0);
-//                }
             }
         }
     }//GEN-LAST:event_payCheck
@@ -2960,9 +2978,6 @@ public class MainForm extends javax.swing.JFrame {
         int index = comboBox.getSelectedIndex();
         sortListOfIngredients(storageList, index);
         showCalcTable(table);
-//        if (index == 1 || index == 2) {
-        
-            //table.setRowSelectionInterval(activeRow, activeRow);
         if (activeRow != -1) {
             table.setRowSelectionInterval(activeRow, activeRow);
             Rectangle cellRect = table.getCellRect(activeRow, 0, true);
@@ -3361,6 +3376,15 @@ public class MainForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_updateCheckInfo
 
+    private void chengeScaleToGrams(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chengeScaleToGrams
+        if (jCheckBox2.isSelected()) {
+            jCheckBox2.setBackground(GREEN);            
+        } else {
+            jCheckBox2.setBackground(RED);
+        }
+        refreshListOfPrices();
+    }//GEN-LAST:event_chengeScaleToGrams
+
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
         jCheckBox1.setBackground(RED);
@@ -3652,6 +3676,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox4;

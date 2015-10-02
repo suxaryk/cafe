@@ -1,5 +1,6 @@
 package cafe.view;
 
+import cafe.Utils.db.CheckUtils;
 import cafe.Utils.db.OrderUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
@@ -9,6 +10,7 @@ import cafe.Utils.db.Dish.RecepiesUtils;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
 import cafe.model.Category;
+import cafe.model.Check;
 import cafe.model.OrderItem;
 import cafe.model.Dish;
 import cafe.model.Employee;
@@ -236,6 +238,12 @@ public class MainForm extends javax.swing.JFrame {
         jButton37 = new javax.swing.JButton();
         jButton38 = new javax.swing.JButton();
         jButton35 = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
+        jTextField9 = new javax.swing.JTextField();
+        jTextField10 = new javax.swing.JTextField();
+        jButton16 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -1579,37 +1587,39 @@ public class MainForm extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(170, 170, 170)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton33, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)))
-                .addGap(26, 26, 26))
+                            .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(170, 170, 170)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton33, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 16, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2)
+                    .addComponent(jTextField3))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2237,6 +2247,53 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(jPanel11);
         jPanel11.setBounds(940, 0, 202, 680);
 
+        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel9.setToolTipText("");
+        jPanel9.setLayout(null);
+
+        jTextField7.setEditable(false);
+        jTextField7.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTextField7.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField7.setToolTipText("");
+        jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel9.add(jTextField7);
+        jTextField7.setBounds(10, 20, 480, 24);
+
+        jTextField8.setEditable(false);
+        jTextField8.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTextField8.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel9.add(jTextField8);
+        jTextField8.setBounds(10, 50, 480, 24);
+
+        jTextField9.setEditable(false);
+        jTextField9.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTextField9.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel9.add(jTextField9);
+        jTextField9.setBounds(10, 80, 480, 24);
+
+        jTextField10.setEditable(false);
+        jTextField10.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTextField10.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel9.add(jTextField10);
+        jTextField10.setBounds(10, 110, 480, 24);
+
+        jButton16.setBackground(new java.awt.Color(255, 255, 255));
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/check-box2.png"))); // NOI18N
+        jButton16.setEnabled(false);
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateCheckInfo(evt);
+            }
+        });
+        jPanel9.add(jButton16);
+        jButton16.setBounds(390, 580, 97, 73);
+
+        getContentPane().add(jPanel9);
+        jPanel9.setBounds(643, 0, 500, 680);
+
         setSize(new java.awt.Dimension(1149, 697));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -2310,8 +2367,14 @@ public class MainForm extends javax.swing.JFrame {
 
     private void PersonalLogining(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalLogining
         jTabbedPane1.setVisible(false);
+        jPanel3.setVisible(false);        
         jPanel6.setVisible(true);
-        mainForm.setSize(630, 697);
+        jPanel9.setVisible(true); 
+        CheckUtils.readCheck();
+        jTextField7.setText(Check.getTitle());
+        jTextField8.setText(Check.getAdress());
+        jTextField9.setText(Check.getPassWifi());
+        jTextField10.setText(Check.getWish());
     }//GEN-LAST:event_PersonalLogining
 
 
@@ -2444,16 +2507,18 @@ public class MainForm extends javax.swing.JFrame {
 
     private void removeCheckItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCheckItem
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        System.out.println("selectedRow" + jTable1.getSelectedRow());      
-        if (jTable1.getRowCount() != 0 && 
-                !orders.get(activeTable).isPayed() &&
-                !jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals(""))  {            
+        System.out.println("selectedRow" + jTable1.getSelectedRow());
+        if (jTable1.getRowCount() != 0) {
+            if (!orders.get(activeTable).isPayed()
+                    && !jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
+
                 model.removeRow(jTable1.getRowCount() - 1);
                 orders.get(activeTable).getItems().
-                remove(orders.get(activeTable).getItems().size() - 1);
-            
+                        remove(orders.get(activeTable).getItems().size() - 1);
+            }
+            jTextField1.setText("" + orders.get(activeTable).getOrderSum());
         }
-        jTextField1.setText("" + orders.get(activeTable).getOrderSum());
+       
     }//GEN-LAST:event_removeCheckItem
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -2479,6 +2544,12 @@ public class MainForm extends javax.swing.JFrame {
             jTextField4.setVisible(true);
             jLabel8.setVisible(true);
             jLabel9.setVisible(true);
+            jTextField7.setEditable(true);
+            jTextField8.setEditable(true);
+            jTextField9.setEditable(true);
+            jTextField10.setEditable(true);
+            jButton16.setEnabled(true);
+            
         } else {
             jLabel5.setText("  " + userList.get(User.active).getName());
             jLabel5.setForeground(BLUE);
@@ -2815,8 +2886,9 @@ public class MainForm extends javax.swing.JFrame {
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
         jPanel6.setVisible(false);
-        jTabbedPane1.setVisible(true);
-        mainForm.setSize(1149, 697);
+        jPanel9.setVisible(false);
+        jPanel3.setVisible(true);
+        jTabbedPane1.setVisible(true);        
     }//GEN-LAST:event_goToMainMenu
 
     private void exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromCalculation
@@ -3023,7 +3095,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel8.setVisible(true);
         jPanel11.setVisible(true);
         jTabbedPane1.setVisible(false);
-        jPanel3.setVisible(false);
+        jPanel3.setVisible(false);        
         setComponentsVisible();
         StorageUtils.readStorage();
         setSort(jComboBox5, jTable5);
@@ -3275,6 +3347,20 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_changeTable
 
+    private void updateCheckInfo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCheckInfo
+        String title = jTextField7.getText();
+        String adress = jTextField8.getText();
+        String passWifi = jTextField9.getText();
+        String wish = jTextField10.getText();
+        CheckUtils.updateCheck(title, adress, passWifi, wish);
+        CheckUtils.readCheck();
+        jTextField7.setText(Check.getTitle());
+        jTextField8.setText(Check.getAdress());
+        jTextField9.setText(Check.getPassWifi());
+        jTextField10.setText(Check.getWish());
+        
+    }//GEN-LAST:event_updateCheckInfo
+
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
         jCheckBox1.setBackground(RED);
@@ -3511,6 +3597,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
@@ -3594,6 +3681,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -3608,11 +3696,15 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JButton table01;
     private javax.swing.JButton table02;
     private javax.swing.JButton table03;

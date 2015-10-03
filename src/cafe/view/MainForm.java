@@ -2579,8 +2579,10 @@ public class MainForm extends javax.swing.JFrame {
             model.addColumn("Початок");
             model.addColumn("Кінець");
         }
+        
         initMainForm();
         initPassTable();
+        jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
     }//GEN-LAST:event_formComponentShown
 
 //    public void printComponenet() {
@@ -2737,8 +2739,8 @@ public class MainForm extends javax.swing.JFrame {
                     OrderUtils.addOrder(orders.get(activeTable), userList.get(User.active));
                     orders.get(activeTable).setPayed(true);
                     jTable1.setBackground(lightRed);
-                    dayCash += orders.get(activeTable).getOrderSum();
-                    jTextField5.setText(String.valueOf(dayCash));
+                    //dayCash += orders.get(activeTable).getOrderSum();
+                    jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
 
                     jButton10.setBackground(lightRed);
                     jButton3.setBackground(lightRed);

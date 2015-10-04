@@ -9,6 +9,7 @@ package cafe.Utils.db;
 import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
 import static cafe.Utils.db.Dish.DishUtils.URL;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
+import static cafe.Utils.db.Dish.DishUtils.getCurrentTimeStamp;
 import cafe.model.Employee;
 import static cafe.view.MainForm.employees;
 import java.sql.Connection;
@@ -114,5 +115,41 @@ public class EmployeeUtils {
         }
 
     }
+    
+    public static void addTimeIn(Employee employee) {
+        final String SQL = "INSERT INTO employee_time(name, date_in) VALUES(?, ?)";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            System.out.println("name" + employee.getName());
+            pstatement.setString(1, employee.getName());
+            pstatement.setTimestamp(2, getCurrentTimeStamp());
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new Time was added successfully!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addTimeIn");
+        }
+    }
+    public static void addTimeOut(Employee employee) {
+        final String SQL = "UPDATE employee_time SET date_out = ? WHERE name = ?";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            PreparedStatement pstatement = connection.prepareStatement(SQL);                     
+            pstatement.setTimestamp(1, getCurrentTimeStamp());
+            pstatement.setString(2, employee.getName());
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new Time was added successfully!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addTimeOut");
+        }
+    }
+    
+    
 
 }

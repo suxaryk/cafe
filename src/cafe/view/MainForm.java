@@ -2370,8 +2370,6 @@ public class MainForm extends javax.swing.JFrame {
             orders.put(activeTable, new Order());
             jTextField1.setText("0");
             System.out.println("orders size = " + orders.size());
-//            orders.remove(activeTable);
-//            jSystem.out.println("table # " + orders.get(activeTable));
         }
         if (orders.get(activeTable).isPayed()) {
             jButton10.setEnabled(false);
@@ -2433,12 +2431,10 @@ public class MainForm extends javax.swing.JFrame {
         if (jCheckBox1.isSelected()) {
             menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
         }
-
         orders.get(activeTable).getItems().add(new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count));
         if (activeCat == 9 || activeCat == 10) {
             orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).getDish().setDrink(true);                      
-        }
-        
+        }        
         jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
         int addedIndex = orders.get(activeTable).getItems().size() - 1;
 
@@ -2814,6 +2810,8 @@ public class MainForm extends javax.swing.JFrame {
         int dayDiff = OrderUtils.getDayRemoveSum() * (-1);
         int daySum = OrderUtils.getDaySum() + dayDiff;
         int allSum = OrderUtils.getAllSum();
+        int cookCount = OrderUtils.getCookCount();
+        int drinlCount = OrderUtils.getDrinkCount();
         System.out.println("dayDiff = " + dayDiff);
         System.out.println("daySum = " + daySum);
         System.out.println("allSum = " + allSum);
@@ -2821,6 +2819,8 @@ public class MainForm extends javax.swing.JFrame {
         if (!ordered) {
             daySum = 0;
             dayDiff = 0;
+            cookCount = 0;
+            drinlCount = 0;
         }
         System.out.println("size " + orders.isEmpty());
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -2829,6 +2829,8 @@ public class MainForm extends javax.swing.JFrame {
                 + "------------------------------------------------\n"
                 + "Каса на початок зміни " + (allSum - daySum + dayDiff) + " грн.\n"
                 + "Сума за день " + daySum + " грн.\n"
+                + "Страв за день " + cookCount + " \n"
+                + "Напоїв за день " + drinlCount + " \n"
                 + "Витрати за день " + dayDiff + " грн.\n"
                 + "Залишок в касі " + allSum + " грн\n"
                 + "------------------------------------------------\n"

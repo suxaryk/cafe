@@ -2790,8 +2790,11 @@ public class MainForm extends javax.swing.JFrame {
                     .getPass() == Integer.parseInt(pass)) {
                 if (date1.equals("null")) {
                     model.setValueAt(dateFormat.format(new Date()), index, 1);
+                    userList.get(User.active);                    
+                    EmployeeUtils.addTimeIn(employees.get(index));
                 } else if (date2.equals("null")) {
                     model.setValueAt(dateFormat.format(new Date()), index, 2);
+                    EmployeeUtils.addTimeOut(employees.get(index));
                 }
             } else {
                 jLabel7.setText("Невірний пароль!");
@@ -2812,6 +2815,7 @@ public class MainForm extends javax.swing.JFrame {
         int allSum = OrderUtils.getAllSum();
         int cookCount = OrderUtils.getCookCount();
         int drinlCount = OrderUtils.getDrinkCount();
+        int ordersCount = OrderUtils.getDayOrdersCount();
         System.out.println("dayDiff = " + dayDiff);
         System.out.println("daySum = " + daySum);
         System.out.println("allSum = " + allSum);
@@ -2821,6 +2825,7 @@ public class MainForm extends javax.swing.JFrame {
             dayDiff = 0;
             cookCount = 0;
             drinlCount = 0;
+            ordersCount = 0;
         }
         System.out.println("size " + orders.isEmpty());
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -2831,6 +2836,7 @@ public class MainForm extends javax.swing.JFrame {
                 + "Сума за день " + daySum + " грн.\n"
                 + "Страв за день " + cookCount + " \n"
                 + "Напоїв за день " + drinlCount + " \n"
+                + "Чеків за день " + ordersCount + " \n"
                 + "Витрати за день " + dayDiff + " грн.\n"
                 + "Залишок в касі " + allSum + " грн\n"
                 + "------------------------------------------------\n"

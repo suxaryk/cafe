@@ -1908,7 +1908,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="395" y="460" width="100" height="70"/>
+              <AbsoluteConstraints x="399" y="460" width="100" height="70"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -2067,7 +2067,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="1" y="601" width="500" height="90"/>
+              <AbsoluteConstraints x="1" y="602" width="500" height="90"/>
             </Constraint>
           </Constraints>
 
@@ -2084,7 +2084,7 @@
                   <Font name="Tahoma" size="18" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/cafe/icons/small/exit18.png"/>
+                  <Image iconType="3" name="/cafe/icons/small/businessman259.png"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="btn3" name="border" type="property"/>
@@ -2092,11 +2092,11 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitSystem"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="swapUser"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="394" y="0" width="100" height="70"/>
+                  <AbsoluteConstraints x="260" y="0" width="100" height="70"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -2134,7 +2134,7 @@
                   <Font name="Tahoma" size="18" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/cafe/icons/small/coin.png"/>
+                  <Image iconType="3" name="/cafe/icons/small/exit18.png"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="btn3" name="border" type="property"/>
@@ -2142,11 +2142,11 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitSystem"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="260" y="0" width="100" height="70"/>
+                  <AbsoluteConstraints x="397" y="0" width="100" height="70"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -2159,7 +2159,7 @@
                   <Font name="Tahoma" size="18" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/cafe/icons/small/login.png"/>
+                  <Image iconType="3" name="/cafe/icons/small/users6 (1).png"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="btn3" name="border" type="property"/>

@@ -1233,7 +1233,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jButton7);
-        jButton7.setBounds(395, 460, 100, 70);
+        jButton7.setBounds(399, 460, 100, 70);
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1315,16 +1315,16 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/businessman259.png"))); // NOI18N
         jButton2.setBorder(btn3.getBorder());
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitSystem(evt);
+                swapUser(evt);
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(394, 0, 100, 70);
+        jButton2.setBounds(260, 0, 100, 70);
 
         jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -1341,20 +1341,20 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(255, 255, 255));
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/coin.png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
         jButton5.setBorder(btn3.getBorder());
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                exitSystem(evt);
             }
         });
         jPanel1.add(jButton5);
-        jButton5.setBounds(260, 0, 100, 70);
+        jButton5.setBounds(397, 0, 100, 70);
 
         jButton6.setBackground(new java.awt.Color(255, 255, 255));
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/login.png"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/users6 (1).png"))); // NOI18N
         jButton6.setBorder(btn3.getBorder());
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1366,7 +1366,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton6.setBounds(0, 0, 100, 70);
 
         jPanel3.add(jPanel1);
-        jPanel1.setBounds(1, 601, 500, 90);
+        jPanel1.setBounds(1, 602, 500, 90);
 
         jLabel11.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel11.setText("грн.");
@@ -2577,7 +2577,7 @@ public class MainForm extends javax.swing.JFrame {
             model.addColumn("пароль");
 
             
-            jButton5.setVisible(true);
+            
             jButton14.setVisible(true);
             jButton15.setVisible(true);
             jButton17.setVisible(true);
@@ -2763,6 +2763,7 @@ public class MainForm extends javax.swing.JFrame {
                     subOrderIngredientsFromDB();
                     OrderUtils.addOrder(orders.get(activeTable), userList.get(User.active));
                     orders.get(activeTable).setPayed(true);
+                    ordered = true;
                     jTable1.setBackground(lightRed);
                     //dayCash += orders.get(activeTable).getOrderSum();
                     jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
@@ -2829,13 +2830,36 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_loginEmployee
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
         JFrame frame = new JFrame();
         String[] options = new String[2];
         options[0] = "Так";
         options[1] = "Ні";
+        System.out.println("aaa" + OrderUtils.getDaySum());
+        int dayDiff = OrderUtils.getDayRemoveSum() * (-1);        
+        int daySum = OrderUtils.getDaySum() + dayDiff;        
+        int allSum = OrderUtils.getAllSum();
+        System.out.println("dayDiff = " + dayDiff);
+        System.out.println("daySum = " + daySum);
+        System.out.println("allSum = " + allSum);  
+        System.out.println("orders empty = " + orders.isEmpty());
+        if (!ordered) {
+            daySum = 0;
+            dayDiff = 0;
+        }
+        System.out.println("size " + orders.isEmpty());
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                "Ви закрили касу?", "Закриття програми?", 0,
-                JOptionPane.YES_NO_OPTION, null, options, null);
+                "Інформація за "+ dateFormat.format(new Date()) +":\n" + 
+                "------------------------------------------------\n" +                
+                "Каса на початок зміни " + (allSum - daySum + dayDiff)+ " грн.\n" +
+                "Сума за день " + daySum  + " грн.\n" +                
+                "Витрати за день " + dayDiff + " грн.\n" +
+                "Залишок в касі " + allSum + " грн\n" +   
+                "------------------------------------------------\n"+                
+                "Закрити програму?"
+                        , "Закриття каси!",
+                0, JOptionPane.YES_NO_OPTION, null, options, null);
         if (reply == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
@@ -2943,37 +2967,6 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setVisible(true);        
     }//GEN-LAST:event_exitFromCalculation
 
-    private void exitSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitSystem
-        OrderUtils.setOrderId(0);
-        mainForm.setVisible(false);
-        mainForm.setEnabled(false);
-        loginForm.getDate();
-        loginForm.setVisible(true);
-        jButton1.setVisible(false);
-        jButton11.setVisible(false);
-        jButton12.setVisible(false);
-        jButton19.setVisible(false);
-        jTextField2.setVisible(false);
-        jTextField4.setVisible(false);
-        jLabel8.setVisible(false);
-        jLabel9.setVisible(false);
-        jButton14.setVisible(false);
-        jButton15.setVisible(false);
-        jButton17.setVisible(false);
-        jTextField3.setVisible(false);        
-        jButton5.setVisible(false);
-        jLabel15.setVisible(false);
-        jTextField6.setVisible(false);
-        jButton36.setVisible(false);
-        jButton37.setVisible(false);
-        
-
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        model.setRowCount(0);
-        employees.clear();
-        jTabbedPane1.setSelectedIndex(0);
-    }//GEN-LAST:event_exitSystem
-
     private void updateTitleAndPrice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTitleAndPrice
         int index = jList2.getSelectedIndex();
         int dbId = menu.get(activeCat).getDishes().get(index).getDbID();
@@ -2994,10 +2987,6 @@ public class MainForm extends javax.swing.JFrame {
         jList2.setSelectedIndex(index);
         getListItem(null);
     }//GEN-LAST:event_updateTitleAndPrice
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-//          JSONUtils.writeAllIngredients();
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void setSort(JComboBox comboBox, JTable table){
         int activeRow = -1;
@@ -3443,11 +3432,44 @@ public class MainForm extends javax.swing.JFrame {
                 order.setOderSum(diff * (-1));
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
                 OrderUtils.addOrder(order, userList.get(User.active));
-                OrderUtils.getAllSum();
+                jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
                 jTextField11.setText("");
             }            
         }      
     }//GEN-LAST:event_payForStorageAddition
+
+    private void swapUser(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapUser
+        OrderUtils.setOrderId(0);
+        mainForm.setVisible(false);
+        mainForm.setEnabled(false);
+        loginForm.getDate();
+        loginForm.setVisible(true);
+        jButton1.setVisible(false);
+        jButton11.setVisible(false);
+        jButton12.setVisible(false);
+        jButton19.setVisible(false);
+        jTextField2.setVisible(false);
+        jTextField4.setVisible(false);
+        jLabel8.setVisible(false);
+        jLabel9.setVisible(false);
+        jButton14.setVisible(false);
+        jButton15.setVisible(false);
+        jButton17.setVisible(false);
+        jTextField3.setVisible(false);
+        jLabel15.setVisible(false);
+        jTextField6.setVisible(false);
+        jButton36.setVisible(false);
+        jButton37.setVisible(false);
+
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        employees.clear();
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_swapUser
+
+    private void exitSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitSystem
+        formWindowClosing(null);
+    }//GEN-LAST:event_exitSystem
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -3570,8 +3592,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(2, false);
         jTextField2.setLayout(new AbsoluteLayout());
         jTextField2.setVisible(false);
-        jTable4.setVisible(false);       
-        jButton5.setVisible(false);
+        jTable4.setVisible(false);            
         jButton1.setVisible(false);
         jButton11.setVisible(false);
         jButton12.setVisible(false);
@@ -3637,6 +3658,7 @@ public class MainForm extends javax.swing.JFrame {
         mainForm = new MainForm();
         mainForm.setIconImage(null);
     }
+    private static boolean ordered;
     private static int dayCash;
     public static ArrayList<Employee> employees = new ArrayList<>();
     private static Map<Integer, Order> orders = new HashMap<Integer, Order>();

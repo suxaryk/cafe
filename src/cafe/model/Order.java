@@ -5,6 +5,7 @@
  */
 package cafe.model;
 
+import cafe.Utils.json.JSONUtils;
 import cafe.view.MainForm;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,10 +20,11 @@ public class Order {
     private int drinkCount;    
     private int orderSum;
     private boolean payed;
+    private  String JSONItems;
     private ArrayList<OrderItem> items = new ArrayList<>();
 
+ 
     
-
      
 
     public int getOrderSum() {
@@ -82,6 +84,11 @@ public class Order {
     public void setPayed(boolean payed) {
         this.payed = payed;
     }
+    public String getJSONItems() {
+        return JSONUtils.convertItemsToJSON(items);
+    }
+
+   
     
     public Map<Integer, Double> getOrderIngredients() {
         Map<Integer, Double> diffMap = new HashMap<>();

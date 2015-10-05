@@ -1346,7 +1346,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton5);
-        jButton5.setBounds(397, 0, 100, 70);
+        jButton5.setBounds(400, 0, 100, 70);
 
         jButton6.setBackground(new java.awt.Color(255, 255, 255));
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -2425,29 +2425,40 @@ public class MainForm extends javax.swing.JFrame {
     private void addRecordToTable(int count) {
         clearCountButton();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-
-        String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
-        //boolean 
+        String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();       
         if (jCheckBox1.isSelected()) {
             menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
         }
-        orders.get(activeTable).getItems().add(new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count));
+        OrderItem newOrder = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count);
+        if (orders.get(activeTable).getItems().contains(newOrder)) {
+            int index = orders.get(activeTable).getItems().indexOf(newOrder);
+            orders.get(activeTable).getItems().get(index).addCount(count);
+            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index, 1);
+            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index, 3);
+        }else{
+            orders.get(activeTable).getItems().add(newOrder);
+            
+            int addedIndex = orders.get(activeTable).getItems().size() - 1;
+
+            model.addRow(new Object[]{
+                orders.get(activeTable).getItems().get(addedIndex)
+                .getDish().getTitle(),
+                orders.get(activeTable).getItems().get(addedIndex)
+                .getCount(),
+                orders.get(activeTable).getItems().get(addedIndex)
+                .getDish().getPrice(),
+                orders.get(activeTable).getItems().get(addedIndex)
+                .getSum()
+            });
+        }
+        
+        
+        
         if (activeCat == 9 || activeCat == 10) {
             orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).getDish().setDrink(true);                      
         }        
         jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
-        int addedIndex = orders.get(activeTable).getItems().size() - 1;
-
-        model.addRow(new Object[]{
-            orders.get(activeTable).getItems().get(addedIndex)
-            .getDish().getTitle(),
-            orders.get(activeTable).getItems().get(addedIndex)
-            .getCount(),
-            orders.get(activeTable).getItems().get(addedIndex)
-            .getDish().getPrice(),
-            orders.get(activeTable).getItems().get(addedIndex)
-            .getSum()
-        });
+        
     }
 
     private void refreshListOfPrices() {
@@ -3103,6 +3114,7 @@ public class MainForm extends javax.swing.JFrame {
             jTextField6.setVisible(true);
             jButton36.setVisible(true);
             jButton37.setVisible(true);
+            jButton38.setVisible(true);
 
         }
     }
@@ -3411,8 +3423,9 @@ public class MainForm extends javax.swing.JFrame {
                     "Інкасація  " + diff + " грн, підтвердити?", "Інкасація/Аванс", 0,
                     JOptionPane.YES_NO_OPTION, null, options, null);
             if (reply == JOptionPane.YES_OPTION) {
+                //fix
                 Order order = new Order();
-                order.setOderSum(diff * (-1));
+                order.setOrderSum(diff * (-1));
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
                 OrderUtils.addOrder(order, userList.get(User.active));
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
@@ -3443,6 +3456,7 @@ public class MainForm extends javax.swing.JFrame {
         jTextField6.setVisible(false);
         jButton36.setVisible(false);
         jButton37.setVisible(false);
+        jButton38.setVisible(false);
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
@@ -3620,6 +3634,7 @@ public class MainForm extends javax.swing.JFrame {
         jTextField6.setVisible(false);
         jButton36.setVisible(false);
         jButton37.setVisible(false);
+        jButton38.setVisible(false);
         jPanel6.setVisible(false);
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);

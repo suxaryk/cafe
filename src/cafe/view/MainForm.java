@@ -2567,8 +2567,10 @@ public class MainForm extends javax.swing.JFrame {
             if (!orders.get(activeTable).isPayed()
                     && !jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
                 model.removeRow(jTable1.getRowCount() - 1);
-                orders.get(activeTable).getItems().
-                        remove(orders.get(activeTable).getItems().size() - 1);
+                int lastIndex = orders.get(activeTable).getItems().size() - 1;
+                orders.get(activeTable).getRemoveditems().add(
+                        orders.get(activeTable).getItems().get(lastIndex));
+                orders.get(activeTable).getItems().remove(lastIndex);
             }
             jTextField1.setText("" + orders.get(activeTable).getOrderSum());
         }

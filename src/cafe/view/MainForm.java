@@ -71,6 +71,7 @@ public class MainForm extends javax.swing.JFrame {
         initLoginForm();
         initMainForm();
         initCalculationTable();
+        loadTables();
 
     }
 
@@ -2351,7 +2352,7 @@ public class MainForm extends javax.swing.JFrame {
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
 
             jTextField1.setText(String.valueOf(orders.get(activeTable)
-                    .getOrderSum()));
+                    .calcOrderSum()));
             for (int i = 0; i < orders.get(activeTable)
                     .getItems().size(); i++) {
                 model.addRow(new Object[]{
@@ -2456,8 +2457,12 @@ public class MainForm extends javax.swing.JFrame {
         
         if (activeCat == 9 || activeCat == 10) {
             orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).getDish().setDrink(true);                      
-        }        
-        jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
+        } 
+        OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
+        //TODO
+        //add fori updateTable in close program 
+        // add load from DB tables on program push in
+        jTextField1.setText(String.valueOf(orders.get(activeTable).calcOrderSum()));
         
     }
 
@@ -2568,11 +2573,19 @@ public class MainForm extends javax.swing.JFrame {
                     && !jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
                 model.removeRow(jTable1.getRowCount() - 1);
                 int lastIndex = orders.get(activeTable).getItems().size() - 1;
-                orders.get(activeTable).getRemoveditems().add(
-                        orders.get(activeTable).getItems().get(lastIndex));
+                OrderItem item = orders.get(activeTable).getItems().get(lastIndex);
+                int count = orders.get(activeTable).getItems().get(lastIndex).getCount();
+                if (orders.get(activeTable).getRemoveditems().contains(
+                        orders.get(activeTable).getItems().get(lastIndex))
+                        ) {
+                    int index = orders.get(activeTable).getRemoveditems().indexOf(item);
+                    orders.get(activeTable).getRemoveditems().get(index).addCount(count);                                     
+                }else{
+                    orders.get(activeTable).getRemoveditems().add(item);                    
+                }                
                 orders.get(activeTable).getItems().remove(lastIndex);
             }
-            jTextField1.setText("" + orders.get(activeTable).getOrderSum());
+            jTextField1.setText("" + orders.get(activeTable).calcOrderSum());
         }
     }//GEN-LAST:event_removeCheckItem
 
@@ -2693,7 +2706,7 @@ public class MainForm extends javax.swing.JFrame {
                     System.out.println("activeCat" + activeCat);
 
 //        if (jButton3.isEnabled()) {
-//            if (orders.get(activeTable).getOrderSum() != 0) {
+//            if (orders.get(activeTable).calcOrderSum() != 0) {
 //                DateFormat dateFormat = new SimpleDateFormat(
 //                                                        "HH:mm:ss dd/MM/yyyy");
 //                MessageFormat header = new MessageFormat(
@@ -2701,7 +2714,7 @@ public class MainForm extends javax.swing.JFrame {
 //                MessageFormat footer = new MessageFormat(LoginForm.userList.
 //                        get(User.active).getName() 
 //                        + "\t" + "Сума по чеку: "
-//                        + String.valueOf(orders.get(activeTable).getOrderSum())
+//                        + String.valueOf(orders.get(activeTable).calcOrderSum())
 //                        + " грн.");
 //
 //                PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
@@ -3428,7 +3441,7 @@ public class MainForm extends javax.swing.JFrame {
                 //fix
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
-                System.out.println("Incasacia - diff =" + order.getOrderSum());
+                System.out.println("Incasacia - diff =" + order.calcOrderSum());
                 OrderUtils.addOrder(order, userList.get(User.active));
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
                 jTextField11.setText("");
@@ -3472,18 +3485,19 @@ public class MainForm extends javax.swing.JFrame {
 
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
         if (jButton10.isEnabled()) {
-            if (orders.get(activeTable).getOrderSum() != 0) {
+            if (orders.get(activeTable).calcOrderSum() != 0) {
                 subOrderIngredientsFromDB();
 //                if (activeCat == 9 || activeCat == 10) {
 //                    orders.get(activeCat);
 //                }
                 
                 OrderUtils.addOrder(orders.get(activeTable),
-                        userList.get(User.active));
+                        userList.get(User.active));                
+                OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
                 ordered = true;
                 jTable1.setBackground(lightRed);
-                //dayCash += orders.get(activeTable).getOrderSum();
+                //dayCash += orders.get(activeTable).calcOrderSum();
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
 
                 jButton10.setBackground(lightRed);
@@ -3609,8 +3623,29 @@ public class MainForm extends javax.swing.JFrame {
 
 //      
         DishUtils.readDBmenu();
-        StorageUtils.readStorage();
-
+        StorageUtils.readStorage();    
+                             
+    }
+    
+    private void loadTables() {
+        HashMap<Integer, Order> loadOrders = new HashMap<>();
+        loadOrders.putAll(OrderUtils.loadTables());
+        
+        if (!loadOrders.isEmpty()) {
+            for (Map.Entry<Integer, Order> entry : loadOrders.entrySet()) {
+                System.out.println("loadTables---");
+                System.out.println("id = " + entry.getKey() + " sum=" + entry.getValue().getOrderSum());
+                System.out.println("title" + entry.getValue().getItems().get(0).getDish().getTitle());
+                System.out.println("title" + entry.getValue().getItems().get(1).getDish().getTitle());
+            }
+            orders.putAll(loadOrders);
+            System.out.println("size " + orders.size());
+            for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
+                if (entry.getValue().getOrderSum() > 0) {
+                    jPanel2.getComponent(entry.getKey()-1).setBackground(Color.yellow);
+                }
+            }            
+        }
     }
 
     private void InitComonentsProperty() {
@@ -3687,7 +3722,7 @@ public class MainForm extends javax.swing.JFrame {
     private static boolean ordered;
     private static int dayCash;
     public static ArrayList<Employee> employees = new ArrayList<>();
-    private static Map<Integer, Order> orders = new HashMap<Integer, Order>();
+    private static Map<Integer, Order> orders = new HashMap();
     private static final int tablesCount = 25;
     public static int activeDishes;
     public static int activeCat;

@@ -65,7 +65,7 @@ public class LoginForm extends javax.swing.JFrame {
         jComboBox1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "оператор1", "оператор2", "оператор3", "оператор4", "оператор5", "Администратор" }));
         getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(370, 12, 130, 30);
+        jComboBox1.setBounds(370, 12, 140, 30);
 
         jButton1.setBackground(new java.awt.Color(0, 153, 0));
         jButton1.setText("відкрити касу");
@@ -76,7 +76,7 @@ public class LoginForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(370, 120, 130, 38);
+        jButton1.setBounds(370, 120, 140, 38);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 51, 0));
@@ -226,7 +226,7 @@ public class LoginForm extends javax.swing.JFrame {
 
         jPasswordField1.setToolTipText("");
         getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(370, 50, 130, 30);
+        jPasswordField1.setBounds(370, 50, 140, 30);
 
         setSize(new java.awt.Dimension(536, 215));
         setLocationRelativeTo(null);
@@ -245,8 +245,9 @@ public class LoginForm extends javax.swing.JFrame {
 
     }
     private void enterToSystem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enterToSystem
-        jLabel1.setText("");
+        jLabel1.setText("");        
         String pass = new String(jPasswordField1.getPassword());
+        jPasswordField1.setText("");
         if (pass.equals("пароль") || pass.equals("")) {
             jLabel1.setText("Невірний пароль!");
 

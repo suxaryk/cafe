@@ -3632,11 +3632,9 @@ public class MainForm extends javax.swing.JFrame {
         loadOrders.putAll(OrderUtils.loadTables());
         
         if (!loadOrders.isEmpty()) {
+            System.out.println("loadTables---");
             for (Map.Entry<Integer, Order> entry : loadOrders.entrySet()) {
-                System.out.println("loadTables---");
-                System.out.println("id = " + entry.getKey() + " sum=" + entry.getValue().getOrderSum());
-                System.out.println("title" + entry.getValue().getItems().get(0).getDish().getTitle());
-                System.out.println("title" + entry.getValue().getItems().get(1).getDish().getTitle());
+                
             }
             orders.putAll(loadOrders);
             System.out.println("size " + orders.size());
@@ -3644,8 +3642,10 @@ public class MainForm extends javax.swing.JFrame {
                 if (entry.getValue().getOrderSum() > 0) {
                     jPanel2.getComponent(entry.getKey()-1).setBackground(Color.yellow);
                 }
-            }            
+            }  
+            OrderUtils.fillTable();
         }
+        
     }
 
     private void InitComonentsProperty() {

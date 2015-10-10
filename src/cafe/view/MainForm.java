@@ -152,8 +152,6 @@ public class MainForm extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -1232,37 +1230,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel3.add(jButton7);
         jButton7.setBounds(399, 460, 100, 70);
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "#", "Назва", "Ціна", "Час"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane5.setViewportView(jTable4);
-
-        jPanel3.add(jScrollPane5);
-        jScrollPane5.setBounds(1, 30, 488, 270);
-
         jButton9.setBackground(new java.awt.Color(255, 102, 102));
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/dining4.png"))); // NOI18N
         jButton9.setEnabled(false);
@@ -2290,6 +2257,11 @@ public class MainForm extends javax.swing.JFrame {
         jTextField7.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextField7.setToolTipText("");
         jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
         jPanel9.add(jTextField7);
         jTextField7.setBounds(10, 20, 480, 24);
 
@@ -2365,7 +2337,10 @@ public class MainForm extends javax.swing.JFrame {
                 });
             }
             if (!orders.get(activeTable).getItems().isEmpty()) {
-                markDishesAsCooked();
+                if (orders.get(activeTable).isPrinted()) {
+                    markDishesAsCooked();
+                }
+                
             }
         } else {
             orders.put(activeTable, new Order());
@@ -2551,7 +2526,8 @@ public class MainForm extends javax.swing.JFrame {
             model.setRowCount(0);
             jTextField1.setText("0");
             jButton10.setBackground(Color.WHITE);
-
+            
+            OrderUtils.fillTableById(activeTable);
             activeTable = 0;
             jLabel4.setText("Стіл № ");
             System.out.println("orders size on remove" + orders.size());
@@ -2562,6 +2538,7 @@ public class MainForm extends javax.swing.JFrame {
             jButton7.setEnabled(false);
             jButton9.setEnabled(false);
             jButton10.setEnabled(false);
+            
         }
     }//GEN-LAST:event_clearTable
 
@@ -2703,6 +2680,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") && !orders.get(activeTable).isPayed()) {
 
                     markDishesAsCooked();
+                    orders.get(activeTable).setPrinted(true);
                     System.out.println("activeCat" + activeCat);
 
 //        if (jButton3.isEnabled()) {
@@ -3408,7 +3386,7 @@ public class MainForm extends javax.swing.JFrame {
         jTextField7.setText(Check.getTitle());
         jTextField8.setText(Check.getAdress());
         jTextField9.setText(Check.getPassWifi());
-        jTextField10.setText(Check.getWish());
+        jTextField10.setText(Check.getWish());       
 
     }//GEN-LAST:event_updateCheckInfo
 
@@ -3512,6 +3490,10 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_payOrder
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -3643,7 +3625,7 @@ public class MainForm extends javax.swing.JFrame {
                     jPanel2.getComponent(entry.getKey()-1).setBackground(Color.yellow);
                 }
             }  
-            OrderUtils.fillTable();
+            OrderUtils.fillAllTables();
         }
         
     }
@@ -3653,8 +3635,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(1, false);
         jTabbedPane1.setEnabledAt(2, false);
         jTextField2.setLayout(new AbsoluteLayout());
-        jTextField2.setVisible(false);
-        jTable4.setVisible(false);
+        jTextField2.setVisible(false);        
         jButton1.setVisible(false);
         jButton11.setVisible(false);
         jButton12.setVisible(false);
@@ -3685,6 +3666,12 @@ public class MainForm extends javax.swing.JFrame {
         jButton37.setBackground(RED);
         jButton38.setBackground(GREEN);
         jButton35.setBackground(RED);
+        jPanel6.setVisible(false);
+        jPanel7.setVisible(false);
+        jPanel8.setVisible(false);
+        jPanel9.setVisible(false);
+        jPanel10.setVisible(false);
+        jPanel11.setVisible(false);
     }
 
     public void initIcons() {
@@ -3859,13 +3846,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;

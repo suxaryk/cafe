@@ -2433,10 +2433,7 @@ public class MainForm extends javax.swing.JFrame {
         if (activeCat == 9 || activeCat == 10) {
             orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).getDish().setDrink(true);                      
         } 
-        OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
-        //TODO
-        //add fori updateTable in close program 
-        // add load from DB tables on program push in
+        OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);       
         jTextField1.setText(String.valueOf(orders.get(activeTable).calcOrderSum()));
         
     }
@@ -2532,6 +2529,7 @@ public class MainForm extends javax.swing.JFrame {
             jLabel4.setText("Стіл № ");
             System.out.println("orders size on remove" + orders.size());
             jButton10.setBackground(Color.WHITE);
+            jButton3.setBackground(Color.WHITE);
             jButton10.setEnabled(true);
             System.out.println("actTable=" + activeTable);
             jButton3.setEnabled(false);
@@ -2681,7 +2679,9 @@ public class MainForm extends javax.swing.JFrame {
 
                     markDishesAsCooked();
                     orders.get(activeTable).setPrinted(true);
+                    OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
                     System.out.println("activeCat" + activeCat);
+                    
 
 //        if (jButton3.isEnabled()) {
 //            if (orders.get(activeTable).calcOrderSum() != 0) {
@@ -3366,7 +3366,9 @@ public class MainForm extends javax.swing.JFrame {
                     jLabel4.setText("Стіл № " + index);
                     jPanel2.getComponent(index - 1).setBackground(Color.yellow);
                     jPanel2.getComponent(activeTable - 1).setBackground(GREEN);
+                    OrderUtils.fillTableById(activeTable);
                     activeTable = index;
+                    OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
                 } else {
                     jComboBox2.setSelectedIndex(0);
                 }
@@ -3624,8 +3626,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (entry.getValue().getOrderSum() > 0) {
                     jPanel2.getComponent(entry.getKey()-1).setBackground(Color.yellow);
                 }
-            }  
-            OrderUtils.fillAllTables();
+            }       
         }
         
     }

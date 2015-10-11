@@ -15,51 +15,60 @@ import java.util.Map;
  *
  * @author suxarina
  */
-public class Order {   
+public class Order {
+
     private int cookCount;
-    private int drinkCount;    
+    private int drinkCount;
     private int orderSum;
     private boolean payed;
-    private  String JSONItems;
+    private boolean printed;
+    private String JSONItems;
     private ArrayList<OrderItem> items = new ArrayList<>();
+    private ArrayList<OrderItem> removeditems = new ArrayList<>();
 
- 
-    
-     
-
-    public int getOrderSum() {
+    public int calcOrderSum() {
         int sum = 0;
-        for (OrderItem orderItem : items) {
-            sum += orderItem.getSum();
+        if (!items.isEmpty()) {
+            for (OrderItem orderItem : items) {
+                sum += orderItem.getSum();
+            }
         }
-        if (orderSum < 0) {                     
+        if (orderSum < 0) {
             return orderSum;
         } else {
             return orderSum = sum;
         }
     }
 
-    public int getDrinkCount() {
-        for (OrderItem orderItem : items) {
-            if (orderItem.getDish().isDrink()) {
-                drinkCount += orderItem.getCount();
-            }
-        }
-        System.out.println("drinkCount" + drinkCount);
-        return drinkCount;
-
+    public int getOrderSum() {
+        return orderSum;
     }
 
-    public int getCookCount() { 
+    public int getDrinkCount() {
+        if (this.drinkCount == 0) {
+            for (OrderItem orderItem : items) {
+                if (orderItem.getDish().isDrink()) {
+                    drinkCount += orderItem.getCount();
+                }
+            }
+        }       
+        return drinkCount;
+    }
+
+    public void setDrinkCount(int drinkCount) {
+        this.drinkCount = drinkCount;
+    }
+
+    public int getCookCount() {
+        if (this.cookCount == 0) {
             for (OrderItem orderItem : items) {
                 if (orderItem.getDish().isCook()) {
                     cookCount += orderItem.getCount();
                 }
-            }                     
-//        }        
-        System.out.println("cookCount" + cookCount);
+            }
+        }          
         return cookCount;
-    }  
+    }
 
     public void setCookCount(int cookCount) {
         this.cookCount = cookCount;
@@ -76,7 +85,15 @@ public class Order {
     public void setItems(ArrayList<OrderItem> checkList) {
         this.items = checkList;
     }
-    
+
+    public ArrayList<OrderItem> getRemoveditems() {
+        return removeditems;
+    }
+
+    public void setRemoveditems(ArrayList<OrderItem> removeditems) {
+        this.removeditems = removeditems;
+    }
+
     public boolean isPayed() {
         return payed;
     }
@@ -84,12 +101,38 @@ public class Order {
     public void setPayed(boolean payed) {
         this.payed = payed;
     }
-    public String getJSONItems() {
-        return JSONUtils.convertItemsToJSON(items);
+
+    public boolean isPrinted() {
+        return printed;
     }
 
-   
+    public void setPrinted(boolean printed) {
+        this.printed = printed;
+    }
     
+    
+    public String getJSONItems(boolean includePrice) {
+        if (!items.isEmpty()) {
+            if (includePrice) {
+                return JSONUtils.convertOrderToJSONTables(items);
+            } else {
+                return JSONUtils.convertOrderToJSON(items);
+            }
+        } else {
+            return "";
+        }
+    }
+
+    public String getJSONRemovedItems(boolean includePrice) {
+        if (!items.isEmpty()) {
+            if (includePrice) {
+                return JSONUtils.convertOrderToJSONTables(removeditems);
+            }
+            return JSONUtils.convertOrderToJSON(removeditems);
+        }
+        return "";
+    }
+
     public Map<Integer, Double> getOrderIngredients() {
         Map<Integer, Double> diffMap = new HashMap<>();
         for (Ingredient ingredient : MainForm.storageList) {
@@ -101,12 +144,7 @@ public class Order {
                 diffMap.put(ingredient.getId(), oldCount + ingredient.getCount());
             }
         }
-//        for (Entry<Integer, Double> entry: diffMap.entrySet()) {
-//            System.out.println(entry.getKey() + " " + entry.getValue());
-//            
-//        }
         return diffMap;
     }
-    
-    
+
 }

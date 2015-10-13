@@ -80,7 +80,7 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
+        TablesPanel = new javax.swing.JPanel();
         table01 = new javax.swing.JButton();
         table02 = new javax.swing.JButton();
         table03 = new javax.swing.JButton();
@@ -109,7 +109,7 @@ public class MainForm extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton18 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        CategoriesPanel = new javax.swing.JPanel();
         cat5 = new javax.swing.JButton();
         cat6 = new javax.swing.JButton();
         cat7 = new javax.swing.JButton();
@@ -122,7 +122,7 @@ public class MainForm extends javax.swing.JFrame {
         cat10 = new javax.swing.JButton();
         cat11 = new javax.swing.JButton();
         cat12 = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
+        DishesPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList();
         btn10 = new javax.swing.JButton();
@@ -265,10 +265,10 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(67, 96, 156));
-        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel2.setEnabled(false);
-        jPanel2.setLayout(null);
+        TablesPanel.setBackground(new java.awt.Color(67, 96, 156));
+        TablesPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TablesPanel.setEnabled(false);
+        TablesPanel.setLayout(null);
 
         table01.setBackground(new java.awt.Color(0, 153, 102));
         table01.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -281,7 +281,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table01);
+        TablesPanel.add(table01);
         table01.setBounds(80, 40, 100, 100);
 
         table02.setBackground(new java.awt.Color(0, 153, 102));
@@ -295,7 +295,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table02);
+        TablesPanel.add(table02);
         table02.setBounds(180, 40, 100, 100);
 
         table03.setBackground(new java.awt.Color(0, 153, 102));
@@ -309,7 +309,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table03);
+        TablesPanel.add(table03);
         table03.setBounds(280, 40, 100, 100);
 
         table4.setBackground(new java.awt.Color(0, 153, 102));
@@ -323,7 +323,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table4);
+        TablesPanel.add(table4);
         table4.setBounds(380, 40, 100, 100);
 
         table5.setBackground(new java.awt.Color(0, 153, 102));
@@ -337,7 +337,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table5);
+        TablesPanel.add(table5);
         table5.setBounds(480, 40, 100, 100);
 
         table6.setBackground(new java.awt.Color(0, 153, 102));
@@ -351,7 +351,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table6);
+        TablesPanel.add(table6);
         table6.setBounds(80, 140, 100, 100);
 
         table7.setBackground(new java.awt.Color(0, 153, 102));
@@ -365,7 +365,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table7);
+        TablesPanel.add(table7);
         table7.setBounds(180, 140, 100, 100);
 
         table8.setBackground(new java.awt.Color(0, 153, 102));
@@ -379,7 +379,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table8);
+        TablesPanel.add(table8);
         table8.setBounds(280, 140, 100, 100);
 
         table9.setBackground(new java.awt.Color(0, 153, 102));
@@ -393,7 +393,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table9);
+        TablesPanel.add(table9);
         table9.setBounds(380, 140, 100, 100);
 
         table10.setBackground(new java.awt.Color(0, 153, 102));
@@ -407,7 +407,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table10);
+        TablesPanel.add(table10);
         table10.setBounds(480, 140, 100, 100);
 
         table11.setBackground(new java.awt.Color(0, 153, 102));
@@ -421,7 +421,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table11);
+        TablesPanel.add(table11);
         table11.setBounds(80, 240, 100, 100);
 
         table12.setBackground(new java.awt.Color(0, 153, 102));
@@ -435,7 +435,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table12);
+        TablesPanel.add(table12);
         table12.setBounds(180, 240, 100, 100);
 
         table13.setBackground(new java.awt.Color(0, 153, 102));
@@ -449,7 +449,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table13);
+        TablesPanel.add(table13);
         table13.setBounds(280, 240, 100, 100);
 
         table14.setBackground(new java.awt.Color(0, 153, 102));
@@ -463,7 +463,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table14);
+        TablesPanel.add(table14);
         table14.setBounds(380, 240, 100, 100);
 
         table15.setBackground(new java.awt.Color(0, 153, 102));
@@ -477,7 +477,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table15);
+        TablesPanel.add(table15);
         table15.setBounds(480, 240, 100, 100);
 
         table16.setBackground(new java.awt.Color(0, 153, 102));
@@ -491,7 +491,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table16);
+        TablesPanel.add(table16);
         table16.setBounds(80, 340, 100, 100);
 
         table17.setBackground(new java.awt.Color(0, 153, 102));
@@ -505,7 +505,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table17);
+        TablesPanel.add(table17);
         table17.setBounds(180, 340, 100, 100);
 
         table18.setBackground(new java.awt.Color(0, 153, 102));
@@ -519,7 +519,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table18);
+        TablesPanel.add(table18);
         table18.setBounds(280, 340, 100, 100);
 
         table19.setBackground(new java.awt.Color(0, 153, 102));
@@ -533,7 +533,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table19);
+        TablesPanel.add(table19);
         table19.setBounds(380, 340, 100, 100);
 
         table20.setBackground(new java.awt.Color(0, 153, 102));
@@ -547,7 +547,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table20);
+        TablesPanel.add(table20);
         table20.setBounds(480, 340, 100, 100);
 
         table21.setBackground(new java.awt.Color(0, 153, 102));
@@ -561,7 +561,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table21);
+        TablesPanel.add(table21);
         table21.setBounds(80, 440, 100, 100);
 
         table22.setBackground(new java.awt.Color(0, 153, 102));
@@ -575,7 +575,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table22);
+        TablesPanel.add(table22);
         table22.setBounds(180, 440, 100, 100);
 
         table23.setBackground(new java.awt.Color(0, 153, 102));
@@ -589,7 +589,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table23);
+        TablesPanel.add(table23);
         table23.setBounds(280, 440, 100, 100);
 
         table24.setBackground(new java.awt.Color(0, 153, 102));
@@ -603,7 +603,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table24);
+        TablesPanel.add(table24);
         table24.setBounds(380, 440, 100, 100);
 
         table25.setBackground(new java.awt.Color(0, 153, 102));
@@ -617,7 +617,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseTable(evt);
             }
         });
-        jPanel2.add(table25);
+        TablesPanel.add(table25);
         table25.setBounds(480, 440, 100, 100);
 
         jTextField5.setEditable(false);
@@ -627,13 +627,13 @@ public class MainForm extends javax.swing.JFrame {
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField5.setText("0");
         jTextField5.setBorder(null);
-        jPanel2.add(jTextField5);
+        TablesPanel.add(jTextField5);
         jTextField5.setBounds(130, 560, 90, 40);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 102, 102));
         jLabel3.setText("грн.");
-        jPanel2.add(jLabel3);
+        TablesPanel.add(jLabel3);
         jLabel3.setBounds(230, 570, 60, 30);
 
         jButton18.setBackground(new java.awt.Color(67, 96, 156));
@@ -641,14 +641,14 @@ public class MainForm extends javax.swing.JFrame {
         jButton18.setForeground(new java.awt.Color(255, 102, 102));
         jButton18.setText("Каса:");
         jButton18.setBorder(null);
-        jPanel2.add(jButton18);
+        TablesPanel.add(jButton18);
         jButton18.setBounds(0, 560, 80, 40);
 
-        jTabbedPane1.addTab("           ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/two200.png")), jPanel2); // NOI18N
+        jTabbedPane1.addTab("           ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/two200.png")), TablesPanel); // NOI18N
 
-        jPanel4.setBackground(new java.awt.Color(67, 96, 156));
-        jPanel4.setToolTipText("");
-        jPanel4.setLayout(null);
+        CategoriesPanel.setBackground(new java.awt.Color(67, 96, 156));
+        CategoriesPanel.setToolTipText("");
+        CategoriesPanel.setLayout(null);
 
         cat5.setBackground(new java.awt.Color(233, 234, 237));
         cat5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -663,7 +663,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat5);
+        CategoriesPanel.add(cat5);
         cat5.setBounds(0, 220, 160, 160);
 
         cat6.setBackground(new java.awt.Color(233, 234, 237));
@@ -679,7 +679,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat6);
+        CategoriesPanel.add(cat6);
         cat6.setBounds(160, 220, 160, 160);
 
         cat7.setBackground(new java.awt.Color(233, 234, 237));
@@ -695,7 +695,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat7);
+        CategoriesPanel.add(cat7);
         cat7.setBounds(320, 220, 160, 160);
 
         cat8.setBackground(new java.awt.Color(233, 234, 237));
@@ -711,7 +711,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat8);
+        CategoriesPanel.add(cat8);
         cat8.setBounds(480, 220, 160, 160);
 
         cat3.setBackground(new java.awt.Color(233, 234, 237));
@@ -727,7 +727,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat3);
+        CategoriesPanel.add(cat3);
         cat3.setBounds(320, 60, 160, 160);
 
         cat4.setBackground(new java.awt.Color(233, 234, 237));
@@ -744,7 +744,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat4);
+        CategoriesPanel.add(cat4);
         cat4.setBounds(480, 60, 160, 160);
 
         cat2.setBackground(new java.awt.Color(233, 234, 237));
@@ -760,7 +760,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat2);
+        CategoriesPanel.add(cat2);
         cat2.setBounds(160, 60, 160, 160);
 
         cat1.setBackground(new java.awt.Color(233, 234, 237));
@@ -776,7 +776,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat1);
+        CategoriesPanel.add(cat1);
         cat1.setBounds(0, 60, 160, 160);
 
         cat9.setBackground(new java.awt.Color(233, 234, 237));
@@ -792,7 +792,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat9);
+        CategoriesPanel.add(cat9);
         cat9.setBounds(0, 380, 160, 160);
 
         cat10.setBackground(new java.awt.Color(233, 234, 237));
@@ -808,7 +808,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCat(evt);
             }
         });
-        jPanel4.add(cat10);
+        CategoriesPanel.add(cat10);
         cat10.setBounds(160, 380, 160, 160);
 
         cat11.setBackground(new java.awt.Color(233, 234, 237));
@@ -819,7 +819,7 @@ public class MainForm extends javax.swing.JFrame {
         cat11.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         cat11.setName("cat10"); // NOI18N
         cat11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel4.add(cat11);
+        CategoriesPanel.add(cat11);
         cat11.setBounds(320, 380, 160, 160);
 
         cat12.setBackground(new java.awt.Color(233, 234, 237));
@@ -830,20 +830,20 @@ public class MainForm extends javax.swing.JFrame {
         cat12.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         cat12.setName("cat11"); // NOI18N
         cat12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel4.add(cat12);
+        CategoriesPanel.add(cat12);
         cat12.setBounds(480, 380, 160, 160);
 
-        jTabbedPane1.addTab("             ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/plate24.png")), jPanel4, ""); // NOI18N
+        jTabbedPane1.addTab("             ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/plate24.png")), CategoriesPanel, ""); // NOI18N
 
-        jPanel5.setBackground(new java.awt.Color(233, 234, 237));
-        jPanel5.setEnabled(false);
-        jPanel5.setFocusable(false);
-        jPanel5.addComponentListener(new java.awt.event.ComponentAdapter() {
+        DishesPanel.setBackground(new java.awt.Color(233, 234, 237));
+        DishesPanel.setEnabled(false);
+        DishesPanel.setFocusable(false);
+        DishesPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                jPanel5ComponentShown(evt);
+                DishesPanelComponentShown(evt);
             }
         });
-        jPanel5.setLayout(null);
+        DishesPanel.setLayout(null);
 
         jList2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jList2.setModel(new javax.swing.AbstractListModel() {
@@ -858,7 +858,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jList2);
 
-        jPanel5.add(jScrollPane3);
+        DishesPanel.add(jScrollPane3);
         jScrollPane3.setBounds(0, 0, 570, 470);
 
         btn10.setBackground(new java.awt.Color(0, 153, 204));
@@ -875,7 +875,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn10);
+        DishesPanel.add(btn10);
         btn10.setBounds(570, 540, 70, 60);
 
         btn6.setBackground(new java.awt.Color(0, 153, 204));
@@ -893,7 +893,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn6);
+        DishesPanel.add(btn6);
         btn6.setBounds(570, 300, 70, 60);
 
         btn7.setBackground(new java.awt.Color(0, 153, 204));
@@ -911,7 +911,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn7);
+        DishesPanel.add(btn7);
         btn7.setBounds(570, 360, 70, 60);
 
         btn8.setBackground(new java.awt.Color(0, 153, 204));
@@ -929,7 +929,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn8);
+        DishesPanel.add(btn8);
         btn8.setBounds(570, 420, 70, 60);
 
         btn9.setBackground(new java.awt.Color(0, 153, 204));
@@ -947,7 +947,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn9);
+        DishesPanel.add(btn9);
         btn9.setBounds(570, 480, 70, 60);
 
         btn5.setBackground(new java.awt.Color(0, 153, 204));
@@ -965,7 +965,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn5);
+        DishesPanel.add(btn5);
         btn5.setBounds(570, 240, 70, 60);
 
         btn1.setBackground(new java.awt.Color(0, 153, 204));
@@ -983,7 +983,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn1);
+        DishesPanel.add(btn1);
         btn1.setBounds(570, 0, 70, 60);
 
         btn2.setBackground(new java.awt.Color(0, 153, 204));
@@ -1001,7 +1001,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn2);
+        DishesPanel.add(btn2);
         btn2.setBounds(570, 60, 70, 60);
 
         btn3.setBackground(new java.awt.Color(0, 153, 204));
@@ -1019,7 +1019,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn3);
+        DishesPanel.add(btn3);
         btn3.setBounds(570, 120, 70, 60);
 
         btn4.setBackground(new java.awt.Color(0, 153, 204));
@@ -1037,7 +1037,7 @@ public class MainForm extends javax.swing.JFrame {
                 chooseCount(evt);
             }
         });
-        jPanel5.add(btn4);
+        DishesPanel.add(btn4);
         btn4.setBounds(570, 180, 70, 60);
 
         jCheckBox1.setBackground(new java.awt.Color(255, 102, 102));
@@ -1048,7 +1048,7 @@ public class MainForm extends javax.swing.JFrame {
                 changePizzaSize(evt);
             }
         });
-        jPanel5.add(jCheckBox1);
+        DishesPanel.add(jCheckBox1);
         jCheckBox1.setBounds(0, 530, 120, 31);
 
         jTextField2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -1058,7 +1058,7 @@ public class MainForm extends javax.swing.JFrame {
                 PriceTyped(evt);
             }
         });
-        jPanel5.add(jTextField2);
+        DishesPanel.add(jTextField2);
         jTextField2.setBounds(490, 490, 80, 30);
 
         jComboBox1.setBackground(new java.awt.Color(240, 240, 240));
@@ -1069,12 +1069,12 @@ public class MainForm extends javax.swing.JFrame {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel5.add(jComboBox1);
+        DishesPanel.add(jComboBox1);
         jComboBox1.setBounds(0, 490, 120, 30);
 
         jLabel6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel6.setText("Сортування:");
-        jPanel5.add(jLabel6);
+        DishesPanel.add(jLabel6);
         jLabel6.setBounds(0, 470, 120, 18);
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
@@ -1086,7 +1086,7 @@ public class MainForm extends javax.swing.JFrame {
                 removeDish(evt);
             }
         });
-        jPanel5.add(jButton1);
+        DishesPanel.add(jButton1);
         jButton1.setBounds(270, 530, 100, 70);
 
         jButton11.setBackground(new java.awt.Color(204, 204, 204));
@@ -1098,7 +1098,7 @@ public class MainForm extends javax.swing.JFrame {
                 addDish(evt);
             }
         });
-        jPanel5.add(jButton11);
+        DishesPanel.add(jButton11);
         jButton11.setBounds(170, 530, 100, 70);
 
         jButton12.setBackground(new java.awt.Color(102, 153, 255));
@@ -1111,21 +1111,21 @@ public class MainForm extends javax.swing.JFrame {
                 refreshCalc(evt);
             }
         });
-        jPanel5.add(jButton12);
+        DishesPanel.add(jButton12);
         jButton12.setBounds(470, 530, 100, 70);
 
         jTextField4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jPanel5.add(jTextField4);
+        DishesPanel.add(jTextField4);
         jTextField4.setBounds(130, 490, 360, 30);
 
         jLabel8.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel8.setText("Ціна");
-        jPanel5.add(jLabel8);
+        DishesPanel.add(jLabel8);
         jLabel8.setBounds(490, 470, 60, 16);
 
         jLabel9.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel9.setText(" Назва");
-        jPanel5.add(jLabel9);
+        DishesPanel.add(jLabel9);
         jLabel9.setBounds(130, 470, 90, 16);
 
         jButton19.setBackground(new java.awt.Color(102, 153, 255));
@@ -1138,7 +1138,7 @@ public class MainForm extends javax.swing.JFrame {
                 updateTitleAndPrice(evt);
             }
         });
-        jPanel5.add(jButton19);
+        DishesPanel.add(jButton19);
         jButton19.setBounds(370, 530, 100, 70);
 
         jCheckBox2.setBackground(new java.awt.Color(255, 102, 102));
@@ -1149,10 +1149,10 @@ public class MainForm extends javax.swing.JFrame {
                 chengeScaleToGrams(evt);
             }
         });
-        jPanel5.add(jCheckBox2);
+        DishesPanel.add(jCheckBox2);
         jCheckBox2.setBounds(0, 530, 120, 31);
 
-        jTabbedPane1.addTab("                 ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), jPanel5); // NOI18N
+        jTabbedPane1.addTab("                 ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), DishesPanel); // NOI18N
 
         getContentPane().add(jTabbedPane1);
         jTabbedPane1.setBounds(0, 0, 643, 680);
@@ -2263,7 +2263,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (orders.get(activeTable).isPrinted()) {
                     markDishesAsCooked();
                 }
-                
+
             }
         } else {
             orders.put(activeTable, new Order());
@@ -2297,7 +2297,7 @@ public class MainForm extends javax.swing.JFrame {
     private void PersonalLogining(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalLogining
         jTabbedPane1.setVisible(false);
         OrderPanel.setVisible(false);
-        UsersPanel.setVisible(true);       
+        UsersPanel.setVisible(true);
         CheckUtils.readCheck();
         jTextField11.setText(Check.getTitle());
         jTextField14.setText(Check.getAdress());
@@ -2323,7 +2323,7 @@ public class MainForm extends javax.swing.JFrame {
     private void addRecordToTable(int count) {
         clearCountButton();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();       
+        String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         if (jCheckBox1.isSelected()) {
             menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
         }
@@ -2333,9 +2333,9 @@ public class MainForm extends javax.swing.JFrame {
             orders.get(activeTable).getItems().get(index).addCount(count);
             model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index, 1);
             model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index, 3);
-        }else{
+        } else {
             orders.get(activeTable).getItems().add(newOrder);
-            
+
             int addedIndex = orders.get(activeTable).getItems().size() - 1;
 
             model.addRow(new Object[]{
@@ -2349,15 +2349,13 @@ public class MainForm extends javax.swing.JFrame {
                 .getSum()
             });
         }
-        
-        
-        
+
         if (activeCat == 9 || activeCat == 10) {
-            orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).getDish().setDrink(true);                      
-        } 
-        OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);       
+            orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).getDish().setDrink(true);
+        }
+        OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
         jTextField1.setText(String.valueOf(orders.get(activeTable).calcOrderSum()));
-        
+
     }
 
     private void refreshListOfPrices() {
@@ -2380,14 +2378,14 @@ public class MainForm extends javax.swing.JFrame {
         btn10.setText("<html>" + (minValue * 10) + unit + "<br/> " + price * 10 + " грн. </html>");
     }
 
-    private void jPanel5ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel5ComponentShown
+    private void DishesPanelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_DishesPanelComponentShown
         jList2.setSelectedIndex(0);
         activeDishes = 0;
         jList2.ensureIndexIsVisible(jList2.getSelectedIndex());
         clearCountButton();
         refreshListOfPrices();
         clearCheckboxs();
-    }//GEN-LAST:event_jPanel5ComponentShown
+    }//GEN-LAST:event_DishesPanelComponentShown
 
     private void clearCountButton() {
         btn1.setBackground(BLUE);
@@ -2437,14 +2435,14 @@ public class MainForm extends javax.swing.JFrame {
             orders.remove(activeTable);
             jTabbedPane1.setSelectedIndex(0);
             System.out.println("compId" + activeTable);
-            jPanel2.getComponent(activeTable - 1).setBackground(GREEN);
+            TablesPanel.getComponent(activeTable - 1).setBackground(GREEN);
             jTabbedPane1.setEnabledAt(1, false);
             jTabbedPane1.setEnabledAt(2, false);
             DefaultTableModel model
                     = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
             jTextField1.setText("0");
-            jButton10.setBackground(Color.WHITE);            
+            jButton10.setBackground(Color.WHITE);
             OrderUtils.fillTableById(activeTable);
             activeTable = 0;
             jLabel4.setText("Стіл № ");
@@ -2456,7 +2454,7 @@ public class MainForm extends javax.swing.JFrame {
             jButton3.setEnabled(false);
             jButton7.setEnabled(false);
             jButton9.setEnabled(false);
-            jButton10.setEnabled(false);            
+            jButton10.setEnabled(false);
         }
     }//GEN-LAST:event_clearTable
 
@@ -2471,13 +2469,12 @@ public class MainForm extends javax.swing.JFrame {
                 OrderItem item = orders.get(activeTable).getItems().get(lastIndex);
                 int count = orders.get(activeTable).getItems().get(lastIndex).getCount();
                 if (orders.get(activeTable).getRemoveditems().contains(
-                        orders.get(activeTable).getItems().get(lastIndex))
-                        ) {
+                        orders.get(activeTable).getItems().get(lastIndex))) {
                     int index = orders.get(activeTable).getRemoveditems().indexOf(item);
-                    orders.get(activeTable).getRemoveditems().get(index).addCount(count);                                     
-                }else{
-                    orders.get(activeTable).getRemoveditems().add(item);                    
-                }                
+                    orders.get(activeTable).getRemoveditems().get(index).addCount(count);
+                } else {
+                    orders.get(activeTable).getRemoveditems().add(item);
+                }
                 orders.get(activeTable).getItems().remove(lastIndex);
             }
             jTextField1.setText("" + orders.get(activeTable).calcOrderSum());
@@ -2504,6 +2501,7 @@ public class MainForm extends javax.swing.JFrame {
             jButton39.setVisible(true);
             jButton43.setVisible(true);
             jButton44.setVisible(true);
+            jButton20.setEnabled(true);
             jTextField2.setVisible(true);
             jTextField4.setVisible(true);
             jLabel8.setVisible(true);
@@ -2513,7 +2511,6 @@ public class MainForm extends javax.swing.JFrame {
             jTextField15.setEditable(true);
             jTextField16.setEditable(true);
             jButton20.setEnabled(true);
-            
 
         } else {
             jLabel5.setText("  " + userList.get(User.active).getName());
@@ -2605,7 +2602,6 @@ public class MainForm extends javax.swing.JFrame {
                     orders.get(activeTable).setPrinted(true);
                     OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
                     System.out.println("activeCat" + activeCat);
-                    
 
 //        if (jButton3.isEnabled()) {
 //            if (orders.get(activeTable).calcOrderSum() != 0) {
@@ -2677,7 +2673,7 @@ public class MainForm extends javax.swing.JFrame {
         }
         jList2.setListData(menu.get(activeCat).getDishes().toArray());
         jList2.ensureIndexIsVisible(0);
-        jPanel5ComponentShown(null);
+        DishesPanelComponentShown(null);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
@@ -2718,7 +2714,7 @@ public class MainForm extends javax.swing.JFrame {
                     .getPass() == Integer.parseInt(pass)) {
                 if (date1.equals("null")) {
                     model.setValueAt(dateFormat.format(new Date()), index, 1);
-                    userList.get(User.active);                    
+                    userList.get(User.active);
                     EmployeeUtils.addTimeIn(employees.get(index));
                 } else if (date2.equals("null")) {
                     model.setValueAt(dateFormat.format(new Date()), index, 2);
@@ -2786,7 +2782,7 @@ public class MainForm extends javax.swing.JFrame {
         if (!jTextField2.getText().equals("") && !jTextField4.getText().equals("")) {
             String title = jTextField4.getText();
             int price = Integer.parseInt(jTextField2.getText());
-            DishUtils.addDish(new Dish(title, price), activeCat);           
+            DishUtils.addDish(new Dish(title, price), activeCat);
             menu.get(activeCat).getDishes().clear();
             DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
@@ -2838,7 +2834,7 @@ public class MainForm extends javax.swing.JFrame {
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
         jTabbedPane1.setVisible(false);
         OrderPanel.setVisible(false);
-        RecipePanel.setVisible(true);     
+        RecipePanel.setVisible(true);
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         jLabel12.setText(title);
         //join between storageList(all count = 0) and exist recipe into storageList
@@ -2860,17 +2856,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
         setSort(jComboBox6, jTable3);
-        //showCalcTable(jTable3);
     }//GEN-LAST:event_refreshCalc
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
-        UsersPanel.setVisible(false);      
+        UsersPanel.setVisible(false);
         OrderPanel.setVisible(true);
         jTabbedPane1.setVisible(true);
     }//GEN-LAST:event_goToMainMenu
 
     private void exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromCalculation
-        RecipePanel.setVisible(false);      
+        RecipePanel.setVisible(false);
         OrderPanel.setVisible(true);
         jTabbedPane1.setVisible(true);
     }//GEN-LAST:event_exitFromCalculation
@@ -3033,7 +3028,7 @@ public class MainForm extends javax.swing.JFrame {
     }
     private void goToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToStorage
         StoragePanel.setVisible(true);
-       
+
         jTabbedPane1.setVisible(false);
         OrderPanel.setVisible(false);
         setComponentsVisible();
@@ -3193,7 +3188,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearDigitLine
 
     private void exitFromStorageTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromStorageTable
-        StoragePanel.setVisible(false);       
+        StoragePanel.setVisible(false);
         OrderPanel.setVisible(true);
         jTabbedPane1.setVisible(true);
     }//GEN-LAST:event_exitFromStorageTable
@@ -3274,8 +3269,8 @@ public class MainForm extends javax.swing.JFrame {
                     orders.put(index, orders.get(activeTable));
                     orders.remove(activeTable);
                     jLabel4.setText("Стіл № " + index);
-                    jPanel2.getComponent(index - 1).setBackground(Color.yellow);
-                    jPanel2.getComponent(activeTable - 1).setBackground(GREEN);
+                    TablesPanel.getComponent(index - 1).setBackground(Color.yellow);
+                    TablesPanel.getComponent(activeTable - 1).setBackground(GREEN);
                     OrderUtils.fillTableById(activeTable);
                     activeTable = index;
                     OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
@@ -3298,7 +3293,7 @@ public class MainForm extends javax.swing.JFrame {
         jTextField11.setText(Check.getTitle());
         jTextField14.setText(Check.getAdress());
         jTextField15.setText(Check.getPassWifi());
-        jTextField16.setText(Check.getWish());       
+        jTextField16.setText(Check.getWish());
 
     }//GEN-LAST:event_updateCheckInfo
 
@@ -3343,6 +3338,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton1.setVisible(false);
         jButton11.setVisible(false);
         jButton12.setVisible(false);
+        jButton20.setEnabled(false);
         jButton19.setVisible(false);
         jTextField2.setVisible(false);
         jTextField4.setVisible(false);
@@ -3375,9 +3371,9 @@ public class MainForm extends javax.swing.JFrame {
 //                if (activeCat == 9 || activeCat == 10) {
 //                    orders.get(activeCat);
 //                }
-                
+
                 OrderUtils.addOrder(orders.get(activeTable),
-                        userList.get(User.active));                
+                        userList.get(User.active));
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
                 ordered = true;
@@ -3492,7 +3488,6 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     //initCalculationTable
-
     private void setColumnRender(TableColumn column) throws ParseException {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
@@ -3521,28 +3516,28 @@ public class MainForm extends javax.swing.JFrame {
 
 //      
         DishUtils.readDBmenu();
-        StorageUtils.readStorage();    
-                             
+        StorageUtils.readStorage();
+
     }
-    
+
     private void loadTables() {
         HashMap<Integer, Order> loadOrders = new HashMap<>();
         loadOrders.putAll(OrderUtils.loadTables());
-        
+
         if (!loadOrders.isEmpty()) {
             System.out.println("loadTables---");
             for (Map.Entry<Integer, Order> entry : loadOrders.entrySet()) {
-                
+
             }
             orders.putAll(loadOrders);
             System.out.println("size " + orders.size());
             for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
                 if (entry.getValue().getOrderSum() > 0) {
-                    jPanel2.getComponent(entry.getKey()-1).setBackground(Color.yellow);
+                    TablesPanel.getComponent(entry.getKey() - 1).setBackground(Color.yellow);
                 }
-            }       
+            }
         }
-        
+
     }
 
     private void InitComonentsProperty() {
@@ -3550,7 +3545,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(1, false);
         jTabbedPane1.setEnabledAt(2, false);
         jTextField2.setLayout(new AbsoluteLayout());
-        jTextField2.setVisible(false);        
+        jTextField2.setVisible(false);
         jButton1.setVisible(false);
         jButton11.setVisible(false);
         jButton12.setVisible(false);
@@ -3572,8 +3567,9 @@ public class MainForm extends javax.swing.JFrame {
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);
         RecipePanel.setVisible(false);
-        StoragePanel.setVisible(false);      
-       
+        StoragePanel.setVisible(false);
+        jButton20.setEnabled(false);
+
         jButton11.setBackground(GREEN);
         jButton1.setBackground(RED);
         jButton39.setBackground(GREEN);
@@ -3582,8 +3578,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton44.setBackground(RED);
         UsersPanel.setVisible(false);
         RecipePanel.setVisible(false);
-        StoragePanel.setVisible(false);       
-       
+        StoragePanel.setVisible(false);
+
     }
 
     public void initIcons() {
@@ -3637,9 +3633,12 @@ public class MainForm extends javax.swing.JFrame {
     private static final Color GREEN = new Color(0, 153, 102);
 //    private static final Color WHITE = new Color(255, 255, 255);
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel CategoriesPanel;
+    private javax.swing.JPanel DishesPanel;
     private javax.swing.JPanel OrderPanel;
     private javax.swing.JPanel RecipePanel;
     private javax.swing.JPanel StoragePanel;
+    private javax.swing.JPanel TablesPanel;
     private javax.swing.JPanel UsersPanel;
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn10;
@@ -3747,9 +3746,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

@@ -187,6 +187,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton15 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jButton17 = new javax.swing.JButton();
+        jTextField11 = new javax.swing.JTextField();
+        jTextField14 = new javax.swing.JTextField();
+        jTextField15 = new javax.swing.JTextField();
+        jTextField16 = new javax.swing.JTextField();
+        jButton20 = new javax.swing.JButton();
         RecipePanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -234,12 +239,6 @@ public class MainForm extends javax.swing.JFrame {
         jButton44 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
         jButton45 = new javax.swing.JButton();
-        InfoPanel = new javax.swing.JPanel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jButton16 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -1348,6 +1347,8 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(OrderPanel);
         OrderPanel.setBounds(643, 0, 500, 680);
 
+        UsersPanel.setLayout(null);
+
         jTable2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1381,6 +1382,9 @@ public class MainForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
+        UsersPanel.add(jScrollPane2);
+        jScrollPane2.setBounds(0, 10, 589, 400);
+
         jButton8.setBackground(new java.awt.Color(255, 255, 255));
         jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
@@ -1389,6 +1393,8 @@ public class MainForm extends javax.swing.JFrame {
                 goToMainMenu(evt);
             }
         });
+        UsersPanel.add(jButton8);
+        jButton8.setBounds(0, 586, 100, 73);
 
         jButton24.setBackground(new java.awt.Color(204, 204, 204));
         jButton24.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1400,6 +1406,8 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton24);
+        jButton24.setBounds(420, 510, 50, 50);
 
         jButton25.setBackground(new java.awt.Color(204, 204, 204));
         jButton25.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
@@ -1411,6 +1419,8 @@ public class MainForm extends javax.swing.JFrame {
                 clearDigit(evt);
             }
         });
+        UsersPanel.add(jButton25);
+        jButton25.setBounds(270, 510, 50, 50);
 
         jButton26.setBackground(new java.awt.Color(204, 204, 204));
         jButton26.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1422,6 +1432,8 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton26);
+        jButton26.setBounds(370, 510, 50, 50);
 
         jButton27.setBackground(new java.awt.Color(204, 204, 204));
         jButton27.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1433,6 +1445,8 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton27);
+        jButton27.setBounds(320, 560, 50, 50);
 
         jButton28.setBackground(new java.awt.Color(204, 204, 204));
         jButton28.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1444,6 +1458,8 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton28);
+        jButton28.setBounds(370, 560, 50, 50);
 
         jButton29.setBackground(new java.awt.Color(204, 204, 204));
         jButton29.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1455,6 +1471,8 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton29);
+        jButton29.setBounds(420, 560, 50, 50);
 
         jButton30.setBackground(new java.awt.Color(204, 204, 204));
         jButton30.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1466,6 +1484,8 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton30);
+        jButton30.setBounds(420, 610, 50, 50);
 
         jButton31.setBackground(new java.awt.Color(204, 204, 204));
         jButton31.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1477,6 +1497,8 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton31);
+        jButton31.setBounds(270, 610, 50, 50);
 
         jButton32.setBackground(new java.awt.Color(204, 204, 204));
         jButton32.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1488,6 +1510,8 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton32);
+        jButton32.setBounds(370, 610, 50, 50);
 
         jButton33.setBackground(new java.awt.Color(204, 204, 204));
         jButton33.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1499,6 +1523,8 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton33);
+        jButton33.setBounds(320, 510, 50, 50);
 
         jButton34.setBackground(new java.awt.Color(204, 204, 204));
         jButton34.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1510,10 +1536,14 @@ public class MainForm extends javax.swing.JFrame {
                 NumberPressed(evt);
             }
         });
+        UsersPanel.add(jButton34);
+        jButton34.setBounds(320, 610, 50, 50);
 
         jPasswordField1.setEditable(false);
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPasswordField1.setToolTipText("");
+        UsersPanel.add(jPasswordField1);
+        jPasswordField1.setBounds(490, 510, 100, 28);
 
         jButton13.setBackground(new java.awt.Color(255, 255, 255));
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/check-box2.png"))); // NOI18N
@@ -1523,11 +1553,15 @@ public class MainForm extends javax.swing.JFrame {
                 loginEmployee(evt);
             }
         });
+        UsersPanel.add(jButton13);
+        jButton13.setBounds(490, 590, 100, 70);
 
         jLabel7.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 51, 0));
         jLabel7.setText("введіть пароль");
         jLabel7.setToolTipText("");
+        UsersPanel.add(jLabel7);
+        jLabel7.setBounds(490, 540, 114, 15);
 
         jButton14.setText("додати");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -1535,6 +1569,8 @@ public class MainForm extends javax.swing.JFrame {
                 addEmployee(evt);
             }
         });
+        UsersPanel.add(jButton14);
+        jButton14.setBounds(0, 440, 100, 40);
 
         jButton15.setText("видалити");
         jButton15.addActionListener(new java.awt.event.ActionListener() {
@@ -1542,12 +1578,16 @@ public class MainForm extends javax.swing.JFrame {
                 removeEmployee(evt);
             }
         });
+        UsersPanel.add(jButton15);
+        jButton15.setBounds(0, 490, 100, 40);
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
+        UsersPanel.add(jTextField3);
+        jTextField3.setBounds(0, 410, 589, 30);
 
         jButton17.setBackground(new java.awt.Color(102, 153, 255));
         jButton17.setText("змінити");
@@ -1556,100 +1596,51 @@ public class MainForm extends javax.swing.JFrame {
                 updateUserAndEmployee(evt);
             }
         });
+        UsersPanel.add(jButton17);
+        jButton17.setBounds(0, 540, 100, 40);
 
-        javax.swing.GroupLayout UsersPanelLayout = new javax.swing.GroupLayout(UsersPanel);
-        UsersPanel.setLayout(UsersPanelLayout);
-        UsersPanelLayout.setHorizontalGroup(
-            UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UsersPanelLayout.createSequentialGroup()
-                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(UsersPanelLayout.createSequentialGroup()
-                        .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(UsersPanelLayout.createSequentialGroup()
-                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(170, 170, 170)
-                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton33, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(20, 20, 20)
-                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 16, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2)
-                    .addComponent(jTextField3))
-                .addContainerGap())
-        );
-        UsersPanelLayout.setVerticalGroup(
-            UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UsersPanelLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(UsersPanelLayout.createSequentialGroup()
-                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton8))
-                    .addGroup(UsersPanelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(UsersPanelLayout.createSequentialGroup()
-                                .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(UsersPanelLayout.createSequentialGroup()
-                                .addComponent(jButton33, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(UsersPanelLayout.createSequentialGroup()
-                                .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jButton32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(UsersPanelLayout.createSequentialGroup()
-                                .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(UsersPanelLayout.createSequentialGroup()
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel7)
-                                .addGap(35, 35, 35)
-                                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(3, 3, 3))
-        );
+        jTextField11.setEditable(false);
+        jTextField11.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTextField11.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField11.setToolTipText("");
+        jTextField11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        UsersPanel.add(jTextField11);
+        jTextField11.setBounds(600, 10, 480, 24);
+
+        jTextField14.setEditable(false);
+        jTextField14.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTextField14.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField14.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        UsersPanel.add(jTextField14);
+        jTextField14.setBounds(600, 40, 480, 24);
+
+        jTextField15.setEditable(false);
+        jTextField15.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTextField15.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField15.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        UsersPanel.add(jTextField15);
+        jTextField15.setBounds(600, 70, 480, 24);
+
+        jTextField16.setEditable(false);
+        jTextField16.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTextField16.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField16.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        UsersPanel.add(jTextField16);
+        jTextField16.setBounds(600, 100, 480, 24);
+
+        jButton20.setBackground(new java.awt.Color(255, 255, 255));
+        jButton20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/check-box2.png"))); // NOI18N
+        jButton20.setEnabled(false);
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateCheckInfo(evt);
+            }
+        });
+        UsersPanel.add(jButton20);
+        jButton20.setBounds(990, 590, 97, 73);
 
         getContentPane().add(UsersPanel);
-        UsersPanel.setBounds(20, 0, 630, 700);
+        UsersPanel.setBounds(20, 0, 1130, 700);
 
         RecipePanel.setLayout(null);
 
@@ -2232,53 +2223,6 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(StoragePanel);
         StoragePanel.setBounds(0, 0, 1140, 700);
 
-        InfoPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        InfoPanel.setToolTipText("");
-        InfoPanel.setLayout(null);
-
-        jTextField7.setEditable(false);
-        jTextField7.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField7.setToolTipText("");
-        jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        InfoPanel.add(jTextField7);
-        jTextField7.setBounds(10, 20, 480, 24);
-
-        jTextField8.setEditable(false);
-        jTextField8.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        InfoPanel.add(jTextField8);
-        jTextField8.setBounds(10, 50, 480, 24);
-
-        jTextField9.setEditable(false);
-        jTextField9.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jTextField9.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        InfoPanel.add(jTextField9);
-        jTextField9.setBounds(10, 80, 480, 24);
-
-        jTextField10.setEditable(false);
-        jTextField10.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jTextField10.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        InfoPanel.add(jTextField10);
-        jTextField10.setBounds(10, 110, 480, 24);
-
-        jButton16.setBackground(new java.awt.Color(255, 255, 255));
-        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/check-box2.png"))); // NOI18N
-        jButton16.setEnabled(false);
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateCheckInfo(evt);
-            }
-        });
-        InfoPanel.add(jButton16);
-        jButton16.setBounds(390, 580, 97, 73);
-
-        getContentPane().add(InfoPanel);
-        InfoPanel.setBounds(643, 0, 500, 680);
-
         setSize(new java.awt.Dimension(1149, 697));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -2353,13 +2297,12 @@ public class MainForm extends javax.swing.JFrame {
     private void PersonalLogining(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalLogining
         jTabbedPane1.setVisible(false);
         OrderPanel.setVisible(false);
-        UsersPanel.setVisible(true);
-        InfoPanel.setVisible(true);
+        UsersPanel.setVisible(true);       
         CheckUtils.readCheck();
-        jTextField7.setText(Check.getTitle());
-        jTextField8.setText(Check.getAdress());
-        jTextField9.setText(Check.getPassWifi());
-        jTextField10.setText(Check.getWish());
+        jTextField11.setText(Check.getTitle());
+        jTextField14.setText(Check.getAdress());
+        jTextField15.setText(Check.getPassWifi());
+        jTextField16.setText(Check.getWish());
     }//GEN-LAST:event_PersonalLogining
 
 
@@ -2565,11 +2508,11 @@ public class MainForm extends javax.swing.JFrame {
             jTextField4.setVisible(true);
             jLabel8.setVisible(true);
             jLabel9.setVisible(true);
-            jTextField7.setEditable(true);
-            jTextField8.setEditable(true);
-            jTextField9.setEditable(true);
-            jTextField10.setEditable(true);
-            jButton16.setEnabled(true);
+            jTextField11.setEditable(true);
+            jTextField14.setEditable(true);
+            jTextField15.setEditable(true);
+            jTextField16.setEditable(true);
+            jButton20.setEnabled(true);
             
 
         } else {
@@ -2916,13 +2859,12 @@ public class MainForm extends javax.swing.JFrame {
                 storageList1.setCount(zero);
             }
         }
-       // setSort(jComboBox6, jTable3);
-        showCalcTable(jTable3);
+        setSort(jComboBox6, jTable3);
+        //showCalcTable(jTable3);
     }//GEN-LAST:event_refreshCalc
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
-        UsersPanel.setVisible(false);
-        InfoPanel.setVisible(false);
+        UsersPanel.setVisible(false);      
         OrderPanel.setVisible(true);
         jTabbedPane1.setVisible(true);
     }//GEN-LAST:event_goToMainMenu
@@ -2955,8 +2897,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateTitleAndPrice
 
     private void setSort(JComboBox comboBox, JTable table) {
-        int activeRow = -1;
-        activeRow = table.getSelectedRow();
+        int activeRow = table.getSelectedRow();
         int index = comboBox.getSelectedIndex();
         sortListOfIngredients(storageList, index);
         showCalcTable(table);
@@ -3348,16 +3289,16 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_changeTable
 
     private void updateCheckInfo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCheckInfo
-        String title = jTextField7.getText();
-        String adress = jTextField8.getText();
-        String passWifi = jTextField9.getText();
-        String wish = jTextField10.getText();
+        String title = jTextField11.getText();
+        String adress = jTextField14.getText();
+        String passWifi = jTextField15.getText();
+        String wish = jTextField16.getText();
         CheckUtils.updateCheck(title, adress, passWifi, wish);
         CheckUtils.readCheck();
-        jTextField7.setText(Check.getTitle());
-        jTextField8.setText(Check.getAdress());
-        jTextField9.setText(Check.getPassWifi());
-        jTextField10.setText(Check.getWish());       
+        jTextField11.setText(Check.getTitle());
+        jTextField14.setText(Check.getAdress());
+        jTextField15.setText(Check.getPassWifi());
+        jTextField16.setText(Check.getWish());       
 
     }//GEN-LAST:event_updateCheckInfo
 
@@ -3641,8 +3582,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton44.setBackground(RED);
         UsersPanel.setVisible(false);
         RecipePanel.setVisible(false);
-        StoragePanel.setVisible(false);
-        InfoPanel.setVisible(false);     
+        StoragePanel.setVisible(false);       
        
     }
 
@@ -3697,7 +3637,6 @@ public class MainForm extends javax.swing.JFrame {
     private static final Color GREEN = new Color(0, 153, 102);
 //    private static final Color WHITE = new Color(255, 255, 255);
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel InfoPanel;
     private javax.swing.JPanel OrderPanel;
     private javax.swing.JPanel RecipePanel;
     private javax.swing.JPanel StoragePanel;
@@ -3732,11 +3671,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
@@ -3823,16 +3762,16 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable5;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
+    private javax.swing.JTextField jTextField14;
+    private javax.swing.JTextField jTextField15;
+    private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JButton table01;
     private javax.swing.JButton table02;
     private javax.swing.JButton table03;

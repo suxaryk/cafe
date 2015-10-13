@@ -147,7 +147,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton19 = new javax.swing.JButton();
         jCheckBox2 = new javax.swing.JCheckBox();
-        jPanel3 = new javax.swing.JPanel();
+        OrderPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
@@ -165,7 +165,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
-        jPanel6 = new javax.swing.JPanel();
+        UsersPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton8 = new javax.swing.JButton();
@@ -187,56 +187,54 @@ public class MainForm extends javax.swing.JFrame {
         jButton15 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jButton17 = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
+        RecipePanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jComboBox6 = new javax.swing.JComboBox();
+        jButton77 = new javax.swing.JButton();
+        jButton78 = new javax.swing.JButton();
+        jButton79 = new javax.swing.JButton();
+        jButton80 = new javax.swing.JButton();
+        jButton81 = new javax.swing.JButton();
+        jButton82 = new javax.swing.JButton();
+        jButton83 = new javax.swing.JButton();
+        jButton84 = new javax.swing.JButton();
+        jButton85 = new javax.swing.JButton();
+        jButton86 = new javax.swing.JButton();
+        jButton87 = new javax.swing.JButton();
+        jButton88 = new javax.swing.JButton();
+        jButton41 = new javax.swing.JButton();
+        jButton22 = new javax.swing.JButton();
+        StoragePanel = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jButton53 = new javax.swing.JButton();
-        jButton54 = new javax.swing.JButton();
-        jButton55 = new javax.swing.JButton();
-        jButton56 = new javax.swing.JButton();
-        jButton57 = new javax.swing.JButton();
-        jButton58 = new javax.swing.JButton();
-        jButton59 = new javax.swing.JButton();
-        jButton60 = new javax.swing.JButton();
-        jButton61 = new javax.swing.JButton();
-        jButton62 = new javax.swing.JButton();
-        jButton63 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
-        jButton39 = new javax.swing.JButton();
-        jComboBox4 = new javax.swing.JComboBox();
+        jLabel19 = new javax.swing.JLabel();
+        jComboBox7 = new javax.swing.JComboBox();
+        jTextField12 = new javax.swing.JTextField();
+        jButton42 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
-        jButton64 = new javax.swing.JButton();
-        jPanel11 = new javax.swing.JPanel();
-        jButton65 = new javax.swing.JButton();
-        jButton66 = new javax.swing.JButton();
-        jButton67 = new javax.swing.JButton();
-        jButton68 = new javax.swing.JButton();
-        jButton69 = new javax.swing.JButton();
-        jButton70 = new javax.swing.JButton();
-        jButton71 = new javax.swing.JButton();
-        jButton72 = new javax.swing.JButton();
-        jButton73 = new javax.swing.JButton();
-        jButton74 = new javax.swing.JButton();
-        jButton75 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
-        jComboBox5 = new javax.swing.JComboBox();
-        jLabel17 = new javax.swing.JLabel();
-        jButton76 = new javax.swing.JButton();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        jButton36 = new javax.swing.JButton();
-        jButton37 = new javax.swing.JButton();
-        jButton38 = new javax.swing.JButton();
-        jButton35 = new javax.swing.JButton();
-        jTextField11 = new javax.swing.JTextField();
-        jButton40 = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
+        jTextField13 = new javax.swing.JTextField();
+        jButton89 = new javax.swing.JButton();
+        jButton90 = new javax.swing.JButton();
+        jButton91 = new javax.swing.JButton();
+        jButton92 = new javax.swing.JButton();
+        jButton93 = new javax.swing.JButton();
+        jButton94 = new javax.swing.JButton();
+        jButton95 = new javax.swing.JButton();
+        jButton96 = new javax.swing.JButton();
+        jButton97 = new javax.swing.JButton();
+        jButton98 = new javax.swing.JButton();
+        jButton99 = new javax.swing.JButton();
+        jButton100 = new javax.swing.JButton();
+        jButton39 = new javax.swing.JButton();
+        jButton43 = new javax.swing.JButton();
+        jButton44 = new javax.swing.JButton();
+        jButton23 = new javax.swing.JButton();
+        jButton45 = new javax.swing.JButton();
+        InfoPanel = new javax.swing.JPanel();
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
@@ -631,13 +629,13 @@ public class MainForm extends javax.swing.JFrame {
         jTextField5.setText("0");
         jTextField5.setBorder(null);
         jPanel2.add(jTextField5);
-        jTextField5.setBounds(80, 560, 90, 40);
+        jTextField5.setBounds(130, 560, 90, 40);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 102, 102));
         jLabel3.setText("грн.");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(180, 570, 60, 30);
+        jLabel3.setBounds(230, 570, 60, 30);
 
         jButton18.setBackground(new java.awt.Color(67, 96, 156));
         jButton18.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -1161,9 +1159,9 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setBounds(0, 0, 643, 680);
         jTabbedPane1.getAccessibleContext().setAccessibleName("");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.setToolTipText("");
-        jPanel3.setLayout(null);
+        OrderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        OrderPanel.setToolTipText("");
+        OrderPanel.setLayout(null);
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -1205,7 +1203,7 @@ public class MainForm extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(3).setMaxWidth(50);
         }
 
-        jPanel3.add(jScrollPane1);
+        OrderPanel.add(jScrollPane1);
         jScrollPane1.setBounds(0, 30, 500, 400);
 
         jButton3.setBackground(new java.awt.Color(255, 255, 255));
@@ -1216,7 +1214,7 @@ public class MainForm extends javax.swing.JFrame {
                 PrintCheck(evt);
             }
         });
-        jPanel3.add(jButton3);
+        OrderPanel.add(jButton3);
         jButton3.setBounds(1, 460, 100, 70);
 
         jButton7.setBackground(new java.awt.Color(255, 102, 102));
@@ -1227,7 +1225,7 @@ public class MainForm extends javax.swing.JFrame {
                 removeCheckItem(evt);
             }
         });
-        jPanel3.add(jButton7);
+        OrderPanel.add(jButton7);
         jButton7.setBounds(399, 460, 100, 70);
 
         jButton9.setBackground(new java.awt.Color(255, 102, 102));
@@ -1238,7 +1236,7 @@ public class MainForm extends javax.swing.JFrame {
                 clearTable(evt);
             }
         });
-        jPanel3.add(jButton9);
+        OrderPanel.add(jButton9);
         jButton9.setBounds(260, 460, 100, 70);
 
         jButton10.setBackground(new java.awt.Color(255, 255, 255));
@@ -1249,29 +1247,29 @@ public class MainForm extends javax.swing.JFrame {
                 payOrder(evt);
             }
         });
-        jPanel3.add(jButton10);
+        OrderPanel.add(jButton10);
         jButton10.setBounds(130, 460, 100, 70);
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel2.setText("Сума замовлення:");
-        jPanel3.add(jLabel2);
+        OrderPanel.add(jLabel2);
         jLabel2.setBounds(10, 430, 189, 23);
 
         jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(255, 51, 51));
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jPanel3.add(jTextField1);
+        OrderPanel.add(jTextField1);
         jTextField1.setBounds(210, 430, 150, 29);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Стіл № ");
-        jPanel3.add(jLabel4);
+        OrderPanel.add(jLabel4);
         jLabel4.setBounds(400, -1, 100, 30);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("  Оператор №   ");
-        jPanel3.add(jLabel5);
+        OrderPanel.add(jLabel5);
         jLabel5.setBounds(0, 0, 360, 30);
 
         jPanel1.setBackground(new java.awt.Color(255, 153, 153));
@@ -1329,12 +1327,12 @@ public class MainForm extends javax.swing.JFrame {
         jPanel1.add(jButton6);
         jButton6.setBounds(0, 0, 100, 70);
 
-        jPanel3.add(jPanel1);
+        OrderPanel.add(jPanel1);
         jPanel1.setBounds(1, 602, 500, 90);
 
         jLabel11.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel11.setText("грн.");
-        jPanel3.add(jLabel11);
+        OrderPanel.add(jLabel11);
         jLabel11.setBounds(370, 430, 60, 23);
 
         jComboBox2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -1344,11 +1342,11 @@ public class MainForm extends javax.swing.JFrame {
                 changeTable(evt);
             }
         });
-        jPanel3.add(jComboBox2);
+        OrderPanel.add(jComboBox2);
         jComboBox2.setBounds(440, 430, 60, 30);
 
-        getContentPane().add(jPanel3);
-        jPanel3.setBounds(643, 0, 500, 680);
+        getContentPane().add(OrderPanel);
+        OrderPanel.setBounds(643, 0, 500, 680);
 
         jTable2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -1559,38 +1557,38 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout UsersPanelLayout = new javax.swing.GroupLayout(UsersPanel);
+        UsersPanel.setLayout(UsersPanelLayout);
+        UsersPanelLayout.setHorizontalGroup(
+            UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UsersPanelLayout.createSequentialGroup()
+                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(UsersPanelLayout.createSequentialGroup()
+                        .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(UsersPanelLayout.createSequentialGroup()
+                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(170, 170, 170)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton33, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(20, 20, 20)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -1599,9 +1597,9 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jTextField3))
                 .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        UsersPanelLayout.setVerticalGroup(
+            UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UsersPanelLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -1609,39 +1607,39 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(UsersPanelLayout.createSequentialGroup()
                         .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton8))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGroup(UsersPanelLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(UsersPanelLayout.createSequentialGroup()
                                 .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(50, 50, 50)
                                 .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addGroup(UsersPanelLayout.createSequentialGroup()
                                 .addComponent(jButton33, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addGroup(UsersPanelLayout.createSequentialGroup()
                                 .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jButton32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addGroup(UsersPanelLayout.createSequentialGroup()
                                 .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addGroup(UsersPanelLayout.createSequentialGroup()
                                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(2, 2, 2)
                                 .addComponent(jLabel7)
@@ -1650,10 +1648,10 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(3, 3, 3))
         );
 
-        getContentPane().add(jPanel6);
-        jPanel6.setBounds(20, 0, 630, 700);
+        getContentPane().add(UsersPanel);
+        UsersPanel.setBounds(20, 0, 630, 700);
 
-        jPanel7.setLayout(null);
+        RecipePanel.setLayout(null);
 
         jTable3.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -1697,7 +1695,7 @@ public class MainForm extends javax.swing.JFrame {
             jTable3.getColumnModel().getColumn(2).setMaxWidth(100);
         }
 
-        jPanel7.add(jScrollPane4);
+        RecipePanel.add(jScrollPane4);
         jScrollPane4.setBounds(0, 30, 940, 640);
 
         jLabel12.setBackground(new java.awt.Color(0, 153, 204));
@@ -1705,13 +1703,210 @@ public class MainForm extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel12.setText(" Інформація");
         jLabel12.setOpaque(true);
-        jPanel7.add(jLabel12);
-        jLabel12.setBounds(0, 0, 940, 30);
+        RecipePanel.add(jLabel12);
+        jLabel12.setBounds(0, 0, 1150, 30);
 
-        getContentPane().add(jPanel7);
-        jPanel7.setBounds(0, 0, 940, 700);
+        jLabel18.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel18.setText("Сортування:");
+        RecipePanel.add(jLabel18);
+        jLabel18.setBounds(941, 60, 120, 18);
 
-        jPanel8.setLayout(null);
+        jComboBox6.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
+        RecipePanel.add(jComboBox6);
+        jComboBox6.setBounds(941, 80, 120, 30);
+
+        jButton77.setBackground(new java.awt.Color(204, 204, 204));
+        jButton77.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
+        jButton77.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/left145.png"))); // NOI18N
+        jButton77.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton77.setEnabled(false);
+        jButton77.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteRecipesFieldDigit(evt);
+            }
+        });
+        RecipePanel.add(jButton77);
+        jButton77.setBounds(941, 200, 50, 50);
+
+        jButton78.setBackground(new java.awt.Color(204, 204, 204));
+        jButton78.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton78.setText("7");
+        jButton78.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton78.setEnabled(false);
+        jButton78.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton78);
+        jButton78.setBounds(990, 200, 50, 50);
+
+        jButton79.setBackground(new java.awt.Color(204, 204, 204));
+        jButton79.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton79.setText("8");
+        jButton79.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton79.setEnabled(false);
+        jButton79.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton79);
+        jButton79.setBounds(1040, 200, 50, 50);
+
+        jButton80.setBackground(new java.awt.Color(204, 204, 204));
+        jButton80.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton80.setText("9");
+        jButton80.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton80.setEnabled(false);
+        jButton80.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton80);
+        jButton80.setBounds(1090, 200, 50, 50);
+
+        jButton81.setBackground(new java.awt.Color(204, 204, 204));
+        jButton81.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton81.setText("6");
+        jButton81.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton81.setEnabled(false);
+        jButton81.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton81);
+        jButton81.setBounds(1090, 250, 50, 50);
+
+        jButton82.setBackground(new java.awt.Color(204, 204, 204));
+        jButton82.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton82.setText("5");
+        jButton82.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton82.setEnabled(false);
+        jButton82.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton82);
+        jButton82.setBounds(1040, 250, 50, 50);
+
+        jButton83.setBackground(new java.awt.Color(204, 204, 204));
+        jButton83.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton83.setText("4");
+        jButton83.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton83.setEnabled(false);
+        jButton83.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton83);
+        jButton83.setBounds(990, 250, 50, 50);
+
+        jButton84.setBackground(new java.awt.Color(204, 204, 204));
+        jButton84.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
+        jButton84.setText("C");
+        jButton84.setToolTipText("");
+        jButton84.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton84.setEnabled(false);
+        jButton84.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearDigitLine(evt);
+            }
+        });
+        RecipePanel.add(jButton84);
+        jButton84.setBounds(941, 250, 50, 50);
+
+        jButton85.setBackground(new java.awt.Color(204, 204, 204));
+        jButton85.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton85.setText("0");
+        jButton85.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton85.setEnabled(false);
+        jButton85.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton85);
+        jButton85.setBounds(941, 300, 50, 50);
+
+        jButton86.setBackground(new java.awt.Color(204, 204, 204));
+        jButton86.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton86.setText("1");
+        jButton86.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton86.setEnabled(false);
+        jButton86.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton86);
+        jButton86.setBounds(990, 300, 50, 50);
+
+        jButton87.setBackground(new java.awt.Color(204, 204, 204));
+        jButton87.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton87.setText("2");
+        jButton87.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton87.setEnabled(false);
+        jButton87.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton87);
+        jButton87.setBounds(1040, 300, 50, 50);
+
+        jButton88.setBackground(new java.awt.Color(204, 204, 204));
+        jButton88.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton88.setText("3");
+        jButton88.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton88.setEnabled(false);
+        jButton88.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PressNumber(evt);
+            }
+        });
+        RecipePanel.add(jButton88);
+        jButton88.setBounds(1090, 300, 50, 50);
+
+        jButton41.setBackground(new java.awt.Color(153, 153, 255));
+        jButton41.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton41.setText("<html> &nbsp;зберегти<br/> &nbsp;&nbsp; зміни</html> ");
+        jButton41.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton41.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton41.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveCalculation(evt);
+            }
+        });
+        RecipePanel.add(jButton41);
+        jButton41.setBounds(941, 400, 200, 70);
+
+        jButton22.setBackground(new java.awt.Color(255, 255, 255));
+        jButton22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitFromCalculation(evt);
+            }
+        });
+        RecipePanel.add(jButton22);
+        jButton22.setBounds(941, 598, 200, 73);
+
+        getContentPane().add(RecipePanel);
+        RecipePanel.setBounds(0, 0, 1140, 700);
+
+        StoragePanel.setLayout(null);
 
         jTable5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
@@ -1757,7 +1952,7 @@ public class MainForm extends javax.swing.JFrame {
             jTable5.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
-        jPanel8.add(jScrollPane6);
+        StoragePanel.add(jScrollPane6);
         jScrollPane6.setBounds(0, 30, 940, 640);
 
         jLabel14.setBackground(new java.awt.Color(0, 153, 204));
@@ -1765,525 +1960,309 @@ public class MainForm extends javax.swing.JFrame {
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel14.setText("Склад - наявність продуктів ");
         jLabel14.setOpaque(true);
-        jPanel8.add(jLabel14);
+        StoragePanel.add(jLabel14);
         jLabel14.setBounds(0, 0, 940, 30);
 
-        getContentPane().add(jPanel8);
-        jPanel8.setBounds(0, 0, 940, 700);
+        jLabel19.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel19.setText("Сортування");
+        StoragePanel.add(jLabel19);
+        jLabel19.setBounds(990, 0, 120, 18);
 
-        jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel10.setToolTipText("");
-        jPanel10.setLayout(null);
-
-        jButton53.setBackground(new java.awt.Color(204, 204, 204));
-        jButton53.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton53.setText("9");
-        jButton53.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton53.setEnabled(false);
-        jButton53.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox7.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox7.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
+        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
+                jComboBox7ActionPerformed(evt);
             }
         });
-        jPanel10.add(jButton53);
-        jButton53.setBounds(150, 230, 50, 50);
+        StoragePanel.add(jComboBox7);
+        jComboBox7.setBounds(941, 20, 200, 30);
 
-        jButton54.setBackground(new java.awt.Color(204, 204, 204));
-        jButton54.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
-        jButton54.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/left145.png"))); // NOI18N
-        jButton54.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton54.setEnabled(false);
-        jButton54.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteRecipesFieldDigit(evt);
-            }
-        });
-        jPanel10.add(jButton54);
-        jButton54.setBounds(0, 230, 50, 50);
-
-        jButton55.setBackground(new java.awt.Color(204, 204, 204));
-        jButton55.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton55.setText("8");
-        jButton55.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton55.setEnabled(false);
-        jButton55.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
-            }
-        });
-        jPanel10.add(jButton55);
-        jButton55.setBounds(100, 230, 50, 50);
-
-        jButton56.setBackground(new java.awt.Color(204, 204, 204));
-        jButton56.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton56.setText("4");
-        jButton56.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton56.setEnabled(false);
-        jButton56.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
-            }
-        });
-        jPanel10.add(jButton56);
-        jButton56.setBounds(50, 280, 50, 50);
-
-        jButton57.setBackground(new java.awt.Color(204, 204, 204));
-        jButton57.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton57.setText("5");
-        jButton57.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton57.setEnabled(false);
-        jButton57.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
-            }
-        });
-        jPanel10.add(jButton57);
-        jButton57.setBounds(100, 280, 50, 50);
-
-        jButton58.setBackground(new java.awt.Color(204, 204, 204));
-        jButton58.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton58.setText("6");
-        jButton58.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton58.setEnabled(false);
-        jButton58.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
-            }
-        });
-        jPanel10.add(jButton58);
-        jButton58.setBounds(150, 280, 50, 50);
-
-        jButton59.setBackground(new java.awt.Color(204, 204, 204));
-        jButton59.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton59.setText("3");
-        jButton59.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton59.setEnabled(false);
-        jButton59.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
-            }
-        });
-        jPanel10.add(jButton59);
-        jButton59.setBounds(150, 330, 50, 50);
-
-        jButton60.setBackground(new java.awt.Color(204, 204, 204));
-        jButton60.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton60.setText("0");
-        jButton60.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton60.setEnabled(false);
-        jButton60.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
-            }
-        });
-        jPanel10.add(jButton60);
-        jButton60.setBounds(0, 330, 50, 50);
-
-        jButton61.setBackground(new java.awt.Color(204, 204, 204));
-        jButton61.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton61.setText("2");
-        jButton61.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton61.setEnabled(false);
-        jButton61.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
-            }
-        });
-        jPanel10.add(jButton61);
-        jButton61.setBounds(100, 330, 50, 50);
-
-        jButton62.setBackground(new java.awt.Color(204, 204, 204));
-        jButton62.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton62.setText("7");
-        jButton62.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton62.setEnabled(false);
-        jButton62.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
-            }
-        });
-        jPanel10.add(jButton62);
-        jButton62.setBounds(50, 230, 50, 50);
-
-        jButton63.setBackground(new java.awt.Color(204, 204, 204));
-        jButton63.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton63.setText("1");
-        jButton63.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton63.setEnabled(false);
-        jButton63.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PressNumber(evt);
-            }
-        });
-        jPanel10.add(jButton63);
-        jButton63.setBounds(50, 330, 50, 50);
-
-        jButton20.setBackground(new java.awt.Color(255, 255, 255));
-        jButton20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
-        jButton20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitFromCalculation(evt);
-            }
-        });
-        jPanel10.add(jButton20);
-        jButton20.setBounds(1, 600, 200, 73);
-
-        jButton39.setBackground(new java.awt.Color(153, 153, 255));
-        jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton39.setText("<html> &nbsp;зберегти<br/> &nbsp;&nbsp; зміни</html> ");
-        jButton39.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton39.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton39.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveCalculation(evt);
-            }
-        });
-        jPanel10.add(jButton39);
-        jButton39.setBounds(1, 430, 200, 70);
-
-        jComboBox4.setBackground(new java.awt.Color(240, 240, 240));
-        jComboBox4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
-        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
-            }
-        });
-        jPanel10.add(jComboBox4);
-        jComboBox4.setBounds(2, 110, 120, 30);
-
-        jLabel16.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabel16.setText("Сортування:");
-        jPanel10.add(jLabel16);
-        jLabel16.setBounds(2, 90, 120, 18);
-
-        jButton64.setBackground(new java.awt.Color(204, 204, 204));
-        jButton64.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
-        jButton64.setText("C");
-        jButton64.setToolTipText("");
-        jButton64.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton64.setEnabled(false);
-        jButton64.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearDigitLine(evt);
-            }
-        });
-        jPanel10.add(jButton64);
-        jButton64.setBounds(0, 280, 50, 50);
-
-        getContentPane().add(jPanel10);
-        jPanel10.setBounds(940, 0, 202, 680);
-
-        jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel11.setToolTipText("");
-        jPanel11.setLayout(null);
-
-        jButton65.setBackground(new java.awt.Color(204, 204, 204));
-        jButton65.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton65.setText("9");
-        jButton65.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton65.setEnabled(false);
-        jButton65.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton65);
-        jButton65.setBounds(151, 80, 50, 50);
-
-        jButton66.setBackground(new java.awt.Color(204, 204, 204));
-        jButton66.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
-        jButton66.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/left145.png"))); // NOI18N
-        jButton66.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton66.setEnabled(false);
-        jButton66.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteStorageFiledDigit(evt);
-            }
-        });
-        jPanel11.add(jButton66);
-        jButton66.setBounds(1, 80, 50, 50);
-
-        jButton67.setBackground(new java.awt.Color(204, 204, 204));
-        jButton67.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton67.setText("8");
-        jButton67.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton67.setEnabled(false);
-        jButton67.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton67);
-        jButton67.setBounds(101, 80, 50, 50);
-
-        jButton68.setBackground(new java.awt.Color(204, 204, 204));
-        jButton68.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton68.setText("4");
-        jButton68.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton68.setEnabled(false);
-        jButton68.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton68);
-        jButton68.setBounds(51, 130, 50, 50);
-
-        jButton69.setBackground(new java.awt.Color(204, 204, 204));
-        jButton69.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton69.setText("5");
-        jButton69.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton69.setEnabled(false);
-        jButton69.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton69);
-        jButton69.setBounds(101, 130, 50, 50);
-
-        jButton70.setBackground(new java.awt.Color(204, 204, 204));
-        jButton70.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton70.setText("6");
-        jButton70.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton70.setEnabled(false);
-        jButton70.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton70);
-        jButton70.setBounds(151, 130, 50, 50);
-
-        jButton71.setBackground(new java.awt.Color(204, 204, 204));
-        jButton71.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton71.setText("3");
-        jButton71.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton71.setEnabled(false);
-        jButton71.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton71);
-        jButton71.setBounds(151, 180, 50, 50);
-
-        jButton72.setBackground(new java.awt.Color(204, 204, 204));
-        jButton72.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton72.setText("0");
-        jButton72.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton72.setEnabled(false);
-        jButton72.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton72);
-        jButton72.setBounds(1, 180, 50, 50);
-
-        jButton73.setBackground(new java.awt.Color(204, 204, 204));
-        jButton73.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton73.setText("2");
-        jButton73.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton73.setEnabled(false);
-        jButton73.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton73);
-        jButton73.setBounds(101, 180, 50, 50);
-
-        jButton74.setBackground(new java.awt.Color(204, 204, 204));
-        jButton74.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton74.setText("7");
-        jButton74.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton74.setEnabled(false);
-        jButton74.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton74);
-        jButton74.setBounds(51, 80, 50, 50);
-
-        jButton75.setBackground(new java.awt.Color(204, 204, 204));
-        jButton75.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jButton75.setText("1");
-        jButton75.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton75.setEnabled(false);
-        jButton75.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pressNumberInStorage(evt);
-            }
-        });
-        jPanel11.add(jButton75);
-        jButton75.setBounds(51, 180, 50, 50);
-
-        jButton21.setBackground(new java.awt.Color(255, 255, 255));
-        jButton21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
-        jButton21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitFromStorageTable(evt);
-            }
-        });
-        jPanel11.add(jButton21);
-        jButton21.setBounds(1, 598, 200, 73);
-
-        jComboBox5.setBackground(new java.awt.Color(240, 240, 240));
-        jComboBox5.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
-        jComboBox5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox5ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(jComboBox5);
-        jComboBox5.setBounds(1, 20, 200, 30);
-
-        jLabel17.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabel17.setText("Сортування");
-        jPanel11.add(jLabel17);
-        jLabel17.setBounds(50, 0, 120, 18);
-
-        jButton76.setBackground(new java.awt.Color(204, 204, 204));
-        jButton76.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
-        jButton76.setText("C");
-        jButton76.setToolTipText("");
-        jButton76.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton76.setEnabled(false);
-        jButton76.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearStorageTableFiled(evt);
-            }
-        });
-        jPanel11.add(jButton76);
-        jButton76.setBounds(1, 130, 50, 50);
-
-        jTextField6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jPanel11.add(jTextField6);
-        jTextField6.setBounds(1, 470, 200, 30);
-
-        jLabel15.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel15.setText(" Назва");
-        jPanel11.add(jLabel15);
-        jLabel15.setBounds(1, 450, 90, 16);
-
-        jButton36.setBackground(new java.awt.Color(204, 204, 204));
-        jButton36.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton36.setText("<html>&nbsp;&nbsp;додати<br/>  інгредієнт </html>\n");
-        jButton36.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton36.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addIngredient(evt);
-            }
-        });
-        jPanel11.add(jButton36);
-        jButton36.setBounds(1, 510, 100, 70);
-
-        jButton37.setBackground(new java.awt.Color(204, 204, 204));
-        jButton37.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton37.setText("<html>&nbsp;&nbsp;видалити<br/>&nbsp;  інгредієнт </html> ");
-        jButton37.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton37.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeIngredient(evt);
-            }
-        });
-        jPanel11.add(jButton37);
-        jButton37.setBounds(100, 510, 100, 70);
-
-        jButton38.setBackground(new java.awt.Color(204, 204, 204));
-        jButton38.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton38.setText("<html>поповнити<br/>&nbsp; (додати)</html> ");
-        jButton38.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton38.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton38.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addToStorage(evt);
-            }
-        });
-        jPanel11.add(jButton38);
-        jButton38.setBounds(1, 240, 100, 70);
-
-        jButton35.setBackground(new java.awt.Color(204, 204, 204));
-        jButton35.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton35.setText("<html> &nbsp;списати<br/> (відняти)</html> ");
-        jButton35.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton35.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton35.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeFromStorage(evt);
-            }
-        });
-        jPanel11.add(jButton35);
-        jButton35.setBounds(101, 240, 100, 70);
-
-        jTextField11.setEditable(false);
-        jTextField11.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jTextField11.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField12.setEditable(false);
+        jTextField12.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextField12.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField11FocusGained(evt);
+                jTextField12FocusGained(evt);
             }
         });
-        jPanel11.add(jTextField11);
-        jTextField11.setBounds(1, 330, 200, 30);
+        StoragePanel.add(jTextField12);
+        jTextField12.setBounds(941, 330, 200, 30);
 
-        jButton40.setBackground(new java.awt.Color(0, 153, 204));
-        jButton40.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jButton40.setText("<html>&nbsp;інкасація/аванс</html> ");
-        jButton40.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton40.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton40.addActionListener(new java.awt.event.ActionListener() {
+        jButton42.setBackground(new java.awt.Color(0, 153, 204));
+        jButton42.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jButton42.setText("<html>&nbsp;інкасація/аванс</html> ");
+        jButton42.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton42.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton42.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 payForStorageAddition(evt);
             }
         });
-        jPanel11.add(jButton40);
-        jButton40.setBounds(1, 370, 200, 70);
+        StoragePanel.add(jButton42);
+        jButton42.setBounds(941, 370, 200, 70);
 
-        getContentPane().add(jPanel11);
-        jPanel11.setBounds(940, 0, 202, 680);
+        jLabel16.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel16.setText(" Назва");
+        StoragePanel.add(jLabel16);
+        jLabel16.setBounds(941, 450, 90, 16);
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel9.setToolTipText("");
-        jPanel9.setLayout(null);
+        jTextField13.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        StoragePanel.add(jTextField13);
+        jTextField13.setBounds(941, 470, 200, 30);
+
+        jButton89.setBackground(new java.awt.Color(204, 204, 204));
+        jButton89.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
+        jButton89.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/left145.png"))); // NOI18N
+        jButton89.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton89.setEnabled(false);
+        jButton89.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteStorageFiledDigit(evt);
+            }
+        });
+        StoragePanel.add(jButton89);
+        jButton89.setBounds(941, 80, 50, 50);
+
+        jButton90.setBackground(new java.awt.Color(204, 204, 204));
+        jButton90.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
+        jButton90.setText("C");
+        jButton90.setToolTipText("");
+        jButton90.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton90.setEnabled(false);
+        jButton90.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearStorageTableFiled(evt);
+            }
+        });
+        StoragePanel.add(jButton90);
+        jButton90.setBounds(941, 130, 50, 50);
+
+        jButton91.setBackground(new java.awt.Color(204, 204, 204));
+        jButton91.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton91.setText("0");
+        jButton91.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton91.setEnabled(false);
+        jButton91.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton91);
+        jButton91.setBounds(941, 180, 50, 50);
+
+        jButton92.setBackground(new java.awt.Color(204, 204, 204));
+        jButton92.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton92.setText("1");
+        jButton92.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton92.setEnabled(false);
+        jButton92.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton92);
+        jButton92.setBounds(990, 180, 50, 50);
+
+        jButton93.setBackground(new java.awt.Color(204, 204, 204));
+        jButton93.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton93.setText("2");
+        jButton93.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton93.setEnabled(false);
+        jButton93.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton93);
+        jButton93.setBounds(1040, 180, 50, 50);
+
+        jButton94.setBackground(new java.awt.Color(204, 204, 204));
+        jButton94.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton94.setText("3");
+        jButton94.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton94.setEnabled(false);
+        jButton94.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton94);
+        jButton94.setBounds(1090, 180, 50, 50);
+
+        jButton95.setBackground(new java.awt.Color(204, 204, 204));
+        jButton95.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton95.setText("4");
+        jButton95.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton95.setEnabled(false);
+        jButton95.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton95);
+        jButton95.setBounds(990, 130, 50, 50);
+
+        jButton96.setBackground(new java.awt.Color(204, 204, 204));
+        jButton96.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton96.setText("5");
+        jButton96.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton96.setEnabled(false);
+        jButton96.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton96);
+        jButton96.setBounds(1040, 130, 50, 50);
+
+        jButton97.setBackground(new java.awt.Color(204, 204, 204));
+        jButton97.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton97.setText("6");
+        jButton97.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton97.setEnabled(false);
+        jButton97.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton97);
+        jButton97.setBounds(1090, 130, 50, 50);
+
+        jButton98.setBackground(new java.awt.Color(204, 204, 204));
+        jButton98.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton98.setText("9");
+        jButton98.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton98.setEnabled(false);
+        jButton98.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton98);
+        jButton98.setBounds(1090, 80, 50, 50);
+
+        jButton99.setBackground(new java.awt.Color(204, 204, 204));
+        jButton99.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton99.setText("8");
+        jButton99.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton99.setEnabled(false);
+        jButton99.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton99);
+        jButton99.setBounds(1040, 80, 50, 50);
+
+        jButton100.setBackground(new java.awt.Color(204, 204, 204));
+        jButton100.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton100.setText("7");
+        jButton100.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton100.setEnabled(false);
+        jButton100.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton100);
+        jButton100.setBounds(990, 80, 50, 50);
+
+        jButton39.setBackground(new java.awt.Color(204, 204, 204));
+        jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton39.setText("<html>поповнити<br/>&nbsp; (додати)</html> ");
+        jButton39.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton39.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton39.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addToStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton39);
+        jButton39.setBounds(941, 240, 100, 70);
+
+        jButton43.setBackground(new java.awt.Color(204, 204, 204));
+        jButton43.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton43.setText("<html>&nbsp;&nbsp;додати<br/>  інгредієнт </html>\n");
+        jButton43.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton43.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addIngredient(evt);
+            }
+        });
+        StoragePanel.add(jButton43);
+        jButton43.setBounds(941, 510, 100, 70);
+
+        jButton44.setBackground(new java.awt.Color(204, 204, 204));
+        jButton44.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton44.setText("<html>&nbsp;&nbsp;видалити<br/>&nbsp;  інгредієнт </html> ");
+        jButton44.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton44.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeIngredient(evt);
+            }
+        });
+        StoragePanel.add(jButton44);
+        jButton44.setBounds(1040, 510, 100, 70);
+
+        jButton23.setBackground(new java.awt.Color(255, 255, 255));
+        jButton23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/exit18.png"))); // NOI18N
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitFromStorageTable(evt);
+            }
+        });
+        StoragePanel.add(jButton23);
+        jButton23.setBounds(941, 598, 200, 73);
+
+        jButton45.setBackground(new java.awt.Color(204, 204, 204));
+        jButton45.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton45.setText("<html> &nbsp;списати<br/> (відняти)</html> ");
+        jButton45.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton45.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton45.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFromStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton45);
+        jButton45.setBounds(1040, 240, 100, 70);
+
+        getContentPane().add(StoragePanel);
+        StoragePanel.setBounds(0, 0, 1140, 700);
+
+        InfoPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        InfoPanel.setToolTipText("");
+        InfoPanel.setLayout(null);
 
         jTextField7.setEditable(false);
         jTextField7.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jTextField7.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextField7.setToolTipText("");
         jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
-        jPanel9.add(jTextField7);
+        InfoPanel.add(jTextField7);
         jTextField7.setBounds(10, 20, 480, 24);
 
         jTextField8.setEditable(false);
         jTextField8.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jTextField8.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel9.add(jTextField8);
+        InfoPanel.add(jTextField8);
         jTextField8.setBounds(10, 50, 480, 24);
 
         jTextField9.setEditable(false);
         jTextField9.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jTextField9.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextField9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel9.add(jTextField9);
+        InfoPanel.add(jTextField9);
         jTextField9.setBounds(10, 80, 480, 24);
 
         jTextField10.setEditable(false);
         jTextField10.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jTextField10.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextField10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel9.add(jTextField10);
+        InfoPanel.add(jTextField10);
         jTextField10.setBounds(10, 110, 480, 24);
 
         jButton16.setBackground(new java.awt.Color(255, 255, 255));
@@ -2294,11 +2273,11 @@ public class MainForm extends javax.swing.JFrame {
                 updateCheckInfo(evt);
             }
         });
-        jPanel9.add(jButton16);
+        InfoPanel.add(jButton16);
         jButton16.setBounds(390, 580, 97, 73);
 
-        getContentPane().add(jPanel9);
-        jPanel9.setBounds(643, 0, 500, 680);
+        getContentPane().add(InfoPanel);
+        InfoPanel.setBounds(643, 0, 500, 680);
 
         setSize(new java.awt.Dimension(1149, 697));
         setLocationRelativeTo(null);
@@ -2373,9 +2352,9 @@ public class MainForm extends javax.swing.JFrame {
 
     private void PersonalLogining(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalLogining
         jTabbedPane1.setVisible(false);
-        jPanel3.setVisible(false);
-        jPanel6.setVisible(true);
-        jPanel9.setVisible(true);
+        OrderPanel.setVisible(false);
+        UsersPanel.setVisible(true);
+        InfoPanel.setVisible(true);
         CheckUtils.readCheck();
         jTextField7.setText(Check.getTitle());
         jTextField8.setText(Check.getAdress());
@@ -2522,8 +2501,7 @@ public class MainForm extends javax.swing.JFrame {
                     = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
             jTextField1.setText("0");
-            jButton10.setBackground(Color.WHITE);
-            
+            jButton10.setBackground(Color.WHITE);            
             OrderUtils.fillTableById(activeTable);
             activeTable = 0;
             jLabel4.setText("Стіл № ");
@@ -2535,8 +2513,7 @@ public class MainForm extends javax.swing.JFrame {
             jButton3.setEnabled(false);
             jButton7.setEnabled(false);
             jButton9.setEnabled(false);
-            jButton10.setEnabled(false);
-            
+            jButton10.setEnabled(false);            
         }
     }//GEN-LAST:event_clearTable
 
@@ -2581,6 +2558,9 @@ public class MainForm extends javax.swing.JFrame {
             jButton11.setVisible(true);
             jButton12.setVisible(true);
             jButton19.setVisible(true);
+            jButton39.setVisible(true);
+            jButton43.setVisible(true);
+            jButton44.setVisible(true);
             jTextField2.setVisible(true);
             jTextField4.setVisible(true);
             jLabel8.setVisible(true);
@@ -2590,6 +2570,7 @@ public class MainForm extends javax.swing.JFrame {
             jTextField9.setEditable(true);
             jTextField10.setEditable(true);
             jButton16.setEnabled(true);
+            
 
         } else {
             jLabel5.setText("  " + userList.get(User.active).getName());
@@ -2913,9 +2894,8 @@ public class MainForm extends javax.swing.JFrame {
     }
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
         jTabbedPane1.setVisible(false);
-        jPanel3.setVisible(false);
-        jPanel7.setVisible(true);
-        jPanel10.setVisible(true);
+        OrderPanel.setVisible(false);
+        RecipePanel.setVisible(true);     
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         jLabel12.setText(title);
         //join between storageList(all count = 0) and exist recipe into storageList
@@ -2936,20 +2916,20 @@ public class MainForm extends javax.swing.JFrame {
                 storageList1.setCount(zero);
             }
         }
+       // setSort(jComboBox6, jTable3);
         showCalcTable(jTable3);
     }//GEN-LAST:event_refreshCalc
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
-        jPanel6.setVisible(false);
-        jPanel9.setVisible(false);
-        jPanel3.setVisible(true);
+        UsersPanel.setVisible(false);
+        InfoPanel.setVisible(false);
+        OrderPanel.setVisible(true);
         jTabbedPane1.setVisible(true);
     }//GEN-LAST:event_goToMainMenu
 
     private void exitFromCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromCalculation
-        jPanel7.setVisible(false);
-        jPanel10.setVisible(false);
-        jPanel3.setVisible(true);
+        RecipePanel.setVisible(false);      
+        OrderPanel.setVisible(true);
         jTabbedPane1.setVisible(true);
     }//GEN-LAST:event_exitFromCalculation
 
@@ -3035,7 +3015,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_changePizzaSize
 
     private void addIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addIngredient
-        String title = jTextField6.getText();
+        String title = jTextField13.getText();
         if (!title.equals("")) {
             StorageUtils.addIngredientToDB(new Ingredient(title));
             StorageUtils.readStorage();
@@ -3103,22 +3083,21 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_removeIngredient
     private void setComponentsVisible() {
         if (User.active == userList.size() - 1) {
-            jLabel15.setVisible(true);
-            jTextField6.setVisible(true);
-            jButton36.setVisible(true);
-            jButton37.setVisible(true);
-            jButton38.setVisible(true);
-
+            jLabel16.setVisible(true);
+            jTextField13.setVisible(true);
+            jButton33.setVisible(true);
+            jButton33.setVisible(true);
+            jButton34.setVisible(true);
         }
     }
     private void goToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToStorage
-        jPanel8.setVisible(true);
-        jPanel11.setVisible(true);
+        StoragePanel.setVisible(true);
+       
         jTabbedPane1.setVisible(false);
-        jPanel3.setVisible(false);
+        OrderPanel.setVisible(false);
         setComponentsVisible();
         StorageUtils.readStorage();
-        setSort(jComboBox5, jTable5);
+        setSort(jComboBox7, jTable5);
         //showCalcTable(jTable5);       
     }//GEN-LAST:event_goToStorage
 
@@ -3229,7 +3208,7 @@ public class MainForm extends javax.swing.JFrame {
                 table.setValueAt(newLine, index, columnIndex);
             }
         } else {
-            jTextField11.setText("" + jTextField11.getText() + button.getText());
+            jTextField12.setText("" + jTextField12.getText() + button.getText());
 
         }
     }
@@ -3238,23 +3217,19 @@ public class MainForm extends javax.swing.JFrame {
         setNumber(myButton, jTable3, 2);
     }//GEN-LAST:event_PressNumber
 
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
-        setSort(jComboBox4, jTable3);
-    }//GEN-LAST:event_jComboBox4ActionPerformed
-
     private void IngredientSelected(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IngredientSelected
-        jButton53.setEnabled(true);
-        jButton54.setEnabled(true);
-        jButton55.setEnabled(true);
-        jButton56.setEnabled(true);
-        jButton57.setEnabled(true);
-        jButton58.setEnabled(true);
-        jButton59.setEnabled(true);
-        jButton60.setEnabled(true);
-        jButton61.setEnabled(true);
-        jButton62.setEnabled(true);
-        jButton63.setEnabled(true);
-        jButton64.setEnabled(true);
+        jButton77.setEnabled(true);
+        jButton78.setEnabled(true);
+        jButton79.setEnabled(true);
+        jButton80.setEnabled(true);
+        jButton81.setEnabled(true);
+        jButton82.setEnabled(true);
+        jButton83.setEnabled(true);
+        jButton84.setEnabled(true);
+        jButton85.setEnabled(true);
+        jButton86.setEnabled(true);
+        jButton87.setEnabled(true);
+        jButton88.setEnabled(true);
     }//GEN-LAST:event_IngredientSelected
 
     private void deleteDigit(JTable table, int columnIndex) {
@@ -3267,8 +3242,8 @@ public class MainForm extends javax.swing.JFrame {
                 table.setValueAt(old, index, columnIndex);
             }
         } else {
-            String old = jTextField11.getText();
-            jTextField11.setText(old.substring(0, old.length() - 1));
+            String old = jTextField12.getText();
+            jTextField12.setText(old.substring(0, old.length() - 1));
         }
     }
     private void clearDigitLine(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDigitLine
@@ -3276,30 +3251,25 @@ public class MainForm extends javax.swing.JFrame {
         jTable3.setValueAt("", index, 2);
     }//GEN-LAST:event_clearDigitLine
 
-    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
-        setSort(jComboBox5, jTable5);
-    }//GEN-LAST:event_jComboBox5ActionPerformed
-
     private void exitFromStorageTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromStorageTable
-        jPanel8.setVisible(false);
-        jPanel11.setVisible(false);
-        jPanel3.setVisible(true);
+        StoragePanel.setVisible(false);       
+        OrderPanel.setVisible(true);
         jTabbedPane1.setVisible(true);
     }//GEN-LAST:event_exitFromStorageTable
 
     private void storageIngSelected(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_storageIngSelected
-        jButton65.setEnabled(true);
-        jButton66.setEnabled(true);
-        jButton67.setEnabled(true);
-        jButton68.setEnabled(true);
-        jButton69.setEnabled(true);
-        jButton70.setEnabled(true);
-        jButton71.setEnabled(true);
-        jButton72.setEnabled(true);
-        jButton73.setEnabled(true);
-        jButton74.setEnabled(true);
-        jButton75.setEnabled(true);
-        jButton76.setEnabled(true);
+        jButton89.setEnabled(true);
+        jButton90.setEnabled(true);
+        jButton91.setEnabled(true);
+        jButton92.setEnabled(true);
+        jButton93.setEnabled(true);
+        jButton94.setEnabled(true);
+        jButton95.setEnabled(true);
+        jButton96.setEnabled(true);
+        jButton97.setEnabled(true);
+        jButton98.setEnabled(true);
+        jButton99.setEnabled(true);
+        jButton100.setEnabled(true);
     }//GEN-LAST:event_storageIngSelected
 
     private void pressNumberInStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pressNumberInStorage
@@ -3312,8 +3282,7 @@ public class MainForm extends javax.swing.JFrame {
         if (index != -1) {
             jTable5.setValueAt("", index, 3);
         } else {
-            jTextField11.setText("");
-
+            jTextField12.setText("");
         }
 
     }//GEN-LAST:event_clearStorageTableFiled
@@ -3347,13 +3316,13 @@ public class MainForm extends javax.swing.JFrame {
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
         changeStorageCount(true);
         StorageUtils.readStorage();
-        setSort(jComboBox5, jTable5);
+        setSort(jComboBox7, jTable5);
     }//GEN-LAST:event_addToStorage
 
     private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
         changeStorageCount(false);
         StorageUtils.readStorage();
-        setSort(jComboBox5, jTable5);
+        setSort(jComboBox7, jTable5);
     }//GEN-LAST:event_removeFromStorage
 
     private void changeTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTable
@@ -3401,13 +3370,8 @@ public class MainForm extends javax.swing.JFrame {
         refreshListOfPrices();
     }//GEN-LAST:event_chengeScaleToGrams
 
-    private void jTextField11FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField11FocusGained
-        jTable5.clearSelection();
-        storageIngSelected(null);
-    }//GEN-LAST:event_jTextField11FocusGained
-
     private void payForStorageAddition(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payForStorageAddition
-        String line = jTextField11.getText();
+        String line = jTextField12.getText();
         if (!line.equals("")) {
             int diff = Integer.parseInt(line);
             JFrame frame = new JFrame();
@@ -3424,7 +3388,7 @@ public class MainForm extends javax.swing.JFrame {
                 System.out.println("Incasacia - diff =" + order.calcOrderSum());
                 OrderUtils.addOrder(order, userList.get(User.active));
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
-                jTextField11.setText("");
+                jTextField12.setText("");
             }
         }
     }//GEN-LAST:event_payForStorageAddition
@@ -3447,11 +3411,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton15.setVisible(false);
         jButton17.setVisible(false);
         jTextField3.setVisible(false);
-        jLabel15.setVisible(false);
-        jTextField6.setVisible(false);
-        jButton36.setVisible(false);
-        jButton37.setVisible(false);
-        jButton38.setVisible(false);
+        jLabel16.setVisible(false);
+        jTextField13.setVisible(false);
+        jButton39.setVisible(false);
+        jButton43.setVisible(false);
+        jButton44.setVisible(false);
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
@@ -3493,9 +3457,18 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_payOrder
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+        setSort(jComboBox6, jTable3);
+    }//GEN-LAST:event_jComboBox6ActionPerformed
+
+    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
+        setSort(jComboBox7, jTable5);
+    }//GEN-LAST:event_jComboBox7ActionPerformed
+
+    private void jTextField12FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField12FocusGained
+        jTable5.clearSelection();
+        storageIngSelected(null);
+    }//GEN-LAST:event_jTextField12FocusGained
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -3649,30 +3622,28 @@ public class MainForm extends javax.swing.JFrame {
         jTextField3.setVisible(false);
         jTextField2.setVisible(false);
         jTextField4.setVisible(false);
-        jLabel15.setVisible(false);
-        jTextField6.setVisible(false);
-        jButton36.setVisible(false);
-        jButton37.setVisible(false);
-        jButton38.setVisible(false);
-        jPanel6.setVisible(false);
+        jLabel16.setVisible(false);
+        jTextField13.setVisible(false);
+        jButton39.setVisible(false);
+        jButton43.setVisible(false);
+        jButton44.setVisible(false);
+        UsersPanel.setVisible(false);
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);
-        jPanel7.setVisible(false);
-        jPanel8.setVisible(false);
-        jPanel10.setVisible(false);
-        jPanel11.setVisible(false);
+        RecipePanel.setVisible(false);
+        StoragePanel.setVisible(false);      
+       
         jButton11.setBackground(GREEN);
         jButton1.setBackground(RED);
-        jButton36.setBackground(GREEN);
-        jButton37.setBackground(RED);
-        jButton38.setBackground(GREEN);
-        jButton35.setBackground(RED);
-        jPanel6.setVisible(false);
-        jPanel7.setVisible(false);
-        jPanel8.setVisible(false);
-        jPanel9.setVisible(false);
-        jPanel10.setVisible(false);
-        jPanel11.setVisible(false);
+        jButton39.setBackground(GREEN);
+        jButton45.setBackground(RED);
+        jButton43.setBackground(GREEN);
+        jButton44.setBackground(RED);
+        UsersPanel.setVisible(false);
+        RecipePanel.setVisible(false);
+        StoragePanel.setVisible(false);
+        InfoPanel.setVisible(false);     
+       
     }
 
     public void initIcons() {
@@ -3726,6 +3697,11 @@ public class MainForm extends javax.swing.JFrame {
     private static final Color GREEN = new Color(0, 153, 102);
 //    private static final Color WHITE = new Color(255, 255, 255);
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel InfoPanel;
+    private javax.swing.JPanel OrderPanel;
+    private javax.swing.JPanel RecipePanel;
+    private javax.swing.JPanel StoragePanel;
+    private javax.swing.JPanel UsersPanel;
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btn2;
@@ -3750,6 +3726,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton cat9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton100;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
@@ -3760,8 +3737,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
@@ -3774,54 +3751,53 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton32;
     private javax.swing.JButton jButton33;
     private javax.swing.JButton jButton34;
-    private javax.swing.JButton jButton35;
-    private javax.swing.JButton jButton36;
-    private javax.swing.JButton jButton37;
-    private javax.swing.JButton jButton38;
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton40;
+    private javax.swing.JButton jButton41;
+    private javax.swing.JButton jButton42;
+    private javax.swing.JButton jButton43;
+    private javax.swing.JButton jButton44;
+    private javax.swing.JButton jButton45;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton53;
-    private javax.swing.JButton jButton54;
-    private javax.swing.JButton jButton55;
-    private javax.swing.JButton jButton56;
-    private javax.swing.JButton jButton57;
-    private javax.swing.JButton jButton58;
-    private javax.swing.JButton jButton59;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton60;
-    private javax.swing.JButton jButton61;
-    private javax.swing.JButton jButton62;
-    private javax.swing.JButton jButton63;
-    private javax.swing.JButton jButton64;
-    private javax.swing.JButton jButton65;
-    private javax.swing.JButton jButton66;
-    private javax.swing.JButton jButton67;
-    private javax.swing.JButton jButton68;
-    private javax.swing.JButton jButton69;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton70;
-    private javax.swing.JButton jButton71;
-    private javax.swing.JButton jButton72;
-    private javax.swing.JButton jButton73;
-    private javax.swing.JButton jButton74;
-    private javax.swing.JButton jButton75;
-    private javax.swing.JButton jButton76;
+    private javax.swing.JButton jButton77;
+    private javax.swing.JButton jButton78;
+    private javax.swing.JButton jButton79;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton80;
+    private javax.swing.JButton jButton81;
+    private javax.swing.JButton jButton82;
+    private javax.swing.JButton jButton83;
+    private javax.swing.JButton jButton84;
+    private javax.swing.JButton jButton85;
+    private javax.swing.JButton jButton86;
+    private javax.swing.JButton jButton87;
+    private javax.swing.JButton jButton88;
+    private javax.swing.JButton jButton89;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButton90;
+    private javax.swing.JButton jButton91;
+    private javax.swing.JButton jButton92;
+    private javax.swing.JButton jButton93;
+    private javax.swing.JButton jButton94;
+    private javax.swing.JButton jButton95;
+    private javax.swing.JButton jButton96;
+    private javax.swing.JButton jButton97;
+    private javax.swing.JButton jButton98;
+    private javax.swing.JButton jButton99;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JComboBox jComboBox5;
+    private javax.swing.JComboBox jComboBox6;
+    private javax.swing.JComboBox jComboBox7;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -3832,16 +3808,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -3855,12 +3824,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTable jTable5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField12;
+    private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;

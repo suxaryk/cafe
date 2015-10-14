@@ -1,4 +1,15 @@
-build/*
-icons/*
+*.com
+*.class
+*.zip
+*.7zip
+*.rar
+*.log
+*.sql
+*.icon
+*.png
+*.txt
 
-/src/cafe/icons/*
+build/*
+dist/*
+icons/*
+src/cafe/icons/*

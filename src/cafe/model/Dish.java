@@ -11,6 +11,7 @@ public class Dish {
     private String title;
     private int price;
     private boolean cook;
+    private boolean drink;
     private ArrayList<Ingredient> recipe = new ArrayList<>();     
     
     public Dish(){}      
@@ -23,8 +24,11 @@ public class Dish {
     public Dish(String title, int price) {        
         this.title = title;
         this.price = price;        
-    }   
-
+    }     
+    public Dish(String title) {         
+        this.title = title;        
+    }     
+      
     public int getDbID() {
         return dbId;
     }
@@ -66,7 +70,17 @@ public class Dish {
 
     public void setCook(boolean cook) {
         this.cook = cook;
-    }   
+    }  
+
+    public boolean isDrink() {
+        return drink;
+    }
+
+    public void setDrink(boolean drink) {
+        this.drink = drink;
+    }
+    
+    
     @Override
     public String toString() {
         return title;

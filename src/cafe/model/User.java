@@ -14,8 +14,11 @@ public class User {
     private String name;
     private int pass;    
     public static int active;
+
+    public User() {
+    }
     
-    User(){}
+    
 
 
     public User(String name, int pass) {

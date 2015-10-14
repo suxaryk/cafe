@@ -48,12 +48,13 @@ public class StorageUtils {
     }
 
     public static void addIngredientToDB(Ingredient ingredient) {
-        final String SQL = "INSERT INTO storage(title) VALUES(?)";
+        final String SQL = "INSERT INTO storage(title, count) VALUES(?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setString(1, ingredient.getTitle());       
+            pstatement.setInt(2, 0);       
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("A new Ingredient was added successfully!");

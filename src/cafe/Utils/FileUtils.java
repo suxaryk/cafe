@@ -330,19 +330,20 @@ public class FileUtils {
             menu.get(7).getDishes().get(i).getRecipe().addAll(rollAdds);
         }
 //        //SmallPizza
-//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(55, 0.159));
+        //menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(52, 0.159));
 //        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(5, 0.002));
 //        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(4, 0.002));
-//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(71, 0.002));
-//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(53, 0.014));
-//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(98, 0.085));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(68, 0.002));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(51, 0.014));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(96, 0.085));
 //        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(11, 0.005));
-//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(43, 0.100));
+//        menu.get(5).getDishes().get(0).getRecipe().add(new Ingredient(41, 0.100));
 //
-//        menu.get(5).getDishes().get(1).getRecipe().add(new Ingredient(72, 0.030));
+//        menu.get(5).getDishes().get(1).getRecipe().add(new Ingredient(45, 0.030));
 //        menu.get(5).getDishes().get(2).getRecipe().add(new Ingredient(72, 0.030));
 //        menu.get(5).getDishes().get(3).getRecipe().add(new Ingredient(73, 0.030));
 //        menu.get(5).getDishes().get(4).getRecipe().add(new Ingredient(36, 0.030));
+//        
 //        menu.get(5).getDishes().get(5).getRecipe().add(new Ingredient(69, 0.030));
 //        menu.get(5).getDishes().get(6).getRecipe().add(new Ingredient(47, 0.030));
 //        menu.get(5).getDishes().get(7).getRecipe().add(new Ingredient(48, 0.030));
@@ -355,14 +356,14 @@ public class FileUtils {
 //        menu.get(5).getDishes().get(14).getRecipe().add(new Ingredient(76, 0.030));
 //        menu.get(5).getDishes().get(15).getRecipe().add(new Ingredient(68, 0.200));
 //        
-//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(56, 0.177));  //Big pizza
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(52, 0.177));  //Big pizza
 //        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(5, 0.003));
 //        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(4, 0.003));
-//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(71, 0.003));
-//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(53, 0.016));
-//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(98, 0.135));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(68, 0.003));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(51, 0.016));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(96, 0.135));
 //        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(11, 0.005));
-//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(43, 0.150));
+//        menu.get(6).getDishes().get(0).getRecipe().add(new Ingredient(41, 0.150));
 //
 //        menu.get(6).getDishes().get(1).getRecipe().add(new Ingredient(72, 0.050));
 //        menu.get(6).getDishes().get(2).getRecipe().add(new Ingredient(72, 0.050));
@@ -378,6 +379,8 @@ public class FileUtils {
 //        menu.get(6).getDishes().get(12).getRecipe().add(new Ingredient(74, 0.015));
 //        menu.get(6).getDishes().get(13).getRecipe().add(new Ingredient(75, 0.150));
 //        menu.get(6).getDishes().get(14).getRecipe().add(new Ingredient(76, 0.050));
+        
+        
 //   
 
 

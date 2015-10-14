@@ -34,11 +34,20 @@ public class OrderItem {
     }
 
     public int getCount() {
+        System.out.println("itemCount" + count);
         return count;
     }
 
     public void setCount(int count) {
         this.count = count;
+    }
+    public void addCount(int count){
+        this.count += count;
+        this.itemSum = this.count * dish.getPrice();
+    }
+    
+    public void reverseCount(){
+        this.count = this.count * (-1);
     }
 
     public int getSum() {
@@ -55,5 +64,15 @@ public class OrderItem {
         }
         return itemRecipe;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        try{
+        return this.getDish().getTitle().equals(((OrderItem)obj).getDish().getTitle()); 
+        }catch(Exception e){
+            return false;
+        }
+    }
+    
     
 }

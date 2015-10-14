@@ -9,7 +9,9 @@ import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
 import static cafe.Utils.db.Dish.DishUtils.URL;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import static cafe.Utils.db.Dish.DishUtils.getCurrentTimeStamp;
+import cafe.Utils.json.JSONUtils;
 import cafe.model.Order;
+import cafe.model.OrderItem;
 import cafe.model.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,6 +19,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -47,15 +51,17 @@ public class OrderUtils {
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(sql);
-            
+            for (OrderItem item : order.getItems()) {
+                System.out.println("----------title " + item.getDish().getTitle() + " count "+ item.getCount());
+            }
             pstatement.setInt(1, dbId++);
-            pstatement.setInt(2, order.getOrderSum());
+            pstatement.setInt(2, order.calcOrderSum());
             pstatement.setInt(3, order.getCookCount());
             pstatement.setInt(4, order.getDrinkCount());
             pstatement.setTimestamp(5, getCurrentTimeStamp());
             pstatement.setString(6, user.getName());
-            pstatement.setString(7, order.getJSONItems());
-            pstatement.setString(8, order.getJSONRemovedItems());
+            pstatement.setString(7, order.getJSONItems(false));
+            pstatement.setString(8, order.getJSONRemovedItems(false));
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -67,7 +73,68 @@ public class OrderUtils {
         }
 
     }
+   
     public static void updateTable(Order order, User user, int activeTable) {
+        final String SQL = "UPDATE tables set sum=?, printed=?, cookCount=?, drinkCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";       
+
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected!"
+                    : "Error DB connecting");
+
+            PreparedStatement pstatement = connection.prepareStatement(SQL);            
+         
+            pstatement.setInt(1, order.calcOrderSum());
+            pstatement.setBoolean(2, order.isPrinted());            
+            pstatement.setInt(3, order.getCookCount());
+            pstatement.setInt(4, order.getDrinkCount());
+            pstatement.setTimestamp(5, getCurrentTimeStamp());
+            pstatement.setString(6, user.getName());
+            pstatement.setString(7, order.getJSONItems(true));
+            pstatement.setString(8, order.getJSONRemovedItems(true));
+            pstatement.setInt(9, activeTable);
+
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new check was added successfully!");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - updateTable");
+        }
+
+    }
+    public static void fillAllTables() {
+        final String SQL = "UPDATE tables set sum=?,  cookCount=?, drinkCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id > 0";       
+
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected!"
+                    : "Error DB connecting");
+
+            PreparedStatement pstatement = connection.prepareStatement(SQL);            
+         
+            pstatement.setInt(1, 0);
+            pstatement.setInt(2, 0);
+            pstatement.setInt(3, 0);
+            pstatement.setTimestamp(4, getCurrentTimeStamp());
+            pstatement.setString(5, "");
+            pstatement.setString(6, "");
+            pstatement.setString(7, "");
+          
+
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new check was added successfully!");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - fillTable");
+        }
+    }
+    public static void fillTableById(int activeTable) {
         final String SQL = "UPDATE tables set sum=?,  cookCount=?, drinkCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";       
 
         try (Connection connection = DriverManager
@@ -78,14 +145,15 @@ public class OrderUtils {
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);            
          
-            pstatement.setInt(1, order.getOrderSum());
-            pstatement.setInt(2, order.getCookCount());
-            pstatement.setInt(3, order.getDrinkCount());
+            pstatement.setInt(1, 0);
+            pstatement.setInt(2, 0);
+            pstatement.setInt(3, 0);
             pstatement.setTimestamp(4, getCurrentTimeStamp());
-            pstatement.setString(5, user.getName());
-            pstatement.setString(6, order.getJSONItems());
-            pstatement.setString(7, order.getJSONRemovedItems());
+            pstatement.setString(5, "");
+            pstatement.setString(6, "");
+            pstatement.setString(7, "");
             pstatement.setInt(8, activeTable);
+          
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -93,7 +161,36 @@ public class OrderUtils {
             }
 
         } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - fillTableById");
+        }
+    }
+    public static Map<Integer, Order> loadTables() {
+        final String SQL = "SELECT * from tables where sum > 0";       
+
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected!"
+                    : "Error DB connecting");
+
+            Statement statement = connection.createStatement();
+            Map<Integer, Order> loadOrders = new HashMap();
+            try (ResultSet rs = statement.executeQuery(SQL)) {               
+                while (rs.next()) {
+                    Order tmpOrder = new Order();
+                    tmpOrder.setOrderSum(rs.getInt("sum"));
+                    tmpOrder.setPrinted(rs.getBoolean("printed"));
+                    tmpOrder.setCookCount(rs.getInt("cookCount"));
+                    tmpOrder.setDrinkCount(rs.getInt("drinkCount"));
+                    tmpOrder.setItems(JSONUtils.convertJSONToOrderTables(rs.getString("order_items")));
+                    tmpOrder.setRemoveditems(JSONUtils.convertJSONToOrderTables(rs.getString("removed_items")));
+                    loadOrders.put(rs.getInt("Id"), tmpOrder);
+                }                
+            } 
+            return loadOrders;
+        } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateTable");
+            return null;
         }
 
     }

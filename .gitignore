@@ -13,3 +13,4 @@ build/*
 dist/*
 icons/*
 src/cafe/icons/*
+nbproject/*

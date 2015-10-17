@@ -3331,7 +3331,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_payForStorageAddition
 
     private void swapUser(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapUser
-        OrderUtils.setOrderId(0);
+        OrderUtils.setOrderId(1);
         mainForm.setVisible(false);
         mainForm.setEnabled(false);
         loginForm.getDate();

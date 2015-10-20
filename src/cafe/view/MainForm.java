@@ -244,7 +244,6 @@ public class MainForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
         setEnabled(false);
-        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -1156,7 +1155,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.addTab("                 ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), DishesPanel); // NOI18N
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(0, 0, 643, 680);
+        jTabbedPane1.setBounds(70, 0, 643, 680);
         jTabbedPane1.getAccessibleContext().setAccessibleName("");
 
         OrderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1346,7 +1345,7 @@ public class MainForm extends javax.swing.JFrame {
         jComboBox2.setBounds(440, 430, 60, 30);
 
         getContentPane().add(OrderPanel);
-        OrderPanel.setBounds(643, 0, 500, 680);
+        OrderPanel.setBounds(710, 0, 500, 680);
 
         UsersPanel.setLayout(null);
 
@@ -1641,7 +1640,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton20.setBounds(990, 590, 97, 73);
 
         getContentPane().add(UsersPanel);
-        UsersPanel.setBounds(20, 0, 1130, 700);
+        UsersPanel.setBounds(90, 0, 1130, 700);
 
         RecipePanel.setLayout(null);
 
@@ -1896,7 +1895,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton22.setBounds(939, 598, 200, 73);
 
         getContentPane().add(RecipePanel);
-        RecipePanel.setBounds(0, 0, 1140, 700);
+        RecipePanel.setBounds(70, 0, 1140, 700);
 
         StoragePanel.setLayout(null);
 
@@ -2231,9 +2230,9 @@ public class MainForm extends javax.swing.JFrame {
         jComboBox8.setBounds(941, 50, 198, 30);
 
         getContentPane().add(StoragePanel);
-        StoragePanel.setBounds(0, 0, 1140, 700);
+        StoragePanel.setBounds(70, 0, 1140, 700);
 
-        setSize(new java.awt.Dimension(1149, 704));
+        setSize(new java.awt.Dimension(1292, 1051));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -3633,6 +3632,7 @@ public class MainForm extends javax.swing.JFrame {
     public static void main(String args[]) {
         mainForm = new MainForm();
         mainForm.setIconImage(null);
+        mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     private static boolean ordered;
     private static int dayCash;

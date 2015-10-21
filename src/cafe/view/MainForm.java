@@ -2559,7 +2559,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        if (User.active == userList.size() - 1) {
+        if (isAdmin()) {
             jLabel5.setText("  " + userList.get(User.active).getName());
             jLabel5.setBackground(RED);
             model.setColumnCount(1);
@@ -2767,7 +2767,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearDigit
 
     private void NumberPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberPressed
-        if (User.active == userList.size() - 1) {
+        if (isAdmin()) {
             jPasswordField1.setEchoChar((char) 0);
         }
         JButton myButton = (JButton) evt.getSource();
@@ -2918,6 +2918,22 @@ public class MainForm extends javax.swing.JFrame {
                     0.0
                 });
             }
+        }
+    }
+    
+    public void showUpdateStorageTable(){
+        DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
+        model.setRowCount(0);
+        if (jTable6.getColumnCount() == 5) {
+            for (int i = 0; i < storageList.size(); i++) {
+                model.addRow(new Object[]{
+                    storageList.get(i).getId(),
+                    storageList.get(i).getTitle(),
+                    storageList.get(i).getCount(),
+                    0.0,
+                    df.format(diffStorage.get(i).getCount())
+                });                
+            }            
         }
     }
     
@@ -3091,7 +3107,7 @@ public class MainForm extends javax.swing.JFrame {
     private void removeIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIngredient
         int index;
         String dishTitles;
-        if (User.active == userList.size() - 1) {
+        if (isAdmin()) {
             index = jTable6.getSelectedRow();
             dishTitles = getRemovedDisheTitles(jTable6);
         }else {
@@ -3119,11 +3135,10 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeIngredient
     private void setComponentsVisible() {
-        if (User.active == userList.size() - 1) {
+        if (isAdmin()) {
             jTable5.setVisible(false);
             jScrollPane6.setVisible(false);
-            jScrollPane7.setVisible(true);
-            //scroolpane todo!!!
+            jScrollPane7.setVisible(true);            
             jTable6.setVisible(true);                      
             jLabel16.setVisible(true);
             jTextField13.setVisible(true);
@@ -3138,7 +3153,7 @@ public class MainForm extends javax.swing.JFrame {
         OrderPanel.setVisible(false);
         setComponentsVisible();
         StorageUtils.readStorage();
-        if (User.active == userList.size() - 1) {
+        if (isAdmin()) {
             setSort(jComboBox7, jTable6);
             showCalcTable(jTable6); 
         }else{
@@ -3323,13 +3338,27 @@ public class MainForm extends javax.swing.JFrame {
 
     private void pressNumberInStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pressNumberInStorage
         JButton myButton = (JButton) evt.getSource();
-        setNumber(myButton, jTable5, 3);
+        if (isAdmin()) {
+            setNumber(myButton, jTable6, 3);
+        }else {
+            setNumber(myButton, jTable5, 3);
+        }
+       
     }//GEN-LAST:event_pressNumberInStorage
 
     private void clearStorageTableFiled(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearStorageTableFiled
-        int index = jTable5.getSelectedRow();
+        int index;
+        if (isAdmin()) {
+            index = jTable6.getSelectedRow();
+        }else {
+            index = jTable5.getSelectedRow();
+        }        
         if (index != -1) {
-            jTable5.setValueAt("", index, 3);
+            if (isAdmin()) {
+                jTable6.setValueAt("", index, 3);
+            }else{
+                jTable5.setValueAt("", index, 3);
+            }            
         } else {
             jTextField12.setText("");
         }
@@ -3337,7 +3366,12 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearStorageTableFiled
 
     private void deleteStorageFiledDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStorageFiledDigit
-        deleteDigit(jTable5, 3);
+        if (isAdmin()) {
+            deleteDigit(jTable6, 3);
+        } else {
+            deleteDigit(jTable5, 3);
+        }
+        
     }//GEN-LAST:event_deleteStorageFiledDigit
 
     private void deleteRecipesFieldDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRecipesFieldDigit
@@ -3372,7 +3406,7 @@ public class MainForm extends javax.swing.JFrame {
 //    }
     private void addIngCountToStorage() {        
         ArrayList<Ingredient> changeList = new ArrayList<>();        
-        changeList.addAll(getListFromTable(jTable5, 3, true));        
+        changeList.addAll(getListFromTable(jTable6, 3, true));        
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();
@@ -3383,9 +3417,9 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
     }
-    private void removeIngCountFromStorage() {        
+    private void removeIngCountFromStorage(JTable table) {        
         ArrayList<Ingredient> changeList = new ArrayList<>();        
-        changeList.addAll(getListFromTable(jTable5, 3, true));        
+        changeList.addAll(getListFromTable(table, 3, true));        
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();
@@ -3399,7 +3433,7 @@ public class MainForm extends javax.swing.JFrame {
     private void updateItemsFromStorage() {       
         diffStorage.clear();
         ArrayList<Ingredient> changeList = new ArrayList<>();        
-        changeList.addAll(getListFromTable(jTable5, 3, true));   
+        changeList.addAll(getListFromTable(jTable6, 3, true));   
         diffStorage.addAll(changeList);
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
@@ -3415,15 +3449,23 @@ public class MainForm extends javax.swing.JFrame {
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
         addIngCountToStorage();
         StorageUtils.readStorage();
-        setSort(jComboBox7, jTable5);
-        showCalcTable(jTable5);
+        setSort(jComboBox7, jTable6);
+        showCalcTable(jTable6);
     }//GEN-LAST:event_addToStorage
 
     private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
-        removeIngCountFromStorage();
-        StorageUtils.readStorage();
-        setSort(jComboBox7, jTable5);
-        showCalcTable(jTable5);
+        if (isAdmin()) {
+            removeIngCountFromStorage(jTable6);
+            StorageUtils.readStorage();
+            setSort(jComboBox7, jTable6);
+            showCalcTable(jTable6);
+        }else{
+            removeIngCountFromStorage(jTable5);
+            StorageUtils.readStorage();
+            setSort(jComboBox7, jTable5);
+            showCalcTable(jTable5);
+        }        
+        
     }//GEN-LAST:event_removeFromStorage
 
     private void changeTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTable
@@ -3482,8 +3524,7 @@ public class MainForm extends javax.swing.JFrame {
             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
                     "Інкасація  " + diff + " грн, підтвердити?", "Інкасація/Аванс", 0,
                     JOptionPane.YES_NO_OPTION, null, options, null);
-            if (reply == JOptionPane.YES_OPTION) {
-                //fix
+            if (reply == JOptionPane.YES_OPTION) {             
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
                 System.out.println("Incasacia - diff =" + order.calcOrderSum());
@@ -3583,14 +3624,18 @@ public class MainForm extends javax.swing.JFrame {
     private void updateIngCountInStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateIngCountInStorage
         updateItemsFromStorage();
         StorageUtils.readStorage();
-        setSort(jComboBox7, jTable5);
-       // showUpdateTable(null);
+        setSort(jComboBox7, jTable6);
+        showUpdateStorageTable();
         
     }//GEN-LAST:event_updateIngCountInStorage
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
         jCheckBox1.setBackground(RED);
+    }
+    
+    public static boolean isAdmin(){
+        return User.active == userList.size() - 1;
     }
 
     private void initLoginForm() {
@@ -3636,7 +3681,7 @@ public class MainForm extends javax.swing.JFrame {
     private void initPassTable() {
         EmployeeUtils.readAllEmployees();
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        if (User.active == userList.size() - 1) {
+        if (isAdmin()) {
             for (User userList1 : userList) {
                 model.addRow(new Object[]{userList1.getName(), userList1.getPass()});
             }
@@ -3661,6 +3706,7 @@ public class MainForm extends javax.swing.JFrame {
             setColumnRender(jTable3.getColumnModel().getColumn(2));
             setColumnRender(jTable5.getColumnModel().getColumn(2));
             setColumnRender(jTable5.getColumnModel().getColumn(3));
+            setColumnRender(jTable6.getColumnModel().getColumn(3));
             setColumnRender(jTable6.getColumnModel().getColumn(4));
 
         } catch (ParseException ex) {

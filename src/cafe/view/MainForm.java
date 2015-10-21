@@ -3121,6 +3121,9 @@ public class MainForm extends javax.swing.JFrame {
     private void setComponentsVisible() {
         if (User.active == userList.size() - 1) {
             jTable5.setVisible(false);
+            jScrollPane6.setVisible(false);
+            jScrollPane7.setVisible(true);
+            //scroolpane todo!!!
             jTable6.setVisible(true);                      
             jLabel16.setVisible(true);
             jTextField13.setVisible(true);

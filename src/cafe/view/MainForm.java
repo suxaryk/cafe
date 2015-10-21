@@ -3405,7 +3405,7 @@ public class MainForm extends javax.swing.JFrame {
 //        }
 //    }
     private void addIngCountToStorage() {        
-        ArrayList<Ingredient> changeList = new ArrayList<>();        
+        changeList.clear();
         changeList.addAll(getListFromTable(jTable6, 3, true));        
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
@@ -3418,7 +3418,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
     private void removeIngCountFromStorage(JTable table) {        
-        ArrayList<Ingredient> changeList = new ArrayList<>();        
+        changeList.clear();
         changeList.addAll(getListFromTable(table, 3, true));        
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
@@ -3432,7 +3432,7 @@ public class MainForm extends javax.swing.JFrame {
     }
     private void updateItemsFromStorage() {       
         diffStorage.clear();
-        ArrayList<Ingredient> changeList = new ArrayList<>();        
+        changeList.clear();
         changeList.addAll(getListFromTable(jTable6, 3, true));   
         diffStorage.addAll(changeList);
         for (int i = 0; i < storageList.size(); i++) {
@@ -3858,6 +3858,7 @@ public class MainForm extends javax.swing.JFrame {
     public static DecimalFormat df = new DecimalFormat("#.###");
     public static ArrayList<Ingredient> storageList = new ArrayList<>();  
     ArrayList<Ingredient> diffStorage = new ArrayList<>();
+    ArrayList<Ingredient> changeList = new ArrayList<>();
     public static List<Category> menu = new ArrayList<>();
     private static final ArrayList<Icon> icons = new ArrayList<>();
     public static MainForm mainForm;

@@ -239,7 +239,6 @@ public class MainForm extends javax.swing.JFrame {
         jButton44 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
         jButton45 = new javax.swing.JButton();
-        jComboBox8 = new javax.swing.JComboBox();
         jButton46 = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
@@ -1984,6 +1983,11 @@ public class MainForm extends javax.swing.JFrame {
                 jTextField12FocusGained(evt);
             }
         });
+        jTextField12.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PriceTyped(evt);
+            }
+        });
         StoragePanel.add(jTextField12);
         jTextField12.setBounds(1080, 580, 198, 30);
 
@@ -2226,12 +2230,6 @@ public class MainForm extends javax.swing.JFrame {
         });
         StoragePanel.add(jButton45);
         jButton45.setBounds(1080, 430, 200, 70);
-
-        jComboBox8.setBackground(new java.awt.Color(240, 240, 240));
-        jComboBox8.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "різниця", "нова вага" }));
-        StoragePanel.add(jComboBox8);
-        jComboBox8.setBounds(1080, 150, 198, 30);
 
         jButton46.setBackground(new java.awt.Color(0, 153, 204));
         jButton46.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2589,6 +2587,8 @@ public class MainForm extends javax.swing.JFrame {
             jTextField15.setEditable(true);
             jTextField16.setEditable(true);
             jButton20.setEnabled(true);
+            jScrollPane7.setVisible(true);
+            jTable6.setVisible(true);
 
         } else {
             jLabel5.setText("  " + userList.get(User.active).getName());
@@ -2596,6 +2596,8 @@ public class MainForm extends javax.swing.JFrame {
             model.setColumnCount(1);
             model.addColumn("Початок");
             model.addColumn("Кінець");
+            jScrollPane6.setVisible(true);
+            jTable5.setVisible(true);
         }
 
         initMainForm();
@@ -3253,11 +3255,8 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addEmployee
 
-    private void setNumber(JButton button, JTable table, int columnIndex) {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        int rowIndex = table.getSelectedRow();      
-        int comboIndex = jComboBox8.getSelectedIndex();
-
+    private void setNumber(JButton button, JTable table, int columnIndex) {       
+        int rowIndex = table.getSelectedRow();             
         if (rowIndex != -1) {
             String old = table.getValueAt(rowIndex, columnIndex).toString();
             String newLine = old + button.getText();
@@ -3562,6 +3561,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton44.setVisible(false);
         jButton46.setVisible(false);
         jTable6.setVisible(false);
+        jScrollPane7.setVisible(false);
         
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
@@ -3706,6 +3706,7 @@ public class MainForm extends javax.swing.JFrame {
             setColumnRender(jTable3.getColumnModel().getColumn(2));
             setColumnRender(jTable5.getColumnModel().getColumn(2));
             setColumnRender(jTable5.getColumnModel().getColumn(3));
+            setColumnRender(jTable6.getColumnModel().getColumn(2));
             setColumnRender(jTable6.getColumnModel().getColumn(3));
             setColumnRender(jTable6.getColumnModel().getColumn(4));
 
@@ -3811,6 +3812,7 @@ public class MainForm extends javax.swing.JFrame {
         RecipePanel.setVisible(false);
         StoragePanel.setVisible(false);
         jTable6.setVisible(false);
+        jScrollPane7.setVisible(false);
 
     }
 
@@ -3967,7 +3969,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox6;
     private javax.swing.JComboBox jComboBox7;
-    private javax.swing.JComboBox jComboBox8;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;

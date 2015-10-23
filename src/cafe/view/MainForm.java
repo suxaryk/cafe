@@ -55,6 +55,7 @@ import javax.swing.table.DefaultTableModel;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 import javax.swing.JFrame;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -652,6 +653,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton18.setForeground(new java.awt.Color(255, 102, 102));
         jButton18.setText("Каса:");
         jButton18.setBorder(null);
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getKassa(evt);
+            }
+        });
         TablesPanel.add(jButton18);
         jButton18.setBounds(0, 560, 80, 40);
 
@@ -1166,7 +1172,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.addTab("                 ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), DishesPanel); // NOI18N
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(70, 100, 643, 680);
+        jTabbedPane1.setBounds(68, 100, 643, 680);
         jTabbedPane1.getAccessibleContext().setAccessibleName("");
 
         OrderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1653,7 +1659,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTextPane1);
 
         UsersPanel.add(jScrollPane8);
-        jScrollPane8.setBounds(720, 300, 350, 380);
+        jScrollPane8.setBounds(720, 300, 350, 140);
 
         getContentPane().add(UsersPanel);
         UsersPanel.setBounds(90, 0, 1130, 1040);
@@ -2731,24 +2737,27 @@ public class MainForm extends javax.swing.JFrame {
                         + "<div  align = \"center\" >" + Check.getWish() + " </div> "
                         + "<div  align = \"left\" >Wi - fi:" +  Check.getPassWifi() + "</div>"
                         + "</html> ";
-               String msg = msgHead + msgFoot;
+               String msg = msgHead;
               jTextPane1.setContentType("text/html");
               jTextPane1.setText(msg);
               
               
-//                try {
-//                    
-//                    jTable1.print(JTable.PrintMode.NORMAL, null, null, false, set, false);
-//
-//                } catch (PrinterException ex) {
-//                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-//                    JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
-//                            + "\n" + ex);
-//                } catch (HeadlessException ex) {
-//                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-//                    JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
-//                            + "\n" + ex);
-//                }                
+                try {
+                    //orders.get(activeTable).getItems()
+                    jTextPane1.print();
+                    jTable1.print(JTable.PrintMode.NORMAL, null, null, false, set, false);
+                    jTextPane1.setText(msgFoot);
+                    jTextPane1.print();
+
+                } catch (PrinterException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
+                            + "\n" + ex);
+                } catch (HeadlessException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
+                            + "\n" + ex);
+                }                
             }
 
         }
@@ -2850,13 +2859,8 @@ public class MainForm extends javax.swing.JFrame {
         closeSystem();
         
     }//GEN-LAST:event_formWindowClosing
-
-    public static void closeSystem(){
-        JFrame frame = new JFrame();
-        String[] options = new String[2];
-        options[0] = "Так";
-        options[1] = "Ні";
-        System.out.println("aaa" + OrderUtils.getDaySum());
+    public static String dayInfo(){
+        System.out.println("DaySum = " + OrderUtils.getDaySum());
         int dayDiff = OrderUtils.getDayRemoveSum() * (-1);
         int daySum = OrderUtils.getDaySum() + dayDiff;
         int allSum = OrderUtils.getAllSum();
@@ -2876,8 +2880,8 @@ public class MainForm extends javax.swing.JFrame {
         }
         System.out.println("size " + orders.isEmpty());
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                "Інформація за " + dateFormat.format(new Date()) + ":\n"
+        String info = ""
+                + "Інформація за " + dateFormat.format(new Date()) + ":\n"
                 + "------------------------------------------------\n"
                 + "Каса на початок зміни " + (allSum - daySum + dayDiff) + " грн.\n"
                 + "Сума за день " + daySum + " грн.\n"
@@ -2886,9 +2890,18 @@ public class MainForm extends javax.swing.JFrame {
                 + "Чеків за день " + ordersCount + " \n"
                 + "Витрати за день " + dayDiff + " грн.\n"
                 + "Залишок в касі " + allSum + " грн\n"
-                + "------------------------------------------------\n"
+                + "------------------------------------------------\n";
+        return info;
+    }
+    public static void closeSystem(){
+        JFrame frame = new JFrame();
+        String[] options = new String[2];
+        options[0] = "Так";
+        options[1] = "Ні";           
+        int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
+                   dayInfo()
                 + "Закрити програму?", "Закриття каси!",
-                0, JOptionPane.YES_NO_OPTION, null, options, null);
+                0, JOptionPane.YES_NO_OPTION, null, options, null);        
         if (reply == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
@@ -3006,6 +3019,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
         setSort(jComboBox6, jTable3);
+        showCalcTable(jTable3);
     }//GEN-LAST:event_refreshCalc
 
     private void goToMainMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToMainMenu
@@ -3647,10 +3661,12 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
         setSort(jComboBox6, jTable3);
+        showCalcTable(jTable3);
     }//GEN-LAST:event_jComboBox6ActionPerformed
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
         setSort(jComboBox7, jTable5);
+        showCalcTable(jTable5);
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
     private void jTextField12FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField12FocusGained
@@ -3669,6 +3685,16 @@ public class MainForm extends javax.swing.JFrame {
         showUpdateStorageTable();
         
     }//GEN-LAST:event_updateIngCountInStorage
+
+    private void getKassa(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getKassa
+        JFrame frame = new JFrame();
+        JOptionPane.showOptionDialog(frame.getContentPane(), 
+                dayInfo()
+                + "Повернутись до програми?", "Інформація по касі за зміну!",
+                0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
+
+        
+    }//GEN-LAST:event_getKassa
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -3812,6 +3838,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void InitComonentsProperty() {
+        jTextPane1.setVisible(false);
         jCheckBox1.setVisible(false);
         jTabbedPane1.setEnabledAt(1, false);
         jTabbedPane1.setEnabledAt(2, false);

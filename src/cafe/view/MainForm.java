@@ -19,12 +19,15 @@ import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.print.PrinterException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +40,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -192,6 +199,8 @@ public class MainForm extends javax.swing.JFrame {
         jTextField15 = new javax.swing.JTextField();
         jTextField16 = new javax.swing.JTextField();
         jButton20 = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
         RecipePanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -1641,6 +1650,11 @@ public class MainForm extends javax.swing.JFrame {
         UsersPanel.add(jButton20);
         jButton20.setBounds(980, 130, 97, 73);
 
+        jScrollPane8.setViewportView(jTextPane1);
+
+        UsersPanel.add(jScrollPane8);
+        jScrollPane8.setBounds(720, 300, 350, 380);
+
         getContentPane().add(UsersPanel);
         UsersPanel.setBounds(90, 0, 1130, 1040);
 
@@ -2681,10 +2695,10 @@ public class MainForm extends javax.swing.JFrame {
                     OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
                     System.out.println("activeCat" + activeCat);
 
-//        if (jButton3.isEnabled()) {
-//            if (orders.get(activeTable).calcOrderSum() != 0) {
-//                DateFormat dateFormat = new SimpleDateFormat(
-//                                                        "HH:mm:ss dd/MM/yyyy");
+        if (jButton3.isEnabled()) {
+            if (orders.get(activeTable).calcOrderSum() != 0) {
+                DateFormat dateFormat = new SimpleDateFormat(
+                                                        "dd-MM-yyyy HH:mm");
 //                MessageFormat header = new MessageFormat(
 //                                                dateFormat.format(new Date()));
 //                MessageFormat footer = new MessageFormat(LoginForm.userList.
@@ -2692,11 +2706,39 @@ public class MainForm extends javax.swing.JFrame {
 //                        + "\t" + "Сума по чеку: "
 //                        + String.valueOf(orders.get(activeTable).calcOrderSum())
 //                        + " грн.");
-//
-//                PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
-//                set.add(OrientationRequested.PORTRAIT);
+
+                PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
+                set.add(OrientationRequested.PORTRAIT);
+                set.add(MediaSizeName.INVOICE);
+                String msgHead = "<html>"
+                        + "<style type=\"text/css\">\n"
+                        + "	h3{\n"
+                        + "		font-size: 12pt;\n"
+                        + "	}\n"
+                        + "	div{\n"
+                        + "		font-size: 10pt;\n"
+                        + "		}\n"
+                        + "</style>"                                        
+                        + "<div align=\"center\">"+ Check.getTitle() + "</div>"
+                        + "<div  align=center> "+ Check.getAdress()+" </div> "
+                        + "<div  align=left> "+ dateFormat.format(new Date())+" </div>"
+                        + "</html>";
+                        
+                
+//                msgHead += "<html align=\"left\"> "+ dateFormat.format(new Date()) + "<br/>"+"</html> ";                        
+               String msgFoot = "<html>"
+                        + "<div>" + "Cума чеку...."+ " </div>"
+                        + "<div  align = \"center\" >" + Check.getWish() + " </div> "
+                        + "<div  align = \"left\" >Wi - fi:" +  Check.getPassWifi() + "</div>"
+                        + "</html> ";
+               String msg = msgHead + msgFoot;
+              jTextPane1.setContentType("text/html");
+              jTextPane1.setText(msg);
+              
+              
 //                try {
-//                    jTable1.print(JTable.PrintMode.FIT_WIDTH, header, footer, false, set, false);
+//                    
+//                    jTable1.print(JTable.PrintMode.NORMAL, null, null, false, set, false);
 //
 //                } catch (PrinterException ex) {
 //                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -2706,11 +2748,10 @@ public class MainForm extends javax.swing.JFrame {
 //                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
 //                    JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
 //                            + "\n" + ex);
-//                }
-//                CalculFromDB();
-//            }
-//
-//        }
+//                }                
+            }
+
+        }
                 }
             }
         }
@@ -3410,7 +3451,7 @@ public class MainForm extends javax.swing.JFrame {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();
             if (diff != 0.0) {                                           
-                storageList.get(i).setCount(Double.valueOf(df.format(old + diff)));                
+                storageList.get(i).setCount(old + diff);                
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
             }
@@ -3423,7 +3464,7 @@ public class MainForm extends javax.swing.JFrame {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();
             if (diff != 0.0) {                                           
-                storageList.get(i).setCount(Double.valueOf(df.format(old - diff)));                
+                storageList.get(i).setCount(old - diff);                
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
             }
@@ -3746,6 +3787,7 @@ public class MainForm extends javax.swing.JFrame {
 //      
         DishUtils.readDBmenu();
         StorageUtils.readStorage();
+        CheckUtils.readCheck();
 
     }
 
@@ -3992,6 +4034,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
@@ -4009,6 +4052,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JButton table01;
     private javax.swing.JButton table02;
     private javax.swing.JButton table03;

@@ -20,11 +20,11 @@ public class DishUtils {
 
     public static  String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static  String USERNAME = "root";
-    public static  String PASSWORD = "root";
+    public static  String PASSWORD = "dbiytdbq18";
 
-    public static final String URL1 = "jdbc:mysql://db4free.net:3306/luckyroger";
-    public static final String USERNAME1 = "luckyroger";
-    public static final String PASSWORD1 = "luckyroger";
+//    public static final String URL1 = "jdbc:mysql://db4free.net:3306/luckyroger";
+//    public static final String USERNAME1 = "luckyroger";
+//    public static final String PASSWORD1 = "luckyroger";
     
     public static final String URL2 = "jdbc:mysql://suharina.ddns.net:3306/luckyroger";
     public static final String USERNAME2 = "root";

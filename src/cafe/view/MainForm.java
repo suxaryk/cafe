@@ -2424,7 +2424,7 @@ public class MainForm extends javax.swing.JFrame {
             menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
         }
         OrderItem newOrder = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count);
-        if (orders.get(activeTable).getItems().contains(newOrder)) {
+        if (orders.get(activeTable).getItems().contains(newOrder) && !orders.get(activeTable).getItems().get(0).isPrinted()) {
             int index = orders.get(activeTable).getItems().indexOf(newOrder);
             orders.get(activeTable).getItems().get(index).addCount(count);
             model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index, 1);
@@ -2444,7 +2444,8 @@ public class MainForm extends javax.swing.JFrame {
                 orders.get(activeTable).getItems().get(addedIndex)
                 .getSum()
             });
-        }
+        }   
+        
 
         if (activeCat == 9 || activeCat == 10) {
             orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).getDish().setDrink(true);
@@ -2693,126 +2694,82 @@ public class MainForm extends javax.swing.JFrame {
         });
     }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
-        //  printComponenet(); 
         if (jTable1.getRowCount() > 0) {
             if (activeCat != 9 && activeCat != 10) {
                 if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") && !orders.get(activeTable).isPayed()) {
 
                     markDishesAsCooked();
-                  //  orders.get(activeTable).setPrinted(true);
                     OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
                     System.out.println("activeCat" + activeCat);
 
-        if (jButton3.isEnabled()) {
-            if (orders.get(activeTable).calcOrderSum() != 0) {
-                
-                DateFormat dateFormat = new SimpleDateFormat(
-                                                        "dd-MM-yyyy HH:mm");
-//                MessageFormat header = new MessageFormat(
-//                                                dateFormat.format(new Date()));
-//                MessageFormat footer = new MessageFormat(LoginForm.userList.
-//                        get(User.active).getName() 
-//                        + "\t" + "Сума по чеку: "
-//                        + String.valueOf(orders.get(activeTable).calcOrderSum())
-//                        + " грн.");
-                    
-                PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
-                set.add(OrientationRequested.PORTRAIT);
-                set.add(MediaSizeName.INVOICE);
-                
-                int i = 1;
-                String style = ""
-                        + "<html>\n"
-                        + "<style>\n"
-                        + "table{\n"
-                        + "border-spacing: 0px; "                      
-                        + "}"
-                        + " tr {\n"
-                        + "    border: 1px solid black;\n"
-                        + "    border-collapse: collapse;\n"
-                        + "    margin: 0px;"
-                        + "    padding: 0px;"  
-                        + "border-spacing: 0px; "
-                        + ""
-                        + "}\n"
-                        + "</style>";
-                String dishes = style ;
-                        dishes += ""
-                                + "<table  style=\"width:100%\">"
-                                + "<tr>"
-                                + "    <td style=\"width:3%\"> " + printedOrderCount++ + " </td> "
-                                + "    <td style=\"width:100%\"> " + dateFormat.format(new Date()) + "</td>"
-                                + "  </tr>"
-                                + "</table>";
-                                             
-                dishes += ""
-                        + "<table    style=\"width:100%\">"
-                        + "<tr>\n"
-                        + "    <th>№</th>\n"
-                        + "    <th>Страва</th>\n"
-                        + "    <th colspan=\"2\">Кіл</th>\n"
-                        + "</tr>";
-                                      
-                for (OrderItem item : orders.get(activeTable).getItems()) {
-                    if (!item.isPrinted()) {
+                    if (jButton3.isEnabled()) {
+                        if (orders.get(activeTable).calcOrderSum() != 0) {
 
-                        item.setPrinted(true);
-                        dishes += "  <tr>"
-                                + "    <td style=\"width:3%\"> "+ i++ +" </td> "
-                                + "    <td style=\"width:100%\"> "+ item.getDish().getTitle() +" </td> "
-                                + "    <td style=\"width:3%\"> "+ item.getCount() +"</td>"
-                                + "  </tr>";
+                            DateFormat dateFormat = new SimpleDateFormat(
+                                    "dd-MM-yyyy HH:mm");
+
+                            PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
+                            set.add(OrientationRequested.PORTRAIT);
+                            set.add(MediaSizeName.INVOICE);
+
+                            int i = 1;
+                            String style = ""
+                                    + "<html>\n"
+                                    + "<style>\n"
+                                    + "table{\n"
+                                    + "border-spacing: 0px; "
+                                    + "}"
+                                    + " tr {\n"
+                                    + "    border: 1px solid black;\n"
+                                    + "    border-collapse: collapse;\n"
+                                    + "    margin: 0px;"
+                                    + "    padding: 0px;"
+                                    + "border-spacing: 0px; "
+                                    + ""
+                                    + "}\n"
+                                    + "</style>";
+                            String dishes = style;
+                            dishes += ""
+                                    + "<table  style=\"width:100%\">"
+                                    + "<tr>"
+                                    + "    <td style=\"width:3%\"> " + printedOrderCount++ + " </td> "
+                                    + "    <td style=\"width:100%\"> " + dateFormat.format(new Date()) + "</td>"
+                                    + "  </tr>"
+                                    + "</table>";
+
+                            dishes += ""
+                                    + "<table    style=\"width:100%\">";
+
+                            for (OrderItem item : orders.get(activeTable).getItems()) {
+                                if (!item.isPrinted()) {
+                                    item.setPrinted(true);
+                                    dishes += "  <tr>"
+                                            + "    <td style=\"width:3%\"> " + i++ + " </td> "
+                                            + "    <td font-size: 10pt style=\"width:100%\"> " + item.getDish().getTitle() + " </td> "
+                                            + "    <td style=\"width:3%\"> " + item.getCount() + "</td>"
+                                            + "  </tr>";
+                                }
+                            }
+                            dishes += "</table>"
+                                    + "</html>";
+
+                            jTextPane1.setContentType("text/html");
+                            jTextPane1.setText(dishes);
+
+                            try {
+                                jTextPane1.print(null, null, false, null, set, false);
+
+                            } catch (PrinterException ex) {
+                                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                                JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
+                                        + "\n" + ex);
+                            } catch (HeadlessException ex) {
+                                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                                JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
+                                        + "\n" + ex);
+                            }
+                        }
                     }
-                }
-                
-//                dishes += String.format(tablL + tablR + "%n", dateFormat.format(new Date()), printedOrderCount++);                 
-//                dishes += "" + dateFormat.format(new Date())+"\t" + printedOrderCount++ + "\n";                 
-//                dishes += "<div align=\"left\"> " + dateFormat.format(new Date()) + " </div>" ;                
-
-                
-                
-                       dishes += "</table>"
-//                               + "</div>"
-                               + "</html>";
-                        
-                
-//                msgHead += "<html align=\"left\"> "+ dateFormat.format(new Date()) + "<br/>"+"</html> ";                        
-//               String msgFoot = "<html>"
-//                        + "<div>" + "Cума чеку...."+ " </div>"
-//                        + "<div  align =\"center\">" + Check.getWish() + " </div> "
-//                        + "<div  align =\"left\">Wi - fi:" +  Check.getPassWifi() + "</div>"
-//                        + "</html> ";
-//              
-               jTextPane1.setContentType("text/html");
-                       
-                jTextPane1.setText(dishes);
-                System.out.println(jTextPane1.getText());
-              
-//                MessageFormat mainMSG = new MessageFormat(dateFormat.format(new Date()));
-              
-               
-                try {
-//                    //orders.get(activeTable).getItems()
-//                    jTextPane1.print();
-//                    jTextArea1
-                    jTextPane1.print(null, null, false, null, set, false);
-                   
-//                    jTable1.print(JTable.PrintMode.NORMAL, null, null, false, set, false);
-//                   // jTextPane1.setText(msgFoot);
-//                   // jTextPane1.print();
-//
-                } catch (PrinterException ex) {
-                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
-                            + "\n" + ex);
-                } catch (HeadlessException ex) {
-                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
-                            + "\n" + ex);
-                }                
-            }
-
-        }
                 }
             }
         }
@@ -3680,11 +3637,80 @@ public class MainForm extends javax.swing.JFrame {
     private void exitSystem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitSystem
         formWindowClosing(null);
     }//GEN-LAST:event_exitSystem
+    private  void printClientCheck() {
+        DateFormat dateFormat = new SimpleDateFormat(
+                "dd-MM-yyyy HH:mm");
 
+        PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
+        set.add(OrientationRequested.PORTRAIT);
+        set.add(MediaSizeName.INVOICE);
+
+        int i = 1;
+        String style = ""
+                + "<html>\n"
+                + "<style>\n"
+                + "table{\n"
+                + "border-spacing: 0px; "
+                + "}"
+                + " tr {\n"
+                + "    border: 1px solid black;\n"
+                + "    border-collapse: collapse;\n"
+                + "    margin: 0px;"
+                + "    padding: 0px;"
+                + "border-spacing: 0px; "
+                + ""
+                + "}\n"
+                + "</style>";
+        String dishes = style;
+        dishes += ""
+                + "<div></div>"
+                + "";
+//                + "<table  style=\"width:100%\">"
+//                + "<tr>"
+//                + "    <td style=\"width:3%\"> " + printedOrderCount++ + " </td> "
+//                + "    <td style=\"width:100%\"> " + dateFormat.format(new Date()) + "</td>"
+//                + "  </tr>"
+//                + "</table>";
+
+        dishes += ""
+                + "<table    style=\"width:100%\">";
+
+        for (OrderItem item : orders.get(activeTable).getItems()) {
+            if (!item.isPrinted()) {
+                item.setPrinted(true);
+                dishes += "  <tr>"
+                        + "    <td style=\"width:3%\"> " + i++ + " </td> "
+                        + "    <td font-size: 10pt style=\"width:100%\"> " + item.getDish().getTitle() + " </td> "
+                        + "    <td style=\"width:3%\"> " + item.getCount() + "</td>"
+                        + "  </tr>";
+            }
+        }
+        dishes += "</table>"
+                + "</html>";
+        
+        jTextPane1.setContentType("text/html");
+        jTextPane1.setText(dishes);
+        System.out.println(jTextPane1.getText());
+
+        try {
+            jTextPane1.print(null, null, false, null, set, false);
+
+        } catch (PrinterException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
+                    + "\n" + ex);
+        } catch (HeadlessException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
+                    + "\n" + ex);
+        }
+    }
+    
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
         if (jButton10.isEnabled()) {
             if (orders.get(activeTable).calcOrderSum() != 0) {
                 subOrderIngredientsFromDB();
+//                printClientCheck();ghjg
 //                if (activeCat == 9 || activeCat == 10) {
 //                    orders.get(activeCat);
 //                }
@@ -3890,8 +3916,8 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void InitComonentsProperty() {
-        jTextPane1.setVisible(false);
-        jScrollPane8.setVisible(false);
+//        jTextPane1.setVisible(false);
+//        jScrollPane8.setVisible(false);
         jCheckBox1.setVisible(false);
         jTabbedPane1.setEnabledAt(1, false);
         jTabbedPane1.setEnabledAt(2, false);

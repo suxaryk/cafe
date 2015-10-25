@@ -1598,7 +1598,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         UsersPanel.add(jButton15);
-        jButton15.setBounds(600, 320, 100, 40);
+        jButton15.setBounds(600, 310, 100, 40);
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1616,7 +1616,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         UsersPanel.add(jButton17);
-        jButton17.setBounds(600, 360, 100, 40);
+        jButton17.setBounds(600, 350, 100, 40);
 
         jTextField11.setEditable(false);
         jTextField11.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -2720,66 +2720,81 @@ public class MainForm extends javax.swing.JFrame {
                 set.add(OrientationRequested.PORTRAIT);
                 set.add(MediaSizeName.INVOICE);
                 
-                 String tabulLeft = "%-70s";
-                 String tabul1 = "%-3s";               
-                 String tabulData = "%10s";
-                String style = "<html>"
-                        + "<style type=\"text/css\">"
-                        + "	h3{"
-                        + "		font-size: 8pt;"
-                        + "	}"
-                        + "	div{"
-                        + "		font-size: 8pt;"                       
-                        + "		}"
-                        + "</style>"  
-                        + "";
-                String header = style 
-                        + "<div align=\"center\">"+ Check.getTitle() + "</div>"
-                        + "<div align=\"center\"> "+ Check.getAdress()+" </div> "
-                        + "<div align=\"left\"> "+ dateFormat.format(new Date())+" </div>" 
-                        +"";
-                
-                
-                
-//                String dishes = style;
-                String dishes = "";
+                int i = 1;
+                String style = ""
+                        + "<html>\n"
+                        + "<style>\n"
+                        + "table{\n"
+                        + "border-spacing: 0px; "                      
+                        + "}"
+                        + " tr {\n"
+                        + "    border: 1px solid black;\n"
+                        + "    border-collapse: collapse;\n"
+                        + "    margin: 0px;"
+                        + "    padding: 0px;"  
+                        + "border-spacing: 0px; "
+                        + ""
+                        + "}\n"
+                        + "</style>";
+                String dishes = style ;
+                        dishes += ""
+                                + "<table  style=\"width:100%\">"
+                                + "<tr>"
+                                + "    <td style=\"width:3%\"> " + printedOrderCount++ + " </td> "
+                                + "    <td style=\"width:100%\"> " + dateFormat.format(new Date()) + "</td>"
+                                + "  </tr>"
+                                + "</table>";
+                                             
+                dishes += ""
+                        + "<table    style=\"width:100%\">"
+                        + "<tr>\n"
+                        + "    <th>№</th>\n"
+                        + "    <th>Страва</th>\n"
+                        + "    <th colspan=\"2\">Кіл</th>\n"
+                        + "</tr>";
+                                      
                 for (OrderItem item : orders.get(activeTable).getItems()) {
                     if (!item.isPrinted()) {
-//                        dishes += ""+ item.getDish().getTitle() +"\t"+ item.getCount()+ "\n";
-                        dishes += String.format(tabulLeft+tabul1+"%n", item.getDish().getTitle(), item.getCount());
+
                         item.setPrinted(true);
-//                        dishes += ""                               
-//                                + "<div align=\"left\"> " + item.getDish().getTitle() + " </div>"
-//                                + "<div align=\"right\">" + item.getCount() + "</div>"      
-//                                + "";
+                        dishes += "  <tr>"
+                                + "    <td style=\"width:3%\"> "+ i++ +" </td> "
+                                + "    <td style=\"width:100%\"> "+ item.getDish().getTitle() +" </td> "
+                                + "    <td style=\"width:3%\"> "+ item.getCount() +"</td>"
+                                + "  </tr>";
                     }
                 }
-                dishes += String.format(tabulLeft + tabul1 + "%n", dateFormat.format(new Date()), printedOrderCount++);                 
+                
+//                dishes += String.format(tablL + tablR + "%n", dateFormat.format(new Date()), printedOrderCount++);                 
 //                dishes += "" + dateFormat.format(new Date())+"\t" + printedOrderCount++ + "\n";                 
 //                dishes += "<div align=\"left\"> " + dateFormat.format(new Date()) + " </div>" ;                
 
                 
                 
-//                       dishes += "</html>";
+                       dishes += "</table>"
+//                               + "</div>"
+                               + "</html>";
                         
                 
 //                msgHead += "<html align=\"left\"> "+ dateFormat.format(new Date()) + "<br/>"+"</html> ";                        
-               String msgFoot = "<html>"
-                        + "<div>" + "Cума чеку...."+ " </div>"
-                        + "<div  align =\"center\">" + Check.getWish() + " </div> "
-                        + "<div  align =\"left\">Wi - fi:" +  Check.getPassWifi() + "</div>"
-                        + "</html> ";
+//               String msgFoot = "<html>"
+//                        + "<div>" + "Cума чеку...."+ " </div>"
+//                        + "<div  align =\"center\">" + Check.getWish() + " </div> "
+//                        + "<div  align =\"left\">Wi - fi:" +  Check.getPassWifi() + "</div>"
+//                        + "</html> ";
+//              
+               jTextPane1.setContentType("text/html");
+                       
+                jTextPane1.setText(dishes);
+                System.out.println(jTextPane1.getText());
               
-//              jTextPane1.setContentType("text/html");
-              jTextPane1.setText(dishes);
-                System.out.println(dishes);
-              
-                MessageFormat mainMSG = new MessageFormat(dateFormat.format(new Date()));
+//                MessageFormat mainMSG = new MessageFormat(dateFormat.format(new Date()));
               
                
                 try {
 //                    //orders.get(activeTable).getItems()
 //                    jTextPane1.print();
+//                    jTextArea1
                     jTextPane1.print(null, null, false, null, set, false);
                    
 //                    jTable1.print(JTable.PrintMode.NORMAL, null, null, false, set, false);
@@ -3875,7 +3890,8 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void InitComonentsProperty() {
-//        jTextPane1.setVisible(false);
+        jTextPane1.setVisible(false);
+        jScrollPane8.setVisible(false);
         jCheckBox1.setVisible(false);
         jTabbedPane1.setEnabledAt(1, false);
         jTabbedPane1.setEnabledAt(2, false);

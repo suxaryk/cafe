@@ -2415,6 +2415,29 @@ public class MainForm extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_getListItem
+    private int getPrintedCount() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int k = 0;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (model.getValueAt(i, 0).equals("")) {
+                k++;
+            }
+        }
+        return k;
+    }
+
+    private int getIndex(int count) {
+        int index = 0;
+        OrderItem newOrder = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count);
+        for (int i = 0; i < orders.get(activeTable).getItems().size(); i++) {
+            if (orders.get(activeTable).getItems().get(i).equals(newOrder)) {
+                if (!orders.get(activeTable).getItems().get(i).isPrinted()) {
+                    index = i;
+                }
+            }
+        }
+        return index;
+    }
 
     private void addRecordToTable(int count) {
         clearCountButton();
@@ -2424,23 +2447,14 @@ public class MainForm extends javax.swing.JFrame {
             menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
         }
         OrderItem newOrder = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count);
-        int index = orders.get(activeTable).getItems().indexOf(newOrder);
-        int k = -1;
-        for (int i = 0; i < orders.get(activeTable).getItems().size(); i++) {
-            if (orders.get(activeTable).getItems().get(i).equals(newOrder)){
-                k++;
-                if(!orders.get(activeTable).getItems().get(i).isPrinted()) {
-                    index = i;  
-                }                                 
-            }            
-        }        
-       
+        int index = getIndex(count);
+
         if (orders.get(activeTable).getItems().contains(newOrder) && !orders.get(activeTable).getItems().get(index).isPrinted()) {
             System.out.println("Index = " + index);
             System.out.println("is Printed = " + orders.get(activeTable).getItems().get(index).isPrinted());
             orders.get(activeTable).getItems().get(index).addCount(count);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index+k, 1);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index+k, 3);
+            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index + getPrintedCount(), 1);
+            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index + getPrintedCount(), 3);
         } else {
             orders.get(activeTable).getItems().add(newOrder);
             int addedIndex = orders.get(activeTable).getItems().size() - 1;
@@ -2454,8 +2468,7 @@ public class MainForm extends javax.swing.JFrame {
                 orders.get(activeTable).getItems().get(addedIndex)
                 .getSum()
             });
-        }   
-        
+        }
 
         if (activeCat == 9 || activeCat == 10) {
             orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).getDish().setDrink(true);

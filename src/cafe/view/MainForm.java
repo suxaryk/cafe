@@ -2424,16 +2424,26 @@ public class MainForm extends javax.swing.JFrame {
             menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
         }
         OrderItem newOrder = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count);
-        if (orders.get(activeTable).getItems().contains(newOrder) && !orders.get(activeTable).getItems().get(0).isPrinted()) {
-            int index = orders.get(activeTable).getItems().indexOf(newOrder);
+        int index = orders.get(activeTable).getItems().indexOf(newOrder);
+        int k = -1;
+        for (int i = 0; i < orders.get(activeTable).getItems().size(); i++) {
+            if (orders.get(activeTable).getItems().get(i).equals(newOrder)){
+                k++;
+                if(!orders.get(activeTable).getItems().get(i).isPrinted()) {
+                    index = i;  
+                }                                 
+            }            
+        }        
+       
+        if (orders.get(activeTable).getItems().contains(newOrder) && !orders.get(activeTable).getItems().get(index).isPrinted()) {
+            System.out.println("Index = " + index);
+            System.out.println("is Printed = " + orders.get(activeTable).getItems().get(index).isPrinted());
             orders.get(activeTable).getItems().get(index).addCount(count);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index, 1);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index, 3);
+            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index+k, 1);
+            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index+k, 3);
         } else {
             orders.get(activeTable).getItems().add(newOrder);
-
             int addedIndex = orders.get(activeTable).getItems().size() - 1;
-
             model.addRow(new Object[]{
                 orders.get(activeTable).getItems().get(addedIndex)
                 .getDish().getTitle(),

@@ -28,10 +28,19 @@ import java.util.Map;
  */
 public class OrderUtils {
 
+    private static int dbId = 1;
 
+    public static int getOrderId() {
+        return dbId;
+    }
+
+    public static void setOrderId(int checkId) {
+        OrderUtils.dbId = checkId;
+    }
+    
     public static void addOrder(Order order, User user) {
-        final String sql = "INSERT INTO orders(orderId, sum, cookCount, drinkCount, datatime, operator, order_items, removed_items)"
-                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO orders(dayId, orderId, sum, cookCount, drinkCount, datatime, operator, order_items, removed_items)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -43,14 +52,15 @@ public class OrderUtils {
             for (OrderItem item : order.getItems()) {
                 System.out.println("----------title " + item.getDish().getTitle() + " count "+ item.getCount());
             }
-            pstatement.setInt(1, order.getDayId());
-            pstatement.setInt(2, order.calcOrderSum());
-            pstatement.setInt(3, order.getCookCount());
-            pstatement.setInt(4, order.getDrinkCount());
-            pstatement.setTimestamp(5, getCurrentTimeStamp());
-            pstatement.setString(6, user.getName());
-            pstatement.setString(7, order.getJSONItems(false));
-            pstatement.setString(8, order.getJSONRemovedItems(false));
+            pstatement.setInt(1, dbId++);
+            pstatement.setInt(2, order.getDayId());
+            pstatement.setInt(3, order.calcOrderSum());
+            pstatement.setInt(4, order.getCookCount());
+            pstatement.setInt(5, order.getDrinkCount());
+            pstatement.setTimestamp(6, getCurrentTimeStamp());
+            pstatement.setString(7, user.getName());
+            pstatement.setString(8, order.getJSONItems(false));
+            pstatement.setString(9, order.getJSONRemovedItems(false));
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -314,7 +324,7 @@ public class OrderUtils {
 //    }
 
     public static int getDayOrdersCount() {
-        final String SQL = "SELECT orderId FROM orders order by id desc limit 1";
+        final String SQL = "SELECT dayId FROM orders order by id desc limit 1";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected!"

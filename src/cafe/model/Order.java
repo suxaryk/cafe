@@ -20,8 +20,7 @@ public class Order {
     private int cookCount;
     private int drinkCount;
     private int orderSum;
-    private boolean payed;
-    private boolean printed;
+    private boolean payed;    
     private String JSONItems;
     private ArrayList<OrderItem> items = new ArrayList<>();
     private ArrayList<OrderItem> removeditems = new ArrayList<>();
@@ -45,13 +44,12 @@ public class Order {
     }
 
     public int getDrinkCount() {
-        if (this.drinkCount == 0) {
+        drinkCount = 0; 
             for (OrderItem orderItem : items) {
                 if (orderItem.getDish().isDrink()) {
                     drinkCount += orderItem.getCount();
                 }
-            }
-        }       
+            }            
         return drinkCount;
     }
 
@@ -60,14 +58,22 @@ public class Order {
     }
 
     public int getCookCount() {
-        if (this.cookCount == 0) {
+        int recipeSize = 0;
+        for (OrderItem item : items) {
+            recipeSize += item.getDish().getRecipe().size();
+        }
+        if (recipeSize == 0) {
+            return cookCount;
+        } else {
+            cookCount = 0;
             for (OrderItem orderItem : items) {
                 if (orderItem.getDish().isCook()) {
-                    cookCount += orderItem.getCount();
+                    this.cookCount += orderItem.getCount();
                 }
             }
-        }          
-        return cookCount;
+            System.out.println("cookCount= " + cookCount);
+            return cookCount;
+        }
     }
 
     public void setCookCount(int cookCount) {
@@ -86,11 +92,11 @@ public class Order {
         this.items = checkList;
     }
 
-    public ArrayList<OrderItem> getRemoveditems() {
+    public ArrayList<OrderItem> getRemovedItems() {
         return removeditems;
     }
 
-    public void setRemoveditems(ArrayList<OrderItem> removeditems) {
+    public void setRemovedItems(ArrayList<OrderItem> removeditems) {
         this.removeditems = removeditems;
     }
 
@@ -102,13 +108,7 @@ public class Order {
         this.payed = payed;
     }
 
-    public boolean isPrinted() {
-        return printed;
-    }
-
-    public void setPrinted(boolean printed) {
-        this.printed = printed;
-    }
+   
     
     
     public String getJSONItems(boolean includePrice) {

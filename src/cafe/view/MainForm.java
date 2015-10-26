@@ -18,7 +18,6 @@ import cafe.model.Ingredient;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
@@ -26,10 +25,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,7 +54,6 @@ import javax.swing.table.DefaultTableModel;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 import javax.swing.JFrame;
 import javax.swing.JTable;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -3314,6 +3310,7 @@ public class MainForm extends javax.swing.JFrame {
         employees.clear();
         initPassTable();
         jTable2.setRowSelectionInterval(activeRow, activeRow);
+        jTextField13.setText("");
         Rectangle cellRect = jTable2.getCellRect(activeRow, 0, true);
         jTable2.scrollRectToVisible(cellRect);
     }//GEN-LAST:event_updateUserAndEmployee
@@ -3633,7 +3630,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_payForStorageAddition
 
     private void swapUser(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapUser
-        
+        loginForm.getUsers();
         mainForm.setVisible(false);
         mainForm.setEnabled(false);
         loginForm.getDate();
@@ -3748,7 +3745,9 @@ public class MainForm extends javax.swing.JFrame {
 //                if (activeCat == 9 || activeCat == 10) {
 //                    orders.get(activeCat);
 //                }
-
+                if (!isOrderPrinted()) {
+                    orders.get(activeTable).setDayId(printedOrderCount++);
+                }
                 OrderUtils.addOrder(orders.get(activeTable),
                         userList.get(User.active));
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);

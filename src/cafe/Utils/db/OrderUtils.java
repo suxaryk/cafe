@@ -28,17 +28,6 @@ import java.util.Map;
  */
 public class OrderUtils {
 
-    private static int dbId = 1;
-
-    public static int getOrderId() {
-        return dbId;
-    }
-
-    public static void setOrderId(int checkId) {
-        OrderUtils.dbId = checkId;
-    }
-    
-    
 
     public static void addOrder(Order order, User user) {
         final String sql = "INSERT INTO orders(orderId, sum, cookCount, drinkCount, datatime, operator, order_items, removed_items)"
@@ -54,7 +43,7 @@ public class OrderUtils {
             for (OrderItem item : order.getItems()) {
                 System.out.println("----------title " + item.getDish().getTitle() + " count "+ item.getCount());
             }
-            pstatement.setInt(1, dbId++);
+            pstatement.setInt(1, order.getDayId());
             pstatement.setInt(2, order.calcOrderSum());
             pstatement.setInt(3, order.getCookCount());
             pstatement.setInt(4, order.getDrinkCount());
@@ -75,7 +64,7 @@ public class OrderUtils {
     }
    
     public static void updateTable(Order order, User user, int activeTable) {
-        final String SQL = "UPDATE tables set sum=?, printed=?, cookCount=?, drinkCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";       
+        final String SQL = "UPDATE tables set sum=?, cookCount=?, drinkCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";       
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -85,15 +74,14 @@ public class OrderUtils {
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);            
          
-            pstatement.setInt(1, order.calcOrderSum());
-            pstatement.setBoolean(2, order.isPrinted());            
-            pstatement.setInt(3, order.getCookCount());
-            pstatement.setInt(4, order.getDrinkCount());
-            pstatement.setTimestamp(5, getCurrentTimeStamp());
-            pstatement.setString(6, user.getName());
-            pstatement.setString(7, order.getJSONItems(true));
-            pstatement.setString(8, order.getJSONRemovedItems(true));
-            pstatement.setInt(9, activeTable);
+            pstatement.setInt(1, order.calcOrderSum());                
+            pstatement.setInt(2, order.getCookCount());
+            pstatement.setInt(3, order.getDrinkCount());
+            pstatement.setTimestamp(4, getCurrentTimeStamp());
+            pstatement.setString(5, user.getName());
+            pstatement.setString(6, order.getJSONItems(true));
+            pstatement.setString(7, order.getJSONRemovedItems(true));
+            pstatement.setInt(8, activeTable);
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -178,12 +166,11 @@ public class OrderUtils {
             try (ResultSet rs = statement.executeQuery(SQL)) {               
                 while (rs.next()) {
                     Order tmpOrder = new Order();
-                    tmpOrder.setOrderSum(rs.getInt("sum"));
-                    tmpOrder.setPrinted(rs.getBoolean("printed"));
-                    tmpOrder.setCookCount(rs.getInt("cookCount"));
+                    tmpOrder.setOrderSum(rs.getInt("sum"));                   
+                    tmpOrder.setCookCount(rs.getInt("cookCount"));                    
                     tmpOrder.setDrinkCount(rs.getInt("drinkCount"));
                     tmpOrder.setItems(JSONUtils.convertJSONToOrderTables(rs.getString("order_items")));
-                    tmpOrder.setRemoveditems(JSONUtils.convertJSONToOrderTables(rs.getString("removed_items")));
+                    tmpOrder.setRemovedItems(JSONUtils.convertJSONToOrderTables(rs.getString("removed_items")));
                     loadOrders.put(rs.getInt("Id"), tmpOrder);
                 }                
             } 

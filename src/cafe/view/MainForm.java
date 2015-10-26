@@ -2588,12 +2588,12 @@ public class MainForm extends javax.swing.JFrame {
                 int lastIndex = orders.get(activeTable).getItems().size() - 1;
                 OrderItem item = orders.get(activeTable).getItems().get(lastIndex);
                 int count = orders.get(activeTable).getItems().get(lastIndex).getCount();
-                if (orders.get(activeTable).getRemoveditems().contains(
+                if (orders.get(activeTable).getRemovedItems().contains(
                         orders.get(activeTable).getItems().get(lastIndex))) {
-                    int index = orders.get(activeTable).getRemoveditems().indexOf(item);
-                    orders.get(activeTable).getRemoveditems().get(index).addCount(count);
+                    int index = orders.get(activeTable).getRemovedItems().indexOf(item);
+                    orders.get(activeTable).getRemovedItems().get(index).addCount(count);
                 } else {
-                    orders.get(activeTable).getRemoveditems().add(item);
+                    orders.get(activeTable).getRemovedItems().add(item);
                 }
                 orders.get(activeTable).getItems().remove(lastIndex);
             }
@@ -2716,11 +2716,22 @@ public class MainForm extends javax.swing.JFrame {
             "", null, null, null
         });
     }
+    private boolean isOrderPrinted(){
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            if (jTable1.getValueAt(i, 0).equals("")) {
+                return true;
+            }
+        }
+        return false;
+    }
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
         if (jTable1.getRowCount() > 0) {
             if (activeCat != 9 && activeCat != 10) {
                 if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") && !orders.get(activeTable).isPayed()) {
-
+                    if (!isOrderPrinted()) {
+                        orders.get(activeTable).setDayId(printedOrderCount++);
+                    }
+                  
                     markDishesAsCooked();
                     OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
                     System.out.println("activeCat" + activeCat);
@@ -2755,7 +2766,7 @@ public class MainForm extends javax.swing.JFrame {
                             dishes += ""
                                     + "<table  style=\"width:100%\">"
                                     + "<tr>"
-                                    + "    <td style=\"width:3%\"> " + printedOrderCount++ + " </td> "
+                                    + "    <td style=\"width:3%\"> " + orders.get(activeTable).getDayId()+ " </td> "
                                     + "    <td style=\"width:100%\"> " + dateFormat.format(new Date()) + "</td>"
                                     + "  </tr>"
                                     + "</table>";
@@ -3622,7 +3633,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_payForStorageAddition
 
     private void swapUser(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapUser
-        OrderUtils.setOrderId(1);
+        
         mainForm.setVisible(false);
         mainForm.setEnabled(false);
         loginForm.getDate();
@@ -3921,21 +3932,17 @@ public class MainForm extends javax.swing.JFrame {
     private void loadTables() {
         HashMap<Integer, Order> loadOrders = new HashMap<>();
         loadOrders.putAll(OrderUtils.loadTables());
-
+            
         if (!loadOrders.isEmpty()) {
             System.out.println("loadTables---");
-            for (Map.Entry<Integer, Order> entry : loadOrders.entrySet()) {
 
-            }
             orders.putAll(loadOrders);
-            System.out.println("size " + orders.size());
             for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
                 if (entry.getValue().getOrderSum() > 0) {
                     TablesPanel.getComponent(entry.getKey() - 1).setBackground(Color.yellow);
                 }
             }
         }
-
     }
 
     private void InitComonentsProperty() {

@@ -846,7 +846,8 @@ public class MainForm extends javax.swing.JFrame {
 
         cat12.setBackground(new java.awt.Color(233, 234, 237));
         cat12.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        cat12.setText("<html>   <br/>  <br/>  <br/> <br/>        &nbsp; Безалкогольні<br/> \n &nbsp; &nbsp; &nbsp;&nbsp; напої</html>");
+        cat12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/no-drink.png"))); // NOI18N
+        cat12.setText("<html>   <br/>  <br/>  <br/> <br/>    <br/>  &nbspБезал.<br/>  </html>");
         cat12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         cat12.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         cat12.setName("cat11"); // NOI18N

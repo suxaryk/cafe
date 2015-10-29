@@ -1160,7 +1160,10 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="18" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;   &lt;br/&gt;  &lt;br/&gt;  &lt;br/&gt; &lt;br/&gt;        &amp;nbsp; &#x411;&#x435;&#x437;&#x430;&#x43b;&#x43a;&#x43e;&#x433;&#x43e;&#x43b;&#x44c;&#x43d;&#x456;&lt;br/&gt; &#xa; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp; &#x43d;&#x430;&#x43f;&#x43e;&#x457;&lt;/html&gt;"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cafe/icons/no-drink.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;   &lt;br/&gt;  &lt;br/&gt;  &lt;br/&gt; &lt;br/&gt;    &lt;br/&gt;  &amp;nbsp&#x411;&#x435;&#x437;&#x430;&#x43b;.&lt;br/&gt;  &lt;/html&gt;"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                     <BevelBorder/>

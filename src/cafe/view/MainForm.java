@@ -153,6 +153,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton19 = new javax.swing.JButton();
         jCheckBox2 = new javax.swing.JCheckBox();
+        jButton16 = new javax.swing.JButton();
         OrderPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -171,6 +172,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
+        jLabel10 = new javax.swing.JLabel();
         UsersPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -812,8 +814,8 @@ public class MainForm extends javax.swing.JFrame {
 
         cat10.setBackground(new java.awt.Color(233, 234, 237));
         cat10.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        cat10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/drink175.png"))); // NOI18N
-        cat10.setText("<html>  \n<br/> \n<br/> \n<br/> \n<br/>  \n<br/>  \n&nbsp;Алкоголь</html>");
+        cat10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/beer.png"))); // NOI18N
+        cat10.setText("<html>   <br/>  <br/>  <br/>  <br/>   <br/>   &nbsp;Пиво</html>");
         cat10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         cat10.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         cat10.setName("cat9"); // NOI18N
@@ -828,23 +830,32 @@ public class MainForm extends javax.swing.JFrame {
 
         cat11.setBackground(new java.awt.Color(233, 234, 237));
         cat11.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        cat11.setText("<html>  \n<br/> \n<br/> \n<br/> \n<br/>  \n<br/>  \n&nbsp;дод.страви</html>");
+        cat11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/drink175.png"))); // NOI18N
+        cat11.setText("<html>   <br/>  <br/>  <br/>  <br/>   <br/>   &nbsp;Алкоголь</html>");
         cat11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        cat11.setEnabled(false);
         cat11.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         cat11.setName("cat10"); // NOI18N
         cat11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
         CategoriesPanel.add(cat11);
         cat11.setBounds(320, 380, 160, 160);
 
         cat12.setBackground(new java.awt.Color(233, 234, 237));
         cat12.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        cat12.setText("<html>  \n<br/> \n<br/> \n<br/> \n<br/>  \n<br/>  \n&nbsp;дод.страви</html>");
+        cat12.setText("<html>   <br/>  <br/>  <br/> <br/>        &nbsp; Безалкогольні<br/> \n &nbsp; &nbsp; &nbsp;&nbsp; напої</html>");
         cat12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        cat12.setEnabled(false);
         cat12.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         cat12.setName("cat11"); // NOI18N
         cat12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
         CategoriesPanel.add(cat12);
         cat12.setBounds(480, 380, 160, 160);
 
@@ -1167,6 +1178,15 @@ public class MainForm extends javax.swing.JFrame {
         DishesPanel.add(jCheckBox2);
         jCheckBox2.setBounds(0, 530, 170, 31);
 
+        jButton16.setText("вага");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+        DishesPanel.add(jButton16);
+        jButton16.setBounds(10, 570, 130, 23);
+
         jTabbedPane1.addTab("                 ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), DishesPanel); // NOI18N
 
         getContentPane().add(jTabbedPane1);
@@ -1284,7 +1304,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("  Оператор №   ");
         OrderPanel.add(jLabel5);
-        jLabel5.setBounds(0, 0, 360, 30);
+        jLabel5.setBounds(0, 0, 200, 30);
 
         jPanel1.setBackground(new java.awt.Color(255, 153, 153));
         jPanel1.setLayout(null);
@@ -1358,6 +1378,11 @@ public class MainForm extends javax.swing.JFrame {
         });
         OrderPanel.add(jComboBox2);
         jComboBox2.setBounds(440, 430, 60, 30);
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel10.setText("Чек № ");
+        OrderPanel.add(jLabel10);
+        jLabel10.setBounds(250, 0, 100, 30);
 
         getContentPane().add(OrderPanel);
         OrderPanel.setBounds(710, 100, 500, 680);
@@ -2437,6 +2462,9 @@ public class MainForm extends javax.swing.JFrame {
 
     private void addRecordToTable(int count) {
         clearCountButton();
+        if (activeCat == 4) {
+            changeIngredientWeight();
+        }
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         if (jCheckBox1.isSelected()) {
@@ -2519,7 +2547,7 @@ public class MainForm extends javax.swing.JFrame {
     private void chooseCat(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseCat
         jTabbedPane1.setEnabledAt(2, true);
         jTabbedPane1.setSelectedIndex(2);
-
+        
         int catId = getButtonId(evt);
         if (catId > 5) {
             catId++;
@@ -2726,6 +2754,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") && !orders.get(activeTable).isPayed()) {
                     if (!isOrderPrinted()) {
                         orders.get(activeTable).setDayId(printedOrderCount++);
+                        jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
                     }
                   
                     markDishesAsCooked();
@@ -3656,6 +3685,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton44.setVisible(false);
         jButton46.setVisible(false);
         jTable6.setVisible(false);
+        jScrollPane6.setVisible(false);
         jScrollPane7.setVisible(false);
         
 
@@ -3747,7 +3777,8 @@ public class MainForm extends javax.swing.JFrame {
 //                }
                 if (!isOrderPrinted()) {
                     orders.get(activeTable).setDayId(printedOrderCount++);
-                }
+                    jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
+                }                
                 OrderUtils.addOrder(orders.get(activeTable),
                         userList.get(User.active));
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
@@ -3776,8 +3807,14 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox6ActionPerformed
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
-        setSort(jComboBox7, jTable5);
-        showCalcTable(jTable5);
+        if (isAdmin()) {
+            setSort(jComboBox7, jTable6);
+            showCalcTable(jTable6);
+        }else{
+            setSort(jComboBox7, jTable5);
+            showCalcTable(jTable5);
+        }
+        
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
     private void jTextField12FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField12FocusGained
@@ -3806,6 +3843,17 @@ public class MainForm extends javax.swing.JFrame {
 
         
     }//GEN-LAST:event_getKassa
+    
+    public void changeIngredientWeight(){
+        WeightForm weightForm = new WeightForm();
+        weightForm.setVisible(true);
+        weightForm.toFront();
+    }
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        changeIngredientWeight();
+        
+        
+    }//GEN-LAST:event_jButton16ActionPerformed
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -3920,6 +3968,7 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("алкоголь"));
         menu.add(new Category("1"));
         menu.add(new Category("2"));
+        menu.add(new Category("3"));
 
 //      
         DishUtils.readDBmenu();
@@ -4016,6 +4065,8 @@ public class MainForm extends javax.swing.JFrame {
                 getResource("/cafe/icons/small/coffee127.png")));
         icons.add(new ImageIcon(getClass().
                 getResource("/cafe/icons/small/drink175.png")));
+        icons.add(new ImageIcon(getClass().
+                getResource("/cafe/icons/small/beer.png")));
     }
 
     /**
@@ -4028,13 +4079,13 @@ public class MainForm extends javax.swing.JFrame {
     }
     private static int printedOrderCount = 1;
     private static boolean ordered;
-    private static int dayCash;
+   // private static int dayCash;
     public static ArrayList<Employee> employees = new ArrayList<>();
-    private static Map<Integer, Order> orders = new HashMap();
-    private static final int tablesCount = 25;
+    public static Map<Integer, Order> orders = new HashMap();
+    //private static final int tablesCount = 25;
     public static int activeDishes;
     public static int activeCat;
-    private static int activeTable;
+    public static int activeTable;
     public static DecimalFormat df = new DecimalFormat("#.###");
     public static ArrayList<Ingredient> storageList = new ArrayList<>();  
     ArrayList<Ingredient> diffStorage = new ArrayList<>();
@@ -4086,6 +4137,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
@@ -4147,6 +4199,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox6;
     private javax.swing.JComboBox jComboBox7;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;

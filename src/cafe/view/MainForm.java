@@ -2495,9 +2495,7 @@ public class MainForm extends javax.swing.JFrame {
             });
         }
 
-        if (activeCat == 9 || activeCat == 10) {
-            orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).getDish().setDrink(true);
-        }
+        
         OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
         jTextField1.setText(String.valueOf(orders.get(activeTable).calcOrderSum()));
 
@@ -2934,7 +2932,7 @@ public class MainForm extends javax.swing.JFrame {
         int daySum = OrderUtils.getDaySum() + dayDiff;
         int allSum = OrderUtils.getAllSum();
         int cookCount = OrderUtils.getCookCount();
-        int drinlCount = OrderUtils.getDrinkCount();
+//        int drinlCount = OrderUtils.getDrinkCount();
         int ordersCount = OrderUtils.getDayOrdersCount();
         System.out.println("dayDiff = " + dayDiff);
         System.out.println("daySum = " + daySum);
@@ -2944,7 +2942,7 @@ public class MainForm extends javax.swing.JFrame {
             daySum = 0;
             dayDiff = 0;
             cookCount = 0;
-            drinlCount = 0;
+//            drinlCount = 0;
             ordersCount = 0;
         }
         System.out.println("size " + orders.isEmpty());
@@ -2955,7 +2953,7 @@ public class MainForm extends javax.swing.JFrame {
                 + "Каса на початок зміни " + (allSum - daySum + dayDiff) + " грн.\n"
                 + "Сума за день " + daySum + " грн.\n"
                 + "Страв за день " + cookCount + " \n"
-                + "Напоїв за день " + drinlCount + " \n"
+//                + "Напоїв за день " + drinlCount + " \n"
                 + "Чеків за день " + ordersCount + " \n"
                 + "Витрати за день " + dayDiff + " грн.\n"
                 + "Залишок в касі " + allSum + " грн\n"
@@ -3193,7 +3191,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addIngredient
 
     private void removeIngredientInAllDishes() {
-        int index = jTable5.getSelectedRow();
+        int index = jTable6.getSelectedRow();
 
         for (int i = 0; i < menu.size(); i++) {
             for (int j = 0; j < menu.get(i).getDishes().size(); j++) {
@@ -3232,14 +3230,10 @@ public class MainForm extends javax.swing.JFrame {
     }
     private void removeIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIngredient
         int index;
-        String dishTitles;
-        if (isAdmin()) {
+        String dishTitles;       
             index = jTable6.getSelectedRow();
             dishTitles = getRemovedDisheTitles(jTable6);
-        }else {
-            index = jTable5.getSelectedRow();
-            dishTitles = getRemovedDisheTitles(jTable5);
-        }
+      
         
         if (index != -1) {
             JFrame frame = new JFrame();
@@ -3256,7 +3250,7 @@ public class MainForm extends javax.swing.JFrame {
                 removeIngredientInAllDishes();
                 StorageUtils.removeIngredientFromDB(storageList.get(index).getId());
                 StorageUtils.readStorage();
-                showCalcTable(jTable5);
+                showCalcTable(jTable6);
             }
         }
     }//GEN-LAST:event_removeIngredient

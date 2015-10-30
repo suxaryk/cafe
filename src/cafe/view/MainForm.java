@@ -4059,9 +4059,11 @@ public class MainForm extends javax.swing.JFrame {
         icons.add(new ImageIcon(getClass().
                 getResource("/cafe/icons/small/coffee127.png")));
         icons.add(new ImageIcon(getClass().
-                getResource("/cafe/icons/small/drink175.png")));
-        icons.add(new ImageIcon(getClass().
                 getResource("/cafe/icons/small/beer.png")));
+        icons.add(new ImageIcon(getClass().
+                getResource("/cafe/icons/small/drink175.png")));        
+        icons.add(new ImageIcon(getClass().
+                getResource("/cafe/icons/small/no-drink.png")));
     }
 
     /**

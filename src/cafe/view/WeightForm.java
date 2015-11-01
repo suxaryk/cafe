@@ -206,19 +206,20 @@ public class WeightForm extends javax.swing.JFrame {
         jButton12.setBounds(70, 110, 50, 50);
 
         jTextField1.setEditable(false);
+        jTextField1.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(250, 80, 140, 30);
+        jTextField1.setBounds(250, 70, 140, 40);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setText("грам");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(400, 90, 60, 22);
+        jLabel1.setBounds(400, 90, 60, 25);
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 102, 102));
         jLabel2.setText("<html>Введіть вагу<br/>   м'яса/ковбасок<br/>    на 1 порцію</html> ");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(250, 20, 150, 50);
+        jLabel2.setBounds(250, 10, 150, 50);
 
         setSize(new java.awt.Dimension(456, 215));
         setLocationRelativeTo(null);
@@ -248,24 +249,30 @@ public class WeightForm extends javax.swing.JFrame {
             + myButton.getText());
     }//GEN-LAST:event_NumberPressed
 
-//    public String removeLastFewChar(String s){
-////        StringBuilder reverted = new StringBuilder(s).reverse();
-////        String l = new StringBuilder(reverted.substring(9)).toString();
-//        
-//        s.substring(0, s.length()-9);
-//        return 
-//    } 
+    public String removeLastFewChar(String s){
+//        StringBuilder reverted = new StringBuilder(s).reverse();
+//        String l = new StringBuilder(reverted.substring(9)).toString();
+        if (s.length() > 9) {
+            s = s.substring(0, s.length() - 9);
+        }
+        
+        return s;
+    } 
             
-    public static void setDishMeetWeight(){ 
+    public  void setDishMeetWeight(){ 
         System.out.println("active dish" + menu.get(activeCat).getDishes().get(activeDishes).getTitle());
-        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {
+        if (weightCount != 100) {
+            String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
+            menu.get(activeCat).getDishes().get(activeDishes).setTitle(removeLastFewChar(title) + "("+weightCount.intValue()+" гр.)");            
+        }
+        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {                      
             if (ing.getCount() == 0.1) {
-                ing.setCount(weightCount/1000);
+                ing.setCount(weightCount/1000);                
                 System.out.println("ingr count " + ing.getCount());
-                System.out.println("ingr id " + ing.getId());   
-//                menu.get(activeCat).getDishes().get(activeDishes).getTitle().
+                System.out.println("ingr id " + ing.getId());           
             }                     
         }
+        
     }
     private void setWeightCount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setWeightCount
         String line = jTextField1.getText();        
@@ -277,7 +284,8 @@ public class WeightForm extends javax.swing.JFrame {
             
         }
         if (weightCount != 0) {
-            this.dispose();            
+            this.dispose(); 
+            mainForm.setEnabled(true);
         }   
       
     }//GEN-LAST:event_setWeightCount

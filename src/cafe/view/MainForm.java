@@ -175,7 +175,6 @@ public class MainForm extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
-        jLabel10 = new javax.swing.JLabel();
         UsersPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -1378,11 +1377,6 @@ public class MainForm extends javax.swing.JFrame {
         });
         OrderPanel.add(jComboBox2);
         jComboBox2.setBounds(440, 430, 60, 30);
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel10.setText("Чек № ");
-        OrderPanel.add(jLabel10);
-        jLabel10.setBounds(250, 0, 100, 30);
 
         getContentPane().add(OrderPanel);
         OrderPanel.setBounds(710, 100, 500, 680);
@@ -2668,7 +2662,8 @@ public class MainForm extends javax.swing.JFrame {
             jTextField1.setText("0");
             jButton10.setBackground(Color.WHITE);
             OrderUtils.fillTableById(activeTable);
-            activeTable = 0;
+            setOrderIdForTable(0);
+            activeTable = 0;            
             jLabel4.setText("Стіл № ");
             System.out.println("orders size on remove" + orders.size());
             jButton10.setBackground(Color.WHITE);
@@ -2839,8 +2834,7 @@ public class MainForm extends javax.swing.JFrame {
             if (activeCat != 9 && activeCat != 10) {
                 if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") && !orders.get(activeTable).isPayed()) {
                     if (!isOrderPrinted()) {
-                        orders.get(activeTable).setDayId(printedOrderCount++);
-                        jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
+                        orders.get(activeTable).setDayId(printedOrderCount++);                     
                         setOrderIdForTable(orders.get(activeTable).getDayId());
                     }
                   
@@ -3669,7 +3663,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void changeTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTable
         int index = jComboBox2.getSelectedIndex();
-        if (index != 0) {
+        if (index != 0 && activeTable != 0) {
             if (!orders.get(activeTable).getItems().isEmpty()) {
                 if (!orders.containsKey(index)) {
                     orders.put(index, orders.get(activeTable));
@@ -3858,8 +3852,7 @@ public class MainForm extends javax.swing.JFrame {
 //                    orders.get(activeCat);
 //                }
                 if (!isOrderPrinted()) {
-                    orders.get(activeTable).setDayId(printedOrderCount++);
-                    jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
+                    orders.get(activeTable).setDayId(printedOrderCount++);                
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }                
                 OrderUtils.addOrder(orders.get(activeTable),
@@ -4149,14 +4142,15 @@ public class MainForm extends javax.swing.JFrame {
     private void setOrderIdForTable(int orderId){ 
         String tableHtml = ((JButton) TablesPanel.getComponent(activeTable-1)).getText();
         Document doc = Jsoup.parse(tableHtml);       
-        for (Element h2: doc.select("h2") ) {            
-            h2.text(String.valueOf(orderId));             
+        for (Element h2: doc.select("h2") ) { 
+            if (orderId == 0) {
+                h2.text("");
+            }else{
+                h2.text(String.valueOf(orderId));
+            }
+                      
         }        
         ((JButton) TablesPanel.getComponent(activeTable-1)).setText(doc.toString());
-    }
-    private String initTableHtml(int tableNumber){
-        return html + "<p>" + tableNumber + "</p></html>";
-        
     }
     
     private void initTables(){
@@ -4175,9 +4169,15 @@ public class MainForm extends javax.swing.JFrame {
                 + "\n"
                 + "<div id=\"count\">\n"
                 + "    <h2></h2>\n"
-                + "</div>\n";
-        for (int i = 0; i < TablesPanel.getComponentCount()-4; i++) {
-            ((JButton)TablesPanel.getComponent(i)).setText(String.valueOf(initTableHtml(i+1)));                    
+                + "</div>\n"
+                + "<p>";
+        String htmlEnd = "</p></html>";
+        for (int i = 0; i < TablesPanel.getComponentCount()-3; i++) {
+            if (i+1 < 10) {
+                ((JButton) TablesPanel.getComponent(i)).setText(html + "0" + String.valueOf(i + 1) + htmlEnd);
+            }else{
+                ((JButton) TablesPanel.getComponent(i)).setText(html + String.valueOf(i + 1) + htmlEnd);
+            }                              
         }
     }
 
@@ -4396,7 +4396,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox6;
     private javax.swing.JComboBox jComboBox7;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

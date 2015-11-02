@@ -58,6 +58,9 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 /**
  * all methods in one class it`s so bad i know
@@ -76,6 +79,7 @@ public class MainForm extends javax.swing.JFrame {
 
         initLoginForm();
         initMainForm();
+        initTables();
         initCalculationTable();
         loadTables();
 
@@ -153,7 +157,6 @@ public class MainForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton19 = new javax.swing.JButton();
         jCheckBox2 = new javax.swing.JCheckBox();
-        jButton16 = new javax.swing.JButton();
         OrderPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -257,6 +260,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton46 = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -289,9 +293,8 @@ public class MainForm extends javax.swing.JFrame {
 
         table01.setBackground(new java.awt.Color(0, 153, 102));
         table01.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        table01.setText("<html>\n    <style>\n#count {  \n    color: #FF6666; \n    font: 12px Arial, sans-serif;\n}\np{\n     margin-left: 20px;\n     margin-bottom: 20px;\n     margin-right: 20px;\n}\n\n    </style>\n\n<div id=\"count\">\n    <h2> 222</h2>\n</div>\n<p>01 </p>\n\n\n\n</html>");
         table01.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        table01.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        table01.setLabel("01");
         table01.setName("tbl1"); // NOI18N
         table01.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -303,7 +306,7 @@ public class MainForm extends javax.swing.JFrame {
 
         table02.setBackground(new java.awt.Color(0, 153, 102));
         table02.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        table02.setText("02");
+        table02.setText("<html>\n    <style>\n#count {  \n    color: #FF6666; \n    font: 12px Arial, sans-serif;\n}\np{\n     margin-left: 20px;\n     margin-bottom: 20px;\n     margin-right: 20px;\n}\n\n    </style>\n\n<div id=\"count\">\n    <h2> 222</h2>\n</div>\n<p>02 </p>\n\n\n\n</html>");
         table02.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         table02.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         table02.setName("tbl2"); // NOI18N
@@ -317,7 +320,7 @@ public class MainForm extends javax.swing.JFrame {
 
         table03.setBackground(new java.awt.Color(0, 153, 102));
         table03.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        table03.setText("03");
+        table03.setText("<html>\n    <style>\n#count {  \n    color: #FF6666; \n    font: 12px Arial, sans-serif;\n}\np{\n     margin-left: 20px;\n     margin-bottom: 20px;\n     margin-right: 20px;\n}\n    </style>\n\n<div id=\"count\">\n    <h2></h2>\n</div>\n<p>03 </p>\n\n\n\n</html>");
         table03.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         table03.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         table03.setName("tbl3"); // NOI18N
@@ -1183,15 +1186,6 @@ public class MainForm extends javax.swing.JFrame {
         });
         DishesPanel.add(jCheckBox2);
         jCheckBox2.setBounds(0, 530, 170, 31);
-
-        jButton16.setText("вага");
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
-            }
-        });
-        DishesPanel.add(jButton16);
-        jButton16.setBounds(10, 570, 130, 23);
 
         jTabbedPane1.addTab("                 ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), DishesPanel); // NOI18N
 
@@ -2402,6 +2396,11 @@ public class MainForm extends javax.swing.JFrame {
         StoragePanel.add(jScrollPane7);
         jScrollPane7.setBounds(0, 30, 1080, 940);
 
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel13.setText("Вага");
+        StoragePanel.add(jLabel13);
+        jLabel13.setBounds(1160, 340, 60, 14);
+
         getContentPane().add(StoragePanel);
         StoragePanel.setBounds(0, 0, 1280, 1000);
 
@@ -2524,12 +2523,8 @@ public class MainForm extends javax.swing.JFrame {
         }
         return index;
     }
-
-    private void addRecordToTable(int count) {
-        clearCountButton();
-        if (activeCat == 4) {
-            changeIngredientWeight();
-        }
+    
+    public void addOrderItemToTable(int count){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         if (jCheckBox1.isSelected()) {
@@ -2559,10 +2554,28 @@ public class MainForm extends javax.swing.JFrame {
             });
         }
 
-        
         OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
         jTextField1.setText(String.valueOf(orders.get(activeTable).calcOrderSum()));
-
+    }
+    
+    public boolean calcMeat(){
+        boolean calcMeat = false;
+        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {
+            if (ing.getCount() == 0.1) {
+                calcMeat = true;
+                break;
+            }
+        }       
+        return calcMeat;
+    }
+    private void addRecordToTable(int count) {
+        clearCountButton();        
+        if (activeCat == 4 && calcMeat()) {            
+            changeIngredientWeight();
+            mainForm.setEnabled(false);                      
+        }else{
+            addOrderItemToTable(count);
+        }    
     }
 
     private void refreshListOfPrices() {
@@ -2631,8 +2644,12 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_chooseCat
 
+    public void refreshDishList(int cat){
+        jList2.setListData(menu.get(cat).getDishes().toArray());
+    }
     private void chooseCount(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseCount
-        addRecordToTable(getButtonId(evt));
+        dishCount = getButtonId(evt);
+        addRecordToTable(dishCount);
         evt.getComponent().setBackground(RED);
     }//GEN-LAST:event_chooseCount
 
@@ -2824,6 +2841,7 @@ public class MainForm extends javax.swing.JFrame {
                     if (!isOrderPrinted()) {
                         orders.get(activeTable).setDayId(printedOrderCount++);
                         jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
+                        setOrderIdForTable(orders.get(activeTable).getDayId());
                     }
                   
                     markDishesAsCooked();
@@ -3834,7 +3852,7 @@ public class MainForm extends javax.swing.JFrame {
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
         if (jButton10.isEnabled()) {
             if (orders.get(activeTable).calcOrderSum() != 0) {
-                subOrderIngredientsFromDB();
+                subOrderIngredientsFromDB();           
 //                printClientCheck();ghjg
 //                if (activeCat == 9 || activeCat == 10) {
 //                    orders.get(activeCat);
@@ -3842,6 +3860,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (!isOrderPrinted()) {
                     orders.get(activeTable).setDayId(printedOrderCount++);
                     jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
+                    setOrderIdForTable(orders.get(activeTable).getDayId());
                 }                
                 OrderUtils.addOrder(orders.get(activeTable),
                         userList.get(User.active));
@@ -3913,12 +3932,6 @@ public class MainForm extends javax.swing.JFrame {
         weightForm.setVisible(true);
         weightForm.toFront();
     }
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        changeIngredientWeight();
-        
-        
-    }//GEN-LAST:event_jButton16ActionPerformed
-
     private void jTable4EmployeeSelected(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable4EmployeeSelected
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable4EmployeeSelected
@@ -4132,6 +4145,41 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void setOrderIdForTable(int orderId){ 
+        String tableHtml = ((JButton) TablesPanel.getComponent(activeTable-1)).getText();
+        Document doc = Jsoup.parse(tableHtml);       
+        for (Element h2: doc.select("h2") ) {            
+            h2.text(String.valueOf(orderId));             
+        }        
+        ((JButton) TablesPanel.getComponent(activeTable-1)).setText(doc.toString());
+    }
+    private String initTableHtml(int tableNumber){
+        return html + "<p>" + tableNumber + "</p></html>";
+        
+    }
+    
+    private void initTables(){
+        html = "<html>\n"
+                + "    <style>\n"
+                + "#count {  \n"
+                + "    color: #FF6666; \n"
+                + "    font: 12px Arial, sans-serif;\n"
+                + "}\n"
+                + "p{\n"
+                + "     margin-left: 20px;\n"
+                + "     margin-bottom: 20px;\n"
+                + "     margin-right: 20px;\n"
+                + "}\n"
+                + "    </style>\n"
+                + "\n"
+                + "<div id=\"count\">\n"
+                + "    <h2></h2>\n"
+                + "</div>\n";
+        for (int i = 0; i < TablesPanel.getComponentCount()-4; i++) {
+            ((JButton)TablesPanel.getComponent(i)).setText(String.valueOf(initTableHtml(i+1)));                    
+        }
+    }
 
     private void InitComonentsProperty() {
         jCheckBox1.setVisible(false);
@@ -4229,6 +4277,8 @@ public class MainForm extends javax.swing.JFrame {
     public static ArrayList<Employee> employees = new ArrayList<>();
     public static Map<Integer, Order> orders = new HashMap();
     //private static final int tablesCount = 25;
+    private static String html;
+    public static int dishCount;
     public static int activeDishes;
     public static int activeCat;
     public static int activeTable;
@@ -4283,7 +4333,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
@@ -4350,6 +4399,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;

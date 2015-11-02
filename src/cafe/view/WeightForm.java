@@ -1,6 +1,7 @@
 package cafe.view;
 
 
+import cafe.Utils.db.Dish.DishUtils;
 import cafe.model.Ingredient;
 import static cafe.view.MainForm.activeCat;
 import static cafe.view.MainForm.activeDishes;
@@ -250,29 +251,24 @@ public class WeightForm extends javax.swing.JFrame {
     }//GEN-LAST:event_NumberPressed
 
     public String removeLastFewChar(String s){
-//        StringBuilder reverted = new StringBuilder(s).reverse();
-//        String l = new StringBuilder(reverted.substring(9)).toString();
         if (s.length() > 9) {
             s = s.substring(0, s.length() - 9);
-        }
-        
+        }        
         return s;
     } 
             
-    public  void setDishMeetWeight(){ 
-        System.out.println("active dish" + menu.get(activeCat).getDishes().get(activeDishes).getTitle());
-        if (weightCount != 100) {
-            String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
-            menu.get(activeCat).getDishes().get(activeDishes).setTitle(removeLastFewChar(title) + "("+weightCount.intValue()+" гр.)");            
-        }
+    public  void setDishMeetWeight(){   
         for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {                      
             if (ing.getCount() == 0.1) {
-                ing.setCount(weightCount/1000);                
-                System.out.println("ingr count " + ing.getCount());
-                System.out.println("ingr id " + ing.getId());           
+                ing.setCount(weightCount/1000);     
+                String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
+                int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
+                menu.get(activeCat).getDishes().get(activeDishes).setTitle(removeLastFewChar(title) + "(" + weightCount.intValue() + " гр.)");
+                Double k = (weightCount * price) / 100;
+                menu.get(activeCat).getDishes().get(activeDishes).setPrice(k.intValue() + 1);
+                break;                          
             }                     
-        }
-        
+        }        
     }
     private void setWeightCount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setWeightCount
         String line = jTextField1.getText();        
@@ -280,8 +276,9 @@ public class WeightForm extends javax.swing.JFrame {
             weightCount = Double.parseDouble(line);
             System.out.println("weightCount "+ weightCount);
             setDishMeetWeight();            
-            mainForm.addOrderItemToTable(dishCount);    
-            
+            mainForm.addOrderItemToTable(dishCount); 
+            DishUtils.readDBCategoryById(4);
+            mainForm.refreshDishList(4);            
         }
         if (weightCount != 0) {
             this.dispose(); 

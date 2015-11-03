@@ -8,8 +8,6 @@ import static cafe.view.MainForm.activeDishes;
 import static cafe.view.MainForm.dishCount;
 import static cafe.view.MainForm.mainForm;
 import static cafe.view.MainForm.menu;
-import java.util.ArrayList;
-import java.util.Collections;
 import javax.swing.JButton;
 
 /**
@@ -256,7 +254,8 @@ public class WeightForm extends javax.swing.JFrame {
         }        
         return s;
     } 
-            
+           
+    //change ingredient weight if it is equals 0.1 KG
     public  void setDishMeetWeight(){   
         for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {                      
             if (ing.getCount() == 0.1) {

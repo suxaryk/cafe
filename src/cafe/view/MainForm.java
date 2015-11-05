@@ -175,6 +175,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
+        jLabel10 = new javax.swing.JLabel();
         UsersPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -1300,7 +1301,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Стіл № ");
         OrderPanel.add(jLabel4);
-        jLabel4.setBounds(360, 0, 100, 30);
+        jLabel4.setBounds(390, 0, 110, 30);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("  Оператор №   ");
@@ -1379,6 +1380,11 @@ public class MainForm extends javax.swing.JFrame {
         });
         OrderPanel.add(jComboBox2);
         jComboBox2.setBounds(440, 430, 60, 30);
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel10.setText("Чек № ");
+        OrderPanel.add(jLabel10);
+        jLabel10.setBounds(250, 0, 100, 30);
 
         getContentPane().add(OrderPanel);
         OrderPanel.setBounds(710, 100, 500, 680);
@@ -1674,7 +1680,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTextPane1);
 
         UsersPanel.add(jScrollPane8);
-        jScrollPane8.setBounds(600, 660, 350, 210);
+        jScrollPane8.setBounds(600, 660, 170, 130);
 
         jTable4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
@@ -1742,7 +1748,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane9.setViewportView(jTextPane2);
 
         UsersPanel.add(jScrollPane9);
-        jScrollPane9.setBounds(600, 400, 350, 170);
+        jScrollPane9.setBounds(600, 400, 170, 100);
 
         getContentPane().add(UsersPanel);
         UsersPanel.setBounds(90, 0, 1130, 1040);
@@ -2449,6 +2455,9 @@ public class MainForm extends javax.swing.JFrame {
             }
         } else {
             orders.put(activeTable, new Order());
+            if (!isOrderPrinted()) {
+                orders.get(activeTable).setDayId(printedOrderCount++);                
+            }
             jTextField1.setText("0");
             System.out.println("orders size = " + orders.size());
         }
@@ -2472,8 +2481,11 @@ public class MainForm extends javax.swing.JFrame {
             jTable1.setBackground(Color.WHITE);
         }
         evt.getComponent().setBackground(Color.yellow);
-        jButton7.setEnabled(true);
-        jButton9.setEnabled(true);
+        jButton7.setEnabled(true);      
+        if (orders.get(activeTable).isPayed()) {
+             jButton9.setEnabled(true);            
+        }
+        jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
     }//GEN-LAST:event_chooseTable
 
     private void PersonalLogining(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalLogining
@@ -2531,7 +2543,7 @@ public class MainForm extends javax.swing.JFrame {
         boolean isCook = true ? activeCat < 9 : false;
         if (jCheckBox1.isSelected()) {
             menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
-        }
+        }        
         OrderItem newOrder = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCook);
         int index = getIndex(count, isCook);
 
@@ -2815,11 +2827,14 @@ public class MainForm extends javax.swing.JFrame {
                 + " tr {\n"
                 + "    border-collapse: collapse;\n"
                 + "    margin: 0px;"
-                + "    font-size: 12pt;"
+                + "    font-size: 7pt;"
                 + "    padding: 0px;"
                 + "border-spacing: 0px; "
                 + ""
                 + "}\n"
+                + "td {"
+                + "      padding: 0px;"
+                + "}"
                 + "</style>";
         String checkHtml = style;
         checkHtml += ""
@@ -2841,8 +2856,8 @@ public class MainForm extends javax.swing.JFrame {
 
         for (OrderItem item : orders.get(activeTable).getItems()) {
             checkHtml += "  <tr>"
-                    + "    <td font-size: 10pt style=\"width:100%\"> " + item.getDish().getTitle() + " </td> "
-                    + "    <td style=\"width:3%\"> " + item.getCount() + " x " + "</td>"
+                    + "    <td  style=\"width:100%\"> " + item.getDish().getTitle().toUpperCase() + " </td> "
+                    + "    <td style=\"width:1%\"> " + item.getCount() + " x" + "</td>"
                     + "    <td style=\"width:3%\"> " + item.getDish().getPrice() + "</td>"
                     + "    <td style=\"width:3%\" align=\"right\"> " + " " + item.getSum() + "</td>"
                     + "  </tr>";
@@ -2885,7 +2900,8 @@ public class MainForm extends javax.swing.JFrame {
         if (jTable1.getRowCount() > 0) {
             if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") && !orders.get(activeTable).isPayed()) {
                 if (!isOrderPrinted()) {
-                    orders.get(activeTable).setDayId(printedOrderCount++);
+//                    orders.get(activeTable).setDayId(printedOrderCount++);
+                    jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
                 markDishesAsCooked();
@@ -2894,6 +2910,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (jButton3.isEnabled()) {
                     if (orders.get(activeTable).calcOrderSum() != 0) {
                         printKitchenCheck();
+                         jButton9.setEnabled(false);
                     }
                 }
             }
@@ -3745,14 +3762,18 @@ public class MainForm extends javax.swing.JFrame {
                 + "border-spacing: 0px; "
                 + "}"
                 + " tr {\n"
-                + "    border: 1px solid black;\n"
-                + "    border-collapse: collapse;\n"
                 + "    margin: 0px;"
-                + "    font-size: 12pt;"
+                + "    font-size: 10pt;"
                 + "    padding: 0px;"
                 + "border-spacing: 0px; "
                 + ""
                 + "}\n"
+                + "td {"
+                + "      border: 1px solid black;"
+                + "      padding: 0px;"
+                + "      padding-left: 5px;"
+                + "      padding-right: 5px;"
+                + "}"
                 + "</style>";
         String dishes = style;
         dishes += ""
@@ -3803,7 +3824,8 @@ public class MainForm extends javax.swing.JFrame {
                 subOrderIngredientsFromDB();
 
                 if (!isOrderPrinted()) {
-                    orders.get(activeTable).setDayId(printedOrderCount++);
+//                    orders.get(activeTable).setDayId(printedOrderCount++);
+                    jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
                 PrintClientCheck();
@@ -3824,6 +3846,7 @@ public class MainForm extends javax.swing.JFrame {
                 jTabbedPane1.setEnabledAt(1, false);
                 jTabbedPane1.setEnabledAt(2, false);
                 jTabbedPane1.setSelectedIndex(0);
+                 jButton9.setEnabled(true);
             }
         }
     }//GEN-LAST:event_payOrder
@@ -4325,6 +4348,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox6;
     private javax.swing.JComboBox jComboBox7;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

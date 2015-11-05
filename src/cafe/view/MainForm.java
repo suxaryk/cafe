@@ -3649,9 +3649,11 @@ public class MainForm extends javax.swing.JFrame {
                     orders.remove(activeTable);
                     jLabel4.setText("Стіл № " + index);
                     TablesPanel.getComponent(index - 1).setBackground(Color.yellow);
+                    setOrderIdForTable(0);
                     TablesPanel.getComponent(activeTable - 1).setBackground(GREEN);
                     OrderUtils.fillTableById(activeTable);
                     activeTable = index;
+                    setOrderIdForTable(orders.get(activeTable).getDayId());
                     OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
                 } else {
                     jComboBox2.setSelectedIndex(0);
@@ -4089,13 +4091,21 @@ public class MainForm extends javax.swing.JFrame {
 
         if (!loadOrders.isEmpty()) {
             System.out.println("loadTables---");
-
+            int maxOrderId = 0;
             orders.putAll(loadOrders);
             for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
                 if (entry.getValue().getOrderSum() > 0) {
-                    TablesPanel.getComponent(entry.getKey() - 1).setBackground(Color.yellow);
+                    TablesPanel.getComponent(entry.getKey() - 1).setBackground(Color.yellow);                 
+                    activeTable = entry.getKey();
+                    System.out.println("actTAble " + activeTable);
+                    System.out.println("orderId " + entry.getValue().getDayId());
+                    setOrderIdForTable(entry.getValue().getDayId());      
+                    if (maxOrderId < entry.getValue().getDayId()) {
+                        maxOrderId = entry.getValue().getDayId();                        
+                    }
                 }
             }
+            printedOrderCount = maxOrderId+1;
         }
     }
 

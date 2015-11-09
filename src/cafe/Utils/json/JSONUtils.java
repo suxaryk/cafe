@@ -109,7 +109,7 @@ public class JSONUtils {
                     String title =  jsonObj.get("title").toString();                    
                     int count = Integer.parseInt(jsonObj.
                             get("count").toString());
-                    list.add(new OrderItem(new Dish(title), count));                                    
+                    list.add(new OrderItem(new Dish(title), count, true));                                    
                 }
             } catch (ParseException ex) {
                 System.out.println("Error parse =" + Dish.class.getName());
@@ -125,10 +125,10 @@ public class JSONUtils {
             itemObj.put("title", item.getDish().getTitle());
             itemObj.put("price", item.getDish().getPrice());  
             itemObj.put("count", item.getCount());
+            itemObj.put("cook", item.isCook());
             jsonArr.add(itemObj);            
         }
-        return jsonArr.toJSONString();
-        
+        return jsonArr.toJSONString();        
     }
     public static ArrayList<OrderItem> convertJSONToOrderTables(String jsonOrder){
         if (!"".equals(jsonOrder)) {            
@@ -144,7 +144,8 @@ public class JSONUtils {
                     int price = Integer.parseInt(jsonObj.get("price").toString());
                     int count = Integer.parseInt(jsonObj.
                             get("count").toString());
-                    list.add(new OrderItem(new Dish(title, price), count));                                   
+                    boolean isCook = Boolean.parseBoolean(jsonObj.get("cook").toString());
+                    list.add(new OrderItem(new Dish(title, price), count, isCook));                                   
                 }
             } catch (ParseException ex) {
                 System.out.println("Error parse =" + Dish.class.getName());

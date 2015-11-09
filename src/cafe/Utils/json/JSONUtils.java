@@ -62,28 +62,33 @@ public class JSONUtils {
         
         
     }
-    //JSON String to data
-    public static void setJSONToRecipe(String jsonRecipes, int activeCat, 
-                                                       int activeDish){
+    //get Recipe from JSON String 
+    public static List<Ingredient> getRecipeFromJSON(String jsonRecipes){
         if (!"".equals(jsonRecipes)) {
             try {
                 JSONParser parser = new JSONParser();
                 Object obj = parser.parse(jsonRecipes);
                 JSONArray jsonArr = (JSONArray) obj;
-                menu.get(activeCat).getDishes().get(activeDish)
-                        .getRecipe().clear();
-                for (int i = 0; i < jsonArr.size(); i++) {
-                    JSONObject jsonObj = (JSONObject) jsonArr.get(i);
+//                menu.get(activeCat).getDishes().get(activeDish)
+//                        .getRecipe().clear();
+                List<Ingredient> recipe = new ArrayList<>();
+                for (Object jsonArr1 : jsonArr) {
+                    JSONObject jsonObj = (JSONObject) jsonArr1;
                     int Id = Integer.parseInt(jsonObj.get("id").toString());                     
                     double count = Double.parseDouble(jsonObj.
-                                                        get("c").toString());                  
-                    menu.get(activeCat).getDishes().get(activeDish)
-                            .getRecipe().add(new Ingredient(Id, count));                                    
+                            get("c").toString());
+                    //                    menu.get(activeCat).getDishes().get(activeDish)
+//                            .getRecipe().add(new Ingredient(Id, count));    
+                    recipe.add(new Ingredient(Id, count));
                 }
+                return recipe;
             } catch (ParseException ex) {
-                System.out.println("Error parse =" + Dish.class.getName());
+                System.out.println("Error parse =" + Dish.class.getName());                
             }
+        }{
+            return null;
         }
+
     }
     public static String  convertOrderToJSON(ArrayList<OrderItem> items){
         JSONArray jsonArr = new JSONArray();

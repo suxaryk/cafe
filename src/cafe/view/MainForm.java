@@ -157,6 +157,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton19 = new javax.swing.JButton();
         jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
         OrderPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -1188,6 +1189,11 @@ public class MainForm extends javax.swing.JFrame {
         });
         DishesPanel.add(jCheckBox2);
         jCheckBox2.setBounds(0, 530, 170, 31);
+
+        jCheckBox3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jCheckBox3.setText("страва");
+        DishesPanel.add(jCheckBox3);
+        jCheckBox3.setBounds(0, 570, 130, 27);
 
         jTabbedPane1.addTab("                 ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), DishesPanel); // NOI18N
 
@@ -2506,6 +2512,7 @@ public class MainForm extends javax.swing.JFrame {
         System.out.println("selected index " + jList2.getSelectedIndex());
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
+        jCheckBox3.setSelected(menu.get(activeCat).getDishes().get(activeDishes).isCook());
         jTextField4.setText(title);
         jTextField2.setText(String.valueOf(price));
 
@@ -2567,8 +2574,8 @@ public class MainForm extends javax.swing.JFrame {
                 .getSum()
             });
         }
-
-        OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
+        
+        OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeCat,  activeTable);
         jTextField1.setText(String.valueOf(orders.get(activeTable).calcOrderSum()));
     }
 
@@ -2760,6 +2767,7 @@ public class MainForm extends javax.swing.JFrame {
             jScrollPane5.setVisible(true);
             jTextField6.setVisible(true);
             jButton21.setVisible(true);
+            jCheckBox3.setVisible(true);
 
         } else {
             jLabel5.setText("  " + userList.get(User.active).getName());
@@ -2911,7 +2919,7 @@ public class MainForm extends javax.swing.JFrame {
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
                 markDishesAsCooked();
-                OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
+                OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active),activeCat, activeTable);
 
                 if (jButton3.isEnabled()) {
                     if (orders.get(activeTable).calcOrderSum() != 0) {
@@ -3078,7 +3086,8 @@ public class MainForm extends javax.swing.JFrame {
         if (!jTextField2.getText().equals("") && !jTextField4.getText().equals("")) {
             String title = jTextField4.getText();
             int price = Integer.parseInt(jTextField2.getText());
-            DishUtils.addDish(new Dish(title, price), activeCat);
+            boolean cook = jCheckBox3.isSelected();
+            DishUtils.addDish(new Dish(title, price, cook), activeCat);
             menu.get(activeCat).getDishes().clear();
             DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
@@ -3198,23 +3207,26 @@ public class MainForm extends javax.swing.JFrame {
 
     private void updateTitleAndPrice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTitleAndPrice
         int index = jList2.getSelectedIndex();
-        int dbId = menu.get(activeCat).getDishes().get(index).getDbID();
-        String title = jTextField4.getText();
-        System.out.println("title = " + title);
-        int price = Integer.parseInt(jTextField2.getText());
-        if (!title.equals("")) {
-            DishUtils.updateDishTitle(dbId, title, activeCat);
+        if (index != -1) {
+            int dbId = menu.get(activeCat).getDishes().get(index).getDbID();
+            String title = jTextField4.getText();
+            System.out.println("title = " + title);
+            int price = Integer.parseInt(jTextField2.getText());
+            if (!title.equals("")) {
+                DishUtils.updateDishTitle(dbId, title, activeCat);
+            }
+            if (price != 0) {
+                DishUtils.updateDishPrice(dbId, price, activeCat);
+            }
+            menu.get(activeCat).getDishes().clear();
+            DishUtils.readDBCategoryById(activeCat);
+            jList2.clearSelection();
+            jList2.setListData(menu.get(activeCat).getDishes().toArray());
+            jList2.ensureIndexIsVisible(index);
+            jList2.setSelectedIndex(index);
+            getListItem(null);            
         }
-        if (price != 0) {
-            DishUtils.updateDishPrice(dbId, price, activeCat);
-        }
-        menu.get(activeCat).getDishes().clear();
-        DishUtils.readDBCategoryById(activeCat);
-        jList2.clearSelection();
-        jList2.setListData(menu.get(activeCat).getDishes().toArray());
-        jList2.ensureIndexIsVisible(index);
-        jList2.setSelectedIndex(index);
-        getListItem(null);
+        
     }//GEN-LAST:event_updateTitleAndPrice
 
     private void setSort(JComboBox comboBox, JTable table) {
@@ -3657,7 +3669,7 @@ public class MainForm extends javax.swing.JFrame {
                     OrderUtils.fillTableById(activeTable);
                     activeTable = index;
                     setOrderIdForTable(orders.get(activeTable).getDayId());
-                    OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
+                    OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active),activeCat, activeTable);
                 } else {
                     jComboBox2.setSelectedIndex(0);
                 }
@@ -3689,7 +3701,7 @@ public class MainForm extends javax.swing.JFrame {
         }
         refreshListOfPrices();
     }//GEN-LAST:event_chengeScaleToGrams
-
+    
     private void payForStorageAddition(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payForStorageAddition
         String line = jTextField12.getText();
         if (!line.equals("")) {
@@ -3705,7 +3717,7 @@ public class MainForm extends javax.swing.JFrame {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
                 System.out.println("Incasacia - diff =" + order.calcOrderSum());
-                OrderUtils.addOrder(order, userList.get(User.active));
+                OrderUtils.addOrder(order, userList.get(User.active),  0);
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
                 jTextField12.setText("");
             }
@@ -3747,6 +3759,8 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane5.setVisible(false);
         jTextField6.setVisible(false);
         jButton21.setVisible(false);
+        
+        jCheckBox3.setVisible(false);
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
@@ -3799,8 +3813,8 @@ public class MainForm extends javax.swing.JFrame {
                 + "<table    style=\"width:100%\">";
 
         for (OrderItem item : orders.get(activeTable).getItems()) {
-            if (!item.isPrinted() && item.isCook()) {
-                System.out.println("cook" + item.isCook());
+            if (!item.isPrinted() && item.getDish().isCook()) {
+                System.out.println("cook" + item.getDish().isCook());
                 item.setPrinted(true);
                 dishes += "  <tr>"
                         + "    <td style=\"width:3%\"> " + i++ + " </td> "
@@ -3841,8 +3855,8 @@ public class MainForm extends javax.swing.JFrame {
                 }
                 PrintClientCheck();
                 OrderUtils.addOrder(orders.get(activeTable),
-                        userList.get(User.active));
-                OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
+                        userList.get(User.active), activeCat);
+                OrderUtils.updateTable(new Order(), userList.get(User.active), activeCat, activeTable);
                 orders.get(activeTable).setPayed(true);
                 ordered = true;
                 jTable1.setBackground(lightRed);
@@ -4185,6 +4199,7 @@ public class MainForm extends javax.swing.JFrame {
         RecipePanel.setVisible(false);
         StoragePanel.setVisible(false);
         jButton20.setEnabled(false);
+        
 
         jButton11.setBackground(GREEN);
         jButton1.setBackground(RED);
@@ -4204,6 +4219,8 @@ public class MainForm extends javax.swing.JFrame {
         jTable4.setVisible(false);
         jTextField6.setVisible(false);
         jButton21.setVisible(false);
+        
+        jCheckBox3.setVisible(false);
 
     }
 
@@ -4362,6 +4379,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton99;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox6;

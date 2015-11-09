@@ -2,6 +2,7 @@ package cafe.view;
 
 import cafe.Utils.db.OrderUtils;
 import cafe.model.Order;
+import cafe.model.OrderItem;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class ClientForm extends javax.swing.JFrame {
                 java.lang.Long.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -90,6 +91,11 @@ public class ClientForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(60);
@@ -98,9 +104,9 @@ public class ClientForm extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(1).setMinWidth(50);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(50);
             jTable1.getColumnModel().getColumn(1).setMaxWidth(50);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(300);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(300);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(300);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(200);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(200);
             jTable1.getColumnModel().getColumn(3).setMinWidth(200);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(200);
             jTable1.getColumnModel().getColumn(3).setMaxWidth(200);
@@ -113,7 +119,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(529, 0, 752, 860);
+        jScrollPane1.setBounds(631, 0, 650, 860);
 
         jTable2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -179,13 +185,45 @@ public class ClientForm extends javax.swing.JFrame {
         orders.clear();
         orders.addAll(OrderUtils.getOrders(new java.sql.Timestamp(startDate.getTime()),
                 new java.sql.Timestamp(endDate.getTime())));
-        refreshTable(jTable1, orders);
+        refreshOrderTable(jTable1, orders);
 
 
     }//GEN-LAST:event_getAllOrders
 
-    private void refreshTable(JTable jTable, List<Order> list) {
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        int index = jTable1.getSelectedRow();
+        if (index != -1) {
+            refreshRecipeTable(index);                    
+        }
+    }//GEN-LAST:event_jTable1MousePressed
+    
+    private void refreshRecipeTable(int id){
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();       
+
+        for (OrderItem item : orders.get(id).getItems()) {
+            model.addRow(new Object[]{              
+                item.getDish().getTitle(),
+                item.getDish().getPrice(),
+                item.getCount(),
+                item.getSum()                
+            });
+        }
+    }
+    private void refreshRemoveRecipeTable(int id){
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();       
+
+        for (OrderItem item : orders.get(id).getRemovedItems()) {
+            model.addRow(new Object[]{              
+                item.getDish().getTitle(),
+                item.getDish().getPrice(),
+                item.getCount(),
+                item.getSum()                
+            });
+        }
+    }
+    
+    private void refreshOrderTable(JTable table, List<Order> list) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         int k = 1;
 
@@ -197,7 +235,7 @@ public class ClientForm extends javax.swing.JFrame {
                 dateFormat.format(order.getDate()),
                 order.getOrderSum(),
                 order.getCookCount()
-            });
+            });          
         }
     }
 

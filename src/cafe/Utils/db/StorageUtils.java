@@ -93,5 +93,28 @@ public class StorageUtils {
             System.out.println("Connection Failed! Check output console - updateCount");
         }
     }
+    
+    public static Ingredient getIngredientById(int id){
+        Ingredient ingredient = new Ingredient();
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            String SQL = "SELECT * FROM storage WHERE Id =" + id;
+            System.out.println(!connection.isClosed() ? "DB connected!"
+                    : "Error DB connecting");
+            MainForm.storageList.clear();
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    ingredient.setId(rs.getInt("Id"));
+                    ingredient.setTitle(rs.getString("title"));
+                    ingredient.setCount(rs.getDouble("count"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - readStorage");
+        }
+        return ingredient;
+        
+    }
 
 }

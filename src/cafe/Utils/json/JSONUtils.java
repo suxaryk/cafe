@@ -6,6 +6,7 @@
 package cafe.Utils.json;
 
 import cafe.Utils.FileUtils;
+import cafe.Utils.db.Dish.DishUtils;
 import cafe.Utils.db.Dish.RecepiesUtils;
 import cafe.model.Dish;
 import cafe.model.Ingredient;
@@ -74,7 +75,8 @@ public class JSONUtils {
                 List<Ingredient> recipe = new ArrayList<>();
                 for (Object jsonArr1 : jsonArr) {
                     JSONObject jsonObj = (JSONObject) jsonArr1;
-                    int Id = Integer.parseInt(jsonObj.get("id").toString());                     
+                    int Id = Integer.parseInt(jsonObj.get("id").toString());  
+                    
                     double count = Double.parseDouble(jsonObj.
                             get("c").toString());
                     //                    menu.get(activeCat).getDishes().get(activeDish)
@@ -90,11 +92,12 @@ public class JSONUtils {
         }
 
     }
-    public static String  convertOrderToJSON(ArrayList<OrderItem> items){
+    public static String  convertOrderToJSON(ArrayList<OrderItem> items, int activeCat){
         JSONArray jsonArr = new JSONArray();
         for (OrderItem item : items) {
             JSONObject itemObj = new JSONObject();
-            itemObj.put("title", item.getDish().getTitle());           
+            itemObj.put("catId", activeCat);           
+            itemObj.put("id", item.getDish().getDbID());           
             itemObj.put("count", item.getCount());           
             jsonArr.add(itemObj);            
         }
@@ -107,14 +110,14 @@ public class JSONUtils {
             try {
                 JSONParser parser = new JSONParser();
                 Object obj = parser.parse(jsonOrder);
-                JSONArray jsonArr = (JSONArray) obj;
-                
+                JSONArray jsonArr = (JSONArray) obj;                
                 for (Object jsonArr1 : jsonArr) {
                     JSONObject jsonObj = (JSONObject) jsonArr1;
-                    String title =  jsonObj.get("title").toString();                    
+                    int catId = Integer.parseInt(jsonObj.get("catId").toString());
+                    int  id =  Integer.parseInt(jsonObj.get("id").toString());
                     int count = Integer.parseInt(jsonObj.
                             get("count").toString());
-                    list.add(new OrderItem(new Dish(title), count, true));                                    
+                    list.add(new OrderItem(DishUtils.getDishById(catId, id), count));                                    
                 }
             } catch (ParseException ex) {
                 System.out.println("Error parse =" + Dish.class.getName());

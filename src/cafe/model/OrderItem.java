@@ -22,6 +22,11 @@ public class OrderItem {
         itemSum = dish.getPrice() * count;
         this.cook = cook;
     }
+    public OrderItem(Dish dish, int count) {
+        this.dish = dish;
+        this.count = count;
+        itemSum = dish.getPrice() * count;       
+    }
 
     public Dish getDish() {
         return dish;

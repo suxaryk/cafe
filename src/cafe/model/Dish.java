@@ -26,9 +26,14 @@ public class Dish {
         }
         
     }
+    public Dish(String title, int price, boolean cook) {        
+        this.title = title;
+        this.price = price;   
+        this.cook = cook;
+    }     
     public Dish(String title, int price) {        
         this.title = title;
-        this.price = price;        
+        this.price = price;          
     }     
     public Dish(String title) {         
         this.title = title;        

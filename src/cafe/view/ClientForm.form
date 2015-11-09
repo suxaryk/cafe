@@ -104,7 +104,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="529" y="0" width="752" height="860"/>
+          <AbsoluteConstraints x="631" y="0" width="650" height="860"/>
         </Constraint>
       </Constraints>
 
@@ -124,7 +124,7 @@
                   <Data value="null"/>
                   <Data value="null"/>
                 </Column>
-                <Column editable="true" title="&#x2116; &#x447;&#x435;&#x43a;&#x443;" type="java.lang.Integer"/>
+                <Column editable="false" title="&#x2116; &#x447;&#x435;&#x43a;&#x443;" type="java.lang.Integer"/>
                 <Column editable="false" title="&#x411;&#x430;&#x440;&#x43c;&#x435;&#x43d;" type="java.lang.String">
                   <Data value="&#x41e;&#x43f;&#x435;&#x440;&#x430;&#x442;&#x43e;&#x440; 1"/>
                   <Data value="&#x43e;&#x43b;&#x434;&#x43b;&#x434;"/>
@@ -167,7 +167,7 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="300" minWidth="300" prefWidth="300" resizable="true">
+                <Column maxWidth="200" minWidth="200" prefWidth="200" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -193,6 +193,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MousePressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

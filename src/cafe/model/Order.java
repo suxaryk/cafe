@@ -120,24 +120,24 @@ public class Order {
       
     
     
-    public String getJSONItems(boolean includePrice) {
+    public String getJSONItems(boolean includePrice, int activeCat) {
         if (!items.isEmpty()) {
             if (includePrice) {
                 return JSONUtils.convertOrderToJSONTables(items);
             } else {
-                return JSONUtils.convertOrderToJSON(items);
+                return JSONUtils.convertOrderToJSON(items, activeCat);
             }
         } else {
             return "";
         }
     }
 
-    public String getJSONRemovedItems(boolean includePrice) {
+    public String getJSONRemovedItems(boolean includePrice, int activeCat) {
         if (!items.isEmpty()) {
             if (includePrice) {
                 return JSONUtils.convertOrderToJSONTables(removeditems);
             }
-            return JSONUtils.convertOrderToJSON(removeditems);
+            return JSONUtils.convertOrderToJSON(removeditems, activeCat);
         }
         return "";
     }

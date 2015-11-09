@@ -89,19 +89,19 @@ public class DishUtils {
         sqlSelectByIdList.add("select * from alcohol WHERE Id = ?");
         sqlSelectByIdList.add("select * from not_alcohol WHERE Id = ?");
 
-        sqlInsertList.add("INSERT INTO firstdishes(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO salats(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO rogerdishes(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO pandishes(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO meat(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO pizza(title, priceS, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO pizza(title, pricB, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO sushi(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO dessert(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO drinks(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO bear(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO alcohol(title, price, ingredients) VALUES(?, ?, ?)");
-        sqlInsertList.add("INSERT INTO not_alcohol(title, price, ingredients) VALUES(?, ?, ?)");
+        sqlInsertList.add("INSERT INTO firstdishes(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO salats(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO rogerdishes(title, price, isCook,  ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pandishes(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO meat(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pizza(title, priceS, isCook, ingredientsS) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pizza(title, priceB, isCook, ingredientsB) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO sushi(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO dessert(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO drinks(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO bear(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO alcohol(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO not_alcohol(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
 
         sqlRemoveList.add("DELETE FROM firstdishes WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM salats WHERE Id = ?");
@@ -146,12 +146,13 @@ public class DishUtils {
         sqlUpdatePriceList.add("UPDATE not_alcohol SET price = ? WHERE Id = ?");
     }
     
-    public static Dish getDishById(int tableId, int dishId){
+    public static Dish getDishById(int catId, int dishId){
         for (int i = 0; i < sqlSelectByIdList.size(); i++) {
-            if (i == tableId) {
+            if (i == catId) {
+                System.out.println("catId " + catId);
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
-                    PreparedStatement pst = connection.prepareStatement(sqlSelectByIdList.get(i));
+                    PreparedStatement pst = connection.prepareStatement(sqlSelectByIdList.get(catId));
                     pst.setInt(1, dishId);               
                     Dish dish = new Dish();
                     try (ResultSet rs = pst.executeQuery()) {
@@ -160,13 +161,20 @@ public class DishUtils {
                             dish.setTitle(rs.getString("title"));
                             dish.setPrice(rs.getInt("price"));
                             dish.setCook(rs.getBoolean("isCook"));
-                            dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredients")));                          
+                            if (catId == 5) {
+                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredientsS")));
+                            }else if (catId == 6) {
+                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredientsB")));
+                            }else {
+                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredients")));
+                            }
+                       
                         }
                     }
                     return dish;
                     
                 } catch (SQLException e) {
-                    System.out.println("Connection Failed! Check output console - updateDishTitle");
+                    System.out.println("Connection Failed! Check output console - getDishById");
                 }                  
             }         
         }
@@ -289,16 +297,12 @@ public class DishUtils {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
                     System.out.println(!connection.isClosed() ? "DB connected!"
-                            : "Error DB connecting");
-                    System.out.println("activeCat" + activeCat);
-                    System.out.println("title" + dish.getTitle());
-                    System.out.println("price" + dish.getPrice());
-                    System.out.println("isCook" + dish.isCook());
-
+                            : "Error DB connecting"); 
                     PreparedStatement pstatement = connection.prepareStatement(sqlInsertList.get(i));
                     pstatement.setString(1, dish.getTitle());
                     pstatement.setInt(2, dish.getPrice());
-                    pstatement.setString(3, "");
+                    pstatement.setBoolean(3, dish.isCook());
+                    pstatement.setString(4, "");
                     int rowsInserted = pstatement.executeUpdate();
                     if (rowsInserted > 0) {
                         System.out.println("A new dish was added successfully!");

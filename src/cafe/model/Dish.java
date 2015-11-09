@@ -1,6 +1,7 @@
 package cafe.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -11,15 +12,19 @@ public class Dish {
     private String title;
     private int price;
     private boolean cook; 
-    private ArrayList<Ingredient> recipe = new ArrayList<>();     
+    private List<Ingredient> recipe = new ArrayList<>();     
     
     public Dish(){}      
 
-    public Dish(int dbId, String title, int price, boolean cook) {
+    public Dish(int dbId, String title, int price, boolean cook, List<Ingredient> recipe) {
         this.dbId = dbId;
         this.title = title;
         this.price = price;   
         this.cook = cook;
+        if (recipe != null) {
+            this.recipe = recipe;   
+        }
+        
     }
     public Dish(String title, int price) {        
         this.title = title;
@@ -53,11 +58,11 @@ public class Dish {
         this.price = price;
     }
 
-    public ArrayList<Ingredient> getRecipe() {
+    public List<Ingredient> getRecipe() {
         return recipe;
     }
 
-    public void setRecipe(ArrayList<Ingredient> list) {
+    public void setRecipe(List<Ingredient> list) {
         this.recipe = list;
     }
 

@@ -2,7 +2,6 @@ package cafe.Utils.db.Dish;
 
 import cafe.Utils.json.JSONUtils;
 import cafe.model.Dish;
-import cafe.model.Ingredient;
 import static cafe.view.MainForm.menu;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -185,53 +184,47 @@ public class DishUtils {
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
-            ResultSet rs;
-            int activeDish = 0;
             for (int i = 0; i < sqlSelectList.size(); i++) {
-                rs = statement.executeQuery(sqlSelectList.get(i));
-                if (i == 5) {
-                    while (rs.next()) {
-                        menu.get(i).getDishes().add(
-                                new Dish(Integer.parseInt(
-                                                rs.getString("Id")),
-                                        rs.getString("title"),
-                                        rs.getInt("priceS"),
-                                        rs.getBoolean("isCook"),
-                                        JSONUtils.getRecipeFromJSON(
-                                        rs.getString("ingredientsS"))
-                                ));
-                        
-                    }
-                } else if (i == 6) {
-                    while (rs.next()) {
-                        menu.get(i).getDishes().add(
-                                new Dish(Integer.parseInt(
-                                                rs.getString("Id")),
-                                        rs.getString("title"),
-                                        rs.getInt("priceB"),
-                                        rs.getBoolean("isCook"),
-                                        JSONUtils.getRecipeFromJSON(
-                                                rs.getString("ingredientsB"))
-                                ));
-                        
-                    }
-                } else {
-                    while (rs.next()) {
-                        menu.get(i).
-                                getDishes().add(
-                                        new Dish(Integer.parseInt(
-                                                        rs.getString("Id")),
-                                                rs.getString("title"),
-                                                rs.getInt("price"),
-                                                rs.getBoolean("isCook"),
-                                                JSONUtils.getRecipeFromJSON(
-                                                rs.getString("ingredients"))
-                                        ));
-                        
+                try (ResultSet rs = statement.executeQuery(sqlSelectList.get(i))) {
+                    if (i == 5) {
+                        while (rs.next()) {
+                            menu.get(i).getDishes().add(
+                                    new Dish(Integer.parseInt(
+                                                    rs.getString("Id")),
+                                            rs.getString("title"),
+                                            rs.getInt("priceS"),
+                                            rs.getBoolean("isCook"),
+                                            JSONUtils.getRecipeFromJSON(
+                                                    rs.getString("ingredientsS"))
+                                    ));
+                        }
+                    } else if (i == 6) {
+                        while (rs.next()) {
+                            menu.get(i).getDishes().add(
+                                    new Dish(Integer.parseInt(
+                                                    rs.getString("Id")),
+                                            rs.getString("title"),
+                                            rs.getInt("priceB"),
+                                            rs.getBoolean("isCook"),
+                                            JSONUtils.getRecipeFromJSON(
+                                                    rs.getString("ingredientsB"))
+                                    ));
+                        }
+                    } else {
+                        while (rs.next()) {
+                            menu.get(i).
+                                    getDishes().add(
+                                            new Dish(Integer.parseInt(
+                                                            rs.getString("Id")),
+                                                    rs.getString("title"),
+                                                    rs.getInt("price"),
+                                                    rs.getBoolean("isCook"),
+                                                    JSONUtils.getRecipeFromJSON(
+                                                            rs.getString("ingredients"))
+                                            ));
+                        }
                     }
                 }
-                activeDish = 0;
-                rs.close();
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - readDBmenu");
@@ -246,48 +239,45 @@ public class DishUtils {
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
-            ResultSet rs;          
-            rs = statement.executeQuery(sqlSelectList.get(activeCat));
-            if (activeCat == 5) {
-                while (rs.next()) {
-                    menu.get(activeCat).getDishes().add(
-                            new Dish(Integer.parseInt(
-                                            rs.getString("Id")),
-                                    rs.getString("title"),
-                                    rs.getInt("priceS"),
-                                    rs.getBoolean("isCook"),
-                                    JSONUtils.getRecipeFromJSON(
-                                    rs.getString("ingredientsS"))
-                            ));
-                    
-                }
-            } else if (activeCat == 6) {
-                while (rs.next()) {
-                    menu.get(activeCat).getDishes().add(
-                            new Dish(Integer.parseInt(
-                                            rs.getString("Id")),
-                                    rs.getString("title"),
-                                    rs.getInt("priceB"),
-                                    rs.getBoolean("isCook"),
-                                    JSONUtils.getRecipeFromJSON(
-                                    rs.getString("ingredientsB"))
-                            ));
-                    
-                }
-            } else {
-                while (rs.next()) {
-                    menu.get(activeCat).getDishes().add(
-                            new Dish(Integer.parseInt(
-                                            rs.getString("Id")),
-                                    rs.getString("title"),
-                                    rs.getInt("price"),
-                                    rs.getBoolean("isCook"),
-                                    JSONUtils.getRecipeFromJSON(
-                                    rs.getString("ingredients"))
-                            ));                    
+            try (ResultSet rs = statement.executeQuery(sqlSelectList.get(activeCat))) {
+                if (activeCat == 5) {
+                    while (rs.next()) {
+                        menu.get(activeCat).getDishes().add(
+                                new Dish(Integer.parseInt(
+                                                rs.getString("Id")),
+                                        rs.getString("title"),
+                                        rs.getInt("priceS"),
+                                        rs.getBoolean("isCook"),
+                                        JSONUtils.getRecipeFromJSON(
+                                                rs.getString("ingredientsS"))
+                                ));
+                    }
+                } else if (activeCat == 6) {
+                    while (rs.next()) {
+                        menu.get(activeCat).getDishes().add(
+                                new Dish(Integer.parseInt(
+                                                rs.getString("Id")),
+                                        rs.getString("title"),
+                                        rs.getInt("priceB"),
+                                        rs.getBoolean("isCook"),
+                                        JSONUtils.getRecipeFromJSON(
+                                                rs.getString("ingredientsB"))
+                                ));
+                    }
+                } else {
+                    while (rs.next()) {
+                        menu.get(activeCat).getDishes().add(
+                                new Dish(Integer.parseInt(
+                                                rs.getString("Id")),
+                                        rs.getString("title"),
+                                        rs.getInt("price"),
+                                        rs.getBoolean("isCook"),
+                                        JSONUtils.getRecipeFromJSON(
+                                                rs.getString("ingredients"))
+                                ));
+                    }
                 }
             }
-            rs.close();
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - readDBCategoryById");
         }

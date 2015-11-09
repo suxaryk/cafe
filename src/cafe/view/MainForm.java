@@ -3253,7 +3253,8 @@ public class MainForm extends javax.swing.JFrame {
         String JSONString = RecepiesUtils.readRecipeFromDB(activeCat,
                 menu.get(activeCat).getDishes().get(activeDishes).getDbID());
         System.out.println("JSONString=" + JSONString);
-        JSONUtils.setJSONToRecipe(JSONString, activeCat, activeDishes);
+        menu.get(activeCat).getDishes().get(activeDishes).getRecipe().clear();        
+        menu.get(activeCat).getDishes().get(activeDishes).setRecipe(JSONUtils.getRecipeFromJSON(JSONString));
         refreshCalc(null);
 
     }//GEN-LAST:event_saveCalculation

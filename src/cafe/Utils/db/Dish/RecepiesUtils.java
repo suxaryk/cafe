@@ -13,7 +13,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -105,7 +104,6 @@ public class RecepiesUtils {
 
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
-            Statement statement = connection.createStatement();
             PreparedStatement pst = connection.prepareStatement(sqlSelectList.get(activeCat));
             pst.setInt(1, dishDbId);           
             

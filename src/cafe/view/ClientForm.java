@@ -10,15 +10,12 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
 public class ClientForm extends javax.swing.JFrame {
-    private Object jTable;
 
     public ClientForm() {
         initComponents();
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -176,22 +173,22 @@ public class ClientForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
-        
-        Date startDate = jXDatePicker1.getDate() ; 
-        Date endDate = jXDatePicker2.getDate();     
+
+        Date startDate = jXDatePicker1.getDate();
+        Date endDate = jXDatePicker2.getDate();
         orders.clear();
         orders.addAll(OrderUtils.getOrders(new java.sql.Timestamp(startDate.getTime()),
-                             new java.sql.Timestamp(endDate.getTime())));
+                new java.sql.Timestamp(endDate.getTime())));
         refreshTable(jTable1, orders);
-        
-        
+
+
     }//GEN-LAST:event_getAllOrders
-    
+
     private void refreshTable(JTable jTable, List<Order> list) {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
         int k = 1;
-        
+
         for (Order order : list) {
             model.addRow(new Object[]{
                 k++,
@@ -204,40 +201,13 @@ public class ClientForm extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(ClientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(ClientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(ClientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(ClientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-        //</editor-fold>
-        
         clientForm = new ClientForm();
         clientForm.setVisible(true);
-       
     }
-    private static List<Order> orders = new ArrayList<>();
-    private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
-    public static ClientForm clientForm;    
+    private static final List<Order> orders = new ArrayList<>();
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    public static ClientForm clientForm;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;

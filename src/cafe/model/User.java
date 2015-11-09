@@ -11,6 +11,7 @@ package cafe.model;
  */
 public class User {
     
+    private int dbId;
     private String name;
     private int pass;    
     public static int active;
@@ -21,9 +22,10 @@ public class User {
     
 
 
-    public User(String name, int pass) {
+    public User(int dbId, String name, int pass) {
         this.name = name;
         this.pass = pass;
+        this.dbId = dbId;
     }
 
     public String getName() {
@@ -42,6 +44,22 @@ public class User {
         this.pass = pass;
     }
 
+    public int getDbId() {
+        return dbId;
+    }
+
+    public void setDbId(int dbId) {
+        this.dbId = dbId;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    
+    
     
 
 }

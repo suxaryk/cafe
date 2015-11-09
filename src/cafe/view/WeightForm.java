@@ -8,6 +8,7 @@ import static cafe.view.MainForm.activeDishes;
 import static cafe.view.MainForm.dishCount;
 import static cafe.view.MainForm.mainForm;
 import static cafe.view.MainForm.menu;
+import java.util.HashMap;
 import javax.swing.JButton;
 
 /**
@@ -259,7 +260,11 @@ public class WeightForm extends javax.swing.JFrame {
     public  void setDishMeetWeight(){   
         for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {                      
             if (ing.getCount() == 0.1) {
-                ing.setCount(weightCount/1000);     
+                if (listOfCoeffic.containsKey(ing.getId())) {
+                    ing.setCount((weightCount * listOfCoeffic.get(ing.getId())) / 1000);
+                }else {
+                    ing.setCount(weightCount / 1000);
+                }                                    
                 String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
                 int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
                 menu.get(activeCat).getDishes().get(activeDishes).setTitle(removeLastFewChar(title) + "(" + weightCount.intValue() + " гр.)");
@@ -269,8 +274,24 @@ public class WeightForm extends javax.swing.JFrame {
             }                     
         }        
     }
+    private void initCoeffic(){
+        listOfCoeffic = new HashMap<>();
+        listOfCoeffic.put(47, 1.2);
+        listOfCoeffic.put(48, 1.3);
+        listOfCoeffic.put(35, 1.12);
+        listOfCoeffic.put(49, 1.14);
+        listOfCoeffic.put(50, 1.27);
+        listOfCoeffic.put(94, 1.22);        
+        listOfCoeffic.put(103, 1.38);
+        listOfCoeffic.put(52, 1.38);    
+      
+        
+        
+    }
+    
     private void setWeightCount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setWeightCount
-        String line = jTextField1.getText();        
+        String line = jTextField1.getText();   
+        initCoeffic();
         if (line.length() > 0) {
             weightCount = Double.parseDouble(line);
             System.out.println("weightCount "+ weightCount);
@@ -323,6 +344,7 @@ public class WeightForm extends javax.swing.JFrame {
     }
     // private boolean sw = true;
     public static  Double weightCount;
+    public static HashMap<Integer, Double> listOfCoeffic;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

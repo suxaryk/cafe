@@ -35,7 +35,9 @@ public class RecepiesUtils {
         sqlSelectList.add("select * from sushi where Id = ?");
         sqlSelectList.add("select * from dessert where Id = ?");
         sqlSelectList.add("select * from drinks where Id = ?");
+        sqlSelectList.add("select * from bear where Id = ?");        
         sqlSelectList.add("select * from alcohol where Id = ?");        
+        sqlSelectList.add("select * from not_alcohol where Id = ?");        
         
         sqlUpdateRecepiesList.add("UPDATE firstdishes SET ingredients = ? WHERE Id = ?");
         sqlUpdateRecepiesList.add("UPDATE salats SET ingredients = ? WHERE Id = ?");
@@ -47,7 +49,9 @@ public class RecepiesUtils {
         sqlUpdateRecepiesList.add("UPDATE sushi SET ingredients = ? WHERE Id = ?");
         sqlUpdateRecepiesList.add("UPDATE dessert SET ingredients = ? WHERE Id = ?");
         sqlUpdateRecepiesList.add("UPDATE drinks SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesList.add("UPDATE bear SET ingredients = ? WHERE Id = ?");
         sqlUpdateRecepiesList.add("UPDATE alcohol SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesList.add("UPDATE not_alcohol SET ingredients = ? WHERE Id = ?");
         
     }
     

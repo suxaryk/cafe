@@ -2456,7 +2456,7 @@ public class MainForm extends javax.swing.JFrame {
         } else {
             orders.put(activeTable, new Order());
             if (!isOrderPrinted()) {
-                orders.get(activeTable).setDayId(printedOrderCount++);                
+                orders.get(activeTable).setDayId(printedOrderCount++);
             }
             jTextField1.setText("0");
             System.out.println("orders size = " + orders.size());
@@ -2481,9 +2481,9 @@ public class MainForm extends javax.swing.JFrame {
             jTable1.setBackground(Color.WHITE);
         }
         evt.getComponent().setBackground(Color.yellow);
-        jButton7.setEnabled(true);      
+        jButton7.setEnabled(true);
         if (orders.get(activeTable).isPayed()) {
-             jButton9.setEnabled(true);            
+            jButton9.setEnabled(true);
         }
         jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
     }//GEN-LAST:event_chooseTable
@@ -2543,7 +2543,7 @@ public class MainForm extends javax.swing.JFrame {
         boolean isCook = true ? activeCat < 9 : false;
         if (jCheckBox1.isSelected()) {
             menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
-        }        
+        }
         OrderItem newOrder = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCook);
         int index = getIndex(count, isCook);
 
@@ -2916,7 +2916,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (jButton3.isEnabled()) {
                     if (orders.get(activeTable).calcOrderSum() != 0) {
                         printKitchenCheck();
-                         jButton9.setEnabled(false);
+                        jButton9.setEnabled(false);
                     }
                 }
             }
@@ -2998,6 +2998,8 @@ public class MainForm extends javax.swing.JFrame {
             if (jButton13.isEnabled() && !pass.equals("")) {
                 DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
                 DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+                
+                       
                 if (employees.get(index)
                         .getPass() == Integer.parseInt(pass)) {
                     if (date1.equals("null")) {
@@ -3854,7 +3856,7 @@ public class MainForm extends javax.swing.JFrame {
                 jTabbedPane1.setEnabledAt(1, false);
                 jTabbedPane1.setEnabledAt(2, false);
                 jTabbedPane1.setSelectedIndex(0);
-                 jButton9.setEnabled(true);
+                jButton9.setEnabled(true);
             }
         }
     }//GEN-LAST:event_payOrder
@@ -4095,17 +4097,17 @@ public class MainForm extends javax.swing.JFrame {
             orders.putAll(loadOrders);
             for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
                 if (entry.getValue().getOrderSum() > 0) {
-                    TablesPanel.getComponent(entry.getKey() - 1).setBackground(Color.yellow);                 
+                    TablesPanel.getComponent(entry.getKey() - 1).setBackground(Color.yellow);
                     activeTable = entry.getKey();
                     System.out.println("actTAble " + activeTable);
                     System.out.println("orderId " + entry.getValue().getDayId());
-                    setOrderIdForTable(entry.getValue().getDayId());      
+                    setOrderIdForTable(entry.getValue().getDayId());
                     if (maxOrderId < entry.getValue().getDayId()) {
-                        maxOrderId = entry.getValue().getDayId();                        
+                        maxOrderId = entry.getValue().getDayId();
                     }
                 }
             }
-            printedOrderCount = maxOrderId+1;
+            printedOrderCount = maxOrderId + 1;
         }
     }
 

@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cafe.model;
 
 import cafe.Utils.json.JSONUtils;
 import cafe.view.MainForm;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,15 +12,28 @@ import java.util.Map;
  * @author suxarina
  */
 public class Order {
-
-    private int cookCount;
-    private int drinkCount;
+    
+    private int dayId;
+    private int cookCount;    
     private int orderSum;
-    private boolean payed;    
-    private String JSONItems;
+    private boolean payed;
+    private Date date;
+    private String user;
     private ArrayList<OrderItem> items = new ArrayList<>();
     private ArrayList<OrderItem> removeditems = new ArrayList<>();
 
+    public  int getDayId() {
+        return dayId;
+    }
+    public  void incDayId() {
+         dayId++;
+    }
+
+    public  void setDayId(int dayId) {
+        this.dayId = dayId;
+    }
+    
+    
     public int calcOrderSum() {
         int sum = 0;
         if (!items.isEmpty()) {
@@ -41,39 +50,22 @@ public class Order {
 
     public int getOrderSum() {
         return orderSum;
-    }
+    } 
 
-    public int getDrinkCount() {
-        drinkCount = 0; 
-            for (OrderItem orderItem : items) {
-                if (orderItem.getDish().isDrink()) {
-                    drinkCount += orderItem.getCount();
-                }
-            }            
-        return drinkCount;
-    }
-
-    public void setDrinkCount(int drinkCount) {
-        this.drinkCount = drinkCount;
-    }
+    
 
     public int getCookCount() {
-        int recipeSize = 0;
-        for (OrderItem item : items) {
-            recipeSize += item.getDish().getRecipe().size();
-        }
-        if (recipeSize == 0) {
+        if (cookCount != 0) {
             return cookCount;
-        } else {
-            cookCount = 0;
+        }else{
+            int count = 0;
             for (OrderItem orderItem : items) {
-                if (orderItem.getDish().isCook()) {
-                    this.cookCount += orderItem.getCount();
-                }
+                count += orderItem.getCookCount();
+                System.out.println("count" + count);
             }
-            System.out.println("cookCount= " + cookCount);
-            return cookCount;
-        }
+            return count;
+        }       
+                
     }
 
     public void setCookCount(int cookCount) {
@@ -108,7 +100,24 @@ public class Order {
         this.payed = payed;
     }
 
-   
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+    
+    
+      
     
     
     public String getJSONItems(boolean includePrice) {

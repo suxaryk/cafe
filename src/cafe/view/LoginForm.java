@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
 /**
@@ -22,9 +23,9 @@ public class LoginForm extends javax.swing.JFrame {
      * Creates new form LoginForm
      */
     public LoginForm() {
-        initComponents();
-        UsersUtils.readAllUsers();
+        initComponents();        
         getDate();
+        getUsers();
 
     }
 
@@ -56,6 +57,9 @@ public class LoginForm extends javax.swing.JFrame {
         setTitle("Вхід в систему");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowDeactivated(java.awt.event.WindowEvent evt) {
                 formWindowDeactivated(evt);
             }
@@ -232,6 +236,11 @@ public class LoginForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void getUsers(){
+        UsersUtils.readAllUsers();        
+        jComboBox1.setModel(new DefaultComboBoxModel(userList.toArray()));
+                
+    }
     public void getDate() {
         Locale locale = new Locale("uk", "UA");
         DateFormat dateFormat = new SimpleDateFormat("EEEE", locale);
@@ -280,6 +289,10 @@ public class LoginForm extends javax.swing.JFrame {
             jPasswordField1.setText("" + pass.substring(0, pass.length() - 1));
         }
     }//GEN-LAST:event_clearDigit
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+//        MainForm.closeSystem();        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

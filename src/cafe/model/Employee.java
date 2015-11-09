@@ -9,26 +9,17 @@ package cafe.model;
  *
  * @author suxarina
  */
-public class Employee extends User{
-    private int dbId;
-  
-
-    public Employee(String name, int pass) {
-        super(name, pass);
-    }
+public class Employee extends User{   
 
     public Employee(int dbId, String name, int pass) {
-        super(name, pass);
-        this.dbId = dbId;
+        super(dbId, name, pass);
     }
+  
 
-    public int getDbId() {
-        return dbId;
-    }
+   
 
-    public void setDbId(int dbId) {
-        this.dbId = dbId;
-    }
+  
+  
 
      
 

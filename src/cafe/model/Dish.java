@@ -10,16 +10,16 @@ public class Dish {
     private int dbId;
     private String title;
     private int price;
-    private boolean cook;
-    private boolean drink;
+    private boolean cook; 
     private ArrayList<Ingredient> recipe = new ArrayList<>();     
     
     public Dish(){}      
 
-    public Dish(int dbId, String title, int price) {
+    public Dish(int dbId, String title, int price, boolean cook) {
         this.dbId = dbId;
         this.title = title;
         this.price = price;   
+        this.cook = cook;
     }
     public Dish(String title, int price) {        
         this.title = title;
@@ -62,24 +62,13 @@ public class Dish {
     }
 
     public boolean isCook() {
-        if (recipe.size() > 1) {
-            return cook = true;
-        }
-        else return cook = false;        
+        return this.cook;
     }
 
     public void setCook(boolean cook) {
         this.cook = cook;
     }  
 
-    public boolean isDrink() {
-        return drink;
-    }
-
-    public void setDrink(boolean drink) {
-        this.drink = drink;
-    }
-    
     
     @Override
     public String toString() {

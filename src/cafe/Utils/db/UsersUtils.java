@@ -23,14 +23,16 @@ import java.sql.Statement;
  */
 public class UsersUtils {
 
-    public static void readAllUsers() {
-        final String SQL = "SELECT name, pass from users";
+    public static void readAllUsers() {   
+        userList.clear();
+        final String SQL = "SELECT * from users";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
                     userList.add(new User(
+                            rs.getInt("id"),
                             rs.getString("name"),
                             rs.getInt("pass")
                     ));

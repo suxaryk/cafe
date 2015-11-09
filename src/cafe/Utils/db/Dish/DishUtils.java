@@ -2,6 +2,7 @@ package cafe.Utils.db.Dish;
 
 import cafe.Utils.json.JSONUtils;
 import cafe.model.Dish;
+import cafe.model.Ingredient;
 import static cafe.view.MainForm.menu;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,6 +31,7 @@ public class DishUtils {
     public static final String PASSWORD2 = "dbiytdbq18";
 
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
+    private static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
     private static final ArrayList<String> sqlRemoveList = new ArrayList<>();
     private static final ArrayList<String> sqlUpdateTitleList = new ArrayList<>();
@@ -73,6 +75,20 @@ public class DishUtils {
         sqlSelectList.add("select * from bear");
         sqlSelectList.add("select * from alcohol");
         sqlSelectList.add("select * from not_alcohol");
+        
+        sqlSelectByIdList.add("select * from firstdishes WHERE Id = ?");
+        sqlSelectByIdList.add("select * from salats WHERE Id = ?");
+        sqlSelectByIdList.add("select * from rogerdishes WHERE Id = ?");
+        sqlSelectByIdList.add("select * from pandishes WHERE Id = ?");
+        sqlSelectByIdList.add("select * from meat WHERE Id = ?");
+        sqlSelectByIdList.add("select * from pizza WHERE Id = ?");
+        sqlSelectByIdList.add("select * from pizza WHERE Id = ?");
+        sqlSelectByIdList.add("select * from sushi WHERE Id = ?");
+        sqlSelectByIdList.add("select * from dessert WHERE Id = ?");
+        sqlSelectByIdList.add("select * from drinks WHERE Id = ?");
+        sqlSelectByIdList.add("select * from bear WHERE Id = ?");
+        sqlSelectByIdList.add("select * from alcohol WHERE Id = ?");
+        sqlSelectByIdList.add("select * from not_alcohol WHERE Id = ?");
 
         sqlInsertList.add("INSERT INTO firstdishes(title, price, ingredients) VALUES(?, ?, ?)");
         sqlInsertList.add("INSERT INTO salats(title, price, ingredients) VALUES(?, ?, ?)");
@@ -130,6 +146,33 @@ public class DishUtils {
         sqlUpdatePriceList.add("UPDATE alcohol SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE not_alcohol SET price = ? WHERE Id = ?");
     }
+    
+    public static Dish getDishById(int tableId, int dishId){
+        for (int i = 0; i < sqlSelectByIdList.size(); i++) {
+            if (i == tableId) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
+                    PreparedStatement pst = connection.prepareStatement(sqlSelectByIdList.get(i));
+                    pst.setInt(1, dishId);               
+                    Dish dish = new Dish();
+                    try (ResultSet rs = pst.executeQuery()) {
+                        while (rs.next()) {                            
+                            dish.setDbID(rs.getInt("Id"));
+                            dish.setTitle(rs.getString("title"));
+                            dish.setPrice(rs.getInt("price"));
+                            dish.setCook(rs.getBoolean("isCook"));
+                            dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredients")));                          
+                        }
+                    }
+                    return dish;
+                    
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console - updateDishTitle");
+                }                  
+            }         
+        }
+        return null;
+    }
 
     public static java.sql.Timestamp getCurrentTimeStamp() {
         Date today = new Date();
@@ -153,10 +196,11 @@ public class DishUtils {
                                                 rs.getString("Id")),
                                         rs.getString("title"),
                                         rs.getInt("priceS"),
-                                        rs.getBoolean("isCook")
+                                        rs.getBoolean("isCook"),
+                                        JSONUtils.getRecipeFromJSON(
+                                        rs.getString("ingredientsS"))
                                 ));
-                        JSONUtils.setJSONToRecipe(
-                                rs.getString("ingredientsS"), i, activeDish++);
+                        
                     }
                 } else if (i == 6) {
                     while (rs.next()) {
@@ -165,22 +209,12 @@ public class DishUtils {
                                                 rs.getString("Id")),
                                         rs.getString("title"),
                                         rs.getInt("priceB"),
-                                        rs.getBoolean("isCook")
+                                        rs.getBoolean("isCook"),
+                                        JSONUtils.getRecipeFromJSON(
+                                                rs.getString("ingredientsB"))
                                 ));
-                        JSONUtils.setJSONToRecipe(
-                                rs.getString("ingredientsB"), i, activeDish++);
+                        
                     }
-//                } else if (i == 10) {
-//                    while (rs.next()) {
-//                            menu.get(i).getDishes().add(
-//                                new Dish(Integer.parseInt(
-//                                                rs.getString("Id")),
-//                                        rs.getString("title"),
-//                                        rs.getInt("price")
-//                                ));
-////                        JSONUtils.setJSONToRecipe(
-////                              rs.getString("ingredients"), i, activeDish++);
-//                    }
                 } else {
                     while (rs.next()) {
                         menu.get(i).
@@ -189,10 +223,11 @@ public class DishUtils {
                                                         rs.getString("Id")),
                                                 rs.getString("title"),
                                                 rs.getInt("price"),
-                                                rs.getBoolean("isCook")
+                                                rs.getBoolean("isCook"),
+                                                JSONUtils.getRecipeFromJSON(
+                                                rs.getString("ingredients"))
                                         ));
-                        JSONUtils.setJSONToRecipe(
-                                rs.getString("ingredients"), i, activeDish++);
+                        
                     }
                 }
                 activeDish = 0;
@@ -211,8 +246,7 @@ public class DishUtils {
             System.out.println(!connection.isClosed() ? "DB connected!"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
-            ResultSet rs;
-            int activeDish = 0;
+            ResultSet rs;          
             rs = statement.executeQuery(sqlSelectList.get(activeCat));
             if (activeCat == 5) {
                 while (rs.next()) {
@@ -221,10 +255,11 @@ public class DishUtils {
                                             rs.getString("Id")),
                                     rs.getString("title"),
                                     rs.getInt("priceS"),
-                                    rs.getBoolean("isCook")
+                                    rs.getBoolean("isCook"),
+                                    JSONUtils.getRecipeFromJSON(
+                                    rs.getString("ingredientsS"))
                             ));
-                    JSONUtils.setJSONToRecipe(
-                            rs.getString("ingredientsS"), activeCat, activeDish++);
+                    
                 }
             } else if (activeCat == 6) {
                 while (rs.next()) {
@@ -233,10 +268,11 @@ public class DishUtils {
                                             rs.getString("Id")),
                                     rs.getString("title"),
                                     rs.getInt("priceB"),
-                                    rs.getBoolean("isCook")
+                                    rs.getBoolean("isCook"),
+                                    JSONUtils.getRecipeFromJSON(
+                                    rs.getString("ingredientsB"))
                             ));
-                    JSONUtils.setJSONToRecipe(
-                            rs.getString("ingredientsB"), activeCat, activeDish++);
+                    
                 }
             } else {
                 while (rs.next()) {
@@ -245,10 +281,10 @@ public class DishUtils {
                                             rs.getString("Id")),
                                     rs.getString("title"),
                                     rs.getInt("price"),
-                                    rs.getBoolean("isCook")
-                            ));
-                    JSONUtils.setJSONToRecipe(
-                            rs.getString("ingredients"), activeCat, activeDish++);
+                                    rs.getBoolean("isCook"),
+                                    JSONUtils.getRecipeFromJSON(
+                                    rs.getString("ingredients"))
+                            ));                    
                 }
             }
             rs.close();

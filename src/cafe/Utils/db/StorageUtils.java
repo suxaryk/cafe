@@ -22,7 +22,7 @@ public class StorageUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             String SQL = "SELECT * FROM storage";
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! readStorage"
                     : "Error DB connecting");
             MainForm.storageList.clear();
             Statement statement = connection.createStatement();
@@ -99,7 +99,7 @@ public class StorageUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             String SQL = "SELECT * FROM storage WHERE Id =" + id;
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! getIngredientById"
                     : "Error DB connecting");
             MainForm.storageList.clear();
             Statement statement = connection.createStatement();

@@ -24,29 +24,29 @@ import org.json.simple.parser.ParseException;
  * @author suxarina
  */
 public class JSONUtils {
-    public static void writeAllIngredients(){
-        int Cat = 7;
-        System.out.println("catSize+ " + menu.get(Cat).getDishes().size());
-        FileUtils.fillIngredients();
-        
-        
-        
-        for (Dish dish : menu.get(Cat).getDishes()) {  
-            JSONArray jsonArr = new JSONArray();
-            for (Ingredient ing : dish.getRecipe()) { 
-                JSONObject ingrObj = new JSONObject();
-//                ingrObj.put(ing.getId(), ing.getCount());
-                ingrObj.put("id", ing.getId());                
-                ingrObj.put("c", ing.getCount());   
-                jsonArr.add(ingrObj);              
-            }
-            
-            
-            System.out.println("json" + jsonArr.toJSONString());
-            RecepiesUtils.updateRecipes(Cat, dish.getDbID(), jsonArr.toJSONString());
-            //recipes.clear();
-        }
-    }
+//    public static void writeAllIngredients(){
+//        int Cat = 7;
+//        System.out.println("catSize+ " + menu.get(Cat).getDishes().size());
+//        FileUtils.fillIngredients();
+//        
+//        
+//        
+//        for (Dish dish : menu.get(Cat).getDishes()) {  
+//            JSONArray jsonArr = new JSONArray();
+//            for (Ingredient ing : dish.getRecipe()) { 
+//                JSONObject ingrObj = new JSONObject();
+////                ingrObj.put(ing.getId(), ing.getCount());
+//                ingrObj.put("id", ing.getId());                
+//                ingrObj.put("c", ing.getCount());   
+//                jsonArr.add(ingrObj);              
+//            }
+//            
+//            
+//            System.out.println("json" + jsonArr.toJSONString());
+//            RecepiesUtils.updateRecipes(Cat, dish.getDbID(), jsonArr.toJSONString());
+//            //recipes.clear();
+//        }
+//    }
     //data to JSON
     public static void updateDishIngredients(List<Ingredient> recipes, 
                                                 int activeCat, int activeDish){
@@ -105,7 +105,7 @@ public class JSONUtils {
         
     }
     public static ArrayList<OrderItem> convertJSONToOrder(String jsonOrder){
-        if (!"".equals(jsonOrder)) {            
+        if (!"[]".equals(jsonOrder)) {            
             ArrayList<OrderItem> list = new ArrayList<>();
             try {
                 JSONParser parser = new JSONParser();
@@ -117,7 +117,11 @@ public class JSONUtils {
                     int  id =  Integer.parseInt(jsonObj.get("id").toString());
                     int count = Integer.parseInt(jsonObj.
                             get("count").toString());
-                    list.add(new OrderItem(DishUtils.getDishById(catId, id), count));                                    
+                    System.out.println("catId " + catId);
+                    System.out.println("id " + id);
+                    System.out.println("count " + count);
+                    list.add(new OrderItem(
+                            DishUtils.getDishById(catId, id), count));                                    
                 }
             } catch (ParseException ex) {
                 System.out.println("Error parse =" + Dish.class.getName());

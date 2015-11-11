@@ -150,6 +150,7 @@ public class DishUtils {
         for (int i = 0; i < sqlSelectByIdList.size(); i++) {
             if (i == catId) {
                 System.out.println("catId " + catId);
+                System.out.println("getDishById");
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
                     PreparedStatement pst = connection.prepareStatement(sqlSelectByIdList.get(catId));
@@ -189,7 +190,7 @@ public class DishUtils {
     public static void readDBmenu() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! readDBmenu"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             for (int i = 0; i < sqlSelectList.size(); i++) {
@@ -244,7 +245,7 @@ public class DishUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! readDBCategoryById"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(sqlSelectList.get(activeCat))) {
@@ -296,7 +297,7 @@ public class DishUtils {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
-                    System.out.println(!connection.isClosed() ? "DB connected!"
+                    System.out.println(!connection.isClosed() ? "DB connected! addDish"
                             : "Error DB connecting"); 
                     PreparedStatement pstatement = connection.prepareStatement(sqlInsertList.get(i));
                     pstatement.setString(1, dish.getTitle());
@@ -320,7 +321,7 @@ public class DishUtils {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
-                    System.out.println(!connection.isClosed() ? "DB connected!"
+                    System.out.println(!connection.isClosed() ? "DB connected! removeDishById"
                             : "Error DB connecting");
                     PreparedStatement pstatement = connection.prepareStatement(sqlRemoveList.get(i));
                     pstatement.setInt(1, dbId);

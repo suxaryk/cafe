@@ -42,7 +42,7 @@ public class OrderUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! getOrders"
                     : "Error DB connecting");
 
             Statement statement = connection.createStatement();           
@@ -74,7 +74,7 @@ public class OrderUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! addOrder"
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(sql);
@@ -107,7 +107,7 @@ public class OrderUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! updateTable"
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);            
@@ -139,7 +139,7 @@ public class OrderUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! updatePrintedTable"
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);            
@@ -165,7 +165,7 @@ public class OrderUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! fillAllTables"
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);            
@@ -193,7 +193,7 @@ public class OrderUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! fillTableById"
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);            
@@ -223,7 +223,7 @@ public class OrderUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! loadTables"
                     : "Error DB connecting");
 
             Statement statement = connection.createStatement();
@@ -247,14 +247,14 @@ public class OrderUtils {
 
     }
 
-    public static int getDaySum() {
+    public static int getDaySum(int dayOrderCount) {
         final String SQL = "select SUM(sum) from (SELECT * FROM orders order by id desc limit ?) as daysum";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! getDaySum"
                     : "Error DB connecting");
             PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, getDayOrdersCount());
+            pst.setInt(1, dayOrderCount);
             int sum;
             try (ResultSet rs = pst.executeQuery()) {
                 sum = 0;
@@ -269,14 +269,14 @@ public class OrderUtils {
         }
     }
     
-    public static int getCookCount() {
+    public static int getCookCount(int dayOrderCount) {
         final String SQL = "select SUM(cookCount) from (SELECT * FROM orders order by id desc limit ?) as daysum";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! getCookCount"
                     : "Error DB connecting");
             PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, getDayOrdersCount());
+            pst.setInt(1, dayOrderCount);
             int sum;
             try (ResultSet rs = pst.executeQuery()) {
                 sum = 0;
@@ -312,14 +312,14 @@ public class OrderUtils {
 //        }
 //    }
     
-    public static int getDayRemoveSum() {
+    public static int getDayRemoveSum(int dayOrderCount) {
         final String SQL = "select SUM(sum) from (SELECT * FROM orders order by id desc limit ?) as dayDiff where sum < 0";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! getDayRemoveSum"
                     : "Error DB connecting");
             PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, getDayOrdersCount());
+            pst.setInt(1, dayOrderCount);
             int sum;
             try (ResultSet rs = pst.executeQuery()) {
                 sum = 0;
@@ -337,7 +337,7 @@ public class OrderUtils {
         final String SQL = "select SUM(sum) from orders";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! getAllSum"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             
@@ -382,7 +382,7 @@ public class OrderUtils {
         final String SQL = "SELECT dayId FROM orders order by id desc limit 1";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! getDayOrdersCount"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             int count;

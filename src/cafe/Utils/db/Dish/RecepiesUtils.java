@@ -59,7 +59,7 @@ public class RecepiesUtils {
         final String SQL = "INSERT INTO recipes(dishId, ingredients) VALUES(?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! addRecipes"
                     : "Error DB connecting");
             PreparedStatement pstatement = connection.prepareStatement(SQL);  
             
@@ -80,7 +80,7 @@ public class RecepiesUtils {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
-                    System.out.println(!connection.isClosed() ? "DB connected!"
+                    System.out.println(!connection.isClosed() ? "DB connected! updateRecipes"
                             : "Error DB connecting");
                     PreparedStatement pstatement = connection.
                             prepareStatement(sqlUpdateRecepiesList.get(i));
@@ -102,7 +102,7 @@ public class RecepiesUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
 
-            System.out.println(!connection.isClosed() ? "DB connected!"
+            System.out.println(!connection.isClosed() ? "DB connected! readRecipeFromDB"
                     : "Error DB connecting");
             PreparedStatement pst = connection.prepareStatement(sqlSelectList.get(activeCat));
             pst.setInt(1, dishDbId);           

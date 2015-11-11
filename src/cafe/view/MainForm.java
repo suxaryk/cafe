@@ -2464,8 +2464,7 @@ public class MainForm extends javax.swing.JFrame {
             if (!isOrderPrinted()) {
                 orders.get(activeTable).setDayId(printedOrderCount++);
             }
-            jTextField1.setText("0");
-            System.out.println("orders size = " + orders.size());
+            jTextField1.setText("0");           
         }
         if (orders.get(activeTable).isPayed()) {
             jButton10.setEnabled(false);
@@ -3031,23 +3030,25 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosing
     public static String dayInfo() {
-        System.out.println("DaySum = " + OrderUtils.getDaySum());
-        int dayDiff = OrderUtils.getDayRemoveSum() * (-1);
-        int daySum = OrderUtils.getDaySum() + dayDiff;
-        int allSum = OrderUtils.getAllSum();
-        int cookCount = OrderUtils.getCookCount();
+        System.out.println("----------day Info----------");
+//        System.out.println("DaySum = " + OrderUtils.getDaySum());
         int ordersCount = OrderUtils.getDayOrdersCount();
-        System.out.println("dayDiff = " + dayDiff);
-        System.out.println("daySum = " + daySum);
-        System.out.println("allSum = " + allSum);
-        System.out.println("orders empty = " + orders.isEmpty());
+        int dayDiff = OrderUtils.getDayRemoveSum(ordersCount) * (-1);
+        int daySum = OrderUtils.getDaySum(ordersCount) + dayDiff;
+        int allSum = OrderUtils.getAllSum();
+        int cookCount = OrderUtils.getCookCount(ordersCount);
+        
+//        System.out.println("dayDiff = " + dayDiff);
+//        System.out.println("daySum = " + daySum);
+//        System.out.println("allSum = " + allSum);
+//        System.out.println("orders empty = " + orders.isEmpty());
         if (!ordered) {
             daySum = 0;
             dayDiff = 0;
             cookCount = 0;
             ordersCount = 0;
         }
-        System.out.println("size " + orders.isEmpty());
+//        System.out.println("size " + orders.isEmpty());
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String info = ""
                 + "Інформація за " + dateFormat.format(new Date()) + ":\n"
@@ -3943,7 +3944,7 @@ public class MainForm extends javax.swing.JFrame {
             String newPass = new String(jPasswordField1.getPassword());
 
             int dbId = userList.get(activeRow).getDbId();
-            if (!name.equals("")) {
+            if (!name.equals("") && dbId != 6) {
                 UsersUtils.updateUserName(dbId, name);
                 System.out.println("name");
             } else {

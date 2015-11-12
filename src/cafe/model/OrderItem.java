@@ -24,7 +24,7 @@ public class OrderItem {
     }
     public OrderItem(Dish dish, int count) {
         this.dish = dish;
-        this.count = count;
+        this.count = count;      
         itemSum = dish.getPrice() * count;       
     }
 
@@ -36,8 +36,7 @@ public class OrderItem {
         this.dish = dish;
     }
 
-    public int getCount() {
-        System.out.println("itemCount" + count);
+    public int getCount() {        
         return count;
     }
 

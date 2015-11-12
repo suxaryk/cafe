@@ -146,41 +146,41 @@ public class DishUtils {
         sqlUpdatePriceList.add("UPDATE not_alcohol SET price = ? WHERE Id = ?");
     }
     
-    public static Dish getDishById(int catId, int dishId){
-        for (int i = 0; i < sqlSelectByIdList.size(); i++) {
-            if (i == catId) {
-                System.out.println("catId " + catId);
-                System.out.println("getDishById");
-                try (Connection connection = DriverManager
-                        .getConnection(URL, USERNAME, PASSWORD)) {
-                    PreparedStatement pst = connection.prepareStatement(sqlSelectByIdList.get(catId));
-                    pst.setInt(1, dishId);               
-                    Dish dish = new Dish();
-                    try (ResultSet rs = pst.executeQuery()) {
-                        while (rs.next()) {                            
-                            dish.setDbID(rs.getInt("Id"));
-                            dish.setTitle(rs.getString("title"));
-                            dish.setPrice(rs.getInt("price"));
-                            dish.setCook(rs.getBoolean("isCook"));
-                            if (catId == 5) {
-                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredientsS")));
-                            }else if (catId == 6) {
-                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredientsB")));
-                            }else {
-                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredients")));
-                            }
-                       
-                        }
-                    }
-                    return dish;
-                    
-                } catch (SQLException e) {
-                    System.out.println("Connection Failed! Check output console - getDishById");
-                }                  
-            }         
-        }
-        return null;
-    }
+//    public static Dish getDishById(int catId, int dishId){
+//        for (int i = 0; i < sqlSelectByIdList.size(); i++) {
+//            if (i == catId) {
+//                System.out.println("catId " + catId);
+//                System.out.println("getDishById");
+//                try (Connection connection = DriverManager
+//                        .getConnection(URL, USERNAME, PASSWORD)) {
+//                    PreparedStatement pst = connection.prepareStatement(sqlSelectByIdList.get(catId));
+//                    pst.setInt(1, dishId);               
+//                    Dish dish = new Dish();
+//                    try (ResultSet rs = pst.executeQuery()) {
+//                        while (rs.next()) {                            
+//                            dish.setDbID(rs.getInt("Id"));
+//                            dish.setTitle(rs.getString("title"));
+//                            dish.setPrice(rs.getInt("price"));
+//                            dish.setCook(rs.getBoolean("isCook"));
+//                            if (catId == 5) {
+//                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredientsS")));
+//                            }else if (catId == 6) {
+//                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredientsB")));
+//                            }else {
+//                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredients")));
+//                            }
+//                       
+//                        }
+//                    }
+//                    return dish;
+//                    
+//                } catch (SQLException e) {
+//                    System.out.println("Connection Failed! Check output console - getDishById");
+//                }                  
+//            }         
+//        }
+//        return null;
+//    }
 
     public static java.sql.Timestamp getCurrentTimeStamp() {
         Date today = new Date();

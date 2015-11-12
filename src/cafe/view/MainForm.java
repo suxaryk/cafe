@@ -73,6 +73,8 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
         initBDmenu();
+        StorageUtils.readStorage();
+        CheckUtils.readCheck();
         initIcons();
 
         InitComonentsProperty();
@@ -4081,7 +4083,7 @@ public class MainForm extends javax.swing.JFrame {
         column.setCellEditor(dce);
     }
 
-    public void initBDmenu() {
+    public static void initBDmenu() {
 
         menu.add(new Category("1,2 страви"));
         menu.add(new Category("салати"));
@@ -4098,8 +4100,7 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("3"));
 
         DishUtils.readDBmenu();
-        StorageUtils.readStorage();
-        CheckUtils.readCheck();
+        
 
     }
 
@@ -4253,7 +4254,19 @@ public class MainForm extends javax.swing.JFrame {
         icons.add(new ImageIcon(getClass().
                 getResource("/cafe/icons/small/no-drink.png")));
     }
-
+    
+    public static Dish getDishById(int catId, int dishId) {
+        for (int i = 0; i < menu.size(); i++) {
+            if (i == catId) {                
+                for (Dish dish : menu.get(i).getDishes()) {
+                    if (dish.getDbID() == dishId) {
+                        return dish;                        
+                    }           
+                }
+            }          
+        }
+        return null;
+    }
     /**
      * @param args the command line arguments
      */

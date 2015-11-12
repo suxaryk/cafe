@@ -11,6 +11,7 @@ import cafe.Utils.db.Dish.RecepiesUtils;
 import cafe.model.Dish;
 import cafe.model.Ingredient;
 import cafe.model.OrderItem;
+import static cafe.view.MainForm.getDishById;
 import static cafe.view.MainForm.menu;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,11 +118,10 @@ public class JSONUtils {
                     int  id =  Integer.parseInt(jsonObj.get("id").toString());
                     int count = Integer.parseInt(jsonObj.
                             get("count").toString());
-                    System.out.println("catId " + catId);
-                    System.out.println("id " + id);
-                    System.out.println("count " + count);
-                    list.add(new OrderItem(
-                            DishUtils.getDishById(catId, id), count));                                    
+                    Dish dish = getDishById(catId, id);
+                    if (dish != null) {
+                        list.add(new OrderItem(dish, count));
+                    }                                                      
                 }
             } catch (ParseException ex) {
                 System.out.println("Error parse =" + Dish.class.getName());
@@ -130,12 +130,12 @@ public class JSONUtils {
         }
         return new ArrayList<>();
     }
-    public static String  convertOrderToJSONTables(ArrayList<OrderItem> items){
+    public static String  convertOrderToJSONTables(ArrayList<OrderItem> items, int activeCat){
         JSONArray jsonArr = new JSONArray();
         for (OrderItem item : items) {
             JSONObject itemObj = new JSONObject();    
-            itemObj.put("title", item.getDish().getTitle());
-            itemObj.put("price", item.getDish().getPrice());  
+            itemObj.put("catId", activeCat);
+            itemObj.put("id", item.getDish().getDbID());
             itemObj.put("count", item.getCount());
             itemObj.put("cook", item.isCook());
             jsonArr.add(itemObj);            
@@ -152,12 +152,16 @@ public class JSONUtils {
                 
                 for (Object jsonArr1 : jsonArr) {
                     JSONObject jsonObj = (JSONObject) jsonArr1;  
-                    String title = jsonObj.get("title").toString();
-                    int price = Integer.parseInt(jsonObj.get("price").toString());
+                    int catId = Integer.parseInt(jsonObj.get("catId").toString());
+                    int id = Integer.parseInt(jsonObj.get("id").toString());
                     int count = Integer.parseInt(jsonObj.
                             get("count").toString());
                     boolean isCook = Boolean.parseBoolean(jsonObj.get("cook").toString());
-                    list.add(new OrderItem(new Dish(title, price), count, isCook));                                   
+                    Dish dish = getDishById(catId, id);
+                    if (dish != null) {
+                        list.add(new OrderItem(dish, count, isCook));
+                    }
+                                                  
                 }
             } catch (ParseException ex) {
                 System.out.println("Error parse =" + Dish.class.getName());

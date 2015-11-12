@@ -55,8 +55,7 @@ public class OrderUtils {
                     tmpOrder.setDate(rs.getTimestamp("datatime"));
                     tmpOrder.setUser(rs.getString("operator"));                                     
                     tmpOrder.setItems(JSONUtils.convertJSONToOrder(rs.getString("order_items")));
-                    tmpOrder.setRemovedItems(JSONUtils.convertJSONToOrder(rs.getString("removed_items")));
-                    
+                    tmpOrder.setRemovedItems(JSONUtils.convertJSONToOrder(rs.getString("removed_items")));                    
                     loadOrders.add(tmpOrder);
                 }
             }

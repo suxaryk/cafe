@@ -123,7 +123,7 @@ public class Order {
     public String getJSONItems(boolean includePrice, int activeCat) {
         if (!items.isEmpty()) {
             if (includePrice) {
-                return JSONUtils.convertOrderToJSONTables(items);
+                return JSONUtils.convertOrderToJSONTables(items, activeCat);
             } else {
                 return JSONUtils.convertOrderToJSON(items, activeCat);
             }
@@ -135,7 +135,7 @@ public class Order {
     public String getJSONRemovedItems(boolean includePrice, int activeCat) {
         if (!items.isEmpty()) {
             if (includePrice) {
-                return JSONUtils.convertOrderToJSONTables(removeditems);
+                return JSONUtils.convertOrderToJSONTables(removeditems, activeCat);
             }
             return JSONUtils.convertOrderToJSON(removeditems, activeCat);
         }

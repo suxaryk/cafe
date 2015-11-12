@@ -15,6 +15,8 @@ public class ClientForm extends javax.swing.JFrame {
 
     public ClientForm() {
         initComponents();
+        initEnabledComponents();
+        MainForm.initBDmenu();
     }
 
     @SuppressWarnings("unchecked")
@@ -35,6 +37,7 @@ public class ClientForm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
         jXDatePicker2 = new org.jdesktop.swingx.JXDatePicker();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -151,17 +154,31 @@ public class ClientForm extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setPreferredWidth(200);
+            jTable2.getColumnModel().getColumn(1).setMinWidth(40);
+            jTable2.getColumnModel().getColumn(1).setPreferredWidth(40);
+            jTable2.getColumnModel().getColumn(1).setMaxWidth(40);
+            jTable2.getColumnModel().getColumn(2).setMinWidth(50);
+            jTable2.getColumnModel().getColumn(2).setPreferredWidth(50);
+            jTable2.getColumnModel().getColumn(2).setMaxWidth(50);
+            jTable2.getColumnModel().getColumn(3).setMinWidth(50);
+            jTable2.getColumnModel().getColumn(3).setPreferredWidth(50);
+            jTable2.getColumnModel().getColumn(3).setMaxWidth(50);
         }
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(10, 360, 350, 200);
+        jScrollPane2.setBounds(10, 320, 500, 200);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Опплачені страви", "Видалені страви" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Оплачені страви", "Видалені страви" }));
         jComboBox2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getRemovedDishes(evt);
+            }
+        });
         getContentPane().add(jComboBox2);
-        jComboBox2.setBounds(10, 330, 350, 30);
+        jComboBox2.setBounds(10, 290, 500, 30);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("показати дані");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 getAllOrders(evt);
@@ -174,12 +191,23 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().add(jXDatePicker2);
         jXDatePicker2.setBounds(80, 140, 150, 22);
 
+        jLabel3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel3.setText("Чек № ");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(20, 250, 160, 20);
+
         setSize(new java.awt.Dimension(1292, 1031));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initEnabledComponents(){
+        jTable1.setEnabled(false);
+        jComboBox2.setEnabled(false);
+    }
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
-
+        jTable1.setEnabled(true);
+        jComboBox2.setEnabled(true);
+        
         Date startDate = jXDatePicker1.getDate();
         Date endDate = jXDatePicker2.getDate();
         orders.clear();
@@ -191,32 +219,42 @@ public class ClientForm extends javax.swing.JFrame {
     }//GEN-LAST:event_getAllOrders
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        int index = jTable1.getSelectedRow();
-        if (index != -1) {
-            refreshRecipeTable(index);                    
-        }
+        activeOrder = jTable1.getSelectedRow();
+        getRemovedDishes(null);        
     }//GEN-LAST:event_jTable1MousePressed
+
+    private void getRemovedDishes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getRemovedDishes
+        int index = jComboBox2.getSelectedIndex();
+        if (activeOrder != -1) {
+            if (index == 0) {
+                refreshRecipeTable(activeOrder);
+            } else {
+                refreshRemoveRecipeTable(activeOrder);
+            }
+            jLabel3.setText("Чек № " + orders.get(activeOrder).getDayId());
+        }
+    }//GEN-LAST:event_getRemovedDishes
     
     private void refreshRecipeTable(int id){
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();       
-
+        model.setRowCount(0);
         for (OrderItem item : orders.get(id).getItems()) {
             model.addRow(new Object[]{              
                 item.getDish().getTitle(),
-                item.getDish().getPrice(),
                 item.getCount(),
+                item.getDish().getPrice(),                
                 item.getSum()                
             });
-        }
+        }              
     }
     private void refreshRemoveRecipeTable(int id){
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();       
-
+        model.setRowCount(0);
         for (OrderItem item : orders.get(id).getRemovedItems()) {
             model.addRow(new Object[]{              
-                item.getDish().getTitle(),
-                item.getDish().getPrice(),
+                item.getDish().getTitle(),                
                 item.getCount(),
+                item.getDish().getPrice(),
                 item.getSum()                
             });
         }
@@ -243,6 +281,7 @@ public class ClientForm extends javax.swing.JFrame {
         clientForm = new ClientForm();
         clientForm.setVisible(true);
     }
+    private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static ClientForm clientForm;
@@ -253,6 +292,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;

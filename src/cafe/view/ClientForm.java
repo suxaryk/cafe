@@ -45,6 +45,11 @@ public class ClientForm extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -53,7 +58,7 @@ public class ClientForm extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Кафе1", "Кафе2", "Кафе3" }));
         jComboBox1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(20, 10, 210, 30);
+        jComboBox1.setBounds(30, 10, 220, 30);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel1.setText("З");
@@ -63,25 +68,25 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel2.setText("По");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 90, 40, 20);
+        jLabel2.setBounds(30, 90, 40, 20);
 
         jTable1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Long(2), null, "олдлд", null,  new Integer(4),  new Integer(200)},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                { new Long(2), null, "олдлд",  new Integer(4), null,  new Integer(200), null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "№", "№ чеку", "Бармен", "Дата", "Сума (грн)", "Кіл.страв"
+                "№", "№ чеку", "Бармен", "Сума (грн)", "Дата", "Кіл.страв", "Кіл. видал"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Long.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -97,6 +102,11 @@ public class ClientForm extends javax.swing.JFrame {
                 jTable1MousePressed(evt);
             }
         });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable1KeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(50);
@@ -105,18 +115,21 @@ public class ClientForm extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(1).setMinWidth(50);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(50);
             jTable1.getColumnModel().getColumn(1).setMaxWidth(50);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(200);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(200);
-            jTable1.getColumnModel().getColumn(3).setMinWidth(180);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(180);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(180);
-            jTable1.getColumnModel().getColumn(4).setMinWidth(70);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(70);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(70);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(150);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(150);
+            jTable1.getColumnModel().getColumn(3).setMinWidth(70);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(70);
+            jTable1.getColumnModel().getColumn(4).setMinWidth(180);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(180);
+            jTable1.getColumnModel().getColumn(4).setMaxWidth(180);
             jTable1.getColumnModel().getColumn(5).setMinWidth(70);
             jTable1.getColumnModel().getColumn(5).setPreferredWidth(70);
             jTable1.getColumnModel().getColumn(5).setMaxWidth(70);
+            jTable1.getColumnModel().getColumn(6).setMinWidth(70);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(70);
+            jTable1.getColumnModel().getColumn(6).setMaxWidth(70);
         }
 
         getContentPane().add(jScrollPane1);
@@ -176,6 +189,8 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().add(jComboBox2);
         jComboBox2.setBounds(650, 260, 630, 30);
 
+        jButton1.setBackground(new java.awt.Color(0, 153, 204));
+        jButton1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jButton1.setText("показати дані");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,11 +198,11 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(70, 140, 160, 40);
+        jButton1.setBounds(30, 140, 220, 60);
         getContentPane().add(jXDatePicker1);
-        jXDatePicker1.setBounds(60, 50, 170, 22);
+        jXDatePicker1.setBounds(80, 50, 170, 22);
         getContentPane().add(jXDatePicker2);
-        jXDatePicker2.setBounds(60, 90, 170, 22);
+        jXDatePicker2.setBounds(80, 90, 170, 22);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel3.setText("Чек № ");
@@ -242,18 +257,18 @@ public class ClientForm extends javax.swing.JFrame {
         jTable4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Бармен", "Каса"
+                "Бармен", "Каса", "Кіл.страв"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -270,15 +285,51 @@ public class ClientForm extends javax.swing.JFrame {
             jTable4.getColumnModel().getColumn(1).setMinWidth(100);
             jTable4.getColumnModel().getColumn(1).setPreferredWidth(100);
             jTable4.getColumnModel().getColumn(1).setMaxWidth(100);
+            jTable4.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable4.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTable4.getColumnModel().getColumn(2).setMaxWidth(100);
         }
 
         getContentPane().add(jScrollPane4);
-        jScrollPane4.setBounds(270, 40, 380, 250);
+        jScrollPane4.setBounds(270, 40, 380, 190);
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jLabel5.setText("Каса");
+        jLabel5.setText("Каса по барменах");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(270, 10, 160, 20);
+
+        jLabel6.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel6.setText("Чеки");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(10, 260, 160, 20);
+
+        jLabel7.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel7.setText("Загальна каса:");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(270, 240, 170, 23);
+
+        jLabel8.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel8.setText("Загальна кіл. страв");
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(270, 260, 220, 23);
+
+        jLabel9.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel9.setText("0");
+        jLabel9.setFocusable(false);
+        jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(jLabel9);
+        jLabel9.setBounds(540, 240, 110, 23);
+
+        jLabel10.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel10.setText("0");
+        jLabel10.setFocusable(false);
+        jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(jLabel10);
+        jLabel10.setBounds(540, 260, 110, 23);
 
         setSize(new java.awt.Dimension(1292, 1031));
         setLocationRelativeTo(null);
@@ -288,12 +339,11 @@ public class ClientForm extends javax.swing.JFrame {
         jTable1.setEnabled(false);
         jComboBox2.setEnabled(false);
     }
-    private void getUsersKasa(){
-        
-        for (int i = 0; i < LoginForm.userList.size()-1; i++) {
-            OrderUtils.getUserKasa(startDate, endDate, LoginForm.userList.get(i).getDbId());            
-        }
-        
+    private void getUsersStatistics(){             
+        for (int i = 0; i < LoginForm.userList.size(); i++) {
+            OrderUtils.getUserKasa(startDate, endDate, i);   
+            OrderUtils.getUserDishCount(startDate, endDate, i);   
+        }        
     }   
     
     
@@ -326,6 +376,10 @@ public class ClientForm extends javax.swing.JFrame {
             jLabel3.setText("Чек № " + orders.get(activeOrder).getDayId());
         }
     }//GEN-LAST:event_getRemovedDishes
+
+    private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
+        jTable1MousePressed(null);
+    }//GEN-LAST:event_jTable1KeyReleased
     
     private void refreshRecipeTable(int id){
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();       
@@ -353,17 +407,20 @@ public class ClientForm extends javax.swing.JFrame {
     }
     
     private void refreshBarmensTable(){
-        getUsersKasa();
+        getUsersStatistics();
         DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
         model.setRowCount(0);
         
         for (int i = 0; i < LoginForm.userList.size()-1; i++) {
             model.addRow(new Object[]{
                 LoginForm.userList.get(i).getName(),
-                LoginForm.userList.get(i).getKasa()
-            });
-            
+                LoginForm.userList.get(i).getKasa(),
+                LoginForm.userList.get(i).getDishCount()
+            });            
         }
+        jLabel9.setText(String.valueOf(OrderUtils.getAllOrdersSum(startDate, endDate)));
+        jLabel10.setText(String.valueOf(OrderUtils.getAllOrdersCookCount(startDate, endDate)));             
+        
     }
     
     private void refreshOrderTable(JTable table, List<Order> list) {
@@ -373,12 +430,13 @@ public class ClientForm extends javax.swing.JFrame {
 
         for (Order order : list) {
             model.addRow(new Object[]{
-                k++,
+                order.getId(),
                 order.getDayId(),
                 order.getUser(),
-                dateFormat.format(order.getDate()),
                 order.getOrderSum(),
-                order.getCookCount()
+                dateFormat.format(order.getDate()),                
+                order.getCookCount(),
+                order.getRemovedItems().size()
             });          
         }
     }
@@ -399,10 +457,15 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

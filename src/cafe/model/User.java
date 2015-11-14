@@ -14,6 +14,8 @@ public class User {
     private int dbId;
     private String name;
     private int pass;    
+    private int kasa;
+    private int dishCount;    
     public static int active;
 
     public User() {
@@ -51,6 +53,25 @@ public class User {
     public void setDbId(int dbId) {
         this.dbId = dbId;
     }
+
+    public int getKasa() {
+        return kasa;
+    }
+
+    public void setKasa(int kasa) {
+        this.kasa = kasa;
+    }
+
+    public int getDishCount() {
+        return dishCount;
+    }
+
+    public void setDishCount(int dishCount) {
+        this.dishCount = dishCount;
+    }
+    
+    
+    
     
     
 

@@ -269,7 +269,7 @@ public class WeightForm extends javax.swing.JFrame {
                 int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
                 menu.get(activeCat).getDishes().get(activeDishes).setTitle(removeLastFewChar(title) + "(" + weightCount.intValue() + " гр.)");
                 Double k = (weightCount * price) / 100;
-                menu.get(activeCat).getDishes().get(activeDishes).setPrice(k.intValue() + 1);
+                menu.get(activeCat).getDishes().get(activeDishes).setPrice((int)Math.ceil(k));
                 break;                          
             }                     
         }        

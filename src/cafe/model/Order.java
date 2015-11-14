@@ -13,6 +13,7 @@ import java.util.Map;
  */
 public class Order {
     
+    private int id;
     private int dayId;
     private int cookCount;    
     private int orderSum;
@@ -22,6 +23,14 @@ public class Order {
     private ArrayList<OrderItem> items = new ArrayList<>();
     private ArrayList<OrderItem> removeditems = new ArrayList<>();
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }    
+    
     public  int getDayId() {
         return dayId;
     }
@@ -60,8 +69,7 @@ public class Order {
         }else{
             int count = 0;
             for (OrderItem orderItem : items) {
-                count += orderItem.getCookCount();
-                System.out.println("count" + count);
+                count += orderItem.getCookCount();                
             }
             return count;
         }       
@@ -122,24 +130,25 @@ public class Order {
     
     public String getJSONItems(boolean includePrice, int activeCat) {
         if (!items.isEmpty()) {
-            if (includePrice) {
-                return JSONUtils.convertOrderToJSONTables(items, activeCat);
-            } else {
+//            if (includePrice) {
+//                return JSONUtils.convertOrderToJSONTables(items, activeCat);
+//            } else {
                 return JSONUtils.convertOrderToJSON(items, activeCat);
-            }
+//            }
         } else {
             return "";
-        }
+        }        
     }
 
     public String getJSONRemovedItems(boolean includePrice, int activeCat) {
         if (!items.isEmpty()) {
-            if (includePrice) {
-                return JSONUtils.convertOrderToJSONTables(removeditems, activeCat);
-            }
+//            if (includePrice) {
+//                return JSONUtils.convertOrderToJSONTables(removeditems, activeCat);
+//            }
             return JSONUtils.convertOrderToJSON(removeditems, activeCat);
-        }
-        return "";
+        }else {
+            return "";
+        }    
     }
 
     public Map<Integer, Double> getOrderIngredients() {

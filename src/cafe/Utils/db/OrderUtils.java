@@ -38,9 +38,11 @@ public class OrderUtils {
     }
 
     public static List<Order> getUserKasa(Timestamp start, Timestamp end, int index) {
-        final String SQL = "SELECT SUM(sum) from orders where datatime >= '"
-                + start + "' AND datatime <= '"
-                + end + "' AND operator ='"
+        final String SQL = "SELECT SUM(sum) from orders where"
+                + " datatime >= '" + start 
+                + "' AND datatime <= '" + end 
+                + "' AND sum > 0"
+                + " AND operator ='" 
                 + LoginForm.userList.get(index).getName() + "'";
         List<Order> loadOrders = new ArrayList<>();
         try (Connection connection = DriverManager
@@ -71,7 +73,7 @@ public class OrderUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected! getUserKasa" + index
+            System.out.println(!connection.isClosed() ? "DB connected! getUserDishCount" + index
                     : "Error DB connecting");
 
             Statement statement = connection.createStatement();
@@ -82,7 +84,7 @@ public class OrderUtils {
             }
             return loadOrders;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getUserKasa " + index);
+            System.out.println("Connection Failed! Check output console - getUserDishCount " + index);
             return null;
         }
     }

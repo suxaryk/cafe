@@ -3897,6 +3897,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jTextField12FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField12FocusGained
         jTable5.clearSelection();
+        jTable6.clearSelection();        
         storageIngSelected(null);
     }//GEN-LAST:event_jTextField12FocusGained
 

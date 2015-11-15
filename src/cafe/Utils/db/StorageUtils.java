@@ -3,7 +3,9 @@ package cafe.Utils.db;
 import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
 import static cafe.Utils.db.Dish.DishUtils.URL;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
+import static cafe.Utils.db.Dish.DishUtils.getCurrentTimeStamp;
 import cafe.model.Ingredient;
+import cafe.model.User;
 import cafe.view.MainForm;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -116,5 +118,47 @@ public class StorageUtils {
         return ingredient;
         
     }
+    
+    public static void addRemovedItems(String JsonItems, User user) {
+        final String SQL = "INSERT INTO storage_removed(date, operator, removed_ingredients) VALUES(?, ?, ?)";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            pstatement.setTimestamp(1, getCurrentTimeStamp());
+            pstatement.setString(2, user.getName());
+            pstatement.setString(3, JsonItems);
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new RemovedItems was added successfully!");
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addRemovedItems");
+        }
+    }
+    public static void g(String JsonItems, User user) {
+        final String SQL = "INSERT INTO storage_removed(date, operator, removed_ingredients) VALUES(?, ?, ?)";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            pstatement.setTimestamp(1, getCurrentTimeStamp());
+            pstatement.setString(2, user.getName());
+            pstatement.setString(3, JsonItems);
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new RemovedItems was added successfully!");
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addRemovedItems");
+        }
+    }
+    
+    
+    
+    
+    
 
 }

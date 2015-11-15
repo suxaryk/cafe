@@ -37,14 +37,13 @@ public class OrderUtils {
         OrderUtils.dbId = checkId;
     }
 
-    public static List<Order> getUserKasa(Timestamp start, Timestamp end, int index) {
+    public static int getUserKasa(Timestamp start, Timestamp end, int index) {
         final String SQL = "SELECT SUM(sum) from orders where"
                 + " datatime >= '" + start 
                 + "' AND datatime <= '" + end 
                 + "' AND sum > 0"
                 + " AND operator ='" 
                 + LoginForm.userList.get(index).getName() + "'";
-        List<Order> loadOrders = new ArrayList<>();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
@@ -54,22 +53,21 @@ public class OrderUtils {
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-                    LoginForm.userList.get(index).setKasa(rs.getInt(1));
+                    return rs.getInt(1);
                 }
-            }
-            return loadOrders;
+            }            
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getUserKasa " + index);
-            return null;
+            return 0;
         }
+        return 0;
     }
 
-    public static List<Order> getUserDishCount(Timestamp start, Timestamp end, int index) {
+    public static int getUserDishCount(Timestamp start, Timestamp end, int index) {
         final String SQL = "SELECT SUM(cookCount) from orders where datatime >= '"
                 + start + "' AND datatime <= '"
                 + end + "' AND operator ='"
-                + LoginForm.userList.get(index).getName() + "'";
-        List<Order> loadOrders = new ArrayList<>();
+                + LoginForm.userList.get(index).getName() + "'";      
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
@@ -79,14 +77,14 @@ public class OrderUtils {
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-                    LoginForm.userList.get(index).setDishCount(rs.getInt(1));
+                    return rs.getInt(1);
                 }
             }
-            return loadOrders;
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getUserDishCount " + index);
-            return null;
+            return 0;
         }
+        return 0;
     }
 
     public static List<Order> getOrders(Timestamp start, Timestamp end) {

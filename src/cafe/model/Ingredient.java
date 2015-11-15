@@ -67,7 +67,11 @@ public class Ingredient  {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return this.getTitle().equals(((Ingredient) obj).getTitle());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 

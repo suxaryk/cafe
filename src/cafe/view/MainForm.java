@@ -9,6 +9,7 @@ import cafe.Utils.db.Dish.DishUtils;
 import cafe.Utils.db.Dish.RecepiesUtils;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
+import static cafe.Utils.json.JSONUtils.convertRemovedIngToJSON;
 import cafe.model.Category;
 import cafe.model.Check;
 import cafe.model.OrderItem;
@@ -2604,7 +2605,7 @@ public class MainForm extends javax.swing.JFrame {
     private void refreshListOfPrices() {
         String unit = "шт.";
         int minValue = 1;
-        if (activeCat == 10 && jCheckBox2.isSelected()) {
+        if (activeCat == 11 && jCheckBox2.isSelected()) {
             unit = "грам";
             minValue = 50;
         }
@@ -2660,7 +2661,7 @@ public class MainForm extends javax.swing.JFrame {
         } else {
             jCheckBox1.setVisible(false);
         }
-        if (activeCat == 10) {
+        if (activeCat == 11) {
             jCheckBox2.setVisible(true);
         } else {
             jCheckBox2.setVisible(false);
@@ -2788,6 +2789,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void subOrderIngredientsFromDB() {
         System.out.println("----- remove Order ingredients from DB-----------");
+        StorageUtils.readStorage();       
         for (Ingredient ingredient : storageList) {
             double diff = orders.get(activeTable)
                     .getOrderIngredients().get(ingredient.getId());
@@ -3608,6 +3610,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void removeIngCountFromStorage(JTable table) {
         changeList.clear();
+        userList.get(User.active).getDayRemovedProducts().clear();
         changeList.addAll(getListFromTable(table, 3, true));
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
@@ -3616,8 +3619,15 @@ public class MainForm extends javax.swing.JFrame {
                 storageList.get(i).setCount(old - diff);
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
+                userList.get(User.active).getDayRemovedProducts().add(
+                        new Ingredient(storageList.get(i).getId(), diff));
             }
         }
+
+        StorageUtils.addRemovedItems(
+                convertRemovedIngToJSON(
+                        userList.get(User.active).getDayRemovedProducts()), 
+                        userList.get(User.active));
     }
 
     private void updateItemsFromStorage() {

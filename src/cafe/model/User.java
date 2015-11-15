@@ -5,6 +5,9 @@
  */
 package cafe.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author suxarina
@@ -16,8 +19,9 @@ public class User {
     private int pass;    
     private int kasa;
     private int dishCount;    
+    private List<Ingredient> dayRemovedProducts = new LinkedList<>();
     public static int active;
-
+ 
     public User() {
     }
     
@@ -69,6 +73,15 @@ public class User {
     public void setDishCount(int dishCount) {
         this.dishCount = dishCount;
     }
+
+    public List<Ingredient> getDayRemovedProducts() {
+        return dayRemovedProducts;
+    }
+
+    public void setDayRemovedProducts(List<Ingredient> dayRemovedProducts) {
+        this.dayRemovedProducts = dayRemovedProducts;
+    }
+    
     
     
     

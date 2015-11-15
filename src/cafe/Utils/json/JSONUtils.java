@@ -5,15 +5,13 @@
  */
 package cafe.Utils.json;
 
-import cafe.Utils.FileUtils;
-import cafe.Utils.db.Dish.DishUtils;
 import cafe.Utils.db.Dish.RecepiesUtils;
 import cafe.model.Dish;
 import cafe.model.Ingredient;
 import cafe.model.OrderItem;
-import static cafe.view.MainForm.getDishById;
 import static cafe.view.MainForm.menu;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -137,6 +135,41 @@ public class JSONUtils {
         }
         return new ArrayList<>();
     }
+    
+    public static String convertRemovedIngToJSON(List<Ingredient> removedList) {
+        JSONArray jsonArr = new JSONArray();
+        for (Ingredient ing : removedList) {
+            JSONObject itemObj = new JSONObject();
+            itemObj.put("id", ing.getId());
+            itemObj.put("count", ing.getCount());         
+            jsonArr.add(itemObj);
+        }
+        return jsonArr.toJSONString();
+
+    }
+    
+    public static List<Ingredient> convertJSONToRemovedIng(String json) {
+        if (!"[]".equals(json)) {
+            List<Ingredient> list = new LinkedList<>();
+            try {
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(json);
+                JSONArray jsonArr = (JSONArray) obj;
+                for (Object jsonArr1 : jsonArr) {
+                    JSONObject jsonObj = (JSONObject) jsonArr1;
+                    int  id =  Integer.parseInt(jsonObj.get("id").toString());                    
+                    int count = Integer.parseInt(jsonObj.
+                            get("count").toString());                 
+                    list.add(new Ingredient(id, count));
+                }
+            } catch (ParseException ex) {
+                System.out.println("Error parse convertJSONToRemovedIng");
+            }
+            return list;
+        }
+        return new ArrayList<>();
+    }
+    
 //    public static String  convertOrderToJSONTables(ArrayList<OrderItem> items, int activeCat){
 //        JSONArray jsonArr = new JSONArray();
 //        for (OrderItem item : items) {

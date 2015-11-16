@@ -150,11 +150,11 @@ public class DishUtils {
     
     public static void chooseServer(int cafeId){
         if (cafeId == 0) {
-            URL = "jdbc:mysql://starkon.ddns.net:3306/luckyroger";                 
+            URL = "jdbc:mysql://server1cafe.ddns.net:3306/luckyroger";                 
         }else if (cafeId == 1) {
-            URL = "jdbc:mysql://shepet.ddns.net:3306/luckyroger";
+            URL = "jdbc:mysql://server2cafe.ddns.net:3306/luckyroger";
         }else if (cafeId == 2) {
-            URL = "jdbc:mysql://slavuta.ddns.net:3306/luckyroger";
+            URL = "jdbc:mysql://server3cafe.ddns.net:3306/luckyroger";
         }
         
     }

@@ -5,6 +5,7 @@
  */
 package cafe.model;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,11 +15,13 @@ import java.util.List;
  */
 public class User {
     
-    private int dbId;
-    private String name;
+    public int dbId;
+    public String name;
     private int pass;    
     private int kasa;
-    private int dishCount;    
+    private int dishCount; 
+    public Date startTime;
+    public Date endTime;
     private List<Ingredient> dayRemovedProducts = new LinkedList<>();
     public static int active;
  
@@ -80,6 +83,22 @@ public class User {
 
     public void setDayRemovedProducts(List<Ingredient> dayRemovedProducts) {
         this.dayRemovedProducts = dayRemovedProducts;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
     
     

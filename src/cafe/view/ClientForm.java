@@ -1,16 +1,19 @@
 package cafe.view;
 
 import static cafe.Utils.db.Dish.DishUtils.chooseServer;
+import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getUserDishCount;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
 import static cafe.Utils.db.StorageUtils.getIngredientById;
 import static cafe.Utils.db.StorageUtils.getRemovedIngredients;
 import cafe.Utils.db.UsersUtils;
+import cafe.model.Employee;
 import cafe.model.Ingredient;
 import cafe.model.Order;
 import cafe.model.OrderItem;
 import static cafe.view.LoginForm.userList;
+import static cafe.view.MainForm.employees;
 import static cafe.view.MainForm.sortListOfIngredients;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -150,7 +153,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(0, 290, 650, 580);
+        jScrollPane1.setBounds(0, 290, 650, 270);
 
         jTable2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -194,7 +197,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(650, 600, 630, 270);
+        jScrollPane2.setBounds(0, 610, 650, 270);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Оплачені страви", "Видалені страви" }));
         jComboBox2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -204,7 +207,7 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jComboBox2);
-        jComboBox2.setBounds(650, 570, 630, 30);
+        jComboBox2.setBounds(0, 580, 650, 30);
 
         jButton1.setBackground(new java.awt.Color(0, 153, 204));
         jButton1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -225,31 +228,31 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 153, 204));
         jLabel3.setText("Чек № ");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(660, 550, 160, 20);
+        jLabel3.setBounds(10, 560, 180, 20);
 
         jTable3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Ім'я", "Початок", "Кінець"
+                "Ім'я", "Початок", "Кінець", "Аванс"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -350,7 +353,7 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel11.setText("Списання");
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(670, 270, 230, 20);
+        jLabel11.setBounds(660, 560, 230, 20);
 
         jTable5.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
@@ -387,7 +390,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         getContentPane().add(jScrollPane5);
-        jScrollPane5.setBounds(650, 290, 630, 260);
+        jScrollPane5.setBounds(650, 580, 630, 300);
 
         jButton2.setText("показати час");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -452,12 +455,28 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void showEmployeeShedule(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showEmployeeShedule
         EmployeeDate = new java.sql.Timestamp((jXDatePicker3.getDate().getTime()));
+        EmployeeUtils.getEmployeeTime(EmployeeDate);
+        refreshEmployeeTable();
+        
+        
     }//GEN-LAST:event_showEmployeeShedule
 
     private void chooseCafe(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCafe
         chooseServer(jComboBox1.getSelectedIndex());
     }//GEN-LAST:event_chooseCafe
     
+    private void refreshEmployeeTable(){
+        DateFormat Format = new SimpleDateFormat("HH:mm:ss");
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();       
+        model.setRowCount(0);
+        for (Employee item : employees) {
+            model.addRow(new Object[]{                          
+                item.getName(),
+                Format.format(item.getStartTime()),
+                Format.format(item.getEndTime())
+            });
+        }              
+    }
     private void refreshRecipeTable(int id){
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();       
         model.setRowCount(0);

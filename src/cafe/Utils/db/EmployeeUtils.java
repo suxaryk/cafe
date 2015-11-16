@@ -18,12 +18,35 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 /**
  *
  * @author suxarina
  */
 public class EmployeeUtils {
+    
+    public static void getEmployeeTime(Date date) {
+        final String SQL = "SELECT * from employee_time WHERE DATE(date_in) = DATE('" + date + "')";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    employees.add(new Employee(
+                            rs.getInt("Id"),
+                            rs.getString("name"),
+                            rs.getTimestamp("date_in"),
+                            rs.getTimestamp("date_out")                            
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getEmployeeTime");
+        }
+
+    }
 
     public static void addEmployeeToDB(String name, int pass) {
         final String SQL = "INSERT INTO employee(name, pass) VALUES(?, ?)";

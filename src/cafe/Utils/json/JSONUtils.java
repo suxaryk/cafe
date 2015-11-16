@@ -158,7 +158,7 @@ public class JSONUtils {
                 for (Object jsonArr1 : jsonArr) {
                     JSONObject jsonObj = (JSONObject) jsonArr1;
                     int  id =  Integer.parseInt(jsonObj.get("id").toString());                    
-                    int count = Integer.parseInt(jsonObj.
+                    double count = Double.parseDouble(jsonObj.
                             get("count").toString());                 
                     list.add(new Ingredient(id, count));
                 }

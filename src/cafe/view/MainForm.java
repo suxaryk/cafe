@@ -2948,7 +2948,7 @@ public class MainForm extends javax.swing.JFrame {
         });
     }
 
-    private void sortListOfIngredients(List list, final int orderArg) {
+    public static  void sortListOfIngredients(List list, final int orderArg) {
         Collections.sort(list, new Comparator<Ingredient>() {
             @Override
             public int compare(Ingredient o1, Ingredient o2) {

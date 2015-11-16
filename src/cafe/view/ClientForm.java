@@ -3,14 +3,20 @@ package cafe.view;
 import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getUserDishCount;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
+import cafe.Utils.db.StorageUtils;
+import static cafe.Utils.db.StorageUtils.getIngredientById;
+import static cafe.Utils.db.StorageUtils.getRemovedIngredients;
 import cafe.Utils.db.UsersUtils;
+import cafe.model.Ingredient;
 import cafe.model.Order;
 import cafe.model.OrderItem;
 import static cafe.view.LoginForm.userList;
+import static cafe.view.MainForm.sortListOfIngredients;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -216,7 +222,7 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(660, 550, 160, 20);
 
-        jTable3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTable3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -249,8 +255,6 @@ public class ClientForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable3.setFocusable(false);
-        jTable3.setRowHeight(22);
         jScrollPane3.setViewportView(jTable3);
 
         getContentPane().add(jScrollPane3);
@@ -346,7 +350,7 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().add(jLabel11);
         jLabel11.setBounds(670, 270, 230, 20);
 
-        jTable5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jTable5.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -370,8 +374,6 @@ public class ClientForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable5.setFocusable(false);
-        jTable5.setRowHeight(18);
         jScrollPane5.setViewportView(jTable5);
         if (jTable5.getColumnModel().getColumnCount() > 0) {
             jTable5.getColumnModel().getColumn(0).setMinWidth(50);
@@ -413,6 +415,7 @@ public class ClientForm extends javax.swing.JFrame {
         refreshOrderTable(jTable1, orders);       
         
        refreshBarmensTable();
+       refreshRemovedIngTable();
     }//GEN-LAST:event_getAllOrders
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
@@ -471,6 +474,28 @@ public class ClientForm extends javax.swing.JFrame {
                 LoginForm.userList.get(i).getName(),
                 LoginForm.userList.get(i).getKasa(),
                 LoginForm.userList.get(i).getDishCount()
+            });            
+        }
+        jLabel9.setText(String.valueOf(OrderUtils.getAllOrdersSum(startDate, endDate)));
+        jLabel10.setText(String.valueOf(OrderUtils.getAllOrdersCookCount(startDate, endDate)));             
+        
+    }
+    private void refreshRemovedIngTable(){
+       
+        DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
+        model.setRowCount(0);
+        List<Ingredient> removedIng = new ArrayList<>();
+        removedIng.addAll(getRemovedIngredients(startDate, endDate));
+        for (Ingredient ing : removedIng) {
+            ing.setTitle(getIngredientById(ing.getId()).getTitle());
+        }
+        sortListOfIngredients(removedIng, 2);
+        
+        for (Ingredient ing : removedIng) {
+            model.addRow(new Object[]{
+                ing.getId(),
+                ing.getTitle(),
+                ing.getCount()
             });            
         }
         jLabel9.setText(String.valueOf(OrderUtils.getAllOrdersSum(startDate, endDate)));

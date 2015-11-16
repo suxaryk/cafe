@@ -58,6 +58,10 @@ public class Ingredient  {
     public void setCount(double count) {
         this.count = count;
     }
+    public void addCount(double count){
+        this.count+=count;
+        
+    }
 
     @Override
     public int hashCode() {
@@ -68,7 +72,7 @@ public class Ingredient  {
     @Override
     public boolean equals(Object obj) {
         try {
-            return this.getTitle().equals(((Ingredient) obj).getTitle());
+            return this.getId() == ((Ingredient) obj).getId();
         } catch (Exception e) {
             return false;
         }

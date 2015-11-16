@@ -4,6 +4,7 @@ import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
 import static cafe.Utils.db.Dish.DishUtils.URL;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import static cafe.Utils.db.Dish.DishUtils.getCurrentTimeStamp;
+import cafe.Utils.json.JSONUtils;
 import cafe.model.Ingredient;
 import cafe.model.User;
 import cafe.view.MainForm;
@@ -13,6 +14,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -89,10 +94,10 @@ public class StorageUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Storage count was updated successfully!");
+                System.out.println("Storage count was updated successfully! " + dbId);
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateCount");
+            System.out.println("Connection Failed! Check output console - updateCount" + dbId);
         }
     }
     
@@ -101,7 +106,7 @@ public class StorageUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             String SQL = "SELECT * FROM storage WHERE Id =" + id;
-            System.out.println(!connection.isClosed() ? "DB connected! getIngredientById"
+            System.out.println(!connection.isClosed() ? "DB connected! getIngredientById " + id
                     : "Error DB connecting");
             MainForm.storageList.clear();
             Statement statement = connection.createStatement();
@@ -113,7 +118,7 @@ public class StorageUtils {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - readStorage");
+            System.out.println("Connection Failed! Check output console - getIngredientById " + id);
         }
         return ingredient;
         
@@ -137,28 +142,49 @@ public class StorageUtils {
             System.out.println("Connection Failed! Check output console - addRemovedItems");
         }
     }
-    public static void g(String JsonItems, User user) {
-        final String SQL = "INSERT INTO storage_removed(date, operator, removed_ingredients) VALUES(?, ?, ?)";
+    
+    public static void fullJoinLists(List<Ingredient> list1, List<Ingredient> list2) {
+        for (int i = 0; i < list2.size(); i++) {
+            if (list1.contains(list2.get(i))) {
+                int index = list1.indexOf(list2.get(i));
+                list1.get(i).addCount(list2.get(index).getCount());
+            }else{
+                list1.add(list2.get(i));
+            }
+        } 
+    }
+
+    public static List<Ingredient> getRemovedIngredients(Timestamp start, Timestamp end) {
+        final String SQL = "SELECT * from storage_removed where"
+                + " date >= '" + start
+                + "' AND date <= '" + end          
+                + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.setTimestamp(1, getCurrentTimeStamp());
-            pstatement.setString(2, user.getName());
-            pstatement.setString(3, JsonItems);
-            int rowsInserted = pstatement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("A new RemovedItems was added successfully!");
+            System.out.println(!connection.isClosed() ? "DB connected! getRemovedIngredients"
+                    : "Error DB connecting");
+            List<Ingredient> removedList = new ArrayList<>();
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    System.out.println("JSON " + rs.getString("removed_ingredients"));
+                    fullJoinLists(removedList,
+                            JSONUtils.convertJSONToRemovedIng(
+                                    rs.getString("removed_ingredients"))
+                    );
+                }
 
+                return removedList;
             }
+
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addRemovedItems");
+            System.out.println("Connection Failed! Check output console - getRemovedIngredients ");
+            return null;
         }
     }
-    
-    
-    
-    
+
+
     
 
 }

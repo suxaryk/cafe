@@ -118,7 +118,7 @@ public class OrderUtils {
         }
     }
 
-    public static void addOrder(Order order, User user, int activeCat) {
+    public static void addOrder(Order order, User user) {
         final String sql = "INSERT INTO orders(dayId, orderId, sum, cookCount, datatime, operator, order_items, removed_items)"
                 + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -139,8 +139,8 @@ public class OrderUtils {
             System.out.println("cookCount" + order.getCookCount());
             pstatement.setTimestamp(5, getCurrentTimeStamp());
             pstatement.setString(6, user.getName());
-            pstatement.setString(7, order.getJSONItems(false, activeCat));
-            pstatement.setString(8, order.getJSONRemovedItems(false, activeCat));
+            pstatement.setString(7, order.getJSONItems());
+            pstatement.setString(8, order.getJSONRemovedItems());
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -152,7 +152,7 @@ public class OrderUtils {
         }
     }
 
-    public static void updateTable(Order order, User user, int activeCat, int activeTable) {
+    public static void updateTable(Order order, User user, int activeTable) {
         final String SQL = "UPDATE tables set orderId=?, sum=?, cookCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";
 
         try (Connection connection = DriverManager
@@ -168,8 +168,8 @@ public class OrderUtils {
             pstatement.setInt(3, order.getCookCount());
             pstatement.setTimestamp(4, getCurrentTimeStamp());
             pstatement.setString(5, user.getName());
-            pstatement.setString(6, order.getJSONItems(true, activeCat));
-            pstatement.setString(7, order.getJSONRemovedItems(true, activeCat));
+            pstatement.setString(6, order.getJSONItems());
+            pstatement.setString(7, order.getJSONRemovedItems());
             pstatement.setInt(8, activeTable);
 
             int rowsInserted = pstatement.executeUpdate();

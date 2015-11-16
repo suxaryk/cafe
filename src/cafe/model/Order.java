@@ -128,29 +128,22 @@ public class Order {
       
     
     
-    public String getJSONItems(boolean includePrice, int activeCat) {
+    public String getJSONItems() {
         if (!items.isEmpty()) {
-//            if (includePrice) {
-//                return JSONUtils.convertOrderToJSONTables(items, activeCat);
-//            } else {
-                return JSONUtils.convertOrderToJSON(items, activeCat);
-//            }
+                return JSONUtils.convertOrderToJSON(items);
         } else {
             return "";
         }        
     }
 
-    public String getJSONRemovedItems(boolean includePrice, int activeCat) {
+    public String getJSONRemovedItems() {
         if (!items.isEmpty()) {
-//            if (includePrice) {
-//                return JSONUtils.convertOrderToJSONTables(removeditems, activeCat);
-//            }
-            return JSONUtils.convertOrderToJSON(removeditems, activeCat);
+            return JSONUtils.convertOrderToJSON(removeditems);
         }else {
             return "";
         }    
     }
-
+    ///FIX !!!!!!!!!!!!!!!
     public Map<Integer, Double> getOrderIngredients() {
         Map<Integer, Double> diffMap = new HashMap<>();
         for (Ingredient ingredient : MainForm.storageList) {

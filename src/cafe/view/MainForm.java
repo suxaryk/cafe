@@ -19,6 +19,8 @@ import cafe.model.Ingredient;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
@@ -54,6 +56,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -2577,7 +2580,7 @@ public class MainForm extends javax.swing.JFrame {
             });
         }
         
-        OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeCat,  activeTable);
+        OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active),  activeTable);
         jTextField1.setText(String.valueOf(orders.get(activeTable).calcOrderSum()));
     }
 
@@ -2922,7 +2925,7 @@ public class MainForm extends javax.swing.JFrame {
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
                 markDishesAsCooked();
-                OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active),activeCat, activeTable);
+                OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
 
                 if (jButton3.isEnabled()) {
                     if (orders.get(activeTable).calcOrderSum() != 0) {
@@ -3682,7 +3685,7 @@ public class MainForm extends javax.swing.JFrame {
                     OrderUtils.fillTableById(activeTable);
                     activeTable = index;
                     setOrderIdForTable(orders.get(activeTable).getDayId());
-                    OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active),activeCat, activeTable);
+                    OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
                 } else {
                     jComboBox2.setSelectedIndex(0);
                 }
@@ -3719,18 +3722,24 @@ public class MainForm extends javax.swing.JFrame {
         String line = jTextField12.getText();
         if (!line.equals("")) {
             int diff = Integer.parseInt(line);
-            JFrame frame = new JFrame();
-            String[] options = new String[2];
-            options[0] = "Так";
-            options[1] = "Ні";
-            int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                    "Інкасація  " + diff + " грн, підтвердити?", "Інкасація/Аванс", 0,
-                    JOptionPane.YES_NO_OPTION, null, options, null);
-            if (reply == JOptionPane.YES_OPTION) {
+            JFrame frame = new JFrame();      
+         
+            Object value = JOptionPane.showInputDialog(frame,
+                    "Інкасація  " + diff + " грн, підтвердити?\n"
+                    + "Виберіть працівника для авансу \n"
+                    + "або бармена хто здійснює інкасацію",
+                    "Інкасація/Аванс",
+                    JOptionPane.YES_NO_OPTION,
+                    null,
+                    employees.toArray(),
+                    employees.toArray()[0]);
+            int index = employees.indexOf(value);       
+
+            if (value != null) {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
                 System.out.println("Incasacia - diff =" + order.calcOrderSum());
-                OrderUtils.addOrder(order, userList.get(User.active),  0);
+                OrderUtils.addOrder(order, employees.get(index));
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
                 jTextField12.setText("");
             }
@@ -3868,8 +3877,8 @@ public class MainForm extends javax.swing.JFrame {
                 }
                 PrintClientCheck();
                 OrderUtils.addOrder(orders.get(activeTable),
-                        userList.get(User.active), activeCat);
-                OrderUtils.updateTable(new Order(), userList.get(User.active), activeCat, activeTable);
+                        userList.get(User.active));
+                OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
                 ordered = true;
                 jTable1.setBackground(lightRed);

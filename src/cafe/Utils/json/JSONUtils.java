@@ -95,12 +95,10 @@ public class JSONUtils {
     
     
     //fix title
-    public static String  convertOrderToJSON(ArrayList<OrderItem> items, int activeCat){
+    public static String  convertOrderToJSON(ArrayList<OrderItem> items){
         JSONArray jsonArr = new JSONArray();
         for (OrderItem item : items) {
             JSONObject itemObj = new JSONObject();
-//            itemObj.put("catId", activeCat);           
-//            itemObj.put("id", item.getDish().getDbID()); 
             itemObj.put("tit", item.getDish().getTitle());             
             itemObj.put("price", item.getDish().getPrice());           
             itemObj.put("count", item.getCount());           
@@ -119,7 +117,6 @@ public class JSONUtils {
                 JSONArray jsonArr = (JSONArray) obj;                
                 for (Object jsonArr1 : jsonArr) {
                     JSONObject jsonObj = (JSONObject) jsonArr1;
-//                    int  id =  Integer.parseInt(jsonObj.get("id").toString());
                     String title = jsonObj.get("tit").toString();
                     int price = Integer.parseInt(jsonObj.get("price").toString());
                     int count = Integer.parseInt(jsonObj.

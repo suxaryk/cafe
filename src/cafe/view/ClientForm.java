@@ -3,7 +3,6 @@ package cafe.view;
 import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getUserDishCount;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
-import cafe.Utils.db.StorageUtils;
 import static cafe.Utils.db.StorageUtils.getIngredientById;
 import static cafe.Utils.db.StorageUtils.getRemovedIngredients;
 import cafe.Utils.db.UsersUtils;
@@ -16,7 +15,6 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -91,7 +89,7 @@ public class ClientForm extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "№", "№ чеку", "Бармен", "Сума (грн)", "Дата", "Кіл.страв", "Кіл. видал"
+                "№", "№ чеку", "Бармен", "Сума (грн)", "Дата Час", "Кіл.страв", "Кіл. видал"
             }
         ) {
             Class[] types = new Class [] {
@@ -268,18 +266,18 @@ public class ClientForm extends javax.swing.JFrame {
         jTable4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Бармен", "Каса", "Кіл.страв"
+                "Бармен", "Каса"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -296,9 +294,6 @@ public class ClientForm extends javax.swing.JFrame {
             jTable4.getColumnModel().getColumn(1).setMinWidth(100);
             jTable4.getColumnModel().getColumn(1).setPreferredWidth(100);
             jTable4.getColumnModel().getColumn(1).setMaxWidth(100);
-            jTable4.getColumnModel().getColumn(2).setMinWidth(100);
-            jTable4.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jTable4.getColumnModel().getColumn(2).setMaxWidth(100);
         }
 
         getContentPane().add(jScrollPane4);
@@ -472,8 +467,7 @@ public class ClientForm extends javax.swing.JFrame {
         for (int i = 0; i < LoginForm.userList.size()-1; i++) {
             model.addRow(new Object[]{
                 LoginForm.userList.get(i).getName(),
-                LoginForm.userList.get(i).getKasa(),
-                LoginForm.userList.get(i).getDishCount()
+                LoginForm.userList.get(i).getKasa()               
             });            
         }
         jLabel9.setText(String.valueOf(OrderUtils.getAllOrdersSum(startDate, endDate)));
@@ -529,7 +523,7 @@ public class ClientForm extends javax.swing.JFrame {
     private static Timestamp startDate, endDate;
     private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();
-    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
     public static ClientForm clientForm;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

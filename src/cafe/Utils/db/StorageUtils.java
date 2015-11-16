@@ -144,12 +144,12 @@ public class StorageUtils {
     }
     
     public static void fullJoinLists(List<Ingredient> list1, List<Ingredient> list2) {
-        for (int i = 0; i < list2.size(); i++) {
-            if (list1.contains(list2.get(i))) {
-                int index = list1.indexOf(list2.get(i));
-                list1.get(i).addCount(list2.get(index).getCount());
-            }else{
-                list1.add(list2.get(i));
+        for (Ingredient ing : list2) {
+            if (list1.contains(ing)) {
+                int index = list1.indexOf(ing);
+                list1.get(index).addCount(ing.getCount());
+            } else {
+                list1.add(ing);
             }
         } 
     }

@@ -143,7 +143,7 @@ public class Order {
             return "";
         }    
     }
-    ///FIX !!!!!!!!!!!!!!!
+    ///need to refactor
     public Map<Integer, Double> getOrderIngredients() {
         Map<Integer, Double> diffMap = new HashMap<>();
         for (Ingredient ingredient : MainForm.storageList) {

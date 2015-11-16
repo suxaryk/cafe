@@ -1,5 +1,6 @@
 package cafe.view;
 
+import static cafe.Utils.db.Dish.DishUtils.chooseServer;
 import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getUserDishCount;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
@@ -60,6 +61,7 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -67,6 +69,11 @@ public class ClientForm extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Кафе1", "Кафе2", "Кафе3" }));
         jComboBox1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseCafe(evt);
+            }
+        });
         getContentPane().add(jComboBox1);
         jComboBox1.setBounds(30, 10, 220, 30);
 
@@ -382,6 +389,15 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().add(jScrollPane5);
         jScrollPane5.setBounds(650, 290, 630, 260);
 
+        jButton2.setText("показати час");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showEmployeeShedule(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(960, 8, 130, 23);
+
         setSize(new java.awt.Dimension(1292, 1031));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -433,6 +449,14 @@ public class ClientForm extends javax.swing.JFrame {
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
         jTable1MousePressed(null);
     }//GEN-LAST:event_jTable1KeyReleased
+
+    private void showEmployeeShedule(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showEmployeeShedule
+        EmployeeDate = new java.sql.Timestamp((jXDatePicker3.getDate().getTime()));
+    }//GEN-LAST:event_showEmployeeShedule
+
+    private void chooseCafe(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCafe
+        chooseServer(jComboBox1.getSelectedIndex());
+    }//GEN-LAST:event_chooseCafe
     
     private void refreshRecipeTable(int id){
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();       
@@ -520,7 +544,7 @@ public class ClientForm extends javax.swing.JFrame {
         clientForm.setVisible(true);
     }
     
-    private static Timestamp startDate, endDate;
+    private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
@@ -528,6 +552,7 @@ public class ClientForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;

@@ -88,7 +88,11 @@ public class OrderUtils {
     }
 
     public static List<Order> getOrders(Timestamp start, Timestamp end) {
-        final String SQL = "SELECT * from orders where datatime >= '" + start + "' AND datatime <= '" + end + "'";
+        final String SQL = "SELECT * from orders where"
+                + " datatime >= '" + start
+                + "' AND datatime <= '" + end
+                + "' AND sum > 0";
+//        final String SQL = "SELECT * from orders where datatime >= '" + start + "' AND datatime <= '" + end + "'";
         List<Order> loadOrders = new ArrayList<>();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

@@ -21,6 +21,8 @@ public class DishUtils {
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String USERNAME = "root";
     public static String PASSWORD = "root";
+    
+    //client
 
 //    public static final String URL1 = "jdbc:mysql://db4free.net:3306/luckyroger";
 //    public static final String USERNAME1 = "luckyroger";
@@ -144,6 +146,17 @@ public class DishUtils {
         sqlUpdatePriceList.add("UPDATE bear SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE alcohol SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE not_alcohol SET price = ? WHERE Id = ?");
+    }
+    
+    public static void chooseServer(int cafeId){
+        if (cafeId == 0) {
+            URL = "jdbc:mysql://starkon.ddns.net:3306/luckyroger";                 
+        }else if (cafeId == 1) {
+            URL = "jdbc:mysql://shepet.ddns.net:3306/luckyroger";
+        }else if (cafeId == 2) {
+            URL = "jdbc:mysql://slavuta.ddns.net:3306/luckyroger";
+        }
+        
     }
     //unused
     public static Dish getDishById(int catId, int dishId){

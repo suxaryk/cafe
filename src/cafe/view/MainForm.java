@@ -2550,9 +2550,9 @@ public class MainForm extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         boolean isCook = true ? activeCat < 9 : false;
-        if (jCheckBox1.isSelected()) {
-            menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
-        }
+//        if (jCheckBox1.isSelected()) {
+//            menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
+//        }
         OrderItem newOrder = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCook);
         int index = getIndex(count, isCook);
 
@@ -3119,7 +3119,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeDish
 
-    private void showCalcTable(JTable jTable) {
+    private static void showCalcTable(JTable jTable) {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
         if (jTable.getColumnCount() == 3) {
@@ -3234,7 +3234,7 @@ public class MainForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_updateTitleAndPrice
 
-    private void setSort(JComboBox comboBox, JTable table) {
+    public static void setSort(JComboBox comboBox, JTable table) {
         int activeRow = table.getSelectedRow();
         int index = comboBox.getSelectedIndex();
         sortListOfIngredients(storageList, index);
@@ -3481,8 +3481,8 @@ public class MainForm extends javax.swing.JFrame {
             if (old.equals("0.0")) {
                 old = "";
             }
-            if (newLine.length() <= 5) {
-                if (newLine.length() == 1) {
+            if (newLine.length() <= 7) {
+                if (newLine.length() == 3) {
                     newLine += ".";
                 }
                 table.setValueAt(newLine, rowIndex, columnIndex);
@@ -3832,8 +3832,8 @@ public class MainForm extends javax.swing.JFrame {
                 + "<table    style=\"width:100%\">";
 
         for (OrderItem item : orders.get(activeTable).getItems()) {
-            if (!item.isPrinted() && item.getDish().isCook()) {
-                System.out.println("cook" + item.getDish().isCook());
+            if (!item.isPrinted() && item.isCook()) {
+                System.out.println("cook" + item.isCook());
                 item.setPrinted(true);
                 dishes += "  <tr>"
                         + "    <td style=\"width:3%\"> " + i++ + " </td> "
@@ -3864,7 +3864,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
         if (jButton10.isEnabled()) {
-            if (orders.get(activeTable).calcOrderSum() != 0) {
+            if (orders.get(activeTable).calcOrderSum() != 0) {               
                 subOrderIngredientsFromDB();
 
                 if (!isOrderPrinted()) {
@@ -4089,7 +4089,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     //initCalculationTable
-    private void setColumnRender(TableColumn column) throws ParseException {
+    public static void setColumnRender(TableColumn column) throws ParseException {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
         column.setCellRenderer(leftRenderer);
@@ -4117,6 +4117,12 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("3"));
 
         DishUtils.readDBmenu();
+//        if (jCheckBox1.isSelected()) {
+//            menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
+//        }
+        for (Dish dishes : menu.get(6).getDishes()) {
+            dishes.addTitle("(Вел.)");
+        }
         
 
     }
@@ -4301,7 +4307,7 @@ public class MainForm extends javax.swing.JFrame {
     public static int activeDishes;
     public static int activeCat;
     public static int activeTable;
-    public static DecimalFormat df = new DecimalFormat("#.###");
+    public static DecimalFormat df = new DecimalFormat("###.###");
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
     ArrayList<Ingredient> diffStorage = new ArrayList<>();
     ArrayList<Ingredient> changeList = new ArrayList<>();
@@ -4312,7 +4318,7 @@ public class MainForm extends javax.swing.JFrame {
     private static final Color RED = new Color(255, 102, 102);
     private static final Color BLUE = new Color(0, 153, 204);
     private static final Color lightRed = new Color(255, 102, 102);
-    private static final Color GREEN = new Color(0, 153, 102);
+    public static final Color GREEN = new Color(0, 153, 102);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CategoriesPanel;

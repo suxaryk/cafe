@@ -2561,7 +2561,7 @@ public class MainForm extends javax.swing.JFrame {
         
         if ((orders.get(activeTable).getItems().contains(newOrderItem) 
                 && !orders.get(activeTable).getItems().get(index).isPrinted())          
-            &&   (activeCat < 5 || activeCat >8 )){
+            &&   (activeCat < 5 || activeCat > 8 )){
                 System.out.println("Index = " + index);
                 System.out.println("is Printed = " + orders.get(activeTable).getItems().get(index).isPrinted());
                 orders.get(activeTable).getItems().get(index).addCount(count);
@@ -3841,14 +3841,17 @@ public class MainForm extends javax.swing.JFrame {
                 + "<table    style=\"width:100%\">";
 
         for (OrderItem item : orders.get(activeTable).getItems()) {
-            if (!item.isPrinted() && item.isCook()) {
-                System.out.println("cook" + item.isCook());
+            if (!item.isPrinted()) {
                 item.setPrinted(true);
-                dishes += "  <tr>"
-                        + "    <td style=\"width:3%\"> " + i++ + " </td> "
-                        + "    <td font-size: 10pt style=\"width:100%\"> " + item.getDish().getTitle() + " </td> "
-                        + "    <td style=\"width:3%\"> " + item.getCount() + "</td>"
-                        + "  </tr>";
+                if (item.isCook()) {
+                    System.out.println("cook" + item.isCook());
+
+                    dishes += "  <tr>"
+                            + "    <td style=\"width:3%\"> " + i++ + " </td> "
+                            + "    <td font-size: 10pt style=\"width:100%\"> " + item.getDish().getTitle() + " </td> "
+                            + "    <td style=\"width:3%\"> " + item.getCount() + "</td>"
+                            + "  </tr>";
+                }
             }
         }
         dishes += "</table>"

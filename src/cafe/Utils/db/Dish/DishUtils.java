@@ -250,6 +250,7 @@ public class DishUtils {
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - readDBmenu");
+//            System.out.println("error in " + menu.get(i));
         }
     }
 

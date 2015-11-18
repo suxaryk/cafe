@@ -54,6 +54,9 @@ public class Dish {
     public void setTitle(String title) {
         this.title = title;
     }
+    public void addTitle(String title) {
+        this.title = title + this.title;
+    }
 
     public int getPrice() {
         return price;

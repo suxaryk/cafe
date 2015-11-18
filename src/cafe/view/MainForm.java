@@ -2553,17 +2553,25 @@ public class MainForm extends javax.swing.JFrame {
 //        if (jCheckBox1.isSelected()) {
 //            menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
 //        }
-        OrderItem newOrder = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCook);
+        OrderItem newOrderItem = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCook);
+        
         int index = getIndex(count, isCook);
-
-        if (orders.get(activeTable).getItems().contains(newOrder) && !orders.get(activeTable).getItems().get(index).isPrinted()) {
-            System.out.println("Index = " + index);
-            System.out.println("is Printed = " + orders.get(activeTable).getItems().get(index).isPrinted());
-            orders.get(activeTable).getItems().get(index).addCount(count);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index + getPrintedCount(), 1);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index + getPrintedCount(), 3);
+        System.out.println("activeCAt " + activeCat);
+        System.out.println("iscook "  + newOrderItem.getDish().isCook());
+        
+        if ((orders.get(activeTable).getItems().contains(newOrderItem) 
+                && !orders.get(activeTable).getItems().get(index).isPrinted())          
+            &&   (activeCat < 5 || activeCat >8 )){
+                System.out.println("Index = " + index);
+                System.out.println("is Printed = " + orders.get(activeTable).getItems().get(index).isPrinted());
+                orders.get(activeTable).getItems().get(index).addCount(count);
+                model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index + getPrintedCount(), 1);
+                model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index + getPrintedCount(), 3);
+                
+            
+            
         } else {
-            orders.get(activeTable).getItems().add(newOrder);
+            orders.get(activeTable).getItems().add(newOrderItem);
             int addedIndex = orders.get(activeTable).getItems().size() - 1;
             model.addRow(new Object[]{
                 orders.get(activeTable).getItems().get(addedIndex)
@@ -2779,6 +2787,7 @@ public class MainForm extends javax.swing.JFrame {
             model.addColumn("Кінець");
             jScrollPane6.setVisible(true);
             jTable5.setVisible(true);
+           
         }
 
         initMainForm();
@@ -2797,7 +2806,7 @@ public class MainForm extends javax.swing.JFrame {
                 double old = ingredient.getCount();
                 System.out.println("old = " + old);
                 System.out.println("diff = " + diff);
-                System.out.println("old-diff = " + df.format(old - diff));
+                System.out.println("old-diff = " + decFormat.format(old - diff));
                 ingredient.setCount(old - diff);
                 StorageUtils.updateCount(ingredient.getId(), ingredient.getCount());
             }
@@ -3007,7 +3016,7 @@ public class MainForm extends javax.swing.JFrame {
             String date2 = String.valueOf(jTable2.getValueAt(index, 2));
             String pass = new String(jPasswordField1.getPassword());
             if (jButton13.isEnabled() && !pass.equals("")) {
-                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
                 DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
                 
                        
@@ -3162,7 +3171,7 @@ public class MainForm extends javax.swing.JFrame {
                     storageList.get(i).getTitle(),
                     storageList.get(i).getCount(),
                     0.0,
-                    df.format(diffStorage.get(i).getCount())
+                    decFormat.format(diffStorage.get(i).getCount())
                 });
             }
         }
@@ -3481,8 +3490,8 @@ public class MainForm extends javax.swing.JFrame {
             if (old.equals("0.0")) {
                 old = "";
             }
-            if (newLine.length() <= 7) {
-                if (newLine.length() == 3) {
+            if (newLine.length() <= 5) {
+                if (newLine.length() == 1) {
                     newLine += ".";
                 }
                 table.setValueAt(newLine, rowIndex, columnIndex);
@@ -3640,7 +3649,7 @@ public class MainForm extends javax.swing.JFrame {
             double newCount = changeList.get(i).getCount();
             if (newCount != 0.0) {
                 diffStorage.get(i).setCount(newCount - old);
-                storageList.get(i).setCount(Double.valueOf(df.format(newCount)));
+                storageList.get(i).setCount(Double.valueOf(decFormat.format(newCount)));
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
             }
@@ -4052,17 +4061,28 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void refreshEmployeesTable() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
         employees.clear();
         EmployeeUtils.readAllEmployees();
+        EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()) );
+
+        
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
         if (isAdmin()) {
             for (Employee employee : employees) {
-                model.addRow(new Object[]{employee.getName(), employee.getPass()});
+                model.addRow(new Object[]{
+                    employee.getName(),
+                    employee.getPass()});
             }
         } else {
-            for (Employee employee : employees) {
-                model.addRow(new Object[]{employee.getName(), null, null});
+            for (Employee employee : employees) {                
+                model.addRow(new Object[]{
+                    employee.getName(),
+                    employee.getStartTime(),
+                    employee.getEndTime()
+                });
             }
         }
     }
@@ -4093,7 +4113,7 @@ public class MainForm extends javax.swing.JFrame {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
         column.setCellRenderer(leftRenderer);
-        MaskFormatter mf2 = new MaskFormatter(df.toString());
+        MaskFormatter mf2 = new MaskFormatter(decFormat.toString());
         JFormattedTextField formattedTextField = new JFormattedTextField(mf2);
         formattedTextField.setFont(new Font("Verdana", 0, 18));
         DefaultCellEditor dce = new DefaultCellEditor(formattedTextField);
@@ -4116,13 +4136,12 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("2"));
         menu.add(new Category("3"));
 
-        DishUtils.readDBmenu();
-//        if (jCheckBox1.isSelected()) {
-//            menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
-//        }
+        DishUtils.readDBmenu();      
+
         for (Dish dishes : menu.get(6).getDishes()) {
             dishes.addTitle("(Вел.)");
-        }
+        }     
+        
         
 
     }
@@ -4307,7 +4326,7 @@ public class MainForm extends javax.swing.JFrame {
     public static int activeDishes;
     public static int activeCat;
     public static int activeTable;
-    public static DecimalFormat df = new DecimalFormat("###.###");
+    public static DecimalFormat decFormat = new DecimalFormat("#.###");
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
     ArrayList<Ingredient> diffStorage = new ArrayList<>();
     ArrayList<Ingredient> changeList = new ArrayList<>();

@@ -30,13 +30,13 @@ public class User {
     
     
 
-
+    
     public User(int dbId, String name, int pass) {
         this.name = name;
         this.pass = pass;
         this.dbId = dbId;
     }
-
+    
     public String getName() {
         return name;
     }
@@ -59,7 +59,7 @@ public class User {
 
     public void setDbId(int dbId) {
         this.dbId = dbId;
-    }
+    }   
 
     public int getKasa() {
         return kasa;

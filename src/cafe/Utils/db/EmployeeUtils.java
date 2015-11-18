@@ -11,6 +11,7 @@ import static cafe.Utils.db.Dish.DishUtils.URL;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import static cafe.Utils.db.Dish.DishUtils.getCurrentTimeStamp;
 import cafe.model.Employee;
+import cafe.model.User;
 import static cafe.view.MainForm.employees;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +27,28 @@ import java.util.Date;
  */
 public class EmployeeUtils {
     
+    
+    
+//    public static Employee getEmployeeById(int dbId) {
+//        final String SQL = "SELECT * from employee WHERE Id = " + dbId;
+//        try (Connection connection = DriverManager
+//                .getConnection(URL, USERNAME, PASSWORD)) {
+//
+//            Statement statement = connection.createStatement();
+//            try (ResultSet rs = statement.executeQuery(SQL)) {
+//                while (rs.next()) {
+//                    return new Employee(
+//                            rs.getInt("Id"),
+//                            rs.getString("name"),
+//                            rs.getInt("pass")                          
+//                    );
+//                }
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Connection Failed! Check output console - getEmployeeById");
+//        }
+//        return null;
+//    }
     public static void getEmployeeTime(Date date) {
         final String SQL = "SELECT * from employee_time WHERE DATE(date_in) = DATE('" + date + "')";
         try (Connection connection = DriverManager
@@ -45,7 +68,26 @@ public class EmployeeUtils {
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getEmployeeTime");
         }
+    }
+    public static void readEmployeeDayTime(Date date) {
+        final String SQL = "SELECT * from employee_time WHERE DATE(date_in) = DATE('" + date + "')";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
 
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    for (Employee employee : employees) {
+                        if (employee.getName().equals(rs.getString("name"))) {
+                            employee.setStartTime(rs.getTimestamp("date_in"));
+                            employee.setEndTime(rs.getTimestamp("date_out"));
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getEmployeeDayTime");
+        }
     }
 
     public static void addEmployeeToDB(String name, int pass) {
@@ -139,7 +181,7 @@ public class EmployeeUtils {
 
     }
     
-    public static void addTimeIn(Employee employee) {
+    public static void addTimeIn(User employee) {
         final String SQL = "INSERT INTO employee_time(name, date_in) VALUES(?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

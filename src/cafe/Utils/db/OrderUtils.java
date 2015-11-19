@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class OrderUtils {
 
-    private static int dbId = 1;
+    public static int dbId = 1;
 
     public static int getOrderId() {
         return dbId;

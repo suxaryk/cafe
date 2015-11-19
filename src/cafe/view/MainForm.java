@@ -7,6 +7,7 @@ import cafe.Utils.db.UsersUtils;
 import cafe.model.Order;
 import cafe.Utils.db.Dish.DishUtils;
 import cafe.Utils.db.Dish.RecepiesUtils;
+import static cafe.Utils.db.OrderUtils.getDayOrdersCount;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
 import static cafe.Utils.json.JSONUtils.convertRemovedIngToJSON;
@@ -86,6 +87,7 @@ public class MainForm extends javax.swing.JFrame {
         initTables();
         initCalculationTable();
         loadTables();
+        
 
     }
 
@@ -2425,6 +2427,9 @@ public class MainForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initStartOrderId(){
+        OrderUtils.setOrderId(getDayOrdersCount() + 1);
+    }
     private int getButtonId(java.awt.event.MouseEvent evt) {
         JButton myButton = (JButton) evt.getSource();
         String btnName = myButton.getName();
@@ -2802,6 +2807,8 @@ public class MainForm extends javax.swing.JFrame {
             
         }
         setStartUserTime();
+        initStartOrderId();
+        printedOrderCount = getDayOrdersCount() + 1;
         
               
         
@@ -2809,12 +2816,14 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
 
     public void setStartUserTime(){
+        EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date = sdf.parse(userList.get(User.active).getStartTime().toString());
         } catch (ParseException | NullPointerException ex) {
             if (new LocalTime().getHourOfDay() > 6) {
                 EmployeeUtils.addTimeIn(userList.get(User.active));
+                EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
             }
         }
     }
@@ -3077,9 +3086,11 @@ public class MainForm extends javax.swing.JFrame {
         System.out.println("daySum = " + daySum);
         System.out.println("allSum = " + allSum);
         System.out.println("orders empty = " + orders.isEmpty());
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
-                + "Інформація за " + dateFormat.format(new Date()) + ":\n"
+                + "Інформація за зміну в терміні  \n"
+                + "_з " + dateFormat.format(userList.get(User.active).getStartTime()) + " \n"
+                + "по " + dateFormat.format(new Date()) + "\n"
                 + "------------------------------------------------\n"
                 + "Каса на початок зміни " + (allSum - daySum + dayDiff) + " грн.\n"
                 + "Сума за день " + daySum + " грн.\n"
@@ -3143,7 +3154,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeDish
 
-    private static void showCalcTable(JTable jTable) {
+    public static void showCalcTable(JTable jTable) {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
         if (jTable.getColumnCount() == 3) {
@@ -3269,7 +3280,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    private ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn, boolean includeZERO) {
+    private static  ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn, boolean includeZERO) {
         ArrayList<Ingredient> changedList = new ArrayList<>();
         for (int i = 0; i < table.getRowCount(); i++) {
             int dbId = Integer.parseInt(table.getValueAt(i, 0).toString());
@@ -3618,9 +3629,9 @@ public class MainForm extends javax.swing.JFrame {
         deleteDigit(jTable3, 2);
     }//GEN-LAST:event_deleteRecipesFieldDigit
 
-    private void addIngCountToStorage() {
+    public static void addIngCountToStorage(JTable table) {
         changeList.clear();
-        changeList.addAll(getListFromTable(jTable6, 3, true));
+        changeList.addAll(getListFromTable(table, 3, true));
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();
@@ -3671,7 +3682,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
-        addIngCountToStorage();
+        addIngCountToStorage(jTable6);
         StorageUtils.readStorage();
         setSort(jComboBox7, jTable6);
         showCalcTable(jTable6);
@@ -4153,7 +4164,7 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("2"));
         menu.add(new Category("3"));
 
-        DishUtils.readDBmenu();      
+        DishUtils.readDBmenu();    
         
         for (Dish dishes : menu.get(6).getDishes()) {
             dishes.addTitle("(Вел.)");
@@ -4344,8 +4355,8 @@ public class MainForm extends javax.swing.JFrame {
     public static int activeTable;
     public static DecimalFormat decFormat = new DecimalFormat("#.###");
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
-    ArrayList<Ingredient> diffStorage = new ArrayList<>();
-    ArrayList<Ingredient> changeList = new ArrayList<>();
+    public static ArrayList<Ingredient> diffStorage = new ArrayList<>();
+    public static ArrayList<Ingredient> changeList = new ArrayList<>();
     public static List<Category> menu = new ArrayList<>();
     private static final ArrayList<Icon> icons = new ArrayList<>();
     public static MainForm mainForm;

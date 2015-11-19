@@ -18,9 +18,11 @@ import cafe.model.Order;
 import cafe.model.OrderItem;
 import static cafe.view.LoginForm.userList;
 import static cafe.view.MainForm.GREEN;
+import static cafe.view.MainForm.addIngCountToStorage;
 import static cafe.view.MainForm.employees;
 import static cafe.view.MainForm.setColumnRender;
 import static cafe.view.MainForm.setSort;
+import static cafe.view.MainForm.showCalcTable;
 import static cafe.view.MainForm.sortListOfIngredients;
 import static cafe.view.MainForm.storageList;
 import java.sql.Connection;
@@ -90,6 +92,7 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jButton39 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        jComboBox7 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -300,7 +303,7 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel4.setText("Працівники");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(670, 10, 230, 20);
+        jLabel4.setBounds(652, 10, 230, 20);
 
         jTable4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
@@ -478,7 +481,7 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel13.setText("Наявні продукти на складі");
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(650, 270, 360, 20);
+        jLabel13.setBounds(652, 270, 360, 20);
 
         jButton39.setBackground(new java.awt.Color(204, 204, 204));
         jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -498,6 +501,17 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(255, 51, 51));
         getContentPane().add(jLabel12);
         jLabel12.setBounds(30, 230, 210, 20);
+
+        jComboBox7.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox7.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за вагою", "за назвою" }));
+        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox7ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jComboBox7);
+        jComboBox7.setBounds(1082, 260, 198, 30);
 
         setSize(new java.awt.Dimension(1292, 1031));
         setLocationRelativeTo(null);
@@ -576,7 +590,9 @@ public class ClientForm extends javax.swing.JFrame {
        jButton2.setEnabled(true);
        jButton39.setEnabled(true);
        refreshBarmensTable();
+        System.out.println("size---------getStorageTable 3 " + storageList.size());
        refreshRemovedIngTable();
+        System.out.println("size---------getStorageTable 4 " + storageList.size());
     }//GEN-LAST:event_getAllOrders
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
@@ -616,14 +632,27 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
 //            addIngCountToStorage();
-         StorageUtils.readStorage();
+//         StorageUtils.readStorage();
+//         addIngCountToStorage(jTable6);
+        StorageUtils.readStorage();
+        setSort(jComboBox7, jTable6);
+        showCalcTable(jTable6);
     }//GEN-LAST:event_addToStorage
+
+    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
+        setSort(jComboBox7, jTable6);
+        showCalcTable(jTable6);
+        System.out.println("size--------- " + storageList.size());
+    }//GEN-LAST:event_jComboBox7ActionPerformed
 
     
     private void getStorageTable(){        
         StorageUtils.readStorage();
-        sortListOfIngredients(storageList, 2);
-        showStorageTable();
+        System.out.println("size---------getStorageTable1  " + storageList.size());
+        setSort(jComboBox7, jTable6);
+        showCalcTable(jTable6);
+        System.out.println("size---------getStorageTable2  " + storageList.size());
+//        showStorageTable();
     }
     
     private void showStorageTable(){
@@ -699,8 +728,10 @@ public class ClientForm extends javax.swing.JFrame {
         for (Ingredient ing : removedIng) {
             ing.setTitle(getIngredientById(ing.getId()).getTitle());
         }
+        //fix getIngById
+        System.out.println("size---------getStorageTable 5 " + storageList.size());
         sortListOfIngredients(removedIng, 2);
-        
+        System.out.println("size---------getStorageTable  6" + storageList.size());
         for (Ingredient ing : removedIng) {
             model.addRow(new Object[]{
                 ing.getId(),
@@ -708,6 +739,7 @@ public class ClientForm extends javax.swing.JFrame {
                 ing.getCount()
             });            
         }
+        System.out.println("size---------getStorageTable  7" + storageList.size());
         jLabel9.setText(String.valueOf(OrderUtils.getAllOrdersSum(startDate, endDate)));
         jLabel10.setText(String.valueOf(OrderUtils.getAllOrdersCookCount(startDate, endDate)));             
         
@@ -749,6 +781,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton39;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

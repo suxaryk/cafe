@@ -71,7 +71,7 @@ public class EmployeeUtils {
         }
     }
     public static void readEmployeeDayTime(Date date) {
-        final String SQL = "SELECT * from employee_time WHERE date_in < '" + date + "'";
+        final String SQL = "SELECT * from employee_time WHERE DATE(date_in) = DATE('" + date + "')";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 

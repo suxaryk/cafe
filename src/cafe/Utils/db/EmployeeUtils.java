@@ -12,6 +12,7 @@ import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import static cafe.Utils.db.Dish.DishUtils.getCurrentTimeStamp;
 import cafe.model.Employee;
 import cafe.model.User;
+import static cafe.view.LoginForm.userList;
 import static cafe.view.MainForm.employees;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -70,7 +71,7 @@ public class EmployeeUtils {
         }
     }
     public static void readEmployeeDayTime(Date date) {
-        final String SQL = "SELECT * from employee_time WHERE DATE(date_in) = DATE('" + date + "')";
+        final String SQL = "SELECT * from employee_time WHERE date_in < '" + date + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
@@ -81,7 +82,14 @@ public class EmployeeUtils {
                         if (employee.getName().equals(rs.getString("name"))) {
                             employee.setStartTime(rs.getTimestamp("date_in"));
                             employee.setEndTime(rs.getTimestamp("date_out"));
+                        }                              
+                    }
+                    for (User user : userList) {
+                        if (user.getName().equals(rs.getString("name"))) {
+                            user.setStartTime(rs.getTimestamp("date_in"));
+                            user.setEndTime(rs.getTimestamp("date_out"));                            
                         }
+                        
                     }
                 }
             }

@@ -9,6 +9,7 @@ import cafe.model.Order;
 import cafe.model.OrderItem;
 import cafe.model.User;
 import cafe.view.LoginForm;
+import static cafe.view.LoginForm.userList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -485,7 +486,7 @@ public class OrderUtils {
     }
 
     public static int getDayOrdersCount() {
-        final String SQL = "SELECT dayId FROM orders order by id desc limit 1";
+        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + userList.get(User.active).getStartTime() + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getDayOrdersCount"
@@ -495,7 +496,7 @@ public class OrderUtils {
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 count = 0;
                 while (rs.next()) {
-                    count = rs.getInt(1);
+                    count = rs.getInt(1);                    
                 }
             }
             return count;

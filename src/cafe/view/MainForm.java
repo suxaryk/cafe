@@ -59,6 +59,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
+import org.joda.time.LocalTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -2791,11 +2792,32 @@ public class MainForm extends javax.swing.JFrame {
         }
 
         initMainForm();
-        refreshEmployeesTable();
         refreshUserTable();
+        refreshEmployeesTable();
+        
         jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
+        
+        for (int i = 0; i < userList.size(); i++) {
+            userList.get(i).getStartTime();
+            
+        }
+        setStartUserTime();
+        
+              
+        
+        
     }//GEN-LAST:event_formComponentShown
 
+    public void setStartUserTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = sdf.parse(userList.get(User.active).getStartTime().toString());
+        } catch (ParseException | NullPointerException ex) {
+            if (new LocalTime().getHourOfDay() > 6) {
+                EmployeeUtils.addTimeIn(userList.get(User.active));
+            }
+        }
+    }
     private void subOrderIngredientsFromDB() {
         System.out.println("----- remove Order ingredients from DB-----------");
         StorageUtils.readStorage();       
@@ -3016,7 +3038,7 @@ public class MainForm extends javax.swing.JFrame {
             String date2 = String.valueOf(jTable2.getValueAt(index, 2));
             String pass = new String(jPasswordField1.getPassword());
             if (jButton13.isEnabled() && !pass.equals("")) {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
                 
                        
@@ -3051,17 +3073,10 @@ public class MainForm extends javax.swing.JFrame {
         int allSum = OrderUtils.getAllSum();
         int cookCount = OrderUtils.getCookCount(ordersCount);
         
-//        System.out.println("dayDiff = " + dayDiff);
-//        System.out.println("daySum = " + daySum);
-//        System.out.println("allSum = " + allSum);
-//        System.out.println("orders empty = " + orders.isEmpty());
-        if (!ordered) {
-            daySum = 0;
-            dayDiff = 0;
-            cookCount = 0;
-            ordersCount = 0;
-        }
-//        System.out.println("size " + orders.isEmpty());
+        System.out.println("dayDiff = " + dayDiff);
+        System.out.println("daySum = " + daySum);
+        System.out.println("allSum = " + allSum);
+        System.out.println("orders empty = " + orders.isEmpty());
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String info = ""
                 + "Інформація за " + dateFormat.format(new Date()) + ":\n"
@@ -3880,7 +3895,6 @@ public class MainForm extends javax.swing.JFrame {
                 subOrderIngredientsFromDB();
 
                 if (!isOrderPrinted()) {
-//                    orders.get(activeTable).setDayId(printedOrderCount++);
                     jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
@@ -3889,7 +3903,6 @@ public class MainForm extends javax.swing.JFrame {
                         userList.get(User.active));
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
-                ordered = true;
                 jTable1.setBackground(lightRed);
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
 
@@ -4068,6 +4081,7 @@ public class MainForm extends javax.swing.JFrame {
         
         employees.clear();
         EmployeeUtils.readAllEmployees();
+//        System.out.println("Empl size "+ employees.size());
         EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()) );
 
         
@@ -4140,7 +4154,7 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("3"));
 
         DishUtils.readDBmenu();      
-
+        
         for (Dish dishes : menu.get(6).getDishes()) {
             dishes.addTitle("(Вел.)");
         }     
@@ -4321,7 +4335,6 @@ public class MainForm extends javax.swing.JFrame {
         mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     private static int printedOrderCount = 1;
-    private static boolean ordered;
     public static ArrayList<Employee> employees = new ArrayList<>();
     public static Map<Integer, Order> orders = new HashMap();
     private static String html;

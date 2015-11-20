@@ -501,7 +501,7 @@ public class OrderUtils {
             }
             return count;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getDayCount");
+            System.out.println("Connection Failed! Check output console - getDayOrdersCount");
             return 0;
         }
     }

@@ -16,12 +16,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 /**
  *
  * @author suxarina
  */
 public class UsersUtils {
+    
+    
 
     public static void readAllUsers() {   
         userList.clear();
@@ -72,6 +75,23 @@ public class UsersUtils {
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateUserName");
+        }
+    }
+    
+    public static void readUserDayTime(Date date) {
+        final String SQL = "select * from employee_time where name = '" + userList.get(User.active) + "' ORDER BY id DESC LIMIT 1;";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    userList.get(User.active).setStartTime(rs.getTimestamp("date_in"));
+                    userList.get(User.active).setEndTime(rs.getTimestamp("date_out"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getEmployeeDayTime");
         }
     }
 

@@ -12,10 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- *
- * @author suxarina
- */
+
 public class DishUtils {
 
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";

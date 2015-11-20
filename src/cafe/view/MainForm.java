@@ -2498,6 +2498,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton7.setEnabled(true);
         if (orders.get(activeTable).isPayed()) {
             jButton9.setEnabled(true);
+        }else{
+            jButton9.setEnabled(false);
         }
         jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
     }//GEN-LAST:event_chooseTable
@@ -2807,8 +2809,17 @@ public class MainForm extends javax.swing.JFrame {
             
         }
         setStartUserTime();
-        initStartOrderId();
-        printedOrderCount = getDayOrdersCount() + 1;
+        initStartOrderId(); 
+        printedOrderCount = orders.size() + getDayOrdersCount() + 1;
+        
+        if (maxOrderId >= printedOrderCount) {
+            printedOrderCount = maxOrderId +1;
+        }
+        System.out.println("maxOrderId " + maxOrderId);
+        System.out.println("load table size " + orders.size());
+        System.out.println("payed orders " + getDayOrdersCount() );
+        System.out.println("printedcount in load tables" + printedOrderCount);
+        
         
               
         
@@ -2816,13 +2827,15 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
 
     public void setStartUserTime(){
-        EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
+//        EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
+        UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date = sdf.parse(userList.get(User.active).getStartTime().toString());
         } catch (ParseException | NullPointerException ex) {
             if (new LocalTime().getHourOfDay() > 6) {
                 EmployeeUtils.addTimeIn(userList.get(User.active));
+                UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
                 EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
             }
         }
@@ -4180,7 +4193,7 @@ public class MainForm extends javax.swing.JFrame {
 
         if (!loadOrders.isEmpty()) {
             System.out.println("loadTables---");
-            int maxOrderId = 0;
+           
             orders.putAll(loadOrders);
             for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
                 if (entry.getValue().getOrderSum() > 0) {
@@ -4193,8 +4206,7 @@ public class MainForm extends javax.swing.JFrame {
                         maxOrderId = entry.getValue().getDayId();
                     }
                 }
-            }
-            printedOrderCount = maxOrderId + 1;
+            }            
         }
     }
 
@@ -4345,6 +4357,7 @@ public class MainForm extends javax.swing.JFrame {
         mainForm.setIconImage(null);
         mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
+    private static int maxOrderId;
     private static int printedOrderCount = 1;
     public static ArrayList<Employee> employees = new ArrayList<>();
     public static Map<Integer, Order> orders = new HashMap();

@@ -7,6 +7,7 @@ import cafe.Utils.db.UsersUtils;
 import cafe.model.Order;
 import cafe.Utils.db.Dish.DishUtils;
 import cafe.Utils.db.Dish.RecepiesUtils;
+import static cafe.Utils.db.OrderUtils.getDayInkassCount;
 import static cafe.Utils.db.OrderUtils.getDayOrdersCount;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
@@ -2810,14 +2811,14 @@ public class MainForm extends javax.swing.JFrame {
         }
         setStartUserTime();
         initStartOrderId(); 
-        printedOrderCount = orders.size() + getDayOrdersCount() + 1;
+        printedOrderCount = orders.size() + (getDayOrdersCount() - getDayInkassCount()) + 1;
         
         if (maxOrderId >= printedOrderCount) {
             printedOrderCount = maxOrderId +1;
         }
         System.out.println("maxOrderId " + maxOrderId);
         System.out.println("load table size " + orders.size());
-        System.out.println("payed orders " + getDayOrdersCount() );
+        System.out.println("payed orders " + (getDayOrdersCount() - getDayInkassCount()));
         System.out.println("printedcount in load tables" + printedOrderCount);
         
         
@@ -3108,7 +3109,7 @@ public class MainForm extends javax.swing.JFrame {
                 + "Каса на початок зміни " + (allSum - daySum + dayDiff) + " грн.\n"
                 + "Сума за день " + daySum + " грн.\n"
                 + "Страв за день " + cookCount + " \n"
-                + "Чеків за день " + ordersCount + " \n"
+                + "Чеків за день " + (ordersCount - getDayInkassCount())+ " \n"
                 + "Витрати за день " + dayDiff + " грн.\n"
                 + "Залишок в касі " + allSum + " грн\n"
                 + "------------------------------------------------\n";

@@ -505,5 +505,25 @@ public class OrderUtils {
             return 0;
         }
     }
+    public static int getDayInkassCount() {
+        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + userList.get(User.active).getStartTime() + "' AND sum < 0";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getDayOrdersCount"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+            int count;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                count = 0;
+                while (rs.next()) {
+                    count = rs.getInt(1);                    
+                }
+            }
+            return count;
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getDayOrdersCount");
+            return 0;
+        }
+    }
 
 }

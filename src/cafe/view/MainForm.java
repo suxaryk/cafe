@@ -2451,7 +2451,7 @@ public class MainForm extends javax.swing.JFrame {
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
 
             jTextField1.setText(String.valueOf(orders.get(activeTable)
-                    .calcOrderSum()));
+                    .getOrderSum()));
             for (int i = 0; i < orders.get(activeTable)
                     .getItems().size(); i++) {
                 model.addRow(new Object[]{
@@ -2595,7 +2595,7 @@ public class MainForm extends javax.swing.JFrame {
         }
         
         OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active),  activeTable);
-        jTextField1.setText(String.valueOf(orders.get(activeTable).calcOrderSum()));
+        jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
     }
 
     public boolean calcMeat() {
@@ -2743,7 +2743,7 @@ public class MainForm extends javax.swing.JFrame {
                 }
                 orders.get(activeTable).getItems().remove(lastIndex);
             }
-            jTextField1.setText("" + orders.get(activeTable).calcOrderSum());
+            jTextField1.setText("" + orders.get(activeTable).getOrderSum());
         }
     }//GEN-LAST:event_removeCheckItem
 
@@ -2833,9 +2833,11 @@ public class MainForm extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date = sdf.parse(userList.get(User.active).getStartTime().toString());
+            System.out.println("Barmen login in " + date);
         } catch (ParseException | NullPointerException ex) {
             if (new LocalTime().getHourOfDay() > 6) {
                 EmployeeUtils.addTimeIn(userList.get(User.active));
+                
                 
                 EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));                
             }else{
@@ -2981,7 +2983,7 @@ public class MainForm extends javax.swing.JFrame {
                 OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
 
                 if (jButton3.isEnabled()) {
-                    if (orders.get(activeTable).calcOrderSum() != 0) {
+                    if (orders.get(activeTable).getOrderSum() != 0) {
                         printKitchenCheck();
                         jButton9.setEnabled(false);
                     }
@@ -3673,6 +3675,7 @@ public class MainForm extends javax.swing.JFrame {
             double diff = changeList.get(i).getCount();
             if (diff != 0.0) {
                 storageList.get(i).setCount(old + diff);
+                System.out.println("new count " + storageList.get(i).getCount());
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
             }
@@ -3808,7 +3811,7 @@ public class MainForm extends javax.swing.JFrame {
             if (value != null) {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
-                System.out.println("Incasacia - diff =" + order.calcOrderSum());
+                System.out.println("Incasacia - diff =" + order.getOrderSum());
                 OrderUtils.addOrder(order, employees.get(index));
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
                 jTextField12.setText("");
@@ -3940,7 +3943,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
         if (jButton10.isEnabled()) {
-            if (orders.get(activeTable).calcOrderSum() != 0) {               
+            if (orders.get(activeTable).getOrderSum() != 0) {               
                 subOrderIngredientsFromDB();
 
                 if (!isOrderPrinted()) {
@@ -3948,10 +3951,6 @@ public class MainForm extends javax.swing.JFrame {
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
                 PrintClientCheck();
-                if (isAdmin()) {
-                    orders.get(activeTable).setOrderSum(0);
-                    
-                }
                 OrderUtils.addOrder(orders.get(activeTable),
                         userList.get(User.active));
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);

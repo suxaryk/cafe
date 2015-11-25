@@ -136,10 +136,11 @@ public class OrderUtils {
             PreparedStatement pstatement = connection.prepareStatement(sql);
             for (OrderItem item : order.getItems()) {
                 System.out.println("----------title " + item.getDish().getTitle() + " count " + item.getCount());
-            }            
+            }        
+           
             pstatement.setInt(1, dbId++);
             pstatement.setInt(2, order.getDayId());
-            pstatement.setInt(3, order.calcOrderSum());
+            pstatement.setInt(3, order.getOrderSum());
             pstatement.setInt(4, order.getCookCount());
             System.out.println("cookCount" + order.getCookCount());
             pstatement.setTimestamp(5, getCurrentTimeStamp());
@@ -169,7 +170,7 @@ public class OrderUtils {
             PreparedStatement pstatement = connection.prepareStatement(SQL);
 
             pstatement.setInt(1, order.getDayId());
-            pstatement.setInt(2, order.calcOrderSum());
+            pstatement.setInt(2, order.getOrderSum());
             pstatement.setInt(3, order.getCookCount());
             pstatement.setTimestamp(4, getCurrentTimeStamp());
             pstatement.setString(5, user.getName());
@@ -396,8 +397,8 @@ public class OrderUtils {
 
     
     public static int getAllSum() {
-//        final String SQL = "select SUM(sum) from orders where operator != '" + userList.get(5).getName() + "'";
-        final String SQL = "select SUM(sum) from orders";
+        final String SQL = "select SUM(sum) from orders where operator != '" + userList.get(5).getName() + "'";
+//        final String SQL = "select SUM(sum) from orders";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getAllSum"

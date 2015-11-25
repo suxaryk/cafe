@@ -43,7 +43,21 @@ public class Order {
     }
     
     
-    public int calcOrderSum() {
+//    public int calcOrderSum1() {
+//        int sum = 0;
+//        if (!items.isEmpty()) {
+//            for (OrderItem orderItem : items) {
+//                sum += orderItem.getSum();
+//            }
+//        }
+//        if (orderSum < 0) {
+//            return orderSum;
+//        } else {
+//            return orderSum = sum;
+//        }
+//    }
+
+    public int getOrderSum() {
         int sum = 0;
         if (!items.isEmpty()) {
             for (OrderItem orderItem : items) {
@@ -54,11 +68,7 @@ public class Order {
             return orderSum;
         } else {
             return orderSum = sum;
-        }
-    }
-
-    public int getOrderSum() {
-        return orderSum;
+        }    
     } 
 
     

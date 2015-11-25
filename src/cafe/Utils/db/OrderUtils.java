@@ -397,7 +397,8 @@ public class OrderUtils {
 
     
     public static int getAllSum() {
-        final String SQL = "select SUM(sum) from orders where operator != '" + userList.get(5).getName() + "'";
+        final String SQL = "select SUM(sum) from orders where operator != '" + userList.get(5).getName() + "'  "
+                           + "OR datatime < '2015-11-17 10:40:00'";
 //        final String SQL = "select SUM(sum) from orders";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -418,7 +419,7 @@ public class OrderUtils {
             return 0;
         }
     }
-    public static int getAllOrdersSum(Timestamp start, Timestamp end) {
+    public static int getAllSumBetween(Timestamp start, Timestamp end) {
         final String SQL = "select SUM(sum) from orders where sum > 0 AND datatime >= '" + start + "' AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -439,7 +440,7 @@ public class OrderUtils {
             return 0;
         }
     }
-    public static int getAllOrdersCookCount(Timestamp start, Timestamp end) {
+    public static int getAllCookCountBetween(Timestamp start, Timestamp end) {
         final String SQL = "select SUM(cookCount) from orders where sum > 0 AND datatime >= '" + start + "' AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -488,7 +489,8 @@ public class OrderUtils {
     }
 
     public static int getDayOrdersCount() {
-        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + userList.get(User.active).getStartTime() + "'";
+        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + userList.get(User.active).getStartTime() + "' "
+                + "AND  operator != '" + userList.get(5).getName() + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getDayOrdersCount"

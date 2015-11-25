@@ -737,8 +737,8 @@ public class ClientForm extends javax.swing.JFrame {
                 LoginForm.userList.get(i).getKasa()               
             });            
         }
-        jLabel9.setText(String.valueOf(OrderUtils.getAllOrdersSum(startDate, endDate)));
-        jLabel10.setText(String.valueOf(OrderUtils.getAllOrdersCookCount(startDate, endDate)));             
+        jLabel9.setText(String.valueOf(OrderUtils.getAllSumBetween(startDate, endDate)));
+        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));             
         
     }
     private void refreshRemovedIngTable(){
@@ -760,8 +760,8 @@ public class ClientForm extends javax.swing.JFrame {
                 ing.getCount()
             });            
         }
-        jLabel9.setText(String.valueOf(OrderUtils.getAllOrdersSum(startDate, endDate)));
-        jLabel10.setText(String.valueOf(OrderUtils.getAllOrdersCookCount(startDate, endDate)));             
+        jLabel9.setText(String.valueOf(OrderUtils.getAllSumBetween(startDate, endDate)));
+        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));             
         
     }
     

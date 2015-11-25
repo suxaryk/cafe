@@ -271,6 +271,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
+        jButton101 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -2146,7 +2147,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton89);
-        jButton89.setBounds(1080, 190, 50, 50);
+        jButton89.setBounds(1080, 130, 50, 50);
 
         jButton90.setBackground(new java.awt.Color(204, 204, 204));
         jButton90.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
@@ -2160,7 +2161,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton90);
-        jButton90.setBounds(1080, 240, 50, 50);
+        jButton90.setBounds(1080, 180, 50, 50);
 
         jButton91.setBackground(new java.awt.Color(204, 204, 204));
         jButton91.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2173,7 +2174,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton91);
-        jButton91.setBounds(1080, 290, 50, 50);
+        jButton91.setBounds(1080, 230, 50, 50);
 
         jButton92.setBackground(new java.awt.Color(204, 204, 204));
         jButton92.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2186,7 +2187,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton92);
-        jButton92.setBounds(1130, 290, 50, 50);
+        jButton92.setBounds(1130, 230, 50, 50);
 
         jButton93.setBackground(new java.awt.Color(204, 204, 204));
         jButton93.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2199,7 +2200,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton93);
-        jButton93.setBounds(1180, 290, 50, 50);
+        jButton93.setBounds(1180, 230, 50, 50);
 
         jButton94.setBackground(new java.awt.Color(204, 204, 204));
         jButton94.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2212,7 +2213,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton94);
-        jButton94.setBounds(1230, 290, 50, 50);
+        jButton94.setBounds(1230, 230, 50, 50);
 
         jButton95.setBackground(new java.awt.Color(204, 204, 204));
         jButton95.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2225,7 +2226,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton95);
-        jButton95.setBounds(1130, 240, 50, 50);
+        jButton95.setBounds(1130, 180, 50, 50);
 
         jButton96.setBackground(new java.awt.Color(204, 204, 204));
         jButton96.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2238,7 +2239,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton96);
-        jButton96.setBounds(1180, 240, 50, 50);
+        jButton96.setBounds(1180, 180, 50, 50);
 
         jButton97.setBackground(new java.awt.Color(204, 204, 204));
         jButton97.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2251,7 +2252,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton97);
-        jButton97.setBounds(1230, 240, 50, 50);
+        jButton97.setBounds(1230, 180, 50, 50);
 
         jButton98.setBackground(new java.awt.Color(204, 204, 204));
         jButton98.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2264,7 +2265,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton98);
-        jButton98.setBounds(1230, 190, 50, 50);
+        jButton98.setBounds(1230, 130, 50, 50);
 
         jButton99.setBackground(new java.awt.Color(204, 204, 204));
         jButton99.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2277,7 +2278,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton99);
-        jButton99.setBounds(1180, 190, 50, 50);
+        jButton99.setBounds(1180, 130, 50, 50);
 
         jButton100.setBackground(new java.awt.Color(204, 204, 204));
         jButton100.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2290,7 +2291,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton100);
-        jButton100.setBounds(1130, 190, 50, 50);
+        jButton100.setBounds(1130, 130, 50, 50);
 
         jButton39.setBackground(new java.awt.Color(204, 204, 204));
         jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2420,6 +2421,19 @@ public class MainForm extends javax.swing.JFrame {
         jLabel13.setText("Вага");
         StoragePanel.add(jLabel13);
         jLabel13.setBounds(1160, 340, 60, 14);
+
+        jButton101.setBackground(new java.awt.Color(204, 204, 204));
+        jButton101.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton101.setText(".");
+        jButton101.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton101.setEnabled(false);
+        jButton101.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pressNumberInStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton101);
+        jButton101.setBounds(1080, 280, 50, 50);
 
         getContentPane().add(StoragePanel);
         StoragePanel.setBounds(0, 0, 1280, 1000);
@@ -3549,6 +3563,10 @@ public class MainForm extends javax.swing.JFrame {
         int rowIndex = table.getSelectedRow();
         if (rowIndex != -1) {
             String old = table.getValueAt(rowIndex, columnIndex).toString();
+            String numberLine = button.getText();
+            if (old.contains(".") && numberLine.contains(".")) {
+                
+            }
             String newLine = old + button.getText();
             old = old.trim();
             if (old.equals("0.0")) {
@@ -3565,6 +3583,46 @@ public class MainForm extends javax.swing.JFrame {
 
         }
     }
+//    private void setNumber(JButton button, JTable table, int columnIndex) {
+//        int rowIndex = table.getSelectedRow();
+//        if (rowIndex != -1) {
+//            String old = table.getValueAt(rowIndex, columnIndex).toString();
+//            String newLine = old + button.getText();
+//            old = old.trim();
+//            if (old.equals("0.0")) {
+//                old = "";
+//            }
+//            if (newLine.length() <= 5) {
+//                if (newLine.length() == 1) {
+//                    newLine += ".";
+//                }
+//                table.setValueAt(newLine, rowIndex, columnIndex);
+//            }
+//        } else {
+//            jTextField12.setText("" + jTextField12.getText() + button.getText());
+//
+//        }
+//    }
+//    private void setNumberTab6(JButton button, JTable table, int columnIndex) {
+//        int rowIndex = table.getSelectedRow();
+//        if (rowIndex != -1) {
+//            String old = table.getValueAt(rowIndex, columnIndex).toString();
+//            String newLine = old + button.getText();
+//            old = old.trim();
+//            if (old.equals("0.0")) {
+//                old = "";
+//            }
+//            if (newLine.length() <= 7) {
+//                if (newLine.length() == 3) {
+//                    newLine += ".";
+//                }
+//                table.setValueAt(newLine, rowIndex, columnIndex);
+//            }
+//        } else {
+//            jTextField12.setText("" + jTextField12.getText() + button.getText());
+//
+//        }
+//    }
     private void PressNumber(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PressNumber
         JButton myButton = (JButton) evt.getSource();
         setNumber(myButton, jTable3, 2);
@@ -3623,6 +3681,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton98.setEnabled(true);
         jButton99.setEnabled(true);
         jButton100.setEnabled(true);
+        jButton101.setEnabled(true);
     }//GEN-LAST:event_storageIngSelected
 
     private void pressNumberInStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pressNumberInStorage
@@ -4440,6 +4499,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton100;
+    private javax.swing.JButton jButton101;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;

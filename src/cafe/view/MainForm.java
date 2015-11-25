@@ -2828,16 +2828,18 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
 
     public void setStartUserTime(){
-//        EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
-        UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
+        EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
+//        UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date = sdf.parse(userList.get(User.active).getStartTime().toString());
         } catch (ParseException | NullPointerException ex) {
             if (new LocalTime().getHourOfDay() > 6) {
                 EmployeeUtils.addTimeIn(userList.get(User.active));
+                
+                EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));                
+            }else{
                 UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
-                EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
             }
         }
     }
@@ -3095,11 +3097,11 @@ public class MainForm extends javax.swing.JFrame {
         int daySum = OrderUtils.getDaySum(ordersCount) + dayDiff;
         int allSum = OrderUtils.getAllSum();
         int cookCount = OrderUtils.getCookCount(ordersCount);
-        
-        System.out.println("dayDiff = " + dayDiff);
-        System.out.println("daySum = " + daySum);
-        System.out.println("allSum = " + allSum);
-        System.out.println("orders empty = " + orders.isEmpty());
+        System.out.println("--------------" + userList.get(User.active).getStartTime());
+//        System.out.println("dayDiff = " + dayDiff);
+//        System.out.println("daySum = " + daySum);
+//        System.out.println("allSum = " + allSum);
+//        System.out.println("orders empty = " + orders.isEmpty());
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
                 + "Інформація за зміну в терміні  \n"
@@ -3194,7 +3196,7 @@ public class MainForm extends javax.swing.JFrame {
                     ingredient.getId(),
                     ingredient.getTitle(),
                     ingredient.getCount(),
-                    0.0,
+                    0,
                     0.0
                 });
             }
@@ -3210,7 +3212,7 @@ public class MainForm extends javax.swing.JFrame {
                     storageList.get(i).getId(),
                     storageList.get(i).getTitle(),
                     storageList.get(i).getCount(),
-                    0.0,
+                    0,
                     decFormat.format(diffStorage.get(i).getCount())
                 });
             }
@@ -3541,6 +3543,26 @@ public class MainForm extends javax.swing.JFrame {
 
         }
     }
+    private void setNumberTab6(JButton button, JTable table, int columnIndex) {
+        int rowIndex = table.getSelectedRow();
+        if (rowIndex != -1) {
+            String old = table.getValueAt(rowIndex, columnIndex).toString();
+            String newLine = old + button.getText();
+            old = old.trim();
+            if (old.equals("0.0")) {
+                old = "";
+            }
+            if (newLine.length() <= 7) {
+                if (newLine.length() == 3) {
+                    newLine += ".";
+                }
+                table.setValueAt(newLine, rowIndex, columnIndex);
+            }
+        } else {
+            jTextField12.setText("" + jTextField12.getText() + button.getText());
+
+        }
+    }
     private void PressNumber(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PressNumber
         JButton myButton = (JButton) evt.getSource();
         setNumber(myButton, jTable3, 2);
@@ -3604,7 +3626,7 @@ public class MainForm extends javax.swing.JFrame {
     private void pressNumberInStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pressNumberInStorage
         JButton myButton = (JButton) evt.getSource();
         if (isAdmin()) {
-            setNumber(myButton, jTable6, 3);
+            setNumberTab6(myButton, jTable6, 3);
         } else {
             setNumber(myButton, jTable5, 3);
         }
@@ -3689,7 +3711,9 @@ public class MainForm extends javax.swing.JFrame {
             double newCount = changeList.get(i).getCount();
             if (newCount != 0.0) {
                 diffStorage.get(i).setCount(newCount - old);
-                storageList.get(i).setCount(Double.valueOf(decFormat.format(newCount)));
+                storageList.get(i).setCount(newCount);
+//not delete
+//                storageList.get(i).setCount(Double.valueOf(decFormat.format(newCount)));
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
             }
@@ -3924,6 +3948,10 @@ public class MainForm extends javax.swing.JFrame {
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
                 PrintClientCheck();
+                if (isAdmin()) {
+                    orders.get(activeTable).setOrderSum(0);
+                    
+                }
                 OrderUtils.addOrder(orders.get(activeTable),
                         userList.get(User.active));
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);

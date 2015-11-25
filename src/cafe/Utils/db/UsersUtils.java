@@ -79,7 +79,7 @@ public class UsersUtils {
     }
     
     public static void readUserDayTime(Date date) {
-        final String SQL = "select * from employee_time where name = '" + userList.get(User.active) + "' ORDER BY id DESC LIMIT 1;";
+        final String SQL = "select * from employee_time where name = '" + userList.get(User.active) + "' ORDER BY id DESC LIMIT 1";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
@@ -88,6 +88,8 @@ public class UsersUtils {
                 while (rs.next()) {
                     userList.get(User.active).setStartTime(rs.getTimestamp("date_in"));
                     userList.get(User.active).setEndTime(rs.getTimestamp("date_out"));
+                    System.out.println("date in " + rs.getTimestamp("date_in"));
+                    System.out.println("date out " + rs.getTimestamp("date_out"));
                 }
             }
         } catch (SQLException e) {

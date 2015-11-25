@@ -136,7 +136,7 @@ public class OrderUtils {
             PreparedStatement pstatement = connection.prepareStatement(sql);
             for (OrderItem item : order.getItems()) {
                 System.out.println("----------title " + item.getDish().getTitle() + " count " + item.getCount());
-            }
+            }            
             pstatement.setInt(1, dbId++);
             pstatement.setInt(2, order.getDayId());
             pstatement.setInt(3, order.calcOrderSum());
@@ -396,6 +396,7 @@ public class OrderUtils {
 
     
     public static int getAllSum() {
+//        final String SQL = "select SUM(sum) from orders where operator != '" + userList.get(5).getName() + "'";
         final String SQL = "select SUM(sum) from orders";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

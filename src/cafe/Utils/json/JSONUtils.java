@@ -69,17 +69,12 @@ public class JSONUtils {
                 JSONParser parser = new JSONParser();
                 Object obj = parser.parse(jsonRecipes);
                 JSONArray jsonArr = (JSONArray) obj;
-//                menu.get(activeCat).getDishes().get(activeDish)
-//                        .getRecipe().clear();
                 List<Ingredient> recipe = new ArrayList<>();
                 for (Object jsonArr1 : jsonArr) {
                     JSONObject jsonObj = (JSONObject) jsonArr1;
-                    int Id = Integer.parseInt(jsonObj.get("id").toString());  
-                    
+                    int Id = Integer.parseInt(jsonObj.get("id").toString());                     
                     double count = Double.parseDouble(jsonObj.
-                            get("c").toString());
-                    //                    menu.get(activeCat).getDishes().get(activeDish)
-//                            .getRecipe().add(new Ingredient(Id, count));    
+                            get("c").toString());  
                     recipe.add(new Ingredient(Id, count));
                 }
                 return recipe;
@@ -90,11 +85,8 @@ public class JSONUtils {
             return null;
         }
 
-    }
+    }  
     
-    
-    
-    //fix title
     public static String  convertOrderToJSON(ArrayList<OrderItem> items){
         JSONArray jsonArr = new JSONArray();
         for (OrderItem item : items) {
@@ -167,46 +159,7 @@ public class JSONUtils {
         return new ArrayList<>();
     }
     
-//    public static String  convertOrderToJSONTables(ArrayList<OrderItem> items, int activeCat){
-//        JSONArray jsonArr = new JSONArray();
-//        for (OrderItem item : items) {
-//            JSONObject itemObj = new JSONObject();    
-//            itemObj.put("catId", activeCat);
-//            itemObj.put("id", item.getDish().getDbID());
-//            itemObj.put("count", item.getCount());
-//            itemObj.put("cook", item.isCook());
-//            jsonArr.add(itemObj);            
-//        }
-//        return jsonArr.toJSONString();        
-//    }
-//    public static ArrayList<OrderItem> convertJSONToOrderTables(String jsonOrder){
-//        if (!"".equals(jsonOrder)) {            
-//            ArrayList<OrderItem> list = new ArrayList<>();
-//            try {
-//                JSONParser parser = new JSONParser();
-//                Object obj = parser.parse(jsonOrder);
-//                JSONArray jsonArr = (JSONArray) obj;
-//                
-//                for (Object jsonArr1 : jsonArr) {
-//                    JSONObject jsonObj = (JSONObject) jsonArr1;  
-//                    int catId = Integer.parseInt(jsonObj.get("catId").toString());
-//                    int id = Integer.parseInt(jsonObj.get("id").toString());
-//                    int count = Integer.parseInt(jsonObj.
-//                            get("count").toString());
-//                    boolean isCook = Boolean.parseBoolean(jsonObj.get("cook").toString());
-//                    Dish dish = getDishById(catId, id);
-//                    if (dish != null) {
-//                        list.add(new OrderItem(dish, count, isCook));
-//                    }
-//                                                  
-//                }
-//            } catch (ParseException ex) {
-//                System.out.println("Error parse =" + Dish.class.getName());
-//            }
-//            return list;
-//        }
-//        return new ArrayList<>();
-//    }
+
 
 
 }

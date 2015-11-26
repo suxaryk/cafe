@@ -30,7 +30,7 @@ public class DishUtils {
     public static final String PASSWORD2 = "dbiytdbq18";
 
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
-    private static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
+    public static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
     private static final ArrayList<String> sqlRemoveList = new ArrayList<>();
     private static final ArrayList<String> sqlUpdateTitleList = new ArrayList<>();
@@ -66,8 +66,8 @@ public class DishUtils {
         sqlSelectList.add("select * from rogerdishes");
         sqlSelectList.add("select * from pandishes");
         sqlSelectList.add("select * from meat");
-        sqlSelectList.add("select * from pizza");
-        sqlSelectList.add("select * from pizza");
+        sqlSelectList.add("select * from pizzaS");
+        sqlSelectList.add("select * from pizzaB");
         sqlSelectList.add("select * from sushi");
         sqlSelectList.add("select * from dessert");
         sqlSelectList.add("select * from drinks");
@@ -80,8 +80,8 @@ public class DishUtils {
         sqlSelectByIdList.add("select * from rogerdishes WHERE Id = ?");
         sqlSelectByIdList.add("select * from pandishes WHERE Id = ?");
         sqlSelectByIdList.add("select * from meat WHERE Id = ?");
-        sqlSelectByIdList.add("select * from pizza WHERE Id = ?");
-        sqlSelectByIdList.add("select * from pizza WHERE Id = ?");
+        sqlSelectByIdList.add("select * from pizzaS WHERE Id = ?");
+        sqlSelectByIdList.add("select * from pizzaB WHERE Id = ?");
         sqlSelectByIdList.add("select * from sushi WHERE Id = ?");
         sqlSelectByIdList.add("select * from dessert WHERE Id = ?");
         sqlSelectByIdList.add("select * from drinks WHERE Id = ?");
@@ -94,8 +94,8 @@ public class DishUtils {
         sqlInsertList.add("INSERT INTO rogerdishes(title, price, isCook,  ingredients) VALUES(?, ?, ?, ?)");
         sqlInsertList.add("INSERT INTO pandishes(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
         sqlInsertList.add("INSERT INTO meat(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
-        sqlInsertList.add("INSERT INTO pizza(title, priceS, isCook, ingredientsS) VALUES(?, ?, ?, ?)");
-        sqlInsertList.add("INSERT INTO pizza(title, priceB, isCook, ingredientsB) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pizzaS(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
+        sqlInsertList.add("INSERT INTO pizzaB(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
         sqlInsertList.add("INSERT INTO sushi(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
         sqlInsertList.add("INSERT INTO dessert(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
         sqlInsertList.add("INSERT INTO drinks(title, price, isCook, ingredients) VALUES(?, ?, ?, ?)");
@@ -108,8 +108,8 @@ public class DishUtils {
         sqlRemoveList.add("DELETE FROM rogerdishes WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM pandishes WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM meat WHERE Id = ?");
-        sqlRemoveList.add("DELETE FROM pizza WHERE Id = ?");
-        sqlRemoveList.add("DELETE FROM pizza WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM pizzaS WHERE Id = ?");
+        sqlRemoveList.add("DELETE FROM pizzaB WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM sushi WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM dessert WHERE Id = ?");
         sqlRemoveList.add("DELETE FROM drinks WHERE Id = ?");
@@ -122,8 +122,8 @@ public class DishUtils {
         sqlUpdateTitleList.add("UPDATE rogerdishes SET title = ? WHERE Id = ?");
         sqlUpdateTitleList.add("UPDATE pandishes SET title = ? WHERE Id = ?");
         sqlUpdateTitleList.add("UPDATE meat SET title = ? WHERE Id = ?");
-        sqlUpdateTitleList.add("UPDATE pizza SET title = ? WHERE Id = ?");
-        sqlUpdateTitleList.add("UPDATE pizza SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE pizzaS SET title = ? WHERE Id = ?");
+        sqlUpdateTitleList.add("UPDATE pizzaB SET title = ? WHERE Id = ?");
         sqlUpdateTitleList.add("UPDATE sushi SET title = ? WHERE Id = ?");
         sqlUpdateTitleList.add("UPDATE dessert SET title = ? WHERE Id = ?");
         sqlUpdateTitleList.add("UPDATE drinks SET title = ? WHERE Id = ?");
@@ -136,8 +136,8 @@ public class DishUtils {
         sqlUpdatePriceList.add("UPDATE rogerdishes SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE pandishes SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE meat SET price = ? WHERE Id = ?");
-        sqlUpdatePriceList.add("UPDATE pizza SET priceS = ? WHERE Id = ?");
-        sqlUpdatePriceList.add("UPDATE pizza SET priceB = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE pizzaS SET price = ? WHERE Id = ?");
+        sqlUpdatePriceList.add("UPDATE pizzaB SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE sushi SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE dessert SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE drinks SET price = ? WHERE Id = ?");
@@ -173,13 +173,7 @@ public class DishUtils {
                             dish.setTitle(rs.getString("title"));
                             dish.setPrice(rs.getInt("price"));
                             dish.setCook(rs.getBoolean("isCook"));
-                            if (catId == 5) {
-                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredientsS")));
-                            }else if (catId == 6) {
-                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredientsB")));
-                            }else {
                                 dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredients")));
-                            }
                        
                         }
                     }
@@ -206,31 +200,6 @@ public class DishUtils {
             Statement statement = connection.createStatement();
             for (int i = 0; i < sqlSelectList.size(); i++) {
                 try (ResultSet rs = statement.executeQuery(sqlSelectList.get(i))) {
-                    if (i == 5) {
-                        while (rs.next()) {
-                            menu.get(i).getDishes().add(
-                                    new Dish(Integer.parseInt(
-                                                    rs.getString("Id")),
-                                            rs.getString("title"),
-                                            rs.getInt("priceS"),
-                                            rs.getBoolean("isCook"),
-                                            JSONUtils.getRecipeFromJSON(
-                                                    rs.getString("ingredientsS"))
-                                    ));
-                        }
-                    } else if (i == 6) {
-                        while (rs.next()) {
-                            menu.get(i).getDishes().add(
-                                    new Dish(Integer.parseInt(
-                                                    rs.getString("Id")),
-                                            rs.getString("title"),
-                                            rs.getInt("priceB"),
-                                            rs.getBoolean("isCook"),
-                                            JSONUtils.getRecipeFromJSON(
-                                                    rs.getString("ingredientsB"))
-                                    ));
-                        }
-                    } else {
                         while (rs.next()) {
                             menu.get(i).
                                     getDishes().add(
@@ -243,7 +212,6 @@ public class DishUtils {
                                                             rs.getString("ingredients"))
                                             ));
                         }
-                    }
                 }
             }
         } catch (SQLException e) {
@@ -261,31 +229,6 @@ public class DishUtils {
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(sqlSelectList.get(activeCat))) {
-                if (activeCat == 5) {
-                    while (rs.next()) {
-                        menu.get(activeCat).getDishes().add(
-                                new Dish(Integer.parseInt(
-                                                rs.getString("Id")),
-                                        rs.getString("title"),
-                                        rs.getInt("priceS"),
-                                        rs.getBoolean("isCook"),
-                                        JSONUtils.getRecipeFromJSON(
-                                                rs.getString("ingredientsS"))
-                                ));
-                    }
-                } else if (activeCat == 6) {
-                    while (rs.next()) {
-                        menu.get(activeCat).getDishes().add(
-                                new Dish(Integer.parseInt(
-                                                rs.getString("Id")),
-                                        rs.getString("title"),
-                                        rs.getInt("priceB"),
-                                        rs.getBoolean("isCook"),
-                                        JSONUtils.getRecipeFromJSON(
-                                                rs.getString("ingredientsB"))
-                                ));
-                    }
-                } else {
                     while (rs.next()) {
                         menu.get(activeCat).getDishes().add(
                                 new Dish(Integer.parseInt(
@@ -297,7 +240,7 @@ public class DishUtils {
                                                 rs.getString("ingredients"))
                                 ));
                     }
-                }
+//                }
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - readDBCategoryById");

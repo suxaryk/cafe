@@ -2573,9 +2573,6 @@ public class MainForm extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         boolean isCook = true ? activeCat < 9 : false;
-//        if (jCheckBox1.isSelected()) {
-//            menu.get(activeCat).getDishes().get(activeDishes).setTitle("(Вел.)" + title);
-//        }
         OrderItem newOrderItem = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCook);
         
         int index = getIndex(count, isCook);
@@ -2641,6 +2638,9 @@ public class MainForm extends javax.swing.JFrame {
             minValue = 50;
         }
         int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
+        String title =  menu.get(activeCat).getDishes().get(activeDishes).getTitle();
+        jTextField4.setText(title);
+        jTextField2.setText(String.valueOf(price));
         btn1.setText("<html>" + (minValue * 1) + unit + "<br/> " + price + " грн. </html>");
         btn2.setText("<html>" + (minValue * 2) + unit + "<br/> " + price * 2 + " грн. </html>");
         btn3.setText("<html>" + (minValue * 3) + unit + "<br/> " + price * 3 + " грн. </html>");
@@ -4266,12 +4266,8 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("2"));
         menu.add(new Category("3"));
 
-        DishUtils.readDBmenu();    
-        
-        for (Dish dishes : menu.get(6).getDishes()) {
-            dishes.addTitle("(Вел.)");
-        }     
-        
+        DishUtils.readDBmenu();            
+
         
 
     }

@@ -3539,45 +3539,47 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addEmployee
 
+//    private void setNumber(JButton button, JTable table, int columnIndex) {
+//        int rowIndex = table.getSelectedRow();
+//        if (rowIndex != -1) {
+//            String old = table.getValueAt(rowIndex, columnIndex).toString();
+//            String newLine = old + button.getText();
+//            old = old.trim();
+//            if (old.equals("0.0")) {
+//                old = "";
+//            }
+//            if (newLine.length() <= 5) {
+//                if (newLine.length() == 1) {
+//                    newLine += ".";
+//                }
+//                table.setValueAt(newLine, rowIndex, columnIndex);
+//            }
+//        } else {
+//            jTextField12.setText("" + jTextField12.getText() + button.getText());
+//
+//        }
+//    }
     private void setNumber(JButton button, JTable table, int columnIndex) {
         int rowIndex = table.getSelectedRow();
         if (rowIndex != -1) {
             String old = table.getValueAt(rowIndex, columnIndex).toString();
-            String newLine = old + button.getText();
-            old = old.trim();
-            if (old.equals("0.0")) {
-                old = "";
-            }
-            if (newLine.length() <= 5) {
-                if (newLine.length() == 1) {
-                    newLine += ".";
-                }
-                table.setValueAt(newLine, rowIndex, columnIndex);
-            }
-        } else {
-            jTextField12.setText("" + jTextField12.getText() + button.getText());
-
-        }
-    }
-    private void setNumberTab6(JButton button, JTable table, int columnIndex) {
-        int rowIndex = table.getSelectedRow();
-        if (rowIndex != -1) {
-            String old = table.getValueAt(rowIndex, columnIndex).toString();
             String numberLine = button.getText();
-            if (old.contains(".") && numberLine.contains(".")) {
-                
-            }
             String newLine = old + button.getText();
-            old = old.trim();
-            if (old.equals("0.0")) {
-                old = "";
-            }
-            if (newLine.length() <= 7) {
-                if (newLine.length() == 3) {
-                    newLine += ".";
-                }
+            if (old.contains(".") && numberLine.contains(".")) {
+                table.setValueAt(old, rowIndex, columnIndex);
+            }else{
                 table.setValueAt(newLine, rowIndex, columnIndex);
-            }
+            }           
+//            old = old.trim();
+//            if (old.equals("0.0")) {
+//                old = "";
+//            }
+//            if (newLine.length() <= 7) {
+//                if (newLine.length() == 3) {
+//                    newLine += ".";
+//                }
+//                table.setValueAt(newLine, rowIndex, columnIndex);
+//            }
         } else {
             jTextField12.setText("" + jTextField12.getText() + button.getText());
 
@@ -3687,7 +3689,7 @@ public class MainForm extends javax.swing.JFrame {
     private void pressNumberInStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pressNumberInStorage
         JButton myButton = (JButton) evt.getSource();
         if (isAdmin()) {
-            setNumberTab6(myButton, jTable6, 3);
+            setNumber(myButton, jTable6, 3);
         } else {
             setNumber(myButton, jTable5, 3);
         }

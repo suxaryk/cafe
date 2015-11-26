@@ -118,7 +118,7 @@ public class JSONUtils {
                     list.add(new OrderItem(new Dish(title, price), count, isCook));
                 }
             } catch (ParseException ex) {
-                System.out.println("Error parse =" + Dish.class.getName());
+                System.out.println("Error parse =" + Dish.class.getName() + " or it`s inkass order");
             }
             return list;
         }

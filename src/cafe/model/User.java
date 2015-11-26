@@ -18,7 +18,8 @@ public class User {
     public int dbId;
     public String name;
     private int pass;    
-    private int kasa;
+    private int kasa;   
+    public int keyMoney;       
     private int dishCount; 
     public Date startTime;
     public Date endTime;
@@ -100,6 +101,16 @@ public class User {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
+
+    public int getKeyMoney() {
+        return keyMoney;
+    }
+
+    public void setKeyMoney(int keyMoney) {
+        this.keyMoney = keyMoney;
+    }
+    
+    
     
     
     

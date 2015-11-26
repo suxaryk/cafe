@@ -6,16 +6,19 @@ import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import static cafe.Utils.db.Dish.DishUtils.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.OrderUtils;
+import static cafe.Utils.db.OrderUtils.getSumKeyMoneyForUserBetween;
 import static cafe.Utils.db.OrderUtils.getUserDishCount;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
 import cafe.Utils.db.StorageUtils;
 import static cafe.Utils.db.StorageUtils.getIngredientById;
+import static cafe.Utils.db.StorageUtils.getOrderedDishes;
 import static cafe.Utils.db.StorageUtils.getRemovedIngredients;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Employee;
 import cafe.model.Ingredient;
 import cafe.model.Order;
 import cafe.model.OrderItem;
+import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import static cafe.view.MainForm.GREEN;
 import static cafe.view.MainForm.employees;
@@ -23,6 +26,7 @@ import static cafe.view.MainForm.setColumnRender;
 import static cafe.view.MainForm.setSort;
 import static cafe.view.MainForm.showCalcTable;
 import static cafe.view.MainForm.sortListOfIngredients;
+import static cafe.view.MainForm.sortListOfOrderItems;
 import static cafe.view.MainForm.storageList;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -70,7 +74,6 @@ public class ClientForm extends javax.swing.JFrame {
         jTable4 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jXDatePicker3 = new org.jdesktop.swingx.JXDatePicker();
@@ -93,6 +96,19 @@ public class ClientForm extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jTable7 = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jComboBox8 = new javax.swing.JComboBox();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTable8 = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -140,26 +156,23 @@ public class ClientForm extends javax.swing.JFrame {
         jTable3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Ім'я", "Початок", "Кінець", "Аванс"
+                "Ім'я", "Початок", "Кінець"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -171,9 +184,17 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(1).setMinWidth(200);
+            jTable3.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jTable3.getColumnModel().getColumn(1).setMaxWidth(200);
+            jTable3.getColumnModel().getColumn(2).setMinWidth(200);
+            jTable3.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable3.getColumnModel().getColumn(2).setMaxWidth(200);
+        }
 
         getContentPane().add(jScrollPane3);
-        jScrollPane3.setBounds(650, 30, 630, 220);
+        jScrollPane3.setBounds(650, 30, 630, 170);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel4.setText("Працівники");
@@ -214,7 +235,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         getContentPane().add(jScrollPane4);
-        jScrollPane4.setBounds(270, 30, 380, 220);
+        jScrollPane4.setBounds(270, 30, 380, 170);
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel5.setText("Каса по барменах");
@@ -222,24 +243,18 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel5.setBounds(270, 10, 160, 20);
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel7.setForeground(new java.awt.Color(0, 153, 0));
         jLabel7.setText("Загальна каса:");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(270, 250, 170, 23);
-
-        jLabel8.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel8.setText("Загальна кіл. страв:");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(270, 270, 220, 23);
+        jLabel7.setBounds(270, 210, 170, 23);
 
         jLabel9.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel9.setForeground(new java.awt.Color(0, 153, 0));
         jLabel9.setText("0");
         jLabel9.setFocusable(false);
         jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(520, 250, 110, 23);
+        jLabel9.setBounds(520, 210, 110, 23);
 
         jLabel10.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 153, 0));
@@ -382,7 +397,7 @@ public class ClientForm extends javax.swing.JFrame {
             jTable2.getColumnModel().getColumn(3).setMaxWidth(50);
         }
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(648, 58, 545, 400));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(648, 58, 615, 400));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Оплачені страви", "Видалені страви" }));
         jComboBox2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -391,7 +406,7 @@ public class ClientForm extends javax.swing.JFrame {
                 getRemovedDishes(evt);
             }
         });
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(648, 27, 545, 30));
+        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(648, 27, 615, 30));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 153, 204));
@@ -466,7 +481,7 @@ public class ClientForm extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 1035, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -476,7 +491,7 @@ public class ClientForm extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton39, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(139, 139, 139))
@@ -517,26 +532,186 @@ public class ClientForm extends javax.swing.JFrame {
             jTable5.getColumnModel().getColumn(0).setMinWidth(50);
             jTable5.getColumnModel().getColumn(0).setPreferredWidth(50);
             jTable5.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTable5.getColumnModel().getColumn(0).setHeaderValue("№");
             jTable5.getColumnModel().getColumn(2).setMinWidth(100);
             jTable5.getColumnModel().getColumn(2).setPreferredWidth(100);
             jTable5.getColumnModel().getColumn(2).setMaxWidth(100);
         }
 
+        jTable7.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jTable7.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Назва", "Кількість"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable7.setRowHeight(20);
+        jScrollPane7.setViewportView(jTable7);
+        if (jTable7.getColumnModel().getColumnCount() > 0) {
+            jTable7.getColumnModel().getColumn(1).setMinWidth(100);
+            jTable7.getColumnModel().getColumn(1).setPreferredWidth(100);
+            jTable7.getColumnModel().getColumn(1).setMaxWidth(100);
+        }
+
+        jLabel8.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 153, 204));
+        jLabel8.setText("Замовлені страви");
+
+        jLabel17.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel17.setText("Списані продукти");
+
+        jComboBox8.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox8.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за назвою", "за кількістю" }));
+        jComboBox8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeOrderedDishSort(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 1191, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 2, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel8)
+                    .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
-        jTabbedPane1.addTab("Списані продукти", jPanel3);
+        jTabbedPane1.addTab("Замовлення", jPanel3);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        jTable8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable8.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Ім'я", "Сума"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane8.setViewportView(jTable8);
+        if (jTable8.getColumnModel().getColumnCount() > 0) {
+            jTable8.getColumnModel().getColumn(1).setMinWidth(200);
+            jTable8.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jTable8.getColumnModel().getColumn(1).setMaxWidth(200);
+        }
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 631, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 490, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Аванс", jPanel4);
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(10, 290, 1200, 700);
+        jTabbedPane1.setBounds(10, 290, 1270, 700);
+
+        jLabel11.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel11.setText("Інкасація + аванс:");
+        getContentPane().add(jLabel11);
+        jLabel11.setBounds(270, 230, 210, 23);
+
+        jLabel13.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel13.setText("-0");
+        jLabel13.setFocusable(false);
+        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(jLabel13);
+        jLabel13.setBounds(511, 230, 110, 23);
+
+        jLabel14.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 153, 204));
+        jLabel14.setText("Сума в касі:");
+        getContentPane().add(jLabel14);
+        jLabel14.setBounds(270, 250, 170, 23);
+
+        jLabel15.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 153, 204));
+        jLabel15.setText("0");
+        jLabel15.setFocusable(false);
+        jLabel15.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(jLabel15);
+        jLabel15.setBounds(520, 250, 110, 23);
+
+        jLabel16.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel16.setText("Загальна кіл. страв:");
+        getContentPane().add(jLabel16);
+        jLabel16.setBounds(270, 270, 220, 23);
 
         setSize(new java.awt.Dimension(1292, 1031));
         setLocationRelativeTo(null);
@@ -605,18 +780,20 @@ public class ClientForm extends javax.swing.JFrame {
             startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
             endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime());
             orders.clear();
-            orders.addAll(OrderUtils.getOrders(startDate, endDate));
+            orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
             refreshOrderTable(jTable1, orders);            
         } finally{
             jProgressBar1.setIndeterminate(false);          
         }               
-        getStorageTable();
-        
+        getStorageTable();        
+       
        jButton2.setEnabled(true);
        jButton39.setEnabled(true);
        refreshBarmensTable();     
        refreshRemovedIngTable();
-        getStorageTable();    
+        getDishes();
+        getEmployeeKeyMoney();
+         
     }//GEN-LAST:event_getAllOrders
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
@@ -669,6 +846,12 @@ public class ClientForm extends javax.swing.JFrame {
         System.out.println("change sort storageList  ");
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
+    private void changeOrderedDishSort(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeOrderedDishSort
+        setSort(jComboBox8, jTable7);
+        sortListOfOrderItems(orderedDishes, jComboBox8.getSelectedIndex());
+        refreshDishesTable();   
+    }//GEN-LAST:event_changeOrderedDishSort
+
     
     private void getStorageTable(){        
         StorageUtils.readStorage();
@@ -676,28 +859,58 @@ public class ClientForm extends javax.swing.JFrame {
         setSort(jComboBox7, jTable6);
         showCalcTable(jTable6);  
     }
+    private void getDishes(){       
+        orderedDishes.addAll(getOrderedDishes(startDate, endDate));  
+        sortListOfOrderItems(orderedDishes, jComboBox8.getSelectedIndex()); 
+        refreshDishesTable();
+        
+
+    }
     
-//    private void showStorageTable(){
-//        DefaultTableModel model = (DefaultTableModel) jTable6.getModel(); 
-//       
-//         for (Ingredient ingredient : storageList) {
-//                model.addRow(new Object[]{
-//                    ingredient.getId(),
-//                    ingredient.getTitle(),
-//                    ingredient.getCount(),
-//                    0.0
-//                });
-//            }        
-//    }
+    private void refreshDishesTable(){
+        DefaultTableModel model = (DefaultTableModel) jTable7.getModel();
+        model.setRowCount(0);
+        for (OrderItem item : orderedDishes) {
+            model.addRow(new Object[]{
+                item.getDish().getTitle(),
+                item.getCount()
+            });
+        }
+    }
+    
+    private void getEmployeeKeyMoney(){
+        EmployeeUtils.readAllEmployees();
+        System.out.println("employee size " + employees.size());    
+        for (Employee employee : employees) {
+            employee.setKeyMoney(getSumKeyMoneyForUserBetween(startDate, endDate, employee.getName()));
+        }
+        refresEmployeeKeyMoneyTable();
+        
+    }
+    
+    private void refresEmployeeKeyMoneyTable(){
+        DefaultTableModel model = (DefaultTableModel) jTable8.getModel(); 
+        model.setRowCount(0);
+         for (Employee employee : employees) {
+                model.addRow(new Object[]{
+                    employee.getName(),
+                    employee.getKeyMoney()
+                        
+                });
+                System.out.println("awans " + employee.getKeyMoney());
+            }        
+    }
     private void refreshEmployeeTable(){
-        DateFormat Format = new SimpleDateFormat("HH:mm:ss");
+//        SimpleDateFormat format1 = new SimpleDateFormat("HH:mm:ss");
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();       
         model.setRowCount(0);
         for (Employee item : employees) {
             model.addRow(new Object[]{                          
                 item.getName(),
-                Format.format(item.getStartTime()),
-                Format.format(item.getEndTime())
+               item.getStartTime(),
+//                format1.format(item.getStartTime()),
+               item.getEndTime()
+//                format1.format(item.getEndTime())
             });
         }              
     }
@@ -731,14 +944,16 @@ public class ClientForm extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
         model.setRowCount(0);
         
-        for (int i = 0; i < LoginForm.userList.size()-1; i++) {
+        for (int i = 0; i < LoginForm.userList.size(); i++) {
             model.addRow(new Object[]{
                 LoginForm.userList.get(i).getName(),
                 LoginForm.userList.get(i).getKasa()               
             });            
         }
-        jLabel9.setText(String.valueOf(OrderUtils.getAllSumBetween(startDate, endDate)));
-        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));             
+        jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
+        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));  
+        jLabel13.setText(String.valueOf(OrderUtils.getAllRemovedSumBetween(startDate, endDate)));          
+        jLabel15.setText(String.valueOf(OrderUtils.getAllSumBetween(startDate, endDate)));          
         
     }
     private void refreshRemovedIngTable(){
@@ -760,8 +975,10 @@ public class ClientForm extends javax.swing.JFrame {
                 ing.getCount()
             });            
         }
-        jLabel9.setText(String.valueOf(OrderUtils.getAllSumBetween(startDate, endDate)));
-        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));             
+        
+        getStorageTable();
+//        jLabel9.setText(String.valueOf(OrderUtils.getAllSumBetween(startDate, endDate)));
+//        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));             
         
     }
     
@@ -792,6 +1009,7 @@ public class ClientForm extends javax.swing.JFrame {
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();
+    private static final List<OrderItem> orderedDishes = new ArrayList<>();
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
     public static ClientForm clientForm;
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -802,9 +1020,16 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox7;
+    private javax.swing.JComboBox jComboBox8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -815,6 +1040,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -822,6 +1048,8 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
@@ -829,6 +1057,8 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
+    private javax.swing.JTable jTable7;
+    private javax.swing.JTable jTable8;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker2;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker3;

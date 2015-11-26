@@ -5,7 +5,9 @@ import static cafe.Utils.db.Dish.DishUtils.URL;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import static cafe.Utils.db.Dish.DishUtils.getCurrentTimeStamp;
 import cafe.Utils.json.JSONUtils;
+import static cafe.Utils.json.JSONUtils.convertJSONToOrder;
 import cafe.model.Ingredient;
+import cafe.model.OrderItem;
 import cafe.model.User;
 import cafe.view.MainForm;
 import java.sql.Connection;
@@ -142,13 +144,23 @@ public class StorageUtils {
         }
     }
     
-    public static void fullJoinLists(List<Ingredient> list1, List<Ingredient> list2) {
+    public static void fullJoinIngLists(List<Ingredient> list1, List<Ingredient> list2) {
         for (Ingredient ing : list2) {
             if (list1.contains(ing)) {
                 int index = list1.indexOf(ing);
                 list1.get(index).addCount(ing.getCount());
             } else {
                 list1.add(ing);
+            }
+        } 
+    }
+    public static void fullJoinOrderItemLists(List<OrderItem> list1, List<OrderItem> list2) {
+        for (OrderItem item : list2) {
+            if (list1.contains(item)) {
+                int index = list1.indexOf(item);
+                list1.get(index).addCount(item.getCount());
+            } else {
+                list1.add(item);
             }
         } 
     }
@@ -167,18 +179,46 @@ public class StorageUtils {
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-                    System.out.println("JSON " + rs.getString("removed_ingredients"));
-                    fullJoinLists(removedList,
+//                    System.out.println("JSON " + rs.getString("removed_ingredients"));
+                    fullJoinIngLists(removedList,
                             JSONUtils.convertJSONToRemovedIng(
                                     rs.getString("removed_ingredients"))
                     );
                 }
-
+                System.out.println("read removedList size = " + removedList.size());
                 return removedList;
             }
 
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getRemovedIngredients ");
+            return null;
+        }
+    }
+    public static List<OrderItem> getOrderedDishes(Timestamp start, Timestamp end) {
+        final String SQL = "SELECT * from orders where"
+                + " datatime >= '" + start
+                + "' AND datatime <= '" + end          
+                + "' AND sum >= 0 ";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! getOrderedDishes"
+                    : "Error DB connecting");
+            List<OrderItem> orderedDishes = new ArrayList<>();
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+//                    System.out.println("JSON " + rs.getString("order_items"));
+                    fullJoinOrderItemLists(orderedDishes,
+                            convertJSONToOrder(rs.getString("order_items"))
+                    );
+                }
+                System.out.println("read orderedDishes size = " +orderedDishes.size());
+                return orderedDishes;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getOrderedDishes ");
             return null;
         }
     }

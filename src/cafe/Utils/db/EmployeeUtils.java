@@ -54,7 +54,7 @@ public class EmployeeUtils {
         final String SQL = "SELECT * from employee_time WHERE DATE(date_in) = DATE('" + date + "')";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
+            employees.clear();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {

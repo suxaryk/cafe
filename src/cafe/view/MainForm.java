@@ -270,7 +270,6 @@ public class MainForm extends javax.swing.JFrame {
         jButton46 = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
-        jLabel13 = new javax.swing.JLabel();
         jButton101 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -1440,9 +1439,6 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(2).setHeaderValue("Кінець");
-        }
 
         UsersPanel.add(jScrollPane2);
         jScrollPane2.setBounds(0, 10, 589, 510);
@@ -2417,11 +2413,6 @@ public class MainForm extends javax.swing.JFrame {
         StoragePanel.add(jScrollPane7);
         jScrollPane7.setBounds(0, 30, 1080, 940);
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel13.setText("Вага");
-        StoragePanel.add(jLabel13);
-        jLabel13.setBounds(1160, 340, 60, 14);
-
         jButton101.setBackground(new java.awt.Color(204, 204, 204));
         jButton101.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
         jButton101.setText(".");
@@ -3034,6 +3025,22 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
     }
+    public static  void sortListOfOrderItems(List list, final int orderArg) {
+        Collections.sort(list, new Comparator<OrderItem>() {
+            @Override
+            public int compare(OrderItem o1, OrderItem o2) {
+                if (orderArg == 0) {
+                    return o1.getDish().getTitle().compareTo(o2.getDish().getTitle());
+                }
+//                else if (orderArg == 1) {
+//                    return ((Integer) o1.getCount()).compareTo(o2.getCount());
+//                }
+                else {
+                    return ((Integer) o2.getCount()).compareTo(o1.getCount());
+                }
+            }
+        });
+    }
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         for (Category category : menu) {
@@ -3539,26 +3546,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addEmployee
 
-//    private void setNumber(JButton button, JTable table, int columnIndex) {
-//        int rowIndex = table.getSelectedRow();
-//        if (rowIndex != -1) {
-//            String old = table.getValueAt(rowIndex, columnIndex).toString();
-//            String newLine = old + button.getText();
-//            old = old.trim();
-//            if (old.equals("0.0")) {
-//                old = "";
-//            }
-//            if (newLine.length() <= 5) {
-//                if (newLine.length() == 1) {
-//                    newLine += ".";
-//                }
-//                table.setValueAt(newLine, rowIndex, columnIndex);
-//            }
-//        } else {
-//            jTextField12.setText("" + jTextField12.getText() + button.getText());
-//
-//        }
-//    }
+
     private void setNumber(JButton button, JTable table, int columnIndex) {
         int rowIndex = table.getSelectedRow();
         if (rowIndex != -1) {
@@ -3570,61 +3558,13 @@ public class MainForm extends javax.swing.JFrame {
             }else{
                 table.setValueAt(newLine, rowIndex, columnIndex);
             }           
-//            old = old.trim();
-//            if (old.equals("0.0")) {
-//                old = "";
-//            }
-//            if (newLine.length() <= 7) {
-//                if (newLine.length() == 3) {
-//                    newLine += ".";
-//                }
-//                table.setValueAt(newLine, rowIndex, columnIndex);
-//            }
+
         } else {
             jTextField12.setText("" + jTextField12.getText() + button.getText());
 
         }
     }
-//    private void setNumber(JButton button, JTable table, int columnIndex) {
-//        int rowIndex = table.getSelectedRow();
-//        if (rowIndex != -1) {
-//            String old = table.getValueAt(rowIndex, columnIndex).toString();
-//            String newLine = old + button.getText();
-//            old = old.trim();
-//            if (old.equals("0.0")) {
-//                old = "";
-//            }
-//            if (newLine.length() <= 5) {
-//                if (newLine.length() == 1) {
-//                    newLine += ".";
-//                }
-//                table.setValueAt(newLine, rowIndex, columnIndex);
-//            }
-//        } else {
-//            jTextField12.setText("" + jTextField12.getText() + button.getText());
-//
-//        }
-//    }
-//    private void setNumberTab6(JButton button, JTable table, int columnIndex) {
-//        int rowIndex = table.getSelectedRow();
-//        if (rowIndex != -1) {
-//            String old = table.getValueAt(rowIndex, columnIndex).toString();
-//            String newLine = old + button.getText();
-//            old = old.trim();
-//            if (old.equals("0.0")) {
-//                old = "";
-//            }
-//            if (newLine.length() <= 7) {
-//                if (newLine.length() == 3) {
-//                    newLine += ".";
-//                }
-//                table.setValueAt(newLine, rowIndex, columnIndex);
-//            }
-//        } else {
-//            jTextField12.setText("" + jTextField12.getText() + button.getText());
-//
-//        }
-//    }
+
     private void PressNumber(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PressNumber
         JButton myButton = (JButton) evt.getSource();
         setNumber(myButton, jTable3, 2);
@@ -4570,7 +4510,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;

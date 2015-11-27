@@ -28,6 +28,7 @@ import static cafe.view.MainForm.showCalcTable;
 import static cafe.view.MainForm.sortListOfIngredients;
 import static cafe.view.MainForm.sortListOfOrderItems;
 import static cafe.view.MainForm.storageList;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -793,6 +794,7 @@ public class ClientForm extends javax.swing.JFrame {
        refreshRemovedIngTable();
         getDishes();
         getEmployeeKeyMoney();
+       
          
     }//GEN-LAST:event_getAllOrders
 

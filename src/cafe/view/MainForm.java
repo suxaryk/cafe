@@ -6,6 +6,8 @@ import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Order;
 import cafe.Utils.db.Dish.DishUtils;
+import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
+import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import cafe.Utils.db.Dish.RecepiesUtils;
 import static cafe.Utils.db.OrderUtils.getDayInkassCount;
 import static cafe.Utils.db.OrderUtils.getDayOrdersCount;
@@ -28,6 +30,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.print.PrinterException;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -3141,7 +3144,7 @@ public class MainForm extends javax.swing.JFrame {
         return info;
     }
 
-    public static void closeSystem() {
+     public static void closeSystem() {
         JFrame frame = new JFrame();
         String[] options = new String[2];
         options[0] = "Так";
@@ -3151,7 +3154,24 @@ public class MainForm extends javax.swing.JFrame {
                 + "Закрити програму?", "Закриття каси!",
                 0, JOptionPane.YES_NO_OPTION, null, options, null);
         if (reply == JOptionPane.YES_OPTION) {
+//            EmployeeUtils.addTimeOut(userList.get(User.active));
+            //fix
+//            doDBDump();
             System.exit(0);
+        }
+    }
+     
+    private static void doDBDump(){
+        DateFormat dateFormat = new SimpleDateFormat(
+                "dd_MM_yyyy_HH_mm");
+        String command = "mysqldump -u"+USERNAME+" -p"+PASSWORD+" luckyroger > C:/dump/dump.sql" ;
+        System.out.println(command);
+        
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            System.out.println("created dump" + dateFormat.format(new Date()) + ".sql");
+        } catch (IOException ex) {
+            Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);         
         }
     }
     private void PriceTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceTyped

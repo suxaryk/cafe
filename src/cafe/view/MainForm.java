@@ -3164,7 +3164,8 @@ public class MainForm extends javax.swing.JFrame {
     private static void doDBDump(){
         DateFormat dateFormat = new SimpleDateFormat(
                 "dd_MM_yyyy_HH_mm");
-        String command = "mysqldump -u"+USERNAME+" -p"+PASSWORD+" luckyroger > C:/dump/dump.sql" ;
+//        String command = "mysqldump -u"+USERNAME+" -p"+PASSWORD+" luckyroger > C:/dump/dump.sql" ;
+        String command = "mysqldump --user=" + USERNAME + "--password=" + PASSWORD + " luckyroger > C:/dump/backdump.sql" ;
         System.out.println(command);
         
         try {
@@ -4150,9 +4151,8 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void refreshEmployeesTable() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        
-        employees.clear();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");        
+       
         EmployeeUtils.readAllEmployees();
 //        System.out.println("Empl size "+ employees.size());
         EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()) );

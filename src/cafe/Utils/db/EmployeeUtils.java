@@ -118,6 +118,7 @@ public class EmployeeUtils {
     }
 
     public static void readAllEmployees() {
+        employees.clear();
         final String SQL = "SELECT Id, name, pass from employee ORDER BY Id";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

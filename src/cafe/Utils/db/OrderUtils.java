@@ -93,7 +93,7 @@ public class OrderUtils {
                 + " datatime >= '" + start
                 + "' AND datatime <= '" + end
 //                + "' AND sum > 0"
-                + "'";
+                + "' ORDER BY Id DESC";
         List<Order> loadOrders = new ArrayList<>();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -418,27 +418,27 @@ public class OrderUtils {
             return 0;
         }
     }
-    public static int getAllSumBetween(Timestamp start, Timestamp end) {
-        final String SQL = "select SUM(sum) from orders where datatime >= '" + start + "' AND datatime <= '" + end + "'";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! getAllOrdersSum"
-                    : "Error DB connecting");
-            Statement statement = connection.createStatement();
-
-            int sum;
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                sum = 0;
-                while (rs.next()) {
-                    sum = rs.getInt(1);
-                }
-            }
-            return sum;
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getAllSumBetween");
-            return 0;
-        }
-    }
+//    public static int getAllSumBetween(Timestamp start, Timestamp end) {
+//        final String SQL = "select SUM(sum) from orders where datatime >= '" + start + "' AND datatime <= '" + end + "'";
+//        try (Connection connection = DriverManager
+//                .getConnection(URL, USERNAME, PASSWORD)) {
+//            System.out.println(!connection.isClosed() ? "DB connected! getAllOrdersSum"
+//                    : "Error DB connecting");
+//            Statement statement = connection.createStatement();
+//
+//            int sum;
+//            try (ResultSet rs = statement.executeQuery(SQL)) {
+//                sum = 0;
+//                while (rs.next()) {
+//                    sum = rs.getInt(1);
+//                }
+//            }
+//            return sum;
+//        } catch (SQLException e) {
+//            System.out.println("Connection Failed! Check output console - getAllSumBetween");
+//            return 0;
+//        }
+//    }
     public static int getAllBarmenSumBetween(Timestamp start, Timestamp end) {
         final String SQL = "select SUM(sum) from orders where sum > 0 AND datatime >= '" + start + "' AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager

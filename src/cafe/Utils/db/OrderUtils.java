@@ -123,9 +123,9 @@ public class OrderUtils {
         }
     }
 
-    public static void addOrder(Order order, User user) {
-        final String sql = "INSERT INTO orders(dayId, orderId, sum, cookCount, datatime, operator, order_items, removed_items)"
-                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+    public static void addOrder(Order order, User user, String message) {
+        final String sql = "INSERT INTO orders(dayId, orderId, sum, cookCount, datatime, operator, order_items, removed_items, coments)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -141,12 +141,12 @@ public class OrderUtils {
             pstatement.setInt(1, dbId++);
             pstatement.setInt(2, order.getDayId());
             pstatement.setInt(3, order.getOrderSum());
-            pstatement.setInt(4, order.getCookCount());
-            System.out.println("cookCount" + order.getCookCount());
+            pstatement.setInt(4, order.getCookCount());          
             pstatement.setTimestamp(5, getCurrentTimeStamp());
             pstatement.setString(6, user.getName());
             pstatement.setString(7, order.getJSONItems());
             pstatement.setString(8, order.getJSONRemovedItems());
+            pstatement.setString(9, message);
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {

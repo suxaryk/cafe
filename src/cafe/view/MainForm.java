@@ -274,6 +274,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
         jButton101 = new javax.swing.JButton();
+        jButton47 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -2081,7 +2082,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel19.setText("Сортування");
         StoragePanel.add(jLabel19);
-        jLabel19.setBounds(1130, 60, 120, 18);
+        jLabel19.setBounds(1130, 10, 120, 18);
 
         jComboBox7.setBackground(new java.awt.Color(240, 240, 240));
         jComboBox7.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2092,7 +2093,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jComboBox7);
-        jComboBox7.setBounds(1080, 80, 198, 30);
+        jComboBox7.setBounds(1080, 30, 198, 30);
 
         jTextField12.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTextField12.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -2111,11 +2112,11 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jTextField12);
-        jTextField12.setBounds(1080, 580, 198, 30);
+        jTextField12.setBounds(1080, 560, 198, 30);
 
         jButton42.setBackground(new java.awt.Color(204, 204, 204));
         jButton42.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jButton42.setText("<html>&nbsp;інкасація/аванс</html> ");
+        jButton42.setText("<html>&nbsp;аванс</html> ");
         jButton42.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton42.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton42.addActionListener(new java.awt.event.ActionListener() {
@@ -2124,7 +2125,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton42);
-        jButton42.setBounds(1080, 620, 200, 70);
+        jButton42.setBounds(1080, 600, 100, 70);
 
         jLabel16.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel16.setText(" Назва");
@@ -2146,7 +2147,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton89);
-        jButton89.setBounds(1080, 130, 50, 50);
+        jButton89.setBounds(1080, 90, 50, 50);
 
         jButton90.setBackground(new java.awt.Color(204, 204, 204));
         jButton90.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
@@ -2160,7 +2161,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton90);
-        jButton90.setBounds(1080, 180, 50, 50);
+        jButton90.setBounds(1080, 140, 50, 50);
 
         jButton91.setBackground(new java.awt.Color(204, 204, 204));
         jButton91.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2173,7 +2174,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton91);
-        jButton91.setBounds(1080, 230, 50, 50);
+        jButton91.setBounds(1080, 190, 50, 50);
 
         jButton92.setBackground(new java.awt.Color(204, 204, 204));
         jButton92.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2186,7 +2187,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton92);
-        jButton92.setBounds(1130, 230, 50, 50);
+        jButton92.setBounds(1130, 190, 50, 50);
 
         jButton93.setBackground(new java.awt.Color(204, 204, 204));
         jButton93.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2199,7 +2200,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton93);
-        jButton93.setBounds(1180, 230, 50, 50);
+        jButton93.setBounds(1180, 190, 50, 50);
 
         jButton94.setBackground(new java.awt.Color(204, 204, 204));
         jButton94.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2212,7 +2213,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton94);
-        jButton94.setBounds(1230, 230, 50, 50);
+        jButton94.setBounds(1230, 190, 50, 50);
 
         jButton95.setBackground(new java.awt.Color(204, 204, 204));
         jButton95.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2225,7 +2226,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton95);
-        jButton95.setBounds(1130, 180, 50, 50);
+        jButton95.setBounds(1130, 140, 50, 50);
 
         jButton96.setBackground(new java.awt.Color(204, 204, 204));
         jButton96.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2238,7 +2239,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton96);
-        jButton96.setBounds(1180, 180, 50, 50);
+        jButton96.setBounds(1180, 140, 50, 50);
 
         jButton97.setBackground(new java.awt.Color(204, 204, 204));
         jButton97.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2251,7 +2252,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton97);
-        jButton97.setBounds(1230, 180, 50, 50);
+        jButton97.setBounds(1230, 140, 50, 50);
 
         jButton98.setBackground(new java.awt.Color(204, 204, 204));
         jButton98.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2264,7 +2265,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton98);
-        jButton98.setBounds(1230, 130, 50, 50);
+        jButton98.setBounds(1230, 90, 50, 50);
 
         jButton99.setBackground(new java.awt.Color(204, 204, 204));
         jButton99.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2277,7 +2278,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton99);
-        jButton99.setBounds(1180, 130, 50, 50);
+        jButton99.setBounds(1180, 90, 50, 50);
 
         jButton100.setBackground(new java.awt.Color(204, 204, 204));
         jButton100.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2290,7 +2291,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton100);
-        jButton100.setBounds(1130, 130, 50, 50);
+        jButton100.setBounds(1130, 90, 50, 50);
 
         jButton39.setBackground(new java.awt.Color(204, 204, 204));
         jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2303,7 +2304,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton39);
-        jButton39.setBounds(1080, 360, 200, 70);
+        jButton39.setBounds(1080, 330, 200, 70);
 
         jButton43.setBackground(new java.awt.Color(204, 204, 204));
         jButton43.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2338,7 +2339,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton23);
-        jButton23.setBounds(1080, 880, 200, 73);
+        jButton23.setBounds(1080, 890, 200, 73);
 
         jButton45.setBackground(new java.awt.Color(204, 204, 204));
         jButton45.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2351,7 +2352,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton45);
-        jButton45.setBounds(1080, 430, 200, 70);
+        jButton45.setBounds(1080, 400, 200, 70);
 
         jButton46.setBackground(new java.awt.Color(0, 153, 204));
         jButton46.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2364,7 +2365,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton46);
-        jButton46.setBounds(1080, 500, 200, 70);
+        jButton46.setBounds(1080, 470, 200, 70);
 
         jTable6.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jTable6.setModel(new javax.swing.table.DefaultTableModel(
@@ -2427,7 +2428,20 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton101);
-        jButton101.setBounds(1080, 280, 50, 50);
+        jButton101.setBounds(1080, 240, 50, 50);
+
+        jButton47.setBackground(new java.awt.Color(204, 204, 204));
+        jButton47.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jButton47.setText("інкасація");
+        jButton47.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton47.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton47.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton47ActionPerformed(evt);
+            }
+        });
+        StoragePanel.add(jButton47);
+        jButton47.setBounds(1180, 600, 100, 70);
 
         getContentPane().add(StoragePanel);
         StoragePanel.setBounds(0, 0, 1280, 1000);
@@ -3156,25 +3170,41 @@ public class MainForm extends javax.swing.JFrame {
         if (reply == JOptionPane.YES_OPTION) {
 //            EmployeeUtils.addTimeOut(userList.get(User.active));
             //fix
-//            doDBDump();
+            doDBDump();
             System.exit(0);
         }
     }
      
-    private static void doDBDump(){
-        DateFormat dateFormat = new SimpleDateFormat(
-                "dd_MM_yyyy_HH_mm");
-//        String command = "mysqldump -u"+USERNAME+" -p"+PASSWORD+" luckyroger > C:/dump/dump.sql" ;
-        String command = "mysqldump --user=" + USERNAME + "--password=" + PASSWORD + " luckyroger > C:/dump/backdump.sql" ;
-        System.out.println(command);
-        
-        try {
+    private static void StopKeyboard(){    
+        String command = "cmd /c taskkill /im osk.exe /f";              
+        try {            
             Process process = Runtime.getRuntime().exec(command);
-            System.out.println("created dump" + dateFormat.format(new Date()) + ".sql");
+            System.out.println("startKeyboard");
         } catch (IOException ex) {
-            Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);         
+             System.out.println("Error startKeyboard");
         }
     }
+    private static void startKeyboard(){    
+        String command = "cmd /c osk";              
+        try {            
+            Process process = Runtime.getRuntime().exec(command);
+            System.out.println("startKeyboard");
+        } catch (IOException ex) {
+             System.out.println("Error startKeyboard");
+        }
+    }
+    private static void doDBDump(){
+        DateFormat dateFormat = new SimpleDateFormat(
+                "ddMMyyyy_HH-mm");
+        String command = "cmd /c  mysqldump -u"+USERNAME+" -p"+PASSWORD+" "
+                + "luckyroger > C:/dump/"+dateFormat.format(new Date())+"_dump.sql" ;        
+        try {            
+            Process process = Runtime.getRuntime().exec(command);
+        } catch (IOException ex) {
+        }
+    }
+    
+    
     private void PriceTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceTyped
         char c = evt.getKeyChar();
         if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || c == KeyEvent.VK_DELETE)) {
@@ -3818,12 +3848,11 @@ public class MainForm extends javax.swing.JFrame {
         if (!line.equals("")) {
             int diff = Integer.parseInt(line);
             JFrame frame = new JFrame();      
-         
+           
             Object value = JOptionPane.showInputDialog(frame,
-                    "Інкасація  " + diff + " грн, підтвердити?\n"
-                    + "Виберіть працівника для авансу \n"
-                    + "або бармена хто здійснює інкасацію",
-                    "Інкасація/Аванс",
+                    "Аванс  " + diff + " грн, підтвердити?\n"
+                    + "Виберіть працівника для авансу \n",
+                    "Аванс",
                     JOptionPane.YES_NO_OPTION,
                     null,
                     employees.toArray(),
@@ -3834,7 +3863,7 @@ public class MainForm extends javax.swing.JFrame {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
-                OrderUtils.addOrder(order, employees.get(index));
+                OrderUtils.addOrder(order, employees.get(index), "");
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
                 jTextField12.setText("");
             }
@@ -3974,7 +4003,7 @@ public class MainForm extends javax.swing.JFrame {
                 }
                 PrintClientCheck();
                 OrderUtils.addOrder(orders.get(activeTable),
-                        userList.get(User.active));
+                        userList.get(User.active), "");
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
                 jTable1.setBackground(lightRed);
@@ -4089,6 +4118,29 @@ public class MainForm extends javax.swing.JFrame {
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jButton47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton47ActionPerformed
+        String line = jTextField12.getText();
+        if (!line.equals("")) {
+            int diff = Integer.parseInt(line);
+            startKeyboard();
+            Object[] message = {"Введіть призначення інкасації"};
+            String option = JOptionPane.showInputDialog(null, message, "Інкасація", JOptionPane.OK_CANCEL_OPTION);
+            if (option == null) {
+                System.out.println("Cancell is clicked..");
+            } else {
+                Order order = new Order();
+                order.setOrderSum(diff * (-1));
+                System.out.println("Incasacia - diff =" + order.getOrderSum());
+                OrderUtils.addOrder(order, employees.get(User.active), option);
+                jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
+                jTextField12.setText("");
+
+            }
+            StopKeyboard();
+        }
+        
+    }//GEN-LAST:event_jButton47ActionPerformed
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -4334,7 +4386,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton1.setBackground(RED);
         jButton39.setBackground(GREEN);
         jButton45.setBackground(RED);
-        jButton42.setBackground(RED);
+        jButton42.setBackground(GREEN);
+        jButton47.setBackground(RED);
         jButton43.setBackground(GREEN);
         jButton44.setBackground(RED);
         UsersPanel.setVisible(false);
@@ -4491,6 +4544,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton44;
     private javax.swing.JButton jButton45;
     private javax.swing.JButton jButton46;
+    private javax.swing.JButton jButton47;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

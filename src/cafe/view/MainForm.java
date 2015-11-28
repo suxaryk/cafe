@@ -275,6 +275,7 @@ public class MainForm extends javax.swing.JFrame {
         jTable6 = new javax.swing.JTable();
         jButton101 = new javax.swing.JButton();
         jButton47 = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -2443,6 +2444,11 @@ public class MainForm extends javax.swing.JFrame {
         StoragePanel.add(jButton47);
         jButton47.setBounds(1180, 600, 100, 70);
 
+        jLabel17.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel17.setText("Сума");
+        StoragePanel.add(jLabel17);
+        jLabel17.setBounds(1080, 540, 90, 16);
+
         getContentPane().add(StoragePanel);
         StoragePanel.setBounds(0, 0, 1280, 1000);
 
@@ -4132,7 +4138,7 @@ public class MainForm extends javax.swing.JFrame {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
-                OrderUtils.addOrder(order, employees.get(User.active), option);
+                OrderUtils.addOrder(order, userList.get(User.active), option);
                 jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
                 jTextField12.setText("");
 
@@ -4586,6 +4592,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;

@@ -15,6 +15,10 @@ public class OrderItem {
     private boolean printed;
     private boolean cook;
 
+    public OrderItem() {
+    }
+    
+    
     
     public OrderItem(Dish dish, int count, boolean cook) {
         this.dish = dish;
@@ -27,6 +31,7 @@ public class OrderItem {
         this.count = count;      
         itemSum = dish.getPrice() * count;       
     }
+    
 
     public Dish getDish() {
         return dish;
@@ -86,7 +91,9 @@ public class OrderItem {
 
     public void setCook(boolean cook) {
         this.cook = cook;
-    }
+    }  
+    
+    
     
     
     public List<Ingredient> getOrderItemRecipe(){

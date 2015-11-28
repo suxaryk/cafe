@@ -22,6 +22,7 @@ public class Order {
     private String user;
     private ArrayList<OrderItem> items = new ArrayList<>();
     private ArrayList<OrderItem> removeditems = new ArrayList<>();
+    private String coment;
 
     public int getId() {
         return id;
@@ -132,6 +133,14 @@ public class Order {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getComent() {
+        return coment;
+    }
+
+    public void setComent(String coment) {
+        this.coment = coment;
     }
     
     

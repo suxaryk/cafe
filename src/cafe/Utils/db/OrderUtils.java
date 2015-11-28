@@ -550,6 +550,7 @@ public class OrderUtils {
             return 0;
         }
     }
+    
     public static int getDayInkassCount() {
         final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + userList.get(User.active).getStartTime() + "' AND sum < 0";
         try (Connection connection = DriverManager
@@ -571,10 +572,38 @@ public class OrderUtils {
         }
     }
     
+    public static List<Order> getInkassOrders() {
+        final String SQL = "select * from orders where coments != ''";
+        List<Order> inkassOrders = new ArrayList<>();
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! getInkassOrders"
+                    : "Error DB connecting");
+
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    Order tmpOrder = new Order();                  
+                    tmpOrder.setOrderSum(rs.getInt("sum"));                 
+                    tmpOrder.setDate(rs.getTimestamp("datatime"));
+                    tmpOrder.setUser(rs.getString("operator"));
+                    tmpOrder.setComent(rs.getString("coments"));
+                 
+                    inkassOrders.add(tmpOrder);
+                }
+            }
+            return inkassOrders;
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getInkassOrders");
+            return null;
+        }
+    }
+    
      public static int getSumKeyMoneyForUserBetween(Timestamp start, Timestamp end, String employeeName) {
         final String SQL = "select SUM(sum) from orders where"
                 + " operator  = '" + employeeName +"'"
-                + "AND sum < 0 "
+                + "AND sum < 0 AND coments = ''"
                 + "AND datatime >= '" + start + "' "
                 + "AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager

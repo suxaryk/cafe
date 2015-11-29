@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -70,9 +71,56 @@ public class EmployeeUtils {
             System.out.println("Connection Failed! Check output console - getEmployeeTime");
         }
     }
+    
+    public static boolean isDayCountStarted() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        final String SQL = "SELECT count(*) from employee_time where DATE(date_in)= DATE('"+sdf.format(new Date())+"')";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! isDayCountStarted"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+
+            int sum;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                sum = 0;
+                while (rs.next()) {
+                    sum = rs.getInt(1);
+                }
+            }
+            System.out.println("user count > 0");
+            return sum != 0;
+            
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - isDayCountStarted");
+            return false;
+        }
+    }
+    //who start first today
+    public static Date getStartDayTime(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        final String SQL = "SELECT date_in from employee_time where DATE(date_in)=DATE('"+sdf.format(date)+"') LIMIT 1";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getStartDayTime"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+
+            Date newdate = new Date();
+            try (ResultSet rs = statement.executeQuery(SQL)) {              
+                while (rs.next()) {
+                    newdate = rs.getTimestamp(1);
+                }
+            }
+            return newdate;
+            
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getStartDayTime");
+            return null;
+        }
+    }
    
     public static void readEmployeeDayTime(Date date) {
-//        final String SQL = "select * from employee_time where date_in > '"+ userList.get(User.active).getStartTime()+"'";
         final String SQL = "SELECT * from employee_time WHERE DATE(date_in) = DATE('" + date + "')";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -226,6 +274,8 @@ public class EmployeeUtils {
         }
     }
     
+    
+      
     
 
 }

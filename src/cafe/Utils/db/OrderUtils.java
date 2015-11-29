@@ -10,6 +10,7 @@ import cafe.model.OrderItem;
 import cafe.model.User;
 import cafe.view.LoginForm;
 import static cafe.view.LoginForm.userList;
+import static cafe.view.MainForm.DAY_START_TIME;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -530,7 +531,7 @@ public class OrderUtils {
     }
 
     public static int getDayOrdersCount() {
-        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + userList.get(User.active).getStartTime() + "' "
+        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + DAY_START_TIME + "' "
                 + "AND  operator != '" + userList.get(5).getName() + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -552,7 +553,7 @@ public class OrderUtils {
     }
     
     public static int getDayInkassCount() {
-        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + userList.get(User.active).getStartTime() + "' AND sum < 0";
+        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + DAY_START_TIME + "' AND sum < 0";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getDayInkassCount"

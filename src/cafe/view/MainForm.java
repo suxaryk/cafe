@@ -9,6 +9,7 @@ import cafe.Utils.db.Dish.DishUtils;
 import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import cafe.Utils.db.Dish.RecepiesUtils;
+import static cafe.Utils.db.EmployeeUtils.isDayCountStarted;
 import static cafe.Utils.db.OrderUtils.getDayInkassCount;
 import static cafe.Utils.db.OrderUtils.getDayOrdersCount;
 import cafe.Utils.db.StorageUtils;
@@ -2855,23 +2856,54 @@ public class MainForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formComponentShown
 
+//    public void setStartUserTime1(){
+//        System.out.println("Add start time");
+//        EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
+////        UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        try {
+//            Date date = sdf.parse(userList.get(User.active).getStartTime().toString());
+//            
+//            System.out.println("Barmen login in " + date);
+//        } catch (ParseException | NullPointerException ex) {
+//            if (!isDayCountStarted()) {
+////                if (new LocalTime().getHourOfDay() > 6) {
+//                    EmployeeUtils.addTimeIn(userList.get(User.active));
+//                    EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
+////                } 
+////                else {
+////                    UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
+////                }
+//            }else{
+//               
+//                    userList.get(User.active).setStartTime(null);
+//             
+//                    UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
+//                
+//            }
+//           
+//        }
+//    }
     public void setStartUserTime(){
-        EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
-//        UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            Date date = sdf.parse(userList.get(User.active).getStartTime().toString());
-            System.out.println("Barmen login in " + date);
-        } catch (ParseException | NullPointerException ex) {
-            if (new LocalTime().getHourOfDay() > 6) {
+        if (new LocalTime().getHourOfDay() > 6) {
+            if (!isDayCountStarted()) {
                 EmployeeUtils.addTimeIn(userList.get(User.active));
+                EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
                 
-                
-                EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));                
             }else{
-                UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
-            }
+                userList.get(User.active).setStartTime(EmployeeUtils.getStartDayTime(new Date()));
+//                System.out.println("start time = " +EmployeeUtils.getStartDayTime());
+            }           
+            
+        }else{         
+            userList.get(User.active).setStartTime(EmployeeUtils.getStartDayTime(
+                    new Date(System.currentTimeMillis() - 10 * 60 * 60 * 1000)));            
         }
+        
+        
+        DAY_START_TIME = userList.get(User.active).getStartTime();
+        System.out.println("DAY_START_TIME " + DAY_START_TIME);
+        
     }
     private void subOrderIngredientsFromDB() {
         System.out.println("----- remove Order ingredients from DB-----------");
@@ -3115,7 +3147,7 @@ public class MainForm extends javax.swing.JFrame {
                        
                 if (employees.get(index)
                         .getPass() == Integer.parseInt(pass)) {
-                    if (date1.equals("null")) {
+                    if (date1.equals("null") && new LocalTime().getHourOfDay() > 6) {
                         model.setValueAt(dateFormat.format(new Date()), index, 1);
                         userList.get(User.active);
                         EmployeeUtils.addTimeIn(employees.get(index));
@@ -3151,7 +3183,7 @@ public class MainForm extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
                 + "Інформація за зміну в терміні  \n"
-                + "_з " + dateFormat.format(userList.get(User.active).getStartTime()) + " \n"
+                + "_з " + dateFormat.format(DAY_START_TIME) + " \n"
                 + "по " + dateFormat.format(new Date()) + "\n"
                 + "------------------------------------------------\n"
                 + "Каса на початок зміни " + (allSum - daySum + dayDiff) + " грн.\n"
@@ -4067,7 +4099,7 @@ public class MainForm extends javax.swing.JFrame {
         JFrame frame = new JFrame();
         JOptionPane.showOptionDialog(frame.getContentPane(),
                 dayInfo()
-                + "Повернутись до програми?", "Інформація по касі за зміну!",
+                + "Повернутись до програми?", "ПОПЕРЕДНЯ зміна!",
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
 
 
@@ -4461,6 +4493,9 @@ public class MainForm extends javax.swing.JFrame {
         mainForm.setIconImage(null);
         mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
+    
+    
+    public static Date DAY_START_TIME;
     private static int maxOrderId;
     private static int printedOrderCount = 1;
     public static ArrayList<Employee> employees = new ArrayList<>();

@@ -18,6 +18,7 @@ public class Order {
     private int cookCount;    
     private int orderSum;
     private boolean payed;
+    private boolean printed;
     private Date date;
     private String user;
     private ArrayList<OrderItem> items = new ArrayList<>();
@@ -142,6 +143,16 @@ public class Order {
     public void setComent(String coment) {
         this.coment = coment;
     }
+
+    public boolean isPrinted() {
+        return printed;
+    }
+
+    public void setPrinted(boolean printed) {
+        this.printed = printed;
+    }
+    
+    
     
     
       

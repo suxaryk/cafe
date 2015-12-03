@@ -280,6 +280,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton101 = new javax.swing.JButton();
         jButton47 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SmartCafe");
@@ -2460,6 +2462,20 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(StoragePanel);
         StoragePanel.setBounds(0, 0, 1280, 1000);
 
+        jLabel15.setBackground(java.awt.Color.yellow);
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel15.setText("готуються");
+        jLabel15.setOpaque(true);
+        getContentPane().add(jLabel15);
+        jLabel15.setBounds(545, 105, 200, 30);
+
+        jLabel20.setBackground(java.awt.Color.green);
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel20.setText("видані страви");
+        jLabel20.setOpaque(true);
+        getContentPane().add(jLabel20);
+        jLabel20.setBounds(545, 140, 200, 30);
+
         setSize(new java.awt.Dimension(1292, 1051));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -2477,7 +2493,7 @@ public class MainForm extends javax.swing.JFrame {
     private void chooseTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseTable
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        jComboBox2.setSelectedIndex(0);        
+        jComboBox2.setSelectedIndex(0);
         activeTable = getButtonId(evt);
         System.out.println("table=" + activeTable);
 
@@ -2501,12 +2517,7 @@ public class MainForm extends javax.swing.JFrame {
                     orders.get(activeTable).getItems().get(i).getSum()
                 });
             }
-            if (!orders.get(activeTable).getItems().isEmpty()) {
-                if (orders.get(activeTable).getItems().get(orders.get(activeTable).getItems().size() - 1).isPrinted()) {
-                    markDishesAsCooked();
-                }
-
-            }
+            changeRowColorTable1();
         } else {
             orders.put(activeTable, new Order());
             if (!isOrderPrinted()) {
@@ -2515,7 +2526,7 @@ public class MainForm extends javax.swing.JFrame {
             jTextField1.setText("0");
         }
         if (orders.get(activeTable).isPayed()) {
-            changeBackGroundTable1();
+            changeBackGroundTable1(lightRed);
             jButton10.setEnabled(false);
             jButton3.setEnabled(false);
             jButton7.setEnabled(false);
@@ -2570,16 +2581,6 @@ public class MainForm extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_getListItem
-    private int getPrintedCount() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int k = 0;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            if (model.getValueAt(i, 0).equals("")) {
-                k++;
-            }
-        }
-        return k;
-    }
 
     private int getIndex(int count, boolean isCook) {
         int index = 0;
@@ -2603,16 +2604,16 @@ public class MainForm extends javax.swing.JFrame {
         int index = getIndex(count, isCook);
         System.out.println("activeCAt " + activeCat);
         System.out.println("iscook " + newOrderItem.getDish().isCook());
-
+        // update old item
         if ((orders.get(activeTable).getItems().contains(newOrderItem)
                 && !orders.get(activeTable).getItems().get(index).isPrinted())
                 && (activeCat < 5 || activeCat > 8)) {
             System.out.println("Index = " + index);
             System.out.println("is Printed = " + orders.get(activeTable).getItems().get(index).isPrinted());
             orders.get(activeTable).getItems().get(index).addCount(count);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index + getPrintedCount(), 1);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index + getPrintedCount(), 3);
-
+            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index, 1);
+            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index, 3);
+            // new order item
         } else {
             orders.get(activeTable).getItems().add(newOrderItem);
             int addedIndex = orders.get(activeTable).getItems().size() - 1;
@@ -2626,6 +2627,14 @@ public class MainForm extends javax.swing.JFrame {
                 orders.get(activeTable).getItems().get(addedIndex)
                 .getSum()
             });
+        }
+        changeRowColorTable1();
+
+        //need test
+        //delete after
+        System.out.println("add redult ");
+        for (OrderItem item : orders.get(activeTable).getItems()) {
+            System.out.println("title " + item.getDish().getTitle() + " count " + item.getCount());
         }
 
         OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
@@ -2766,7 +2775,8 @@ public class MainForm extends javax.swing.JFrame {
         System.out.println("selectedRow" + jTable1.getSelectedRow());
         if (jTable1.getRowCount() != 0) {
             if (!orders.get(activeTable).isPayed()
-                    && !jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("")) {
+                    && !orders.get(activeTable).getItems().get(
+                            orders.get(activeTable).getItems().size() - 1).isPrinted()) {
                 model.removeRow(jTable1.getRowCount() - 1);
                 int lastIndex = orders.get(activeTable).getItems().size() - 1;
                 OrderItem item = orders.get(activeTable).getItems().get(lastIndex);
@@ -2779,6 +2789,12 @@ public class MainForm extends javax.swing.JFrame {
                     orders.get(activeTable).getRemovedItems().add(item);
                 }
                 orders.get(activeTable).getItems().remove(lastIndex);
+//TEST 
+//delete
+                System.out.println("remuve result");
+                for (OrderItem item1 : orders.get(activeTable).getItems()) {
+                    System.out.println("title " + item.getDish().getTitle() + " count " + item.getCount());
+                }
             }
             jTextField1.setText("" + orders.get(activeTable).getOrderSum());
         }
@@ -2900,20 +2916,13 @@ public class MainForm extends javax.swing.JFrame {
 
     }
 
-    private void markDishesAsCooked() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.addRow(new Object[]{
-            "", null, null, null
-        });
+    private void setOrderPrinted() {
+        orders.get(activeTable).setPrinted(true);
+        changeRowColorTable1();
     }
 
     private boolean isOrderPrinted() {
-        for (int i = 0; i < jTable1.getRowCount(); i++) {
-            if (jTable1.getValueAt(i, 0).equals("")) {
-                return true;
-            }
-        }
-        return false;
+        return orders.get(activeTable).isPrinted();
     }
 
     private void PrintClientCheck() {
@@ -3009,24 +3018,20 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
-        if (jTable1.getRowCount() > 0) {
-            if (!jTable1.getValueAt(jTable1.getRowCount() - 1, 0).equals("") && !orders.get(activeTable).isPayed()) {
-                if (!isOrderPrinted()) {
-//                    orders.get(activeTable).setDayId(printedOrderCount++);
-                    jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
-                    setOrderIdForTable(orders.get(activeTable).getDayId());
-                }
-                markDishesAsCooked();
-                OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
+        if (!orders.get(activeTable).isPayed()) {
+            jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
+            setOrderIdForTable(orders.get(activeTable).getDayId());
+            setOrderPrinted();
+            OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
 
-                if (jButton3.isEnabled()) {
-                    if (orders.get(activeTable).getOrderSum() != 0) {
-                        printKitchenCheck();
-                        jButton9.setEnabled(false);
-                    }
+            if (jButton3.isEnabled()) {
+                if (orders.get(activeTable).getOrderSum() != 0) {
+                    printKitchenCheck();
+                    jButton9.setEnabled(false);
                 }
             }
         }
+
     }//GEN-LAST:event_PrintCheck
     private void sortListOfDish(List list, final int orderArg) {
         Collections.sort(list, new Comparator<Dish>() {
@@ -4015,7 +4020,7 @@ public class MainForm extends javax.swing.JFrame {
         if (jButton10.isEnabled()) {
             if (orders.get(activeTable).getOrderSum() != 0) {
                 subOrderIngredientsFromDB();
-                changeBackGroundTable1();
+                changeBackGroundTable1(lightRed);
 
                 if (!isOrderPrinted()) {
                     jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
@@ -4164,20 +4169,16 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton47ActionPerformed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        // TODO add your handling code here:    
         int index = jTable1.getSelectedRow();
         if (!orders.get(activeTable).isPayed() && index < orders.get(activeTable).getItems().size()) {
             JTable table = (JTable) evt.getSource();
             Point p = evt.getPoint();
             int row = table.rowAtPoint(p);
-            
+
             if (evt.getClickCount() == 1) {
-//                if (isOrderItemRelized(index) && !orders.get(activeTable).getItems().get(index).isPrinted()) {
-//                    orders.get(activeTable).getItems().get(index).setRealized(false);
-//                } else {
-//                    
-                    orders.get(activeTable).getItems().get(index).setRealized(true);
-//                }
+
+                System.out.println("clicked greeeen");
+                orders.get(activeTable).getItems().get(index).setRealized(true);
                 changeRowColorTable1();
             }
         }
@@ -4188,11 +4189,19 @@ public class MainForm extends javax.swing.JFrame {
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
             return orders.get(activeTable).getItems().get(index).isRealized();
-        }else{
-            return false; 
+        } else {
+            return false;
         }
-        
-        
+
+    }
+
+    private boolean isOrderItemPrinted(int index) {
+        if (index < orders.get(activeTable).getItems().size()) {
+            return orders.get(activeTable).getItems().get(index).isPrinted();
+        } else {
+            return false;
+        }
+
     }
 
     private void changeRowColorTable1() {
@@ -4207,37 +4216,36 @@ public class MainForm extends javax.swing.JFrame {
                     c.setBackground(Color.LIGHT_GRAY);
                 } else {
                     c.setBackground(Color.WHITE);
-                }               
-                if (isOrderItemRelized(row)) {
-                    c.setBackground(Color.green);
-                } 
-//                else {
-//                    c.setBackground(Color.WHITE);
-//                }
+                }
 
+                if (isOrderItemPrinted(row)) {
+                    c.setBackground(Color.YELLOW);
+                } else {
+                    c.setBackground(Color.WHITE);
+                }
+                if (isOrderItemRelized(row) && isOrderItemPrinted(row)) {
+                    System.out.println("11111111111111111111");
+                    c.setBackground(Color.green);
+                }
                 return c;
             }
         });
+        jTable1.repaint();
     }
-    private void changeBackGroundTable1() {
+
+    private void changeBackGroundTable1(final Color color) {
         jTable1.setDefaultRenderer(Object.class, new TableCellRenderer() {
             private DefaultTableCellRenderer DEFAULT_RENDERER = new DefaultTableCellRenderer();
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = DEFAULT_RENDERER.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                if (isSelected) {
-                    c.setBackground(lightRed);
-                } else {
-                    c.setBackground(lightRed);
-                }
-              
+                c.setBackground(color);
                 return c;
             }
         });
+        jTable1.repaint();
     }
-
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);
@@ -4682,11 +4690,13 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

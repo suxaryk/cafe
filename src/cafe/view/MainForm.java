@@ -1245,6 +1245,11 @@ public class MainForm extends javax.swing.JFrame {
         jTable1.setFocusable(false);
         jTable1.setRowHeight(18);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(1).setMinWidth(40);
@@ -2845,7 +2850,7 @@ public class MainForm extends javax.swing.JFrame {
         if (maxOrderId >= printedOrderCount) {
             printedOrderCount = maxOrderId +1;
         }
-        System.out.println("maxOrderId " + maxOrderId);
+        System.out.println("maxOrderId (in saved tables) " + maxOrderId);
         System.out.println("load table size " + orders.size());
         System.out.println("payed orders " + (getDayOrdersCount() - getDayInkassCount()));
         System.out.println("printedcount in load tables" + printedOrderCount);
@@ -2856,34 +2861,7 @@ public class MainForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formComponentShown
 
-//    public void setStartUserTime1(){
-//        System.out.println("Add start time");
-//        EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
-////        UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        try {
-//            Date date = sdf.parse(userList.get(User.active).getStartTime().toString());
-//            
-//            System.out.println("Barmen login in " + date);
-//        } catch (ParseException | NullPointerException ex) {
-//            if (!isDayCountStarted()) {
-////                if (new LocalTime().getHourOfDay() > 6) {
-//                    EmployeeUtils.addTimeIn(userList.get(User.active));
-//                    EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
-////                } 
-////                else {
-////                    UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
-////                }
-//            }else{
-//               
-//                    userList.get(User.active).setStartTime(null);
-//             
-//                    UsersUtils.readUserDayTime(new java.sql.Timestamp(new Date().getTime()));
-//                
-//            }
-//           
-//        }
-//    }
+
     public void setStartUserTime(){
         if (new LocalTime().getHourOfDay() > 6) {
             if (!isDayCountStarted()) {
@@ -3175,6 +3153,7 @@ public class MainForm extends javax.swing.JFrame {
         int daySum = OrderUtils.getDaySum(ordersCount) + dayDiff;
         int allSum = OrderUtils.getAllSum();
         int cookCount = OrderUtils.getCookCount(ordersCount);
+        int startKass = OrderUtils.getDayStartSum() ;
         System.out.println("--------------" + userList.get(User.active).getStartTime());
 //        System.out.println("dayDiff = " + dayDiff);
 //        System.out.println("daySum = " + daySum);
@@ -3186,7 +3165,8 @@ public class MainForm extends javax.swing.JFrame {
                 + "_з " + dateFormat.format(DAY_START_TIME) + " \n"
                 + "по " + dateFormat.format(new Date()) + "\n"
                 + "------------------------------------------------\n"
-                + "Каса на початок зміни " + (allSum - daySum + dayDiff) + " грн.\n"
+//                + "Каса на початок зміни " + (allSum - daySum + dayDiff) + " грн.\n"
+                + "Каса на початок зміни " + startKass + " грн.\n"
                 + "Сума за день " + daySum + " грн.\n"
                 + "Страв за день " + cookCount + " \n"
                 + "Чеків за день " + (ordersCount - getDayInkassCount())+ " \n"
@@ -3209,6 +3189,7 @@ public class MainForm extends javax.swing.JFrame {
 //            EmployeeUtils.addTimeOut(userList.get(User.active));
             //fix
             doDBDump();
+            OrderUtils.addDayInfo(DAY_START_TIME, new Date(), dayInfo());
             System.exit(0);
         }
     }
@@ -4095,10 +4076,11 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_updateIngCountInStorage
 
+//getLastDayKass
     private void getKassa(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getKassa
         JFrame frame = new JFrame();
         JOptionPane.showOptionDialog(frame.getContentPane(),
-                dayInfo()
+                OrderUtils.getDayInfo()
                 + "Повернутись до програми?", "ПОПЕРЕДНЯ зміна!",
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
 
@@ -4176,9 +4158,16 @@ public class MainForm extends javax.swing.JFrame {
 
             }
             StopKeyboard();
+            StopKeyboard();
         }
         
     }//GEN-LAST:event_jButton47ActionPerformed
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+//        model.get
+    }//GEN-LAST:event_jTable1MousePressed
 
     private void clearCheckboxs() {
         jCheckBox1.setSelected(false);

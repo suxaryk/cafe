@@ -691,8 +691,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="&#x410;&#x432;&#x430;&#x43d;&#x441;">
-                <Property name="tabTitle" type="java.lang.String" value="&#x410;&#x432;&#x430;&#x43d;&#x441;"/>
+              <JTabbedPaneConstraints tabName="&#x41f;&#x440;&#x430;&#x446;&#x456;&#x432;&#x43d;&#x438;&#x43a;&#x438;">
+                <Property name="tabTitle" type="java.lang.String" value="&#x41f;&#x440;&#x430;&#x446;&#x456;&#x432;&#x43d;&#x438;&#x43a;&#x438;"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>

@@ -51,7 +51,7 @@ public class DishUtils {
                     : "Error DB connecting");
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Redirection to another SERVER");
+            System.out.println("Connection Failed! Redirection to another SERVER" + URL2);
             URL = URL2;
             USERNAME = USERNAME2;
             PASSWORD = PASSWORD2;

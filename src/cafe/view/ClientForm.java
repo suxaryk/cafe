@@ -18,7 +18,6 @@ import cafe.model.Employee;
 import cafe.model.Ingredient;
 import cafe.model.Order;
 import cafe.model.OrderItem;
-import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import static cafe.view.MainForm.GREEN;
 import static cafe.view.MainForm.employees;
@@ -27,8 +26,6 @@ import static cafe.view.MainForm.setSort;
 import static cafe.view.MainForm.showCalcTable;
 import static cafe.view.MainForm.sortListOfIngredients;
 import static cafe.view.MainForm.sortListOfOrderItems;
-import static cafe.view.MainForm.storageList;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -50,7 +47,9 @@ public class ClientForm extends javax.swing.JFrame {
     public ClientForm() {
         initComponents();
 //        initServer();
+        
         initEnabledComponents();
+//        testCafeConnection();
         MainForm.initBDmenu();
         UsersUtils.readAllUsers();
         
@@ -562,7 +561,7 @@ public class ClientForm extends javax.swing.JFrame {
         jPanel4.add(jButton2);
         jButton2.setBounds(470, 8, 130, 23);
 
-        jTabbedPane1.addTab("Аванс", jPanel4);
+        jTabbedPane1.addTab("Працівники", jPanel4);
 
         jPanel5.setLayout(null);
 
@@ -850,6 +849,7 @@ public class ClientForm extends javax.swing.JFrame {
             endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime());
             orders.clear();
             orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
+            System.out.println("orders size " + orders.size());
             refreshOrderTable(jTable1, orders);            
         } finally{
             jProgressBar1.setIndeterminate(false);          

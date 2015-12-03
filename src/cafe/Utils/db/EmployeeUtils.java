@@ -257,7 +257,7 @@ public class EmployeeUtils {
             System.out.println("Connection Failed! Check output console - addTimeIn");
         }
     }
-    public static void addTimeOut(Employee employee) {
+    public static void addTimeOut(User employee) {
         final String SQL = "UPDATE employee_time SET date_out = ? WHERE name = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

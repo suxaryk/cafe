@@ -14,6 +14,7 @@ public class OrderItem {
     private int itemSum;
     private boolean printed;
     private boolean cook;
+    private boolean realized;
 
     public OrderItem() {
     }
@@ -92,6 +93,16 @@ public class OrderItem {
     public void setCook(boolean cook) {
         this.cook = cook;
     }  
+
+    public boolean isRealized() {
+        return realized;
+    }
+
+    public void setRealized(boolean realized) {
+        this.realized = realized;
+    }
+    
+    
     
     
     

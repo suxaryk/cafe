@@ -4158,7 +4158,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="&#x433;&#x43e;&#x442;&#x443;&#x44e;&#x442;&#x44c;&#x441;&#x44f;"/>
+        <Property name="text" type="java.lang.String" value=" &#x433;&#x43e;&#x442;&#x443;&#x44e;&#x442;&#x44c;&#x441;&#x44f;"/>
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>
       <Constraints>
@@ -4175,7 +4175,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="&#x432;&#x438;&#x434;&#x430;&#x43d;&#x456; &#x441;&#x442;&#x440;&#x430;&#x432;&#x438;"/>
+        <Property name="text" type="java.lang.String" value=" &#x432;&#x438;&#x434;&#x430;&#x43d;&#x456; &#x441;&#x442;&#x440;&#x430;&#x432;&#x438;"/>
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>
       <Constraints>

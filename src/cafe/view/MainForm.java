@@ -34,6 +34,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -2464,14 +2465,14 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel15.setBackground(java.awt.Color.yellow);
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel15.setText("готуються");
+        jLabel15.setText(" готуються");
         jLabel15.setOpaque(true);
         getContentPane().add(jLabel15);
         jLabel15.setBounds(545, 105, 200, 30);
 
         jLabel20.setBackground(java.awt.Color.green);
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel20.setText("видані страви");
+        jLabel20.setText(" видані страви");
         jLabel20.setOpaque(true);
         getContentPane().add(jLabel20);
         jLabel20.setBounds(545, 140, 200, 30);
@@ -3151,12 +3152,22 @@ public class MainForm extends javax.swing.JFrame {
     public static String dayInfo() {
         System.out.println("----------day Info----------");
 //        System.out.println("DaySum = " + OrderUtils.getDaySum());
+        
+        
+//        int ordersCount = OrderUtils.getDayOrdersCount();
+//        int dayDiff = OrderUtils.getDayRemoveSum(ordersCount) * (-1);
+//        int daySum = OrderUtils.getDaySum(ordersCount) + dayDiff;
+//        int allSum = OrderUtils.getAllSum();
+//        int cookCount = OrderUtils.getCookCount(ordersCount);
         int ordersCount = OrderUtils.getDayOrdersCount();
-        int dayDiff = OrderUtils.getDayRemoveSum(ordersCount) * (-1);
-        int daySum = OrderUtils.getDaySum(ordersCount) + dayDiff;
-        int allSum = OrderUtils.getAllSum();
+        int dayDiff = OrderUtils.getAllRemovedSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime())) * (-1);
+        int daySum = OrderUtils.getAllBarmenSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
+        int allSum = OrderUtils.getAllSumBefore(new Date());
         int cookCount = OrderUtils.getCookCount(ordersCount);
-        int startKass = OrderUtils.getDayStartSum();
+        
+        
+        
+        int startKass = OrderUtils.getAllSumBefore(DAY_START_TIME);
         System.out.println("--------------" + userList.get(User.active).getStartTime());
 //        System.out.println("dayDiff = " + dayDiff);
 //        System.out.println("daySum = " + daySum);
@@ -3172,7 +3183,7 @@ public class MainForm extends javax.swing.JFrame {
                 + "Каса на початок зміни " + startKass + " грн.\n"
                 + "Сума за день " + daySum + " грн.\n"
                 + "Страв за день " + cookCount + " \n"
-                + "Чеків за день " + (ordersCount - getDayInkassCount()) + " \n"
+                + "Чеків за день " + ordersCount + " \n"
                 + "Витрати за день " + dayDiff + " грн.\n"
                 + "Залишок в касі " + allSum + " грн\n"
                 + "------------------------------------------------\n";

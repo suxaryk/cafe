@@ -468,10 +468,10 @@ public class OrderUtils {
     }
     
     ///TEST
-    public static int getDayStartSum() {
+    public static int getAllSumBefore(Date date) {
         final String SQL = "select SUM(sum) from orders where (operator != '" + userList.get(5).getName() + "'  "
                            + "OR datatime < '2015-11-17 10:40:00')"
-                           + "AND datatime < '" + DAY_START_TIME +"'";
+                           + "AND datatime < '" + date +"'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getAllSum"
@@ -513,7 +513,8 @@ public class OrderUtils {
 //        }
 //    }
     public static int getAllBarmenSumBetween(Timestamp start, Timestamp end) {
-        final String SQL = "select SUM(sum) from orders where sum > 0 AND datatime >= '" + start + "' AND datatime <= '" + end + "'";
+        final String SQL = "select SUM(sum) from orders where sum > 0 AND datatime >= '" + start + "' AND datatime <= '" + end + "'"
+                + "AND operator != '" + userList.get(5).getName() + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getAllOrdersSum"
@@ -604,7 +605,8 @@ public class OrderUtils {
 
     public static int getDayOrdersCount() {
         final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + DAY_START_TIME + "' "
-                + "AND  operator != '" + userList.get(5).getName() + "'";
+                + "AND  operator != '" + userList.get(5).getName() + "'"
+                + "AND sum > 0";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getDayOrdersCount"

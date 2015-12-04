@@ -399,78 +399,80 @@ public class OrderUtils {
 
     //unsed
 
-    public static int getDrinkCount() {
-        final String SQL = "select SUM(drinkCount) from (SELECT * FROM orders order by id desc limit ?) as daysum";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");
-            PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, getDayOrdersCount());
-            int sum;
-            try (ResultSet rs = pst.executeQuery()) {
-                sum = 0;
-                while (rs.next()) {
-                    sum = rs.getInt(1);
-                }
-            }
-            return sum;
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getDrinkCount");
-            return 0;
-        }
-    }
+//    public static int getDrinkCount() {
+//        final String SQL = "select SUM(drinkCount) from (SELECT * FROM orders order by id desc limit ?) as daysum";
+//        try (Connection connection = DriverManager
+//                .getConnection(URL, USERNAME, PASSWORD)) {
+//            System.out.println(!connection.isClosed() ? "DB connected!"
+//                    : "Error DB connecting");
+//            PreparedStatement pst = connection.prepareStatement(SQL);
+//            pst.setInt(1, getDayOrdersCount());
+//            int sum;
+//            try (ResultSet rs = pst.executeQuery()) {
+//                sum = 0;
+//                while (rs.next()) {
+//                    sum = rs.getInt(1);
+//                }
+//            }
+//            return sum;
+//        } catch (SQLException e) {
+//            System.out.println("Connection Failed! Check output console - getDrinkCount");
+//            return 0;
+//        }
+//    }
 
-    public static int getDayRemoveSum(int dayOrderCount) {
-        final String SQL = "select SUM(sum) from (SELECT * FROM orders order by id desc limit ?) as dayDiff where sum < 0";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! getDayRemoveSum"
-                    : "Error DB connecting");
-            PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, dayOrderCount);
-            int sum;
-            try (ResultSet rs = pst.executeQuery()) {
-                sum = 0;
-                while (rs.next()) {
-                    sum = rs.getInt(1);
-                }
-            }
-            return sum;
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getDayRemoveSum");
-            return 0;
-        }
-    }
+//    public static int getDayRemoveSum(int dayOrderCount) {
+//        final String SQL = "select SUM(sum) from (SELECT * FROM orders order by id desc limit ?) as dayDiff where sum < 0";
+//        try (Connection connection = DriverManager
+//                .getConnection(URL, USERNAME, PASSWORD)) {
+//            System.out.println(!connection.isClosed() ? "DB connected! getDayRemoveSum"
+//                    : "Error DB connecting");
+//            PreparedStatement pst = connection.prepareStatement(SQL);
+//            pst.setInt(1, dayOrderCount);
+//            int sum;
+//            try (ResultSet rs = pst.executeQuery()) {
+//                sum = 0;
+//                while (rs.next()) {
+//                    sum = rs.getInt(1);
+//                }
+//            }
+//            return sum;
+//        } catch (SQLException e) {
+//            System.out.println("Connection Failed! Check output console - getDayRemoveSum");
+//            return 0;
+//        }
+//    }
 
     
-    public static int getAllSum() {
-        final String SQL = "select SUM(sum) from orders where operator != '" + userList.get(5).getName() + "'  "
-                           + "OR datatime < '2015-11-17 10:40:00'";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! getAllSum"
-                    : "Error DB connecting");
-            Statement statement = connection.createStatement();
-
-            int sum;
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                sum = 0;
-                while (rs.next()) {
-                    sum = rs.getInt(1);
-                }
-            }
-            return sum;
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getAllSum");
-            return 0;
-        }
-    }
+//    public static int getAllSum() {
+//        final String SQL = "select SUM(sum) from orders where operator != '" + userList.get(5).getName() + "'  "
+//                           + "OR datatime < '2015-11-17 10:40:00'"
+//                             + "";
+//        try (Connection connection = DriverManager
+//                .getConnection(URL, USERNAME, PASSWORD)) {
+//            System.out.println(!connection.isClosed() ? "DB connected! getAllSum"
+//                    : "Error DB connecting");
+//            Statement statement = connection.createStatement();
+//
+//            int sum;
+//            try (ResultSet rs = statement.executeQuery(SQL)) {
+//                sum = 0;
+//                while (rs.next()) {
+//                    sum = rs.getInt(1);
+//                }
+//            }
+//            return sum;
+//        } catch (SQLException e) {
+//            System.out.println("Connection Failed! Check output console - getAllSum");
+//            return 0;
+//        }
+//    }
     
     ///TEST
     public static int getAllSumBefore(Date date) {
         final String SQL = "select SUM(sum) from orders where (operator != '" + userList.get(5).getName() + "'  "
-                           + "OR datatime < '2015-11-17 10:40:00')"
+                           + "OR datatime < '2015-11-17 10:40:00'"
+                            + ")"
                            + "AND datatime < '" + date +"'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -605,7 +607,7 @@ public class OrderUtils {
 
     public static int getDayOrdersCount() {
         final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + DAY_START_TIME + "' "
-                + "AND  operator != '" + userList.get(5).getName() + "'"
+//                + "AND  operator != '" + userList.get(5).getName() + "'"
                 + "AND sum > 0";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

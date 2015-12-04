@@ -63,7 +63,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -2857,7 +2856,7 @@ public class MainForm extends javax.swing.JFrame {
         refreshUserTable();
         refreshEmployeesTable();
 
-        jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
+        jTextField5.setText(String.valueOf(getRealKasa()));
 
         for (int i = 0; i < userList.size(); i++) {
             userList.get(i).getStartTime();
@@ -3163,7 +3162,7 @@ public class MainForm extends javax.swing.JFrame {
         int dayDiff = OrderUtils.getAllRemovedSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime())) * (-1);
         int daySum = OrderUtils.getAllBarmenSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
         int allSum = OrderUtils.getAllSumBefore(new Date());
-        int cookCount = OrderUtils.getCookCount(ordersCount);
+        int cookCount = OrderUtils.getAllCookCountBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
         
         
         
@@ -3898,12 +3897,16 @@ public class MainForm extends javax.swing.JFrame {
                 order.setOrderSum(diff * (-1));
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
                 OrderUtils.addOrder(order, employees.get(index), "");
-                jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
+                jTextField5.setText(String.valueOf(getRealKasa()));
                 jTextField12.setText("");
             }
         }
     }//GEN-LAST:event_payForStorageAddition
-
+    private int getRealKasa(){
+        return OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
+    }
+    
+    
     private void swapUser(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapUser
         loginForm.getUsers();
         mainForm.setVisible(false);
@@ -4043,7 +4046,7 @@ public class MainForm extends javax.swing.JFrame {
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
                 jTable1.setBackground(lightRed);
-                jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
+                jTextField5.setText(String.valueOf(getRealKasa()));
 
                 jButton10.setBackground(lightRed);
                 jButton3.setBackground(lightRed);
@@ -4170,7 +4173,7 @@ public class MainForm extends javax.swing.JFrame {
                 order.setOrderSum(diff * (-1));
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
                 OrderUtils.addOrder(order, userList.get(User.active), option);
-                jTextField5.setText(String.valueOf(OrderUtils.getAllSum()));
+                jTextField5.setText(String.valueOf(getRealKasa()));
                 jTextField12.setText("");
 
             }

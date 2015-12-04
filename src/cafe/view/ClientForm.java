@@ -34,6 +34,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1040,7 +1041,7 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
         jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));  
         jLabel13.setText(String.valueOf(OrderUtils.getAllRemovedSumBetween(startDate, endDate)));          
-        jLabel15.setText(String.valueOf(OrderUtils.getAllSum()));          
+        jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));          
         
     }
     private void refreshRemovedIngTable(){

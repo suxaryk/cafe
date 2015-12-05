@@ -2605,16 +2605,17 @@ public class MainForm extends javax.swing.JFrame {
         System.out.println("activeCAt " + activeCat);
         System.out.println("iscook " + newOrderItem.getDish().isCook());
         // update old item
-        if ((orders.get(activeTable).getItems().contains(newOrderItem)
-                && !orders.get(activeTable).getItems().get(index).isPrinted())
-                && (activeCat < 5 || activeCat > 8)) {
-            System.out.println("Index = " + index);
-            System.out.println("is Printed = " + orders.get(activeTable).getItems().get(index).isPrinted());
-            orders.get(activeTable).getItems().get(index).addCount(count);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index, 1);
-            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index, 3);
-            // new order item
-        } else {
+//        if ((orders.get(activeTable).getItems().contains(newOrderItem)
+//                && !orders.get(activeTable).getItems().get(index).isPrinted())
+//                && (activeCat < 5 || activeCat > 8)) {
+//            System.out.println("Index = " + index);
+//            System.out.println("is Printed = " + orders.get(activeTable).getItems().get(index).isPrinted());
+//            orders.get(activeTable).getItems().get(index).addCount(count);
+//            model.setValueAt(orders.get(activeTable).getItems().get(index).getCount(), index, 1);
+//            model.setValueAt(orders.get(activeTable).getItems().get(index).getSum(), index, 3);
+//           
+//        } else {
+        // new order item
             orders.get(activeTable).getItems().add(newOrderItem);
             int addedIndex = orders.get(activeTable).getItems().size() - 1;
             model.addRow(new Object[]{
@@ -2627,7 +2628,7 @@ public class MainForm extends javax.swing.JFrame {
                 orders.get(activeTable).getItems().get(addedIndex)
                 .getSum()
             });
-        }
+//        }
         changeRowColorTable1();
 
         //need test
@@ -2775,8 +2776,10 @@ public class MainForm extends javax.swing.JFrame {
         System.out.println("selectedRow" + jTable1.getSelectedRow());
         if (jTable1.getRowCount() != 0) {
             if (!orders.get(activeTable).isPayed()
+                    && (!orders.get(activeTable).getItems().get(
+                            orders.get(activeTable).getItems().size() - 1).isPrinted()
                     && !orders.get(activeTable).getItems().get(
-                            orders.get(activeTable).getItems().size() - 1).isPrinted()) {
+                            orders.get(activeTable).getItems().size() - 1).isRealized())) {
                 model.removeRow(jTable1.getRowCount() - 1);
                 int lastIndex = orders.get(activeTable).getItems().size() - 1;
                 OrderItem item = orders.get(activeTable).getItems().get(lastIndex);
@@ -2885,7 +2888,6 @@ public class MainForm extends javax.swing.JFrame {
 
             } else {
                 userList.get(User.active).setStartTime(EmployeeUtils.getStartDayTime(new Date()));
-//                System.out.println("start time = " +EmployeeUtils.getStartDayTime());
             }
 
         } else {
@@ -3069,9 +3071,7 @@ public class MainForm extends javax.swing.JFrame {
             public int compare(OrderItem o1, OrderItem o2) {
                 if (orderArg == 0) {
                     return o1.getDish().getTitle().compareTo(o2.getDish().getTitle());
-                } //                else if (orderArg == 1) {
-                //                    return ((Integer) o1.getCount()).compareTo(o2.getCount());
-                //                }
+                } 
                 else {
                     return ((Integer) o2.getCount()).compareTo(o1.getCount());
                 }
@@ -3150,14 +3150,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
     public static String dayInfo() {
         System.out.println("----------day Info----------");
-//        System.out.println("DaySum = " + OrderUtils.getDaySum());
-        
-        
-//        int ordersCount = OrderUtils.getDayOrdersCount();
-//        int dayDiff = OrderUtils.getDayRemoveSum(ordersCount) * (-1);
-//        int daySum = OrderUtils.getDaySum(ordersCount) + dayDiff;
-//        int allSum = OrderUtils.getAllSum();
-//        int cookCount = OrderUtils.getCookCount(ordersCount);
+
         int ordersCount = OrderUtils.getDayOrdersCount();
         int dayDiff = OrderUtils.getAllRemovedSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime())) * (-1);
         int daySum = OrderUtils.getAllBarmenSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
@@ -3167,18 +3160,13 @@ public class MainForm extends javax.swing.JFrame {
         
         
         int startKass = OrderUtils.getAllSumBefore(DAY_START_TIME);
-        System.out.println("--------------" + userList.get(User.active).getStartTime());
-//        System.out.println("dayDiff = " + dayDiff);
-//        System.out.println("daySum = " + daySum);
-//        System.out.println("allSum = " + allSum);
-//        System.out.println("orders empty = " + orders.isEmpty());
+
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
                 + "Інформація за зміну в терміні  \n"
                 + "_з " + dateFormat.format(DAY_START_TIME) + " \n"
                 + "по " + dateFormat.format(new Date()) + "\n"
-                + "------------------------------------------------\n"
-                //                + "Каса на початок зміни " + (allSum - daySum + dayDiff) + " грн.\n"
+                + "------------------------------------------------\n"            
                 + "Каса на початок зміни " + startKass + " грн.\n"
                 + "Сума за день " + daySum + " грн.\n"
                 + "Страв за день " + cookCount + " \n"
@@ -4237,10 +4225,13 @@ public class MainForm extends javax.swing.JFrame {
                 } else {
                     c.setBackground(Color.WHITE);
                 }
-                if (isOrderItemRelized(row) && isOrderItemPrinted(row)) {
-                    System.out.println("11111111111111111111");
+                if (isOrderItemRelized(row)) {
                     c.setBackground(Color.green);
                 }
+                if (isOrderItemRelized(row) && isOrderItemPrinted(row)) {                   
+                    c.setBackground(Color.green);
+                }        
+                
                 return c;
             }
         });

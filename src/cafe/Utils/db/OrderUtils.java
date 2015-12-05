@@ -375,98 +375,7 @@ public class OrderUtils {
         }
     }
 
-    public static int getCookCount(int dayOrderCount) {
-        final String SQL = "select SUM(cookCount) from (SELECT * FROM orders order by id desc limit ?) as daysum";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! getCookCount"
-                    : "Error DB connecting");
-            PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, dayOrderCount);
-            int sum;
-            try (ResultSet rs = pst.executeQuery()) {
-                sum = 0;
-                while (rs.next()) {
-                    sum = rs.getInt(1);
-                }
-            }
-            return sum;
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getCookCount");
-            return 0;
-        }
-    }
 
-    //unsed
-
-//    public static int getDrinkCount() {
-//        final String SQL = "select SUM(drinkCount) from (SELECT * FROM orders order by id desc limit ?) as daysum";
-//        try (Connection connection = DriverManager
-//                .getConnection(URL, USERNAME, PASSWORD)) {
-//            System.out.println(!connection.isClosed() ? "DB connected!"
-//                    : "Error DB connecting");
-//            PreparedStatement pst = connection.prepareStatement(SQL);
-//            pst.setInt(1, getDayOrdersCount());
-//            int sum;
-//            try (ResultSet rs = pst.executeQuery()) {
-//                sum = 0;
-//                while (rs.next()) {
-//                    sum = rs.getInt(1);
-//                }
-//            }
-//            return sum;
-//        } catch (SQLException e) {
-//            System.out.println("Connection Failed! Check output console - getDrinkCount");
-//            return 0;
-//        }
-//    }
-
-//    public static int getDayRemoveSum(int dayOrderCount) {
-//        final String SQL = "select SUM(sum) from (SELECT * FROM orders order by id desc limit ?) as dayDiff where sum < 0";
-//        try (Connection connection = DriverManager
-//                .getConnection(URL, USERNAME, PASSWORD)) {
-//            System.out.println(!connection.isClosed() ? "DB connected! getDayRemoveSum"
-//                    : "Error DB connecting");
-//            PreparedStatement pst = connection.prepareStatement(SQL);
-//            pst.setInt(1, dayOrderCount);
-//            int sum;
-//            try (ResultSet rs = pst.executeQuery()) {
-//                sum = 0;
-//                while (rs.next()) {
-//                    sum = rs.getInt(1);
-//                }
-//            }
-//            return sum;
-//        } catch (SQLException e) {
-//            System.out.println("Connection Failed! Check output console - getDayRemoveSum");
-//            return 0;
-//        }
-//    }
-
-    
-//    public static int getAllSum() {
-//        final String SQL = "select SUM(sum) from orders where operator != '" + userList.get(5).getName() + "'  "
-//                           + "OR datatime < '2015-11-17 10:40:00'"
-//                             + "";
-//        try (Connection connection = DriverManager
-//                .getConnection(URL, USERNAME, PASSWORD)) {
-//            System.out.println(!connection.isClosed() ? "DB connected! getAllSum"
-//                    : "Error DB connecting");
-//            Statement statement = connection.createStatement();
-//
-//            int sum;
-//            try (ResultSet rs = statement.executeQuery(SQL)) {
-//                sum = 0;
-//                while (rs.next()) {
-//                    sum = rs.getInt(1);
-//                }
-//            }
-//            return sum;
-//        } catch (SQLException e) {
-//            System.out.println("Connection Failed! Check output console - getAllSum");
-//            return 0;
-//        }
-//    }
     
     ///TEST
     public static int getAllSumBefore(Date date) {
@@ -493,27 +402,7 @@ public class OrderUtils {
             return 0;
         }
     }
-//    public static int getAllSumBetween(Timestamp start, Timestamp end) {
-//        final String SQL = "select SUM(sum) from orders where datatime >= '" + start + "' AND datatime <= '" + end + "'";
-//        try (Connection connection = DriverManager
-//                .getConnection(URL, USERNAME, PASSWORD)) {
-//            System.out.println(!connection.isClosed() ? "DB connected! getAllOrdersSum"
-//                    : "Error DB connecting");
-//            Statement statement = connection.createStatement();
-//
-//            int sum;
-//            try (ResultSet rs = statement.executeQuery(SQL)) {
-//                sum = 0;
-//                while (rs.next()) {
-//                    sum = rs.getInt(1);
-//                }
-//            }
-//            return sum;
-//        } catch (SQLException e) {
-//            System.out.println("Connection Failed! Check output console - getAllSumBetween");
-//            return 0;
-//        }
-//    }
+
     public static int getAllBarmenSumBetween(Timestamp start, Timestamp end) {
         final String SQL = "select SUM(sum) from orders where sum > 0 AND datatime >= '" + start + "' AND datatime <= '" + end + "'"
                 + "AND operator != '" + userList.get(5).getName() + "'";

@@ -96,6 +96,8 @@ public class MainForm extends javax.swing.JFrame {
         initTables();
         initCalculationTable();
         loadTables();
+        setStartUserTime();
+        initStartOrderId();
 
     }
 
@@ -2481,13 +2483,37 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initStartOrderId() {
-        OrderUtils.setOrderId(getDayOrdersCount() + 1);
+        System.out.println("---------initStartOrderId------------");
+        int maxDbDayId = OrderUtils.getMaxDbDayId();
+        if (maxSavedOrderId > maxDbDayId) {
+            printedOrderCount = maxSavedOrderId + 1;
+        }else{
+            printedOrderCount = maxDbDayId + 1;
+        }
     }
 
     private int getButtonId(java.awt.event.MouseEvent evt) {
         JButton myButton = (JButton) evt.getSource();
         String btnName = myButton.getName();
         return Integer.parseInt(btnName.substring(3));
+    }
+    
+    private void refreshOrderTable(){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();        
+        jTextField1.setText(String.valueOf(orders.get(activeTable)
+                .getOrderSum()));
+        for (int i = 0; i < orders.get(activeTable)
+                .getItems().size(); i++) {
+            model.addRow(new Object[]{
+                orders.get(activeTable).getItems().get(i)
+                .getDish().getTitle(),
+                orders.get(activeTable).getItems().get(i).getCount(),
+                orders.get(activeTable).getItems().get(i).getDish()
+                .getPrice(),
+                orders.get(activeTable).getItems().get(i).getSum()
+            });
+        }
+        changeRowColorTable1();
     }
 
     private void chooseTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseTable
@@ -2501,27 +2527,12 @@ public class MainForm extends javax.swing.JFrame {
         jLabel4.setForeground(RED);
         System.out.println("user" + User.active);
 
-        if (evt.getComponent().getBackground().equals(Color.yellow)) {
-            changeRowColorTable1();
-
-            jTextField1.setText(String.valueOf(orders.get(activeTable)
-                    .getOrderSum()));
-            for (int i = 0; i < orders.get(activeTable)
-                    .getItems().size(); i++) {
-                model.addRow(new Object[]{
-                    orders.get(activeTable).getItems().get(i)
-                    .getDish().getTitle(),
-                    orders.get(activeTable).getItems().get(i).getCount(),
-                    orders.get(activeTable).getItems().get(i).getDish()
-                    .getPrice(),
-                    orders.get(activeTable).getItems().get(i).getSum()
-                });
-            }
-            changeRowColorTable1();
+        if (evt.getComponent().getBackground().equals(Color.yellow)) {          
+            refreshOrderTable();            
         } else {
             orders.put(activeTable, new Order());
             if (!isOrderPrinted()) {
-                orders.get(activeTable).setDayId(printedOrderCount++);
+                orders.get(activeTable).setDayId(printedOrderCount++);                
             }
             jTextField1.setText("0");
         }
@@ -2640,6 +2651,7 @@ public class MainForm extends javax.swing.JFrame {
 
         OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
         jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
+        setOrderIdForTable(orders.get(activeTable).getDayId());
     }
 
     public boolean calcMeat() {
@@ -2774,14 +2786,15 @@ public class MainForm extends javax.swing.JFrame {
     private void removeCheckItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCheckItem
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         System.out.println("selectedRow" + jTable1.getSelectedRow());
+        int lastIndex = orders.get(activeTable).getItems().size() - 1;
         if (jTable1.getRowCount() != 0) {
             if (!orders.get(activeTable).isPayed()
-                    && (!orders.get(activeTable).getItems().get(
-                            orders.get(activeTable).getItems().size() - 1).isPrinted()
-                    && !orders.get(activeTable).getItems().get(
-                            orders.get(activeTable).getItems().size() - 1).isRealized())) {
+                    && (!orders.get(activeTable).getItems()
+                            .get(lastIndex).isPrinted()
+                    && !orders.get(activeTable).getItems()
+                            .get(lastIndex).isRealized())) {
                 model.removeRow(jTable1.getRowCount() - 1);
-                int lastIndex = orders.get(activeTable).getItems().size() - 1;
+                
                 OrderItem item = orders.get(activeTable).getItems().get(lastIndex);
                 int count = orders.get(activeTable).getItems().get(lastIndex).getCount();
                 if (orders.get(activeTable).getRemovedItems().contains(
@@ -2791,13 +2804,17 @@ public class MainForm extends javax.swing.JFrame {
                 } else {
                     orders.get(activeTable).getRemovedItems().add(item);
                 }
-                orders.get(activeTable).getItems().remove(lastIndex);
-//TEST 
-//delete
-                System.out.println("remuve result");
-                for (OrderItem item1 : orders.get(activeTable).getItems()) {
-                    System.out.println("title " + item.getDish().getTitle() + " count " + item.getCount());
+                orders.get(activeTable).getItems().remove(lastIndex);   
+                
+                
+                if (orders.get(activeTable).getItems().isEmpty()) {
+                    setOrderIdForTable(0);
+                    System.out.println("00");
+                }else{
+                    setOrderIdForTable(orders.get(activeTable).getDayId());
+                    System.out.println("11");
                 }
+                
             }
             jTextField1.setText("" + orders.get(activeTable).getOrderSum());
         }
@@ -2865,22 +2882,15 @@ public class MainForm extends javax.swing.JFrame {
             userList.get(i).getStartTime();
 
         }
-        setStartUserTime();
-        initStartOrderId();
-        printedOrderCount = orders.size() + (getDayOrdersCount() - getDayInkassCount()) + 1;
-
-        if (maxOrderId >= printedOrderCount) {
-            printedOrderCount = maxOrderId + 1;
-        }
-        System.out.println("maxOrderId (in saved tables) " + maxOrderId);
-        System.out.println("load table size " + orders.size());
-        System.out.println("payed orders " + (getDayOrdersCount() - getDayInkassCount()));
-        System.out.println("printedcount in load tables" + printedOrderCount);
+        
+        
+       
+       
 
 
     }//GEN-LAST:event_formComponentShown
 
-    public void setStartUserTime() {
+    public static void setStartUserTime() {
         if (new LocalTime().getHourOfDay() > 6) {
             if (!isDayCountStarted()) {
                 EmployeeUtils.addTimeIn(userList.get(User.active));
@@ -4406,8 +4416,8 @@ public class MainForm extends javax.swing.JFrame {
                     System.out.println("actTAble " + activeTable);
                     System.out.println("orderId " + entry.getValue().getDayId());
                     setOrderIdForTable(entry.getValue().getDayId());
-                    if (maxOrderId < entry.getValue().getDayId()) {
-                        maxOrderId = entry.getValue().getDayId();
+                    if (maxSavedOrderId < entry.getValue().getDayId()) {
+                        maxSavedOrderId = entry.getValue().getDayId();
                     }
                 }
             }
@@ -4565,7 +4575,7 @@ public class MainForm extends javax.swing.JFrame {
 
     public static int renderRow, renderCol;
     public static Date DAY_START_TIME;
-    private static int maxOrderId;
+    private static int maxSavedOrderId;
     private static int printedOrderCount = 1;
     public static ArrayList<Employee> employees = new ArrayList<>();
     public static Map<Integer, Order> orders = new HashMap();

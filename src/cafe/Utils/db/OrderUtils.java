@@ -30,15 +30,15 @@ import java.util.Map;
  */
 public class OrderUtils {
 
-    public static int dbId = 1;
+//    private static int dayId = 1;
+//    static{
+//        if (dayId == 1) {
+//            dayId = getDayOrdersCount()+1;
+//            
+//        }
+//    }
 
-    public static int getOrderId() {
-        return dbId;
-    }
 
-    public static void setOrderId(int checkId) {
-        OrderUtils.dbId = checkId;
-    }
 
     public static int getUserKasa(Timestamp start, Timestamp end, int index) {
         final String SQL = "SELECT SUM(sum) from orders where"
@@ -108,7 +108,7 @@ public class OrderUtils {
                 while (rs.next()) {
                     Order tmpOrder = new Order();
                     tmpOrder.setId(rs.getInt("Id"));
-                    tmpOrder.setDayId(rs.getInt("orderId"));
+                    tmpOrder.setDayId(rs.getInt("dayId"));
                     tmpOrder.setOrderSum(rs.getInt("sum"));
                     tmpOrder.setCookCount(rs.getInt("cookCount"));
                     tmpOrder.setDate(rs.getTimestamp("datatime"));
@@ -126,8 +126,8 @@ public class OrderUtils {
     }
 
     public static void addOrder(Order order, User user, String message) {
-        final String sql = "INSERT INTO orders(dayId, orderId, sum, cookCount, datatime, operator, order_items, removed_items, coments)"
-                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO orders(dayId, sum, cookCount, datatime, operator, order_items, removed_items, coments)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -140,15 +140,15 @@ public class OrderUtils {
                 System.out.println("----------title " + item.getDish().getTitle() + " count " + item.getCount());
             }        
            
-            pstatement.setInt(1, dbId++);
-            pstatement.setInt(2, order.getDayId());
-            pstatement.setInt(3, order.getOrderSum());
-            pstatement.setInt(4, order.getCookCount());          
-            pstatement.setTimestamp(5, getCurrentTimeStamp());
-            pstatement.setString(6, user.getName());
-            pstatement.setString(7, order.getJSONItems());
-            pstatement.setString(8, order.getJSONRemovedItems());
-            pstatement.setString(9, message);
+//            pstatement.setInt(1, dayId++);
+            pstatement.setInt(1, order.getDayId());
+            pstatement.setInt(2, order.getOrderSum());
+            pstatement.setInt(3, order.getCookCount());          
+            pstatement.setTimestamp(4, getCurrentTimeStamp());
+            pstatement.setString(5, user.getName());
+            pstatement.setString(6, order.getJSONItems());
+            pstatement.setString(7, order.getJSONRemovedItems());
+            pstatement.setString(8, message);
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -207,7 +207,7 @@ public class OrderUtils {
     }
 
     public static void updateTable(Order order, User user, int activeTable) {
-        final String SQL = "UPDATE tables set orderId=?, sum=?, cookCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";
+        final String SQL = "UPDATE tables set dayId=?, sum=?, cookCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -294,7 +294,7 @@ public class OrderUtils {
     }
 
     public static void fillTableById(int activeTable) {
-        final String SQL = "UPDATE tables set orderId=?, sum=?,  cookCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";
+        final String SQL = "UPDATE tables set dayId=?, sum=?,  cookCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -337,7 +337,7 @@ public class OrderUtils {
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
                     Order tmpOrder = new Order();
-                    tmpOrder.setDayId(rs.getInt("orderId"));
+                    tmpOrder.setDayId(rs.getInt("dayId"));
                     tmpOrder.setOrderSum(rs.getInt("sum"));
                     tmpOrder.setCookCount(rs.getInt("cookCount"));
                     tmpOrder.setItems(JSONUtils.convertJSONToOrder(rs.getString("order_items")));
@@ -471,28 +471,28 @@ public class OrderUtils {
 
     //unsed
 
-    public static int getLastCheckId() {
-        final String SQL = "SELECT orderId FROM orders"
-                + "order by id desc limit 1";
-
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected!"
-                    : "Error DB connecting");
-            Statement statement = connection.createStatement();
-            int last;
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                last = 0;
-                while (rs.next()) {
-                    last = rs.getInt(1);
-                }
-            }
-            return last;
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getLastCheckId");
-            return 0;
-        }
-    }
+//    public static int getLastCheckId() {
+//        final String SQL = "SELECT dayId FROM orders"
+//                + "order by id desc limit 1";
+//
+//        try (Connection connection = DriverManager
+//                .getConnection(URL, USERNAME, PASSWORD)) {
+//            System.out.println(!connection.isClosed() ? "DB connected!"
+//                    : "Error DB connecting");
+//            Statement statement = connection.createStatement();
+//            int last;
+//            try (ResultSet rs = statement.executeQuery(SQL)) {
+//                last = 0;
+//                while (rs.next()) {
+//                    last = rs.getInt(1);
+//                }
+//            }
+//            return last;
+//        } catch (SQLException e) {
+//            System.out.println("Connection Failed! Check output console - getLastCheckId");
+//            return 0;
+//        }
+//    }
 
     public static int getDayOrdersCount() {
         final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + DAY_START_TIME + "' "
@@ -586,6 +586,29 @@ public class OrderUtils {
                 }
             }
             return sum;
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getAllCookCountBetween");
+            return 0;
+        }
+    }
+     
+     public static int getMaxDbDayId() {
+        final String SQL = "select  max(dayId) from orders where "
+                + "datatime > '" + DAY_START_TIME + "' ";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getAllCookCountBetween"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+
+            int max;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                max = 0;
+                while (rs.next()) {
+                    max = rs.getInt(1);
+                }
+            }
+            return max;
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getAllCookCountBetween");
             return 0;

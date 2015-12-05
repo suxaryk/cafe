@@ -36,9 +36,9 @@ public class Order {
     public  int getDayId() {
         return dayId;
     }
-    public  void incDayId() {
-         dayId++;
-    }
+//    public  void incDayId() {
+//         dayId++;
+//    }
 
     public  void setDayId(int dayId) {
         this.dayId = dayId;

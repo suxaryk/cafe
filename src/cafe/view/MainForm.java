@@ -3164,12 +3164,12 @@ public class MainForm extends javax.swing.JFrame {
         int ordersCount = OrderUtils.getDayOrdersCount();
         int dayDiff = OrderUtils.getAllRemovedSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime())) * (-1);
         int daySum = OrderUtils.getAllBarmenSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
-        int allSum = OrderUtils.getAllSumBefore(new Date());
+        int allSum = OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
         int cookCount = OrderUtils.getAllCookCountBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
         
         
         
-        int startKass = OrderUtils.getAllSumBefore(DAY_START_TIME);
+        int startKass = OrderUtils.getAllSumBefore(new Timestamp(DAY_START_TIME.getTime()));
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""

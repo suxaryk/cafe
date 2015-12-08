@@ -204,13 +204,13 @@
                           <Data value="null"/>
                         </Column>
                         <Column editable="false" title="&#x414;&#x430;&#x442;&#x430; &#x427;&#x430;&#x441;" type="java.lang.String"/>
-                        <Column editable="true" title="&#x41a;&#x456;&#x43b;.&#x441;&#x442;&#x440;&#x430;&#x432;" type="java.lang.Integer">
+                        <Column editable="false" title="&#x41a;&#x456;&#x43b;.&#x441;&#x442;&#x440;&#x430;&#x432;" type="java.lang.Integer">
                           <Data value="200"/>
                           <Data value="null"/>
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="true" title="&#x41a;&#x456;&#x43b;. &#x432;&#x438;&#x434;&#x430;&#x43b;" type="java.lang.Object"/>
+                        <Column editable="false" title="&#x41a;&#x456;&#x43b;. &#x432;&#x438;&#x434;&#x430;&#x43b;" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -574,7 +574,7 @@
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
-                          <Title value="&#x2116;"/>
+                          <Title/>
                           <Editor/>
                           <Renderer/>
                         </Column>
@@ -1121,7 +1121,7 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="7">
                         <Column editable="false" title="&#x406;&#x43c;&apos;&#x44f;" type="java.lang.String"/>
-                        <Column editable="true" title="&#x41f;&#x440;&#x438;&#x437;&#x43d;&#x430;&#x447;&#x435;&#x43d;&#x43d;&#x44f;" type="java.lang.String"/>
+                        <Column editable="false" title="&#x41f;&#x440;&#x438;&#x437;&#x43d;&#x430;&#x447;&#x435;&#x43d;&#x43d;&#x44f;" type="java.lang.String"/>
                         <Column editable="false" title="&#x421;&#x443;&#x43c;&#x430;" type="java.lang.Integer"/>
                       </Table>
                     </Property>

@@ -187,7 +187,7 @@ public class ClientForm extends javax.swing.JFrame {
                 java.lang.Long.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -412,7 +412,6 @@ public class ClientForm extends javax.swing.JFrame {
             jTable5.getColumnModel().getColumn(0).setMinWidth(50);
             jTable5.getColumnModel().getColumn(0).setPreferredWidth(50);
             jTable5.getColumnModel().getColumn(0).setMaxWidth(50);
-            jTable5.getColumnModel().getColumn(0).setHeaderValue("№");
             jTable5.getColumnModel().getColumn(2).setMinWidth(100);
             jTable5.getColumnModel().getColumn(2).setPreferredWidth(100);
             jTable5.getColumnModel().getColumn(2).setMaxWidth(100);
@@ -747,7 +746,7 @@ public class ClientForm extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -821,7 +820,7 @@ public class ClientForm extends javax.swing.JFrame {
         for (int i = 0; i < LoginForm.userList.size(); i++) {
             userList.get(i).setKasa(getUserKasa(startDate, endDate, i)); 
             userList.get(i).setDishCount(getUserDishCount(startDate, endDate, i));
-            OrderUtils.getUserDishCount(startDate, endDate, i);   
+//            OrderUtils.getUserDishCount(startDate, endDate, i);   
         }        
     }   
     public  void testCafeConnection(){

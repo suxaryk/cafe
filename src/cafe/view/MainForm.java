@@ -10,8 +10,6 @@ import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
 import static cafe.Utils.db.Dish.DishUtils.USERNAME;
 import cafe.Utils.db.Dish.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isDayCountStarted;
-import static cafe.Utils.db.OrderUtils.getDayInkassCount;
-import static cafe.Utils.db.OrderUtils.getDayOrdersCount;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
 import static cafe.Utils.json.JSONUtils.convertRemovedIngToJSON;
@@ -96,8 +94,8 @@ public class MainForm extends javax.swing.JFrame {
         initTables();
         initCalculationTable();
         loadTables();
-        setStartUserTime();
         initStartOrderId();
+        
 
     }
 
@@ -2820,14 +2818,23 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeCheckItem
 
+    public  void  initBarmen(){
+        if (User.active != -1) {
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            jLabel5.setText("  " + userList.get(User.active).getName());
+            System.out.println("User.active " + User.active);
+            jLabel5.setForeground(BLUE);
+            model.setColumnCount(1);
+        }
+        
+       
+    }
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        if (isAdmin()) {
-            jLabel5.setText("  " + userList.get(User.active).getName());
-            jLabel5.setBackground(RED);
-            model.setColumnCount(1);
+        initBarmen();
+        if (isAdmin()) {                       
             model.addColumn("пароль");
-
+            
             jButton14.setVisible(true);
             jButton15.setVisible(true);
             jButton17.setVisible(true);
@@ -2861,10 +2868,7 @@ public class MainForm extends javax.swing.JFrame {
             jButton21.setVisible(true);
             jCheckBox3.setVisible(true);
 
-        } else {
-            jLabel5.setText("  " + userList.get(User.active).getName());
-            jLabel5.setForeground(BLUE);
-            model.setColumnCount(1);
+        } else {            
             model.addColumn("Початок");
             model.addColumn("Кінець");
             jScrollPane6.setVisible(true);
@@ -2881,18 +2885,13 @@ public class MainForm extends javax.swing.JFrame {
         for (int i = 0; i < userList.size(); i++) {
             userList.get(i).getStartTime();
 
-        }
-        
-        
-       
-       
-
-
+        }        
     }//GEN-LAST:event_formComponentShown
 
     public static void setStartUserTime() {
         if (new LocalTime().getHourOfDay() > 6) {
             if (!isDayCountStarted()) {
+                System.out.println("-----" + userList.get(User.active).getName());
                 EmployeeUtils.addTimeIn(userList.get(User.active));
                 EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
 

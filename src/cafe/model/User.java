@@ -24,8 +24,8 @@ public class User {
     public Date startTime;
     public Date endTime;
     private List<Ingredient> dayRemovedProducts = new LinkedList<>();
-    public static int active;
- 
+    public static int active = -1;    
+    
     public User() {
     }
     

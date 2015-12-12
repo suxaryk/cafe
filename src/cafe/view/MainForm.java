@@ -28,8 +28,6 @@ import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.sql.Timestamp;

@@ -1,5 +1,6 @@
 package cafe.Utils.db.Dish;
 
+import cafe.Utils.db.OrderUtils;
 import cafe.Utils.json.JSONUtils;
 import cafe.model.Dish;
 import static cafe.view.MainForm.menu;
@@ -11,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class DishUtils {
 
@@ -24,9 +27,7 @@ public class DishUtils {
 //    public static final String URL1 = "jdbc:mysql://db4free.net:3306/luckyroger";
 //    public static final String USERNAME1 = "luckyroger";
 //    public static final String PASSWORD1 = "luckyroger";
-    public static final String URL2 = "jdbc:mysql://suharina.ddns.net:3306/luckyroger";
-    public static final String USERNAME2 = "root";
-    public static final String PASSWORD2 = "dbiytdbq18";
+
 
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
     public static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
@@ -35,31 +36,40 @@ public class DishUtils {
     private static final ArrayList<String> sqlUpdateTitleList = new ArrayList<>();
     private static final ArrayList<String> sqlUpdatePriceList = new ArrayList<>();
 
-    static {
+    static {        
+
+        ConnectDb();        
+        initQueries();
+
+    }
+    private static void ConnectDb(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("MySQL JDBC Driver Registered!");
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
         }
-//        URL = URL2;
-//        USERNAME = USERNAME2;
-//        PASSWORD = PASSWORD2;
+
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
             System.out.println(!connection.isClosed() ? "DB connected to " + URL
                     : "Error DB connecting");
 
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Redirection to another SERVER" + URL2);
-            URL = URL2;
-            USERNAME = USERNAME2;
-            PASSWORD = PASSWORD2;
+        } catch (SQLException e ) {
+            System.out.println("Connection to DB Failed! ");
+            JFrame frame = new JFrame();
+            int reply =  JOptionPane.showOptionDialog(frame.getContentPane(),
+                    "Помилка підключення до бази данних!\nВихід з програми", "ПОМИЛКА!",
+                    0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
+            if (reply == JOptionPane.YES_OPTION) {                
+                System.exit(0);
+            }
         } catch (Exception e) {
 
         }
-
-        System.out.println("MySQL JDBC Driver Registered!");
-
+        
+    }
+    private static void initQueries(){
         sqlSelectList.add("select * from firstdishes");
         sqlSelectList.add("select * from salats");
         sqlSelectList.add("select * from rogerdishes");

@@ -1,4 +1,3 @@
-
 package cafe.model;
 
 /**
@@ -6,17 +5,18 @@ package cafe.model;
  * @author suxarina
  * @date 28.08.15
  */
-public class Ingredient  {
+public class Ingredient {
+
     private int dbId;
-    private String title; 
+    private String title;
     private double count;
 
-    public Ingredient() {}
+    public Ingredient() {
+    }
 
     public Ingredient(String title) {
         this.title = title;
     }
-    
 
     public Ingredient(int dbId, double count) {
         this.dbId = dbId;
@@ -32,7 +32,7 @@ public class Ingredient  {
         this.dbId = dbId;
         this.title = title;
         this.count = count;
-    }   
+    }
 
     public int getId() {
         return dbId;
@@ -49,7 +49,6 @@ public class Ingredient  {
     public void setTitle(String title) {
         this.title = title;
     }
-    
 
     public double getCount() {
         return count;
@@ -58,9 +57,10 @@ public class Ingredient  {
     public void setCount(double count) {
         this.count = count;
     }
-    public void addCount(double count){
-        this.count+=count;
-        
+
+    public void addCount(double count) {
+        this.count += count;
+
     }
 
     @Override
@@ -78,12 +78,4 @@ public class Ingredient  {
         }
     }
 
-
-    
-
-
-    
-    
-    
 }
-

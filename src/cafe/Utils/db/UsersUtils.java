@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cafe.Utils.db;
 
 import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
@@ -18,15 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
-/**
- *
- * @author suxarina
- */
 public class UsersUtils {
-    
-    
 
-    public static void readAllUsers() {   
+    public static void readAllUsers() {
         userList.clear();
         final String SQL = "SELECT * from users";
         try (Connection connection = DriverManager
@@ -77,7 +66,7 @@ public class UsersUtils {
             System.out.println("Connection Failed! Check output console - updateUserName");
         }
     }
-    
+
     public static void readUserDayTime(Date date) {
         final String SQL = "select * from employee_time where name = '" + userList.get(User.active) + "' ORDER BY id DESC LIMIT 1";
         try (Connection connection = DriverManager

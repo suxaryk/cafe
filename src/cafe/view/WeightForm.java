@@ -1,6 +1,5 @@
 package cafe.view;
 
-
 import cafe.Utils.db.Dish.DishUtils;
 import cafe.model.Ingredient;
 import static cafe.view.MainForm.activeCat;
@@ -21,14 +20,10 @@ public class WeightForm extends javax.swing.JFrame {
      * Creates new form LoginForm
      */
     public WeightForm() {
-        initComponents();        
-      
+        initComponents();
 
     }
 
-   
-
- 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -53,9 +48,6 @@ public class WeightForm extends javax.swing.JFrame {
         setTitle("Вага м'яса");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
             public void windowDeactivated(java.awt.event.WindowEvent evt) {
                 formWindowDeactivated(evt);
             }
@@ -225,115 +217,86 @@ public class WeightForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-   
+
     private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
         mainForm.setVisible(true);
 
     }//GEN-LAST:event_formWindowDeactivated
 
     private void clearDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDigit
-       String pass = jTextField1.getText();
+        String pass = jTextField1.getText();
         if (pass.length() > 0) {
             jTextField1.setText("" + pass.substring(0, pass.length() - 1));
         }
     }//GEN-LAST:event_clearDigit
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-//        MainForm.closeSystem();        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosing
-
     private void NumberPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberPressed
         JButton myButton = (JButton) evt.getSource();
         jTextField1.setText("" + jTextField1.getText()
-            + myButton.getText());
+                + myButton.getText());
     }//GEN-LAST:event_NumberPressed
 
-    public String removeLastFewChar(String s){
+    public String removeLastFewChar(String s) {
         if (s.length() > 9) {
             s = s.substring(0, s.length() - 9);
-        }        
+        }
         return s;
-    } 
-           
+    }
+
     //change ingredient weight if it is equals 0.1 KG
-    public  void setDishMeetWeight(){   
-        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {                      
+    public void setDishMeetWeight() {
+        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {
             if (ing.getCount() == 0.1) {
                 if (listOfCoeffic.containsKey(ing.getId())) {
                     ing.setCount((weightCount * listOfCoeffic.get(ing.getId())) / 1000);
-                }else {
+                } else {
                     ing.setCount(weightCount / 1000);
-                }                                    
+                }
                 String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
                 int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
                 menu.get(activeCat).getDishes().get(activeDishes).setTitle(removeLastFewChar(title) + "(" + weightCount.intValue() + " гр.)");
                 Double k = (weightCount * price) / 100;
-                menu.get(activeCat).getDishes().get(activeDishes).setPrice((int)Math.ceil(k));
-                break;                          
-            }                     
-        }        
+                menu.get(activeCat).getDishes().get(activeDishes).setPrice((int) Math.ceil(k));
+                break;
+            }
+        }
     }
-    private void initCoeffic(){
+
+    private void initCoeffic() {
         listOfCoeffic = new HashMap<>();
         listOfCoeffic.put(47, 1.2);
         listOfCoeffic.put(48, 1.3);
         listOfCoeffic.put(35, 1.12);
         listOfCoeffic.put(49, 1.14);
         listOfCoeffic.put(50, 1.27);
-        listOfCoeffic.put(94, 1.22);        
+        listOfCoeffic.put(94, 1.22);
         listOfCoeffic.put(103, 1.38);
-        listOfCoeffic.put(52, 1.38);    
-      
-        
-        
+        listOfCoeffic.put(52, 1.38);
+
     }
-    
+
     private void setWeightCount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setWeightCount
-        String line = jTextField1.getText();   
+        String line = jTextField1.getText();
         initCoeffic();
         if (line.length() > 0) {
             weightCount = Double.parseDouble(line);
-            System.out.println("weightCount "+ weightCount);
-            setDishMeetWeight();            
-            mainForm.addOrderItemToTable(dishCount); 
+            System.out.println("weightCount " + weightCount);
+            setDishMeetWeight();
+            mainForm.addOrderItemToTable(dishCount);
             DishUtils.readDBCategoryById(4);
-            mainForm.refreshDishList(4);            
+            mainForm.refreshDishList(4);
         }
         if (weightCount != 0) {
-            this.dispose(); 
+            this.dispose();
             mainForm.setEnabled(true);
-        }   
-      
+        }
+
     }//GEN-LAST:event_setWeightCount
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WeightForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WeightForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WeightForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WeightForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -342,8 +305,7 @@ public class WeightForm extends javax.swing.JFrame {
             }
         });
     }
-    // private boolean sw = true;
-    public static  Double weightCount;
+    public static Double weightCount;
     public static HashMap<Integer, Double> listOfCoeffic;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -56,19 +56,19 @@ public class StorageUtils {
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.setString(1, ingredient.getTitle());       
-            pstatement.setInt(2, 0);       
+            pstatement.setString(1, ingredient.getTitle());
+            pstatement.setInt(2, 0);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("A new Ingredient was added successfully!");
-                
+
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - addIngredientToDB");
         }
 
     }
-    
+
     public static void removeIngredientFromDB(int dbId) {
         final String SQL = "DELETE FROM storage WHERE Id = ?";
 
@@ -85,8 +85,9 @@ public class StorageUtils {
         }
 
     }
-    public static void updateCount(int dbId, double count){
-        
+
+    public static void updateCount(int dbId, double count) {
+
         final String SQL = "UPDATE storage SET count = ? WHERE Id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -101,8 +102,8 @@ public class StorageUtils {
             System.out.println("Connection Failed! Check output console - updateCount" + dbId);
         }
     }
-    
-    public static Ingredient getIngredientById(int id){
+
+    public static Ingredient getIngredientById(int id) {
         Ingredient ingredient = new Ingredient();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -122,9 +123,9 @@ public class StorageUtils {
             System.out.println("Connection Failed! Check output console - getIngredientById " + id);
         }
         return ingredient;
-        
+
     }
-    
+
     public static void addRemovedItems(String JsonItems, User user) {
         final String SQL = "INSERT INTO storage_removed(date, operator, removed_ingredients) VALUES(?, ?, ?)";
         try (Connection connection = DriverManager
@@ -143,7 +144,7 @@ public class StorageUtils {
             System.out.println("Connection Failed! Check output console - addRemovedItems");
         }
     }
-    
+
     public static void fullJoinIngLists(List<Ingredient> list1, List<Ingredient> list2) {
         for (Ingredient ing : list2) {
             if (list1.contains(ing)) {
@@ -152,8 +153,9 @@ public class StorageUtils {
             } else {
                 list1.add(ing);
             }
-        } 
+        }
     }
+
     public static void fullJoinOrderItemLists(List<OrderItem> list1, List<OrderItem> list2) {
         for (OrderItem item : list2) {
             if (list1.contains(item)) {
@@ -162,13 +164,13 @@ public class StorageUtils {
             } else {
                 list1.add(item);
             }
-        } 
+        }
     }
 
     public static List<Ingredient> getRemovedIngredients(Timestamp start, Timestamp end) {
         final String SQL = "SELECT * from storage_removed where"
                 + " date >= '" + start
-                + "' AND date <= '" + end          
+                + "' AND date <= '" + end
                 + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -179,7 +181,6 @@ public class StorageUtils {
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-//                    System.out.println("JSON " + rs.getString("removed_ingredients"));
                     fullJoinIngLists(removedList,
                             JSONUtils.convertJSONToRemovedIng(
                                     rs.getString("removed_ingredients"))
@@ -194,10 +195,11 @@ public class StorageUtils {
             return null;
         }
     }
+
     public static List<OrderItem> getOrderedDishes(Timestamp start, Timestamp end) {
         final String SQL = "SELECT * from orders where"
                 + " datatime >= '" + start
-                + "' AND datatime <= '" + end          
+                + "' AND datatime <= '" + end
                 + "' AND sum >= 0 ";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -208,12 +210,11 @@ public class StorageUtils {
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-//                    System.out.println("JSON " + rs.getString("order_items"));
                     fullJoinOrderItemLists(orderedDishes,
                             convertJSONToOrder(rs.getString("order_items"))
                     );
                 }
-                System.out.println("read orderedDishes size = " +orderedDishes.size());
+                System.out.println("read orderedDishes size = " + orderedDishes.size());
                 return orderedDishes;
             }
 
@@ -222,8 +223,5 @@ public class StorageUtils {
             return null;
         }
     }
-
-
-    
 
 }

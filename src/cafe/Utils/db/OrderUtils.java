@@ -111,7 +111,8 @@ public class OrderUtils {
     }
 
     public static void addOrder(Order order, User user, String message) {
-        final String sql = "INSERT INTO orders(dayId, sum, cookCount, datatime, operator, order_items, removed_items, coments)"
+        final String sql = "INSERT INTO orders(dayId, sum, cookCount, datatime,"
+                + " operator, order_items, removed_items, coments)"
                 + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager
@@ -155,7 +156,6 @@ public class OrderUtils {
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(sql);
-
             pstatement.setTimestamp(1, new Timestamp(start.getTime()));
             pstatement.setTimestamp(2, new Timestamp(end.getTime()));
             pstatement.setString(3, info);
@@ -191,7 +191,9 @@ public class OrderUtils {
     }
 
     public static void updateTable(Order order, User user, int activeTable) {
-        final String SQL = "UPDATE tables set dayId=?, sum=?, cookCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";
+        final String SQL = "UPDATE tables set dayId=?, sum=?, cookCount=?,"
+                + " datatime=?, operator=?, order_items=?,"
+                + " removed_items=? where Id = ?";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -222,7 +224,9 @@ public class OrderUtils {
     }
 
     public static void fillTableById(int activeTable) {
-        final String SQL = "UPDATE tables set dayId=?, sum=?,  cookCount=?, datatime=?, operator=?, order_items=?, removed_items=? where Id = ?";
+        final String SQL = "UPDATE tables set dayId=?, sum=?,  cookCount=?,"
+                + " datatime=?, operator=?, order_items=?,"
+                + " removed_items=? where Id = ?";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -231,7 +235,6 @@ public class OrderUtils {
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);
-
             pstatement.setInt(1, 0);
             pstatement.setInt(2, 0);
             pstatement.setInt(3, 0);
@@ -282,7 +285,8 @@ public class OrderUtils {
     }
 
     public static int getDaySum(int dayOrderCount) {
-        final String SQL = "select SUM(sum) from (SELECT * FROM orders order by id desc limit ?) as daysum";
+        final String SQL = "select SUM(sum) from "
+                + "(SELECT * FROM orders order by id desc limit ?) as daysum";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getDaySum"
@@ -305,7 +309,8 @@ public class OrderUtils {
 
     ///TEST
     public static int getAllSumBefore(Timestamp time) {
-        final String SQL = "select SUM(sum) from orders where (operator != '" + userList.get(5).getName() + "'  "
+        final String SQL = "select SUM(sum) from orders where "
+                + "(operator != '" + userList.get(5).getName() + "'  "
                 + "OR (operator = '" + userList.get(5).getName() + "' AND sum < 0)"
                 + "OR datatime < '2015-11-17 10:40:00'"
                 + ")"
@@ -331,7 +336,9 @@ public class OrderUtils {
     }
 
     public static int getAllBarmenSumBetween(Timestamp start, Timestamp end) {
-        final String SQL = "select SUM(sum) from orders where sum > 0 AND datatime >= '" + start + "' AND datatime <= '" + end + "'"
+        final String SQL = "select SUM(sum) from orders where sum > 0 "
+                + "AND datatime >= '" + start + "' "
+                + "AND datatime <= '" + end + "'"
                 + "AND operator != '" + userList.get(5).getName() + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -354,7 +361,9 @@ public class OrderUtils {
     }
 
     public static int getAllRemovedSumBetween(Timestamp start, Timestamp end) {
-        final String SQL = "select SUM(sum) from orders where sum < 0 AND datatime >= '" + start + "' AND datatime <= '" + end + "'";
+        final String SQL = "select SUM(sum) from orders where sum < 0 "
+                + "AND datatime >= '" + start + "' "
+                + "AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getAllRemovedSumBetween"
@@ -376,7 +385,9 @@ public class OrderUtils {
     }
 
     public static int getAllCookCountBetween(Timestamp start, Timestamp end) {
-        final String SQL = "select SUM(cookCount) from orders where sum > 0 AND datatime >= '" + start + "' AND datatime <= '" + end + "'";
+        final String SQL = "select SUM(cookCount) from orders where sum > 0 "
+                + "AND datatime >= '" + start + "' "
+                + "AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! getAllCookCountBetween"
@@ -398,8 +409,8 @@ public class OrderUtils {
     }
 
     public static int getDayOrdersCount() {
-        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + DAY_START_TIME + "' "
-                //                + "AND  operator != '" + userList.get(5).getName() + "'"
+        final String SQL = "SELECT COUNT(*) FROM orders "
+                + "where datatime >  '" + DAY_START_TIME + "' "
                 + "AND sum > 0";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

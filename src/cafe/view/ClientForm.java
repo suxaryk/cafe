@@ -48,13 +48,12 @@ public class ClientForm extends javax.swing.JFrame {
     public ClientForm() {
         initComponents();
 //        initServer();
-        
+
         initEnabledComponents();
 //        testCafeConnection();
         MainForm.initBDmenu();
         UsersUtils.readAllUsers();
-        
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -784,13 +783,12 @@ public class ClientForm extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1292, 782));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-    
-    private static void initServer(){
+
+    private static void initServer() {
         JFrame frame = new JFrame();
         String[] servers = {"кафе1", "кафе2", "кафе3"};
         Object value = JOptionPane.showInputDialog(frame,
-                "Виберіть кафе для підключення",              
+                "Виберіть кафе для підключення",
                 "Вибір бази данних",
                 JOptionPane.YES_NO_OPTION,
                 null,
@@ -799,47 +797,48 @@ public class ClientForm extends javax.swing.JFrame {
         int index = employees.indexOf(value);
 
         if (value != null) {
-          
+
         }
-        
+
     }
-    private void initEnabledComponents(){        
-        
-            jTable1.setEnabled(false);
-            jComboBox2.setEnabled(false);
-            jButton39.setBackground(GREEN);
-            
-            
+
+    private void initEnabledComponents() {
+
+        jTable1.setEnabled(false);
+        jComboBox2.setEnabled(false);
+        jButton39.setBackground(GREEN);
+
         try {
-            setColumnRender(jTable6.getColumnModel().getColumn(2));          
+            setColumnRender(jTable6.getColumnModel().getColumn(2));
         } catch (ParseException ex) {
             Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void getUsersStatistics(){             
+
+    private void getUsersStatistics() {
         for (int i = 0; i < LoginForm.userList.size(); i++) {
-            userList.get(i).setKasa(getUserKasa(startDate, endDate, i)); 
+            userList.get(i).setKasa(getUserKasa(startDate, endDate, i));
             userList.get(i).setDishCount(getUserDishCount(startDate, endDate, i));
-//            OrderUtils.getUserDishCount(startDate, endDate, i);   
-        }        
-    }   
-    public  void testCafeConnection(){
+        }
+    }
+
+    public void testCafeConnection() {
         chooseServer(jComboBox1.getSelectedIndex());
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-            
+
             System.out.println(!connection.isClosed() ? "DB connected to " + URL
                     : "Error DB connecting");
 
         } catch (SQLException e) {
             System.out.println("Connection Failed! Try connect to DB again");
             jLabel12.setText("Помилка підключення \n до бази кафе");
-            
+
         } catch (Exception e) {
 
         }
     }
-    
+
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
 //        testCafeConnection();
         jTable1.setEnabled(true);
@@ -850,26 +849,26 @@ public class ClientForm extends javax.swing.JFrame {
             orders.clear();
             orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
             System.out.println("orders size " + orders.size());
-            refreshOrderTable(jTable1, orders);            
-        } finally{
-            jProgressBar1.setIndeterminate(false);          
-        }               
-        getStorageTable();        
-       
-       jButton2.setEnabled(true);
-       jButton39.setEnabled(true);
-       refreshBarmensTable();     
-       refreshRemovedIngTable();
+            refreshOrderTable(jTable1, orders);
+        } finally {
+            jProgressBar1.setIndeterminate(false);
+        }
+        getStorageTable();
+
+        jButton2.setEnabled(true);
+        jButton39.setEnabled(true);
+        refreshBarmensTable();
+        refreshRemovedIngTable();
         getDishes();
         getEmployeeKeyMoney();
         getInkass();
-       
-         
+
+
     }//GEN-LAST:event_getAllOrders
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         activeOrder = jTable1.getSelectedRow();
-        getRemovedDishes(null);        
+        getRemovedDishes(null);
     }//GEN-LAST:event_jTable1MousePressed
 
     private void getRemovedDishes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getRemovedDishes
@@ -891,7 +890,7 @@ public class ClientForm extends javax.swing.JFrame {
     private void showEmployeeShedule(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showEmployeeShedule
         EmployeeDate = new java.sql.Timestamp((jXDatePicker3.getDate().getTime()));
         EmployeeUtils.getEmployeeTime(EmployeeDate);
-        refreshEmployeeTable();             
+        refreshEmployeeTable();
     }//GEN-LAST:event_showEmployeeShedule
 
     private void chooseCafe(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCafe
@@ -903,8 +902,8 @@ public class ClientForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MousePressed
 
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
-        StorageUtils.readStorage();  
-        setSort(jComboBox7, jTable6);       
+        StorageUtils.readStorage();
+        setSort(jComboBox7, jTable6);
         MainForm.addIngCountToStorage(jTable6);
         StorageUtils.readStorage();
         setSort(jComboBox7, jTable6);
@@ -920,26 +919,25 @@ public class ClientForm extends javax.swing.JFrame {
     private void changeOrderedDishSort(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeOrderedDishSort
         setSort(jComboBox8, jTable7);
         sortListOfOrderItems(orderedDishes, jComboBox8.getSelectedIndex());
-        refreshDishesTable();   
+        refreshDishesTable();
     }//GEN-LAST:event_changeOrderedDishSort
 
-    
-    private void getStorageTable(){        
+    private void getStorageTable() {
         StorageUtils.readStorage();
-    
+
         setSort(jComboBox7, jTable6);
-        showCalcTable(jTable6);  
+        showCalcTable(jTable6);
     }
-    private void getDishes(){  
+
+    private void getDishes() {
         orderedDishes.clear();
-        orderedDishes.addAll(getOrderedDishes(startDate, endDate));  
-        sortListOfOrderItems(orderedDishes, jComboBox8.getSelectedIndex()); 
+        orderedDishes.addAll(getOrderedDishes(startDate, endDate));
+        sortListOfOrderItems(orderedDishes, jComboBox8.getSelectedIndex());
         refreshDishesTable();
-        
 
     }
-    
-    private void refreshDishesTable(){
+
+    private void refreshDishesTable() {
         DefaultTableModel model = (DefaultTableModel) jTable7.getModel();
         model.setRowCount(0);
         for (OrderItem item : orderedDishes) {
@@ -949,29 +947,30 @@ public class ClientForm extends javax.swing.JFrame {
             });
         }
     }
-    
-    private void getEmployeeKeyMoney(){
+
+    private void getEmployeeKeyMoney() {
         EmployeeUtils.readAllEmployees();
-        System.out.println("employee size " + employees.size());    
+        System.out.println("employee size " + employees.size());
         for (Employee employee : employees) {
             employee.setKeyMoney(getSumKeyMoneyForUserBetween(startDate, endDate, employee.getName()));
         }
         refresEmployeeKeyMoneyTable();
-        
+
     }
-    
-    private void refresEmployeeKeyMoneyTable(){
-        DefaultTableModel model = (DefaultTableModel) jTable8.getModel(); 
+
+    private void refresEmployeeKeyMoneyTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable8.getModel();
         model.setRowCount(0);
-         for (Employee employee : employees) {
-                model.addRow(new Object[]{
-                    employee.getName(),
-                    employee.getKeyMoney()
-                        
-                });       
-            }        
+        for (Employee employee : employees) {
+            model.addRow(new Object[]{
+                employee.getName(),
+                employee.getKeyMoney()
+
+            });
+        }
     }
-    private void getInkass(){
+
+    private void getInkass() {
         inkassOrders.clear();
         inkassOrders.addAll(OrderUtils.getInkassOrders());
         DefaultTableModel model = (DefaultTableModel) jTable9.getModel();
@@ -981,70 +980,73 @@ public class ClientForm extends javax.swing.JFrame {
                 order.getUser(),
                 order.getComent(),
                 order.getOrderSum()
-                
-            });            
+
+            });
         }
-        
+
     }
-    
-    private void refreshEmployeeTable(){
+
+    private void refreshEmployeeTable() {
 //        SimpleDateFormat format1 = new SimpleDateFormat("HH:mm:ss");
-        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();       
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
         for (Employee item : employees) {
-            model.addRow(new Object[]{                          
+            model.addRow(new Object[]{
                 item.getName(),
-               item.getStartTime(),
-//                format1.format(item.getStartTime()),
-               item.getEndTime()
+                item.getStartTime(),
+                //                format1.format(item.getStartTime()),
+                item.getEndTime()
 //                format1.format(item.getEndTime())
-            });
-        }              
-    }
-    private void refreshRecipeTable(int id){
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();       
-        model.setRowCount(0);
-        for (OrderItem item : orders.get(id).getItems()) {
-            model.addRow(new Object[]{              
-                item.getDish().getTitle(),
-                item.getCount(),
-                item.getDish().getPrice(),                
-                item.getSum()                
-            });
-        }              
-    }
-    private void refreshRemoveRecipeTable(int id){
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();       
-        model.setRowCount(0);
-        for (OrderItem item : orders.get(id).getRemovedItems()) {
-            model.addRow(new Object[]{              
-                item.getDish().getTitle(),                
-                item.getCount(),
-                item.getDish().getPrice(),
-                item.getSum()                
             });
         }
     }
-    
-    private void refreshBarmensTable(){
+
+    private void refreshRecipeTable(int id) {
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        for (OrderItem item : orders.get(id).getItems()) {
+            model.addRow(new Object[]{
+                item.getDish().getTitle(),
+                item.getCount(),
+                item.getDish().getPrice(),
+                item.getSum()
+            });
+        }
+    }
+
+    private void refreshRemoveRecipeTable(int id) {
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        for (OrderItem item : orders.get(id).getRemovedItems()) {
+            model.addRow(new Object[]{
+                item.getDish().getTitle(),
+                item.getCount(),
+                item.getDish().getPrice(),
+                item.getSum()
+            });
+        }
+    }
+
+    private void refreshBarmensTable() {
         getUsersStatistics();
         DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
         model.setRowCount(0);
-        
+
         for (int i = 0; i < LoginForm.userList.size(); i++) {
             model.addRow(new Object[]{
                 LoginForm.userList.get(i).getName(),
-                LoginForm.userList.get(i).getKasa()               
-            });            
+                LoginForm.userList.get(i).getKasa()
+            });
         }
         jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
-        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));  
-        jLabel13.setText(String.valueOf(OrderUtils.getAllRemovedSumBetween(startDate, endDate)));          
-        jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));          
-        
+        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));
+        jLabel13.setText(String.valueOf(OrderUtils.getAllRemovedSumBetween(startDate, endDate)));
+        jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));
+
     }
-    private void refreshRemovedIngTable(){
-       
+
+    private void refreshRemovedIngTable() {
+
         DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
         model.setRowCount(0);
         List<Ingredient> removedIng = new ArrayList<>();
@@ -1053,22 +1055,22 @@ public class ClientForm extends javax.swing.JFrame {
             ing.setTitle(getIngredientById(ing.getId()).getTitle());
         }
         //fix getIngById
-      
-        sortListOfIngredients(removedIng, 2);      
+
+        sortListOfIngredients(removedIng, 2);
         for (Ingredient ing : removedIng) {
             model.addRow(new Object[]{
                 ing.getId(),
                 ing.getTitle(),
                 ing.getCount()
-            });            
+            });
         }
-        
+
         getStorageTable();
 //        jLabel9.setText(String.valueOf(OrderUtils.getAllSumBetween(startDate, endDate)));
 //        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));             
-        
+
     }
-    
+
     private void refreshOrderTable(JTable table, List<Order> list) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
@@ -1080,10 +1082,10 @@ public class ClientForm extends javax.swing.JFrame {
                 order.getDayId(),
                 order.getUser(),
                 order.getOrderSum(),
-                dateFormat.format(order.getDate()),                
+                dateFormat.format(order.getDate()),
                 order.getCookCount(),
                 order.getRemovedItems().size()
-            });          
+            });
         }
     }
 
@@ -1092,7 +1094,7 @@ public class ClientForm extends javax.swing.JFrame {
         clientForm.setVisible(true);
         clientForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-    
+
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();

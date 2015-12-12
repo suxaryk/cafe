@@ -12,7 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class DishUtils {
 
 //    public static String URL = "jdbc:mysql://server1cafe.ddns.net:3306/luckyroger";
@@ -20,16 +19,15 @@ public class DishUtils {
     public static String USERNAME = "root";
 //    public static String PASSWORD = "dbiytdbq18";
     public static String PASSWORD = "root";
-    
-    //client
 
+    //client
 //    public static final String URL1 = "jdbc:mysql://db4free.net:3306/luckyroger";
 //    public static final String USERNAME1 = "luckyroger";
 //    public static final String PASSWORD1 = "luckyroger";
     public static final String URL2 = "jdbc:mysql://suharina.ddns.net:3306/luckyroger";
     public static final String USERNAME2 = "root";
     public static final String PASSWORD2 = "dbiytdbq18";
-    
+
     private static final ArrayList<String> sqlSelectList = new ArrayList<>();
     public static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
     private static final ArrayList<String> sqlInsertList = new ArrayList<>();
@@ -75,7 +73,7 @@ public class DishUtils {
         sqlSelectList.add("select * from bear");
         sqlSelectList.add("select * from alcohol");
         sqlSelectList.add("select * from not_alcohol");
-        
+
         sqlSelectByIdList.add("select * from firstdishes WHERE Id = ?");
         sqlSelectByIdList.add("select * from salats WHERE Id = ?");
         sqlSelectByIdList.add("select * from rogerdishes WHERE Id = ?");
@@ -146,46 +144,16 @@ public class DishUtils {
         sqlUpdatePriceList.add("UPDATE alcohol SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE not_alcohol SET price = ? WHERE Id = ?");
     }
-    
-    public static void chooseServer(int cafeId){
+
+    public static void chooseServer(int cafeId) {
         if (cafeId == 0) {
-            URL = "jdbc:mysql://server1cafe.ddns.net:3306/luckyroger";                 
-        }else if (cafeId == 1) {
+            URL = "jdbc:mysql://server1cafe.ddns.net:3306/luckyroger";
+        } else if (cafeId == 1) {
             URL = "jdbc:mysql://server2cafe.ddns.net:3306/luckyroger";
-        }else if (cafeId == 2) {
+        } else if (cafeId == 2) {
             URL = "jdbc:mysql://server3cafe.ddns.net:3306/luckyroger";
         }
-        
-    }
-    //unused
-    public static Dish getDishById(int catId, int dishId){
-        for (int i = 0; i < sqlSelectByIdList.size(); i++) {
-            if (i == catId) {
-                System.out.println("catId " + catId);
-                System.out.println("getDishById");
-                try (Connection connection = DriverManager
-                        .getConnection(URL, USERNAME, PASSWORD)) {
-                    PreparedStatement pst = connection.prepareStatement(sqlSelectByIdList.get(catId));
-                    pst.setInt(1, dishId);               
-                    Dish dish = new Dish();
-                    try (ResultSet rs = pst.executeQuery()) {
-                        while (rs.next()) {                            
-                            dish.setDbID(rs.getInt("Id"));
-                            dish.setTitle(rs.getString("title"));
-                            dish.setPrice(rs.getInt("price"));
-                            dish.setCook(rs.getBoolean("isCook"));
-                                dish.setRecipe(JSONUtils.getRecipeFromJSON(rs.getString("ingredients")));
-                       
-                        }
-                    }
-                    return dish;
-                    
-                } catch (SQLException e) {
-                    System.out.println("Connection Failed! Check output console - getDishById");
-                }                  
-            }         
-        }
-        return null;
+
     }
 
     public static java.sql.Timestamp getCurrentTimeStamp() {
@@ -201,23 +169,22 @@ public class DishUtils {
             Statement statement = connection.createStatement();
             for (int i = 0; i < sqlSelectList.size(); i++) {
                 try (ResultSet rs = statement.executeQuery(sqlSelectList.get(i))) {
-                        while (rs.next()) {
-                            menu.get(i).
-                                    getDishes().add(
-                                            new Dish(Integer.parseInt(
-                                                            rs.getString("Id")),
-                                                    rs.getString("title"),
-                                                    rs.getInt("price"),
-                                                    rs.getBoolean("isCook"),
-                                                    JSONUtils.getRecipeFromJSON(
-                                                            rs.getString("ingredients"))
-                                            ));
-                        }
+                    while (rs.next()) {
+                        menu.get(i).
+                                getDishes().add(
+                                        new Dish(Integer.parseInt(
+                                                        rs.getString("Id")),
+                                                rs.getString("title"),
+                                                rs.getInt("price"),
+                                                rs.getBoolean("isCook"),
+                                                JSONUtils.getRecipeFromJSON(
+                                                        rs.getString("ingredients"))
+                                        ));
+                    }
                 }
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - readDBmenu");
-//            System.out.println("error in " + menu.get(i));
         }
     }
 
@@ -230,18 +197,17 @@ public class DishUtils {
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(sqlSelectList.get(activeCat))) {
-                    while (rs.next()) {
-                        menu.get(activeCat).getDishes().add(
-                                new Dish(Integer.parseInt(
-                                                rs.getString("Id")),
-                                        rs.getString("title"),
-                                        rs.getInt("price"),
-                                        rs.getBoolean("isCook"),
-                                        JSONUtils.getRecipeFromJSON(
-                                                rs.getString("ingredients"))
-                                ));
-                    }
-//                }
+                while (rs.next()) {
+                    menu.get(activeCat).getDishes().add(
+                            new Dish(Integer.parseInt(
+                                            rs.getString("Id")),
+                                    rs.getString("title"),
+                                    rs.getInt("price"),
+                                    rs.getBoolean("isCook"),
+                                    JSONUtils.getRecipeFromJSON(
+                                            rs.getString("ingredients"))
+                            ));
+                }
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - readDBCategoryById");
@@ -254,7 +220,7 @@ public class DishUtils {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
                     System.out.println(!connection.isClosed() ? "DB connected! addDish"
-                            : "Error DB connecting"); 
+                            : "Error DB connecting");
                     PreparedStatement pstatement = connection.prepareStatement(sqlInsertList.get(i));
                     pstatement.setString(1, dish.getTitle());
                     pstatement.setInt(2, dish.getPrice());

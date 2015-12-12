@@ -7,15 +7,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- * @author suxarina
- */
 public class Order {
-    
+
     private int id;
     private int dayId;
-    private int cookCount;    
+    private int cookCount;
     private int orderSum;
     private boolean payed;
     private boolean printed;
@@ -31,33 +27,15 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
-    }    
-    
-    public  int getDayId() {
+    }
+
+    public int getDayId() {
         return dayId;
     }
-//    public  void incDayId() {
-//         dayId++;
-//    }
 
-    public  void setDayId(int dayId) {
+    public void setDayId(int dayId) {
         this.dayId = dayId;
     }
-    
-    
-//    public int calcOrderSum1() {
-//        int sum = 0;
-//        if (!items.isEmpty()) {
-//            for (OrderItem orderItem : items) {
-//                sum += orderItem.getSum();
-//            }
-//        }
-//        if (orderSum < 0) {
-//            return orderSum;
-//        } else {
-//            return orderSum = sum;
-//        }
-//    }
 
     public int getOrderSum() {
         int sum = 0;
@@ -70,22 +48,20 @@ public class Order {
             return orderSum;
         } else {
             return orderSum = sum;
-        }    
-    } 
-
-    
+        }
+    }
 
     public int getCookCount() {
         if (cookCount != 0) {
             return cookCount;
-        }else{
+        } else {
             int count = 0;
             for (OrderItem orderItem : items) {
-                count += orderItem.getCookCount();                
+                count += orderItem.getCookCount();
             }
             return count;
-        }       
-                
+        }
+
     }
 
     public void setCookCount(int cookCount) {
@@ -151,29 +127,23 @@ public class Order {
     public void setPrinted(boolean printed) {
         this.printed = printed;
     }
-    
-    
-    
-    
-      
-    
-    
+
     public String getJSONItems() {
         if (!items.isEmpty()) {
-                return JSONUtils.convertOrderToJSON(items);
+            return JSONUtils.convertOrderToJSON(items);
         } else {
             return "";
-        }        
+        }
     }
 
     public String getJSONRemovedItems() {
         if (!items.isEmpty()) {
             return JSONUtils.convertOrderToJSON(removeditems);
-        }else {
+        } else {
             return "";
-        }    
+        }
     }
-    ///need to refactor
+
     public Map<Integer, Double> getOrderIngredients() {
         Map<Integer, Double> diffMap = new HashMap<>();
         for (Ingredient ingredient : MainForm.storageList) {

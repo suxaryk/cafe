@@ -1,8 +1,7 @@
-
 package cafe.model;
 
-
 public class Check {
+
     private static String title;
     private static String adress;
     private static String passWifi;
@@ -10,15 +9,13 @@ public class Check {
 
     public Check() {
     }
+
     public Check(String title, String adress, String passWifi, String wish) {
         Check.title = title;
         Check.adress = adress;
         Check.passWifi = passWifi;
         Check.wish = wish;
     }
-    
-
-    
 
     public static String getTitle() {
         return title;
@@ -51,8 +48,5 @@ public class Check {
     public static void setWish(final String wish) {
         Check.wish = wish;
     }
-    
-    
-    
-    
+
 }

@@ -1,6 +1,5 @@
 package cafe.view;
 
-
 import cafe.Utils.db.UsersUtils;
 import cafe.model.User;
 import static cafe.view.MainForm.mainForm;
@@ -14,25 +13,18 @@ import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-/**
- *
- * @author suxarina
- */
 public class LoginForm extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginForm
      */
     public LoginForm() {
-        initComponents();        
+        initComponents();
         getDate();
         getUsers();
 
     }
 
-   
-
- 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -234,11 +226,12 @@ public class LoginForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void getUsers(){
-        UsersUtils.readAllUsers();        
+    public void getUsers() {
+        UsersUtils.readAllUsers();
         jComboBox1.setModel(new DefaultComboBoxModel(userList.toArray()));
-                
+
     }
+
     public void getDate() {
         Locale locale = new Locale("uk", "UA");
         DateFormat dateFormat = new SimpleDateFormat("EEEE", locale);
@@ -252,7 +245,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     }
     private void enterToSystem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enterToSystem
-        jLabel1.setText("");        
+        jLabel1.setText("");
         String pass = new String(jPasswordField1.getPassword());
         jPasswordField1.setText("");
         if (pass.equals("пароль") || pass.equals("")) {
@@ -260,11 +253,11 @@ public class LoginForm extends javax.swing.JFrame {
 
         } else if (userList.get(jComboBox1.getSelectedIndex())
                 .getPass() == Integer.parseInt(pass)) {
-            User.active = jComboBox1.getSelectedIndex();            
-            this.setVisible(false);            
-            setStartUserTime(); 
+            User.active = jComboBox1.getSelectedIndex();
+            this.setVisible(false);
+            setStartUserTime();
             mainForm.setVisible(true);
-            mainForm.setEnabled(true);           
+            mainForm.setEnabled(true);
         } else {
             jLabel1.setText("Невірний пароль!");
         }
@@ -275,11 +268,11 @@ public class LoginForm extends javax.swing.JFrame {
     private void NumberPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberPressed
         JButton myButton = (JButton) evt.getSource();
         jPasswordField1.setText("" + new String(jPasswordField1.getPassword())
-                                                        + myButton.getText());
+                + myButton.getText());
     }//GEN-LAST:event_NumberPressed
 
     private void clearDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDigit
-       String pass = new String(jPasswordField1.getPassword());
+        String pass = new String(jPasswordField1.getPassword());
         if (pass.length() > 0) {
             jPasswordField1.setText("" + pass.substring(0, pass.length() - 1));
         }
@@ -293,37 +286,14 @@ public class LoginForm extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginForm().setVisible(true);
             }
         });
     }
-    // private boolean sw = true;
+
     public static List<User> userList = new ArrayList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

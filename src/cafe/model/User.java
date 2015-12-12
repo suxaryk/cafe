@@ -14,30 +14,27 @@ import java.util.List;
  * @author suxarina
  */
 public class User {
-    
+
     public int dbId;
     public String name;
-    private int pass;    
-    private int kasa;   
-    public int keyMoney;       
-    private int dishCount; 
+    private int pass;
+    private int kasa;
+    public int keyMoney;
+    private int dishCount;
     public Date startTime;
     public Date endTime;
     private List<Ingredient> dayRemovedProducts = new LinkedList<>();
-    public static int active = -1;    
-    
+    public static int active = -1;
+
     public User() {
     }
-    
-    
 
-    
     public User(int dbId, String name, int pass) {
         this.name = name;
         this.pass = pass;
         this.dbId = dbId;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -60,7 +57,7 @@ public class User {
 
     public void setDbId(int dbId) {
         this.dbId = dbId;
-    }   
+    }
 
     public int getKasa() {
         return kasa;
@@ -109,21 +106,10 @@ public class User {
     public void setKeyMoney(int keyMoney) {
         this.keyMoney = keyMoney;
     }
-    
-    
-    
-    
-    
-    
-    
-    
 
     @Override
     public String toString() {
         return name;
     }
-    
-    
-    
 
 }

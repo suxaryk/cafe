@@ -1,9 +1,10 @@
 package cafe.Utils.db;
 
-import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
-import static cafe.Utils.db.Dish.DishUtils.URL;
-import static cafe.Utils.db.Dish.DishUtils.USERNAME;
-import static cafe.Utils.db.Dish.DishUtils.getCurrentTimeStamp;
+
+import static cafe.Utils.db.DbConnect.PASSWORD;
+import static cafe.Utils.db.DbConnect.URL;
+import static cafe.Utils.db.DbConnect.USERNAME;
+import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
 import cafe.model.Employee;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;

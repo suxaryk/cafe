@@ -1,6 +1,6 @@
 package cafe.view;
 
-import cafe.Utils.db.Dish.DishUtils;
+import cafe.Utils.db.DishUtils;
 import cafe.model.Ingredient;
 import static cafe.view.MainForm.activeCat;
 import static cafe.view.MainForm.activeDishes;

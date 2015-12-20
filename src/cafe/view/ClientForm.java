@@ -1,9 +1,9 @@
 package cafe.view;
 
-import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
-import static cafe.Utils.db.Dish.DishUtils.URL;
-import static cafe.Utils.db.Dish.DishUtils.USERNAME;
-import static cafe.Utils.db.Dish.DishUtils.chooseServer;
+import static cafe.Utils.db.DbConnect.PASSWORD;
+import static cafe.Utils.db.DbConnect.URL;
+import static cafe.Utils.db.DbConnect.USERNAME;
+import static cafe.Utils.db.DbConnect.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getSumKeyMoneyForUserBetween;

@@ -1,6 +1,6 @@
 package cafe.Utils.json;
 
-import cafe.Utils.db.Dish.RecepiesUtils;
+import cafe.Utils.db.RecepiesUtils;
 import cafe.model.Dish;
 import cafe.model.Ingredient;
 import cafe.model.OrderItem;

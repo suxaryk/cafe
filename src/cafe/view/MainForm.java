@@ -5,10 +5,10 @@ import cafe.Utils.db.OrderUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Order;
-import cafe.Utils.db.Dish.DishUtils;
-import static cafe.Utils.db.Dish.DishUtils.PASSWORD;
-import static cafe.Utils.db.Dish.DishUtils.USERNAME;
-import cafe.Utils.db.Dish.RecepiesUtils;
+import cafe.Utils.db.DishUtils;
+import static cafe.Utils.db.DbConnect.PASSWORD;
+import static cafe.Utils.db.DbConnect.USERNAME;
+import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isDayCountStarted;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
@@ -80,7 +80,7 @@ public class MainForm extends javax.swing.JFrame {
 
     public MainForm() {
         initComponents();
-        initBDmenu();
+        
         StorageUtils.readStorage();
         CheckUtils.readCheck();
         initIcons();
@@ -93,6 +93,7 @@ public class MainForm extends javax.swing.JFrame {
         initCalculationTable();
         loadTables();
         initStartOrderId();
+        initBDmenu();
 
     }
 
@@ -188,6 +189,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         UsersPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -1405,6 +1407,12 @@ public class MainForm extends javax.swing.JFrame {
         jLabel10.setText("Чек № ");
         OrderPanel.add(jLabel10);
         jLabel10.setBounds(250, 0, 100, 30);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel13.setText("В КАСУ НЕ РАХУЄ");
+        OrderPanel.add(jLabel13);
+        jLabel13.setBounds(120, 540, 280, 30);
 
         getContentPane().add(OrderPanel);
         OrderPanel.setBounds(710, 100, 500, 680);
@@ -2830,6 +2838,7 @@ public class MainForm extends javax.swing.JFrame {
             jTextField6.setVisible(true);
             jButton21.setVisible(true);
             jCheckBox3.setVisible(true);
+            jLabel13.setVisible(true);
 
         } else {
             model.addColumn("Початок");
@@ -3888,6 +3897,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane7.setVisible(false);
 
         jLabel1.setVisible(false);
+        jLabel13.setVisible(false);
         jTable4.setVisible(false);
         jScrollPane5.setVisible(false);
         jTextField6.setVisible(false);
@@ -4418,6 +4428,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane7.setVisible(false);
 
         jLabel1.setVisible(false);
+        jLabel13.setVisible(false);
         jScrollPane5.setVisible(false);
         jTable4.setVisible(false);
         jTextField6.setVisible(false);
@@ -4609,6 +4620,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;

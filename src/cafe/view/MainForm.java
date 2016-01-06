@@ -36,6 +36,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -3189,13 +3190,19 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private static void doDBDump() {
-        DateFormat dateFormat = new SimpleDateFormat(
-                "ddMMyyyy_HH-mm");
-        String command = "cmd /c  mysqldump -u" + USERNAME + " -p" + PASSWORD + " "
-                + "luckyroger > C:/dump/" + dateFormat.format(new Date()) + "_dump.sql";
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-        } catch (IOException ex) {
+        Date currentDate = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+        if (dayOfWeek == 2) {
+            DateFormat dateFormat = new SimpleDateFormat(
+                    "ddMMyyyy_HH-mm");
+            String command = "cmd /c  mysqldump -u" + USERNAME + " -p" + PASSWORD + " "
+                    + "luckyroger > C:/dump/" + dateFormat.format(new Date()) + "_dump.sql";
+            try {
+                Process process = Runtime.getRuntime().exec(command);
+            } catch (IOException ex) {
+            }
         }
     }
 

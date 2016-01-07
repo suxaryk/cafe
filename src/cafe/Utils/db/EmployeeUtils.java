@@ -229,13 +229,15 @@ public class EmployeeUtils {
     }
 
     public static void addTimeOut(User employee) {
-        final String SQL = "UPDATE employee_time SET date_out = ? WHERE name = ?";
+        final String SQL = "UPDATE employee_time "
+                + "SET date_out = current_timestamp()"
+                + "WHERE name = ?"
+                + "AND date(date_in) = date(current_timestamp())";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.setTimestamp(1, getCurrentTimeStamp());
-            pstatement.setString(2, employee.getName());
+            PreparedStatement pstatement = connection.prepareStatement(SQL);          
+            pstatement.setString(1, employee.getName());
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("A new Time was added successfully!");

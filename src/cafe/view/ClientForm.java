@@ -719,7 +719,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel5.add(jScrollPane8);
-        jScrollPane8.setBounds(0, 260, 640, 170);
+        jScrollPane8.setBounds(0, 260, 790, 170);
 
         jLabel20.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel20.setText("Аванс");
@@ -729,23 +729,23 @@ public class ClientForm extends javax.swing.JFrame {
         jTable9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable9.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Ім'я", "Призначення", "Сума"
+                "Ім'я", "Призначення", "Дата", "Сума"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -762,13 +762,16 @@ public class ClientForm extends javax.swing.JFrame {
             jTable9.getColumnModel().getColumn(1).setMinWidth(300);
             jTable9.getColumnModel().getColumn(1).setPreferredWidth(300);
             jTable9.getColumnModel().getColumn(1).setMaxWidth(300);
-            jTable9.getColumnModel().getColumn(2).setMinWidth(150);
-            jTable9.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTable9.getColumnModel().getColumn(2).setMaxWidth(150);
+            jTable9.getColumnModel().getColumn(2).setMinWidth(200);
+            jTable9.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable9.getColumnModel().getColumn(2).setMaxWidth(200);
+            jTable9.getColumnModel().getColumn(3).setMinWidth(150);
+            jTable9.getColumnModel().getColumn(3).setPreferredWidth(150);
+            jTable9.getColumnModel().getColumn(3).setMaxWidth(150);
         }
 
         jPanel5.add(jScrollPane9);
-        jScrollPane9.setBounds(0, 500, 640, 170);
+        jScrollPane9.setBounds(0, 500, 790, 170);
 
         jLabel21.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel21.setText("Інкасація");
@@ -979,8 +982,8 @@ public class ClientForm extends javax.swing.JFrame {
             model.addRow(new Object[]{
                 order.getUser(),
                 order.getComent(),
+                order.getDate(),
                 order.getOrderSum()
-
             });
         }
 

@@ -453,8 +453,10 @@ public class OrderUtils {
         }
     }
 
-    public static List<Order> getInkassOrders() {
-        final String SQL = "select * from orders where coments != ''";
+    public static List<Order> getInkassOrders(Timestamp start, Timestamp end) {
+        final String SQL = "select * from orders where coments != ''" 
+                + "AND datatime >= '" + start + "' "
+                + "AND datatime <= '" + end + "'";
         List<Order> inkassOrders = new ArrayList<>();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

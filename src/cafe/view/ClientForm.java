@@ -975,7 +975,7 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void getInkass() {
         inkassOrders.clear();
-        inkassOrders.addAll(OrderUtils.getInkassOrders());
+        inkassOrders.addAll(OrderUtils.getInkassOrders(startDate, endDate));
         DefaultTableModel model = (DefaultTableModel) jTable9.getModel();
         model.setRowCount(0);
         for (Order order : inkassOrders) {

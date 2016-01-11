@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author suxarina
  */
 public class DbConnect {
-    //    public static String URL = "jdbc:mysql://server1cafe.ddns.net:3306/luckyroger";
+//        public static String URL = "jdbc:mysql://server1cafe.ddns.net:3306/luckyroger";
 
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String USERNAME = "root";
@@ -32,7 +32,7 @@ public class DbConnect {
     public static final ArrayList<String> sqlUpdatePriceList = new ArrayList<>();
 
     static {
-
+//        chooseServer(0);
         ConnectDb();
         initQueries();
 
@@ -154,7 +154,7 @@ public class DbConnect {
 
     public static void chooseServer(int cafeId) {
         if (cafeId == 0) {
-            URL = "jdbc:mysql://server1cafe.ddns.net:3306/luckyroger";
+            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
         } else if (cafeId == 1) {
             URL = "jdbc:mysql://server2cafe.ddns.net:3306/luckyroger";
         } else if (cafeId == 2) {

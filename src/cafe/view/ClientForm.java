@@ -210,9 +210,9 @@ public class ClientForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(50);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTable1.getColumnModel().getColumn(0).setMinWidth(70);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(70);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(70);
             jTable1.getColumnModel().getColumn(1).setMinWidth(50);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(50);
             jTable1.getColumnModel().getColumn(1).setMaxWidth(50);
@@ -598,7 +598,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel5.add(jScrollPane4);
-        jScrollPane4.setBounds(0, 20, 640, 200);
+        jScrollPane4.setBounds(0, 20, 640, 160);
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel5.setText("Каса по барменах");
@@ -719,12 +719,12 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel5.add(jScrollPane8);
-        jScrollPane8.setBounds(0, 260, 790, 170);
+        jScrollPane8.setBounds(650, 210, 360, 230);
 
         jLabel20.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel20.setText("Аванс");
         jPanel5.add(jLabel20);
-        jLabel20.setBounds(20, 230, 220, 23);
+        jLabel20.setBounds(660, 170, 220, 23);
 
         jTable9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable9.setModel(new javax.swing.table.DefaultTableModel(
@@ -759,9 +759,9 @@ public class ClientForm extends javax.swing.JFrame {
         jTable9.setRowHeight(20);
         jScrollPane9.setViewportView(jTable9);
         if (jTable9.getColumnModel().getColumnCount() > 0) {
-            jTable9.getColumnModel().getColumn(1).setMinWidth(300);
-            jTable9.getColumnModel().getColumn(1).setPreferredWidth(300);
-            jTable9.getColumnModel().getColumn(1).setMaxWidth(300);
+            jTable9.getColumnModel().getColumn(1).setMinWidth(200);
+            jTable9.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jTable9.getColumnModel().getColumn(1).setMaxWidth(200);
             jTable9.getColumnModel().getColumn(2).setMinWidth(200);
             jTable9.getColumnModel().getColumn(2).setPreferredWidth(200);
             jTable9.getColumnModel().getColumn(2).setMaxWidth(200);
@@ -771,12 +771,12 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel5.add(jScrollPane9);
-        jScrollPane9.setBounds(0, 500, 790, 170);
+        jScrollPane9.setBounds(0, 210, 640, 490);
 
         jLabel21.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel21.setText("Інкасація");
         jPanel5.add(jLabel21);
-        jLabel21.setBounds(20, 470, 220, 23);
+        jLabel21.setBounds(10, 180, 220, 23);
 
         jTabbedPane1.addTab("Загальна", jPanel5);
 
@@ -821,7 +821,7 @@ public class ClientForm extends javax.swing.JFrame {
     private void getUsersStatistics() {
         for (int i = 0; i < LoginForm.userList.size(); i++) {
             userList.get(i).setKasa(getUserKasa(startDate, endDate, i));
-            userList.get(i).setDishCount(getUserDishCount(startDate, endDate, i));
+//            userList.get(i).setDishCount(getUserDishCount(startDate, endDate, i));
         }
     }
 

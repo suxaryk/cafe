@@ -491,7 +491,7 @@ public class OrderUtils {
                 + "AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! getAllCookCountBetween"
+            System.out.println(!connection.isClosed() ? "DB connected! getSumKeyMoneyForUser = " + employeeName
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
 
@@ -504,7 +504,7 @@ public class OrderUtils {
             }
             return sum;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getAllCookCountBetween");
+            System.out.println("Connection Failed! Check output console - getSumKeyMoneyForUser = " + employeeName);
             return 0;
         }
     }
@@ -514,7 +514,7 @@ public class OrderUtils {
                 + "datatime > '" + DAY_START_TIME + "' ";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! getAllCookCountBetween"
+            System.out.println(!connection.isClosed() ? "DB connected! getMaxDbDayId"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
 
@@ -527,7 +527,7 @@ public class OrderUtils {
             }
             return max;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getAllCookCountBetween");
+            System.out.println("Connection Failed! Check output console - getMaxDbDayId");
             return 0;
         }
     }

@@ -232,7 +232,7 @@ public class EmployeeUtils {
         final String SQL = "UPDATE employee_time "
                 + "SET date_out = current_timestamp()"
                 + "WHERE name = ?"
-                + "AND date(date_in) = date(current_timestamp())";
+                + "ORDER BY Id DESC limit 1";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 

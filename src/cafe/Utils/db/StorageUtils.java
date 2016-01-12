@@ -51,6 +51,15 @@ public class StorageUtils {
 
     }
 
+    public static String getIngTitleById(int Id) {
+        for (Ingredient ing : MainForm.storageList) {
+            if (ing.getId() == Id) {
+                return ing.getTitle();
+            }
+        }
+        return "";
+    }
+
     public static void addIngredientToDB(Ingredient ingredient) {
         final String SQL = "INSERT INTO storage(title, count) VALUES(?, ?)";
         try (Connection connection = DriverManager

@@ -7,10 +7,9 @@ import static cafe.Utils.db.DbConnect.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getSumKeyMoneyForUserBetween;
-import static cafe.Utils.db.OrderUtils.getUserDishCount;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
 import cafe.Utils.db.StorageUtils;
-import static cafe.Utils.db.StorageUtils.getIngredientById;
+import static cafe.Utils.db.StorageUtils.getIngTitleById;
 import static cafe.Utils.db.StorageUtils.getOrderedDishes;
 import static cafe.Utils.db.StorageUtils.getRemovedIngredients;
 import cafe.Utils.db.UsersUtils;
@@ -541,7 +540,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel4.add(jScrollPane3);
-        jScrollPane3.setBounds(10, 30, 630, 210);
+        jScrollPane3.setBounds(10, 30, 630, 260);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel4.setText("Час роботи працівників");
@@ -719,7 +718,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel5.add(jScrollPane8);
-        jScrollPane8.setBounds(650, 210, 360, 230);
+        jScrollPane8.setBounds(650, 210, 360, 490);
 
         jLabel20.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel20.setText("Аванс");
@@ -821,7 +820,6 @@ public class ClientForm extends javax.swing.JFrame {
     private void getUsersStatistics() {
         for (int i = 0; i < LoginForm.userList.size(); i++) {
             userList.get(i).setKasa(getUserKasa(startDate, endDate, i));
-//            userList.get(i).setDishCount(getUserDishCount(startDate, endDate, i));
         }
     }
 
@@ -1054,8 +1052,8 @@ public class ClientForm extends javax.swing.JFrame {
         model.setRowCount(0);
         List<Ingredient> removedIng = new ArrayList<>();
         removedIng.addAll(getRemovedIngredients(startDate, endDate));
-        for (Ingredient ing : removedIng) {
-            ing.setTitle(getIngredientById(ing.getId()).getTitle());
+        for (Ingredient ing : removedIng) {       
+            ing.setTitle(getIngTitleById(ing.getId()));
         }
         //fix getIngById
 

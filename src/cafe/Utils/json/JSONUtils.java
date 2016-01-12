@@ -75,7 +75,7 @@ public class JSONUtils {
     }
 
     public static ArrayList<OrderItem> convertJSONToOrder(String jsonOrder) {
-        if (!"[]".equals(jsonOrder)) {
+        if (!"".equals(jsonOrder) ) {
             ArrayList<OrderItem> list = new ArrayList<>();
             try {
                 JSONParser parser = new JSONParser();
@@ -92,7 +92,7 @@ public class JSONUtils {
                     list.add(new OrderItem(new Dish(title, price), count, isCook));
                 }
             } catch (ParseException ex) {
-                System.out.println("Error parse =" + Dish.class.getName() + " or it`s inkass order");
+                System.out.println("Error parse , avans  or it`s inkass order");
             }
             return list;
         }

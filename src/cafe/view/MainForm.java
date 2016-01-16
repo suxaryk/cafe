@@ -3161,9 +3161,7 @@ public class MainForm extends javax.swing.JFrame {
                 + "ЗАКРИТТЯ КАСИ\nВиключити програму?", "Закриття каси!",
                 0, JOptionPane.YES_NO_OPTION, null, options, null);
         if (reply == JOptionPane.YES_OPTION) {
-            EmployeeUtils.addTimeOut(userList.get(User.active));
-            //fix
-            doDBDump();
+            EmployeeUtils.addTimeOut(userList.get(User.active));            
             OrderUtils.addDayInfo(DAY_START_TIME, new Date(), dayInfo());
             System.exit(0);
         }
@@ -3227,9 +3225,25 @@ public class MainForm extends javax.swing.JFrame {
             jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
             jList2.setSelectedIndex(jList2.getModel().getSize() - 1);
             getListItem(null);
+            redirectToRefreshCalculation();
         }
     }//GEN-LAST:event_addDish
 
+    public  void redirectToRefreshCalculation(){        
+        JFrame frame = new JFrame();
+        String[] options = new String[2];
+        options[0] = "Так";
+        options[1] = "Ні";
+        int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
+                "Не забудьте ввести калькуляцію в доданій страві\n"
+                + "Ввести калькуляцію зараз?",
+                "Підсказка!",
+                0, JOptionPane.YES_NO_OPTION, null, options, null);
+        if (reply == JOptionPane.YES_OPTION) {
+            refreshCalc(null);
+        } 
+    }
+    
     private void removeDish(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeDish
         System.out.println("selectd index = " + jList2.getSelectedIndex());
         int activeIndex = jList2.getSelectedIndex();
@@ -4320,6 +4334,7 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("3"));
 
         DishUtils.readDBmenu();
+        doDBDump();
 
     }
 

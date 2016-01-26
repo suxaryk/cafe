@@ -32,6 +32,7 @@ public class DbConnect {
     public static final ArrayList<String> sqlUpdatePriceList = new ArrayList<>();
 
     static {
+        //uncoment for stat chooseServer
 //        chooseServer(0);
         ConnectDb();
         initQueries();

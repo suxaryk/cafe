@@ -119,7 +119,7 @@ public class ClientForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Кафе1", "Кафе2", "Кафе3" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Шепетівка", "Староконстянтинів", "Славута" }));
         jComboBox1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,17 +172,16 @@ public class ClientForm extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Long(2), null, "олдлд",  new Integer(4), null,  new Integer(200), null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "№", "№ чеку", "Бармен", "Сума (грн)", "Дата Час", "Кіл.страв", "Кіл. видал"
+                "№", "№ чеку", "Бармен", "Сума (грн)", "Дата Час", "Кіл.", "Видал"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.Long.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
@@ -812,18 +811,21 @@ public class ClientForm extends javax.swing.JFrame {
         }
     }
 
-    public void testCafeConnection() {
-        chooseServer(jComboBox1.getSelectedIndex());
+    public void testCafeConnection() {       
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-
             System.out.println(!connection.isClosed() ? "DB connected to " + URL
                     : "Error DB connecting");
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Try connect to DB again");
-            jLabel12.setText("Помилка підключення \n до бази кафе");
-
+            System.out.println("Connection to DB Failed! ");
+            JFrame frame = new JFrame();
+            int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
+                    "Помилка підключення до бази данних!\nВихід з програми", "ПОМИЛКА!",
+                    0, JOptionPane.YES_NO_OPTION, null, new String[]{"ТАК", "НІ"}, null);
+            if (reply == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
         } catch (Exception e) {
 
         }
@@ -885,6 +887,7 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void chooseCafe(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCafe
         chooseServer(jComboBox1.getSelectedIndex());
+        testCafeConnection();
     }//GEN-LAST:event_chooseCafe
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed

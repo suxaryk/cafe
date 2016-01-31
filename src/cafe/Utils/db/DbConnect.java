@@ -21,8 +21,8 @@ public class DbConnect {
 
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String USERNAME = "root";
-//    public static String PASSWORD = "dbiytdbq18";
-    public static String PASSWORD = "root";
+    public static String PASSWORD = "dbiytdbq18";
+//    public static String PASSWORD = "root";
 
     public static final ArrayList<String> sqlSelectList = new ArrayList<>();
     public static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
@@ -33,7 +33,7 @@ public class DbConnect {
 
     static {
         //uncoment for stat chooseServer
-//        chooseServer(0);
+        chooseServer(0);
         ConnectDb();
         initQueries();
 
@@ -157,9 +157,9 @@ public class DbConnect {
         if (cafeId == 0) {
             URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
         } else if (cafeId == 1) {
-            URL = "jdbc:mysql://server2cafe.ddns.net:3306/luckyroger";
+            URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
         } else if (cafeId == 2) {
-            URL = "jdbc:mysql://server3cafe.ddns.net:3306/luckyroger";
+            URL = "jdbc:mysql://82.207.112.48:3306/luckyroger";
         }
 
     }

@@ -1,5 +1,6 @@
 package cafe.view;
 
+import cafe.Utils.db.DbConnect;
 import static cafe.Utils.db.DbConnect.PASSWORD;
 import static cafe.Utils.db.DbConnect.URL;
 import static cafe.Utils.db.DbConnect.USERNAME;
@@ -37,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -774,21 +776,25 @@ public class ClientForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    //need to fix
     private static void initServer() {
         JFrame frame = new JFrame();
-        String[] servers = {"кафе1", "кафе2", "кафе3"};
-        Object value = JOptionPane.showInputDialog(frame,
-                "Виберіть кафе для підключення",
-                "Вибір бази данних",
-                JOptionPane.YES_NO_OPTION,
-                null,
-                servers,
-                servers[0]);
-        int index = employees.indexOf(value);
+        String[] servers = {"Шепетовка", "Староконстянтинів", "Славута"};
+        final JComboBox<String> combo = new JComboBox<>(servers);
+        String[] options = {"OK"};
+        int selection = JOptionPane.showOptionDialog(null, combo, "Виберіть кафе для підключення",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+                options, options[0]);
+        Object server = combo.getSelectedItem();
+        if (server != null) {
+            System.out.println("server: " + server);
+//            System.out.println("server index" + servers.);
+            chooseServer(employees.indexOf(server));            
+            DbConnect.ConnectDb();
+        }   
 
-        if (value != null) {
-
-        }
+        
 
     }
 
@@ -845,6 +851,7 @@ public class ClientForm extends javax.swing.JFrame {
         } finally {
             jProgressBar1.setIndeterminate(false);
         }
+      
         getStorageTable();
 
         jButton2.setEnabled(true);

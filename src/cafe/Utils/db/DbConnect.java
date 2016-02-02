@@ -32,20 +32,22 @@ public class DbConnect {
     public static final ArrayList<String> sqlUpdatePriceList = new ArrayList<>();
 
     static {
-        //uncoment for stat chooseServer
-        chooseServer(0);
-        ConnectDb();
-        initQueries();
-
-    }
-
-    private static void ConnectDb() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("MySQL JDBC Driver Registered!");
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
         }
+        
+        
+        //uncoment for stat chooseServer
+//        chooseServer(0);
+//        ConnectDb();
+        initQueries();
+
+    }
+
+    public static void ConnectDb() {       
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
@@ -62,6 +64,7 @@ public class DbConnect {
                 System.exit(0);
             }
         } catch (Exception e) {
+            
 
         }
 

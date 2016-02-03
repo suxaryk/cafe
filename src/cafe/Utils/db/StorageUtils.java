@@ -147,11 +147,28 @@ public class StorageUtils {
             pstatement.setString(3, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new RemovedItems was added successfully!");
+                System.out.println("A new RemovedItem(s) was added successfully!");
 
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - addRemovedItems");
+        }
+    }
+    public static void addAddedItems(String JsonItems) {
+        final String SQL = "INSERT INTO storage_added(date, added_ingredients) VALUES(?, ?)";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            pstatement.setTimestamp(1, getCurrentTimeStamp());          
+            pstatement.setString(2, JsonItems);
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new AddedItem(s) was added successfully!");
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addAddesItems");
         }
     }
 

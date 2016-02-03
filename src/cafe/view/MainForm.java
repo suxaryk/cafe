@@ -12,7 +12,7 @@ import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isDayCountStarted;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
-import static cafe.Utils.json.JSONUtils.convertRemovedIngToJSON;
+import static cafe.Utils.json.JSONUtils.convertDiffIngToJSON;
 import cafe.model.Category;
 import cafe.model.Check;
 import cafe.model.OrderItem;
@@ -3736,6 +3736,7 @@ public class MainForm extends javax.swing.JFrame {
 
     public static void addIngCountToStorage(JTable table) {
         changeList.clear();
+        addedProductsToStorage.clear();
         changeList.addAll(getListFromTable(table, 3, true));
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
@@ -3745,8 +3746,12 @@ public class MainForm extends javax.swing.JFrame {
                 System.out.println("new count " + storageList.get(i).getCount());
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
+                addedProductsToStorage.add(
+                        new Ingredient(storageList.get(i).getId(), diff));
             }
         }
+        StorageUtils.addAddedItems(convertDiffIngToJSON(addedProductsToStorage));
+        
     }
 
     private void removeIngCountFromStorage(JTable table) {
@@ -3765,8 +3770,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
 
-        StorageUtils.addRemovedItems(
-                convertRemovedIngToJSON(
+        StorageUtils.addRemovedItems(convertDiffIngToJSON(
                         userList.get(User.active).getDayRemovedProducts()),
                 userList.get(User.active));
     }
@@ -4526,6 +4530,7 @@ public class MainForm extends javax.swing.JFrame {
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
     public static ArrayList<Ingredient> diffStorage = new ArrayList<>();
     public static ArrayList<Ingredient> changeList = new ArrayList<>();
+    public static ArrayList<Ingredient> addedProductsToStorage = new ArrayList<>();
     public static List<Category> menu = new ArrayList<>();
     private static final ArrayList<Icon> icons = new ArrayList<>();
     public static MainForm mainForm;

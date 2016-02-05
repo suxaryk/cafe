@@ -222,6 +222,34 @@ public class StorageUtils {
             return null;
         }
     }
+    public static List<Ingredient> getAddedIngredients(Timestamp start, Timestamp end) {
+        final String SQL = "SELECT * from storage_removed where"
+                + " date >= '" + start
+                + "' AND date <= '" + end
+                + "'";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! getAddedIngredients"
+                    : "Error DB connecting");
+            List<Ingredient> addedList = new ArrayList<>();
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    fullJoinIngLists(addedList,
+                            JSONUtils.convertJSONToRemovedIng(
+                                    rs.getString("added_ingredients"))
+                    );
+                }
+                System.out.println("read addedList size = " + addedList.size());
+                return addedList;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getRemovedIngredients ");
+            return null;
+        }
+    }
 
     public static List<OrderItem> getOrderedDishes(Timestamp start, Timestamp end) {
         final String SQL = "SELECT * from orders where"

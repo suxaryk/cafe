@@ -21,7 +21,6 @@ public class DbConnect {
 
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String USERNAME = "root";
-//    public static String PASSWORD = "dbiytdbq18";
     public static String PASSWORD = "root";
 
     public static final ArrayList<String> sqlSelectList = new ArrayList<>();

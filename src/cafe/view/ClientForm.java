@@ -427,7 +427,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel3.add(jScrollPane5);
-        jScrollPane5.setBounds(0, 30, 370, 496);
+        jScrollPane5.setBounds(0, 30, 390, 496);
 
         jLabel17.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 51, 51));
@@ -471,7 +471,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel3.add(jScrollPane10);
-        jScrollPane10.setBounds(420, 30, 370, 496);
+        jScrollPane10.setBounds(400, 30, 390, 496);
 
         jLabel22.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 51, 51));
@@ -1120,9 +1120,9 @@ public class ClientForm extends javax.swing.JFrame {
         List<Ingredient> removedIng = new ArrayList<>();
         removedIng.addAll(getRemovedIngredients(startDate, endDate));
         for (Ingredient ing : removedIng) {       
-            ing.setTitle(getIngTitleById(ing.getId()));
+            ing.setTitle(getIngTitleById(ing.getId()));  //fix getIngTitleById
         }
-        //fix getIngById
+        
 
         sortListOfIngredients(removedIng, 2);
         for (Ingredient ing : removedIng) {
@@ -1133,9 +1133,7 @@ public class ClientForm extends javax.swing.JFrame {
             });
         }
 
-        getStorageTable();
-//        jLabel9.setText(String.valueOf(OrderUtils.getAllSumBetween(startDate, endDate)));
-//        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));             
+        getStorageTable();         
 
     }
 

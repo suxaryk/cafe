@@ -48,11 +48,9 @@ import javax.swing.table.DefaultTableModel;
 public class ClientForm extends javax.swing.JFrame {
 
     public ClientForm() {
-        initComponents();
-//        initServer();
+        initComponents();       
 
         initEnabledComponents();
-//        testCafeConnection();
         
 
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cafe.Utils.db;
 
 import java.sql.Connection;
@@ -37,19 +32,13 @@ public class DbConnect {
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
         }
-        
-        
-        
-//        chooseServer(0);
         //coment below for stat ClientForm
-//        ConnectDb();
-        
-        
-        initQueries();
+        ConnectDb();
 
+        initQueries();
     }
 
-    public static void ConnectDb() {       
+    public static void ConnectDb() {
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
@@ -66,7 +55,6 @@ public class DbConnect {
                 System.exit(0);
             }
         } catch (Exception e) {
-            
 
         }
 

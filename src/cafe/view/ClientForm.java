@@ -10,6 +10,7 @@ import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getSumKeyMoneyForUserBetween;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
 import cafe.Utils.db.StorageUtils;
+import static cafe.Utils.db.StorageUtils.getAddedIngredients;
 import static cafe.Utils.db.StorageUtils.getIngTitleById;
 import static cafe.Utils.db.StorageUtils.getOrderedDishes;
 import static cafe.Utils.db.StorageUtils.getRemovedIngredients;
@@ -125,6 +126,7 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Шепетівка", "Староконстянтинів", "Славута" }));
+        jComboBox1.setSelectedIndex(-1);
         jComboBox1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -894,43 +896,41 @@ public class ClientForm extends javax.swing.JFrame {
             System.out.println("Connection to DB Failed! ");
             JFrame frame = new JFrame();
             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                    "Помилка підключення до бази данних!\nВихід з програми", "ПОМИЛКА!",
-                    0, JOptionPane.YES_NO_OPTION, null, new String[]{"ТАК", "НІ"}, null);
-            if (reply == JOptionPane.YES_OPTION) {
-                System.exit(0);
-            }
+                    "Немаэ підключення до бази данних!\nВихід з програми", "ПОМИЛКА!",
+                    0, JOptionPane.YES_OPTION, null, new String[]{"ТАК"}, null);
+          
         } catch (Exception e) {
 
         }
     }
 
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
-//        testCafeConnection();
-        jTable1.setEnabled(true);
-        jComboBox2.setEnabled(true);
-        try {
-            startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
-            endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime());
-            orders.clear();
-            orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
-            System.out.println("orders size " + orders.size());
-            refreshOrderTable(jTable1, orders);
-        } finally {
-            jProgressBar1.setIndeterminate(false);
-        }
-        MainForm.initBDmenu();
-        UsersUtils.readAllUsers();
-        getStorageTable();
+        if (jComboBox1.getSelectedIndex() >= 0 ) {
+            jTable1.setEnabled(true);
+            jComboBox2.setEnabled(true);
+            try {
+                startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
+                endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime());
+                orders.clear();
+                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
+                System.out.println("orders size " + orders.size());
+                refreshOrderTable(jTable1, orders);
+            } finally {
+                jProgressBar1.setIndeterminate(false);
+            }
+            MainForm.initBDmenu();
+            UsersUtils.readAllUsers();
+            getStorageTable();
 
-        jButton2.setEnabled(true);
-        jButton39.setEnabled(true);
-        refreshBarmensTable();
-        refreshRemovedIngTable();
-        getDishes();
-        getEmployeeKeyMoney();
-        getInkass();
-
-
+            jButton2.setEnabled(true);
+            jButton39.setEnabled(true);
+            refreshBarmensTable();
+            refreshRemovedIngTable();
+            refreshAddedIngTable();
+            getDishes();
+            getEmployeeKeyMoney();
+            getInkass();
+        }     
     }//GEN-LAST:event_getAllOrders
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
@@ -1132,8 +1132,29 @@ public class ClientForm extends javax.swing.JFrame {
                 ing.getCount()
             });
         }
+        getStorageTable();        
 
-        getStorageTable();         
+    }
+    
+    private void refreshAddedIngTable() {
+
+        DefaultTableModel model = (DefaultTableModel) jTable10.getModel();
+        model.setRowCount(0);
+        List<Ingredient> addedIng = new ArrayList<>();
+        addedIng.addAll(getAddedIngredients(startDate, endDate));
+        for (Ingredient ing : addedIng) {
+            ing.setTitle(getIngTitleById(ing.getId()));  
+        }
+
+        sortListOfIngredients(addedIng, 2);
+        for (Ingredient ing : addedIng) {
+            model.addRow(new Object[]{
+                ing.getId(),
+                ing.getTitle(),
+                ing.getCount()
+            });
+        }
+        getStorageTable();
 
     }
 

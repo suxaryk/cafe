@@ -223,7 +223,7 @@ public class StorageUtils {
         }
     }
     public static List<Ingredient> getAddedIngredients(Timestamp start, Timestamp end) {
-        final String SQL = "SELECT * from storage_removed where"
+        final String SQL = "SELECT * from storage_added where"
                 + " date >= '" + start
                 + "' AND date <= '" + end
                 + "'";
@@ -246,7 +246,7 @@ public class StorageUtils {
             }
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getRemovedIngredients ");
+            System.out.println("Connection Failed! Check output console - getAddedIngredients ");
             return null;
         }
     }

@@ -39,6 +39,7 @@
             <StringItem index="2" value="&#x421;&#x43b;&#x430;&#x432;&#x443;&#x442;&#x430;"/>
           </StringArray>
         </Property>
+        <Property name="selectedIndex" type="int" value="-1"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
             <BevelBorder/>

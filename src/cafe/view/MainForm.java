@@ -3788,14 +3788,13 @@ public class MainForm extends javax.swing.JFrame {
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double newCount = changeList.get(i).getCount();
-            if (newCount != 0.0) {
-                diffStorage.get(i).setCount(newCount - old);
+            if (newCount != 0.0) {                
+                diffStorage.get(i).setCount(Double.valueOf(decFormat.format(newCount - old)));
                 storageList.get(i).setCount(newCount);
+                StorageUtils.addRevizia(storageList.get(i).getId(), old,
+                                    newCount, diffStorage.get(i).getCount());                
                 StorageUtils.updateCount(storageList.get(i).getId(),
-                        storageList.get(i).getCount());
-                addedProductsToStorage.add(new Ingredient(
-                        storageList.get(i).getId(), 
-                        diffStorage.get(i).getCount()));
+                        storageList.get(i).getCount());                            
             }
         }
     }

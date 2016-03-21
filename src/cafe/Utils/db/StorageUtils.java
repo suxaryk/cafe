@@ -147,7 +147,7 @@ public class StorageUtils {
             pstatement.setString(3, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new RemovedItem(s) was added successfully!");
+                System.out.println("New RemovedItem(s) was added successfully!");
 
             }
         } catch (SQLException e) {
@@ -164,11 +164,32 @@ public class StorageUtils {
             pstatement.setString(2, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new AddedItem(s) was added successfully!");
+                System.out.println("New AddedItem(s) was added successfully!");
 
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - addAddesItems");
+        }
+    }
+
+    public static void addRevizia(int ingredientId, double oldCount, double newCount, double diffCount) {
+        final String SQL = "INSERT INTO revizia(date, ingredient_id, old_count, new_count, diff_count) VALUES(?, ?, ?, ?, ?)";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            
+            PreparedStatement pstatement = connection.prepareStatement(SQL);    
+            pstatement.setTimestamp(1, getCurrentTimeStamp());
+            pstatement.setInt(2, ingredientId);
+            pstatement.setDouble(3, oldCount);
+            pstatement.setDouble(4, newCount);
+            pstatement.setDouble(5, diffCount);
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Revizia was added successfully!");
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addRevizia");
         }
     }
 

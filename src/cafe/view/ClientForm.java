@@ -87,6 +87,11 @@ public class ClientForm extends javax.swing.JFrame {
         jScrollPane10 = new javax.swing.JScrollPane();
         jTable10 = new javax.swing.JTable();
         jLabel22 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        jTable11 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -480,6 +485,61 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel22.setBounds(570, 0, 90, 23);
 
         jTabbedPane1.addTab("Продукти", jPanel3);
+
+        jPanel7.setLayout(null);
+
+        jTable11.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jTable11.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "№", "Назва", "Вага стара", "Вага нова", "Різниця"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable11.setRowHeight(20);
+        jScrollPane11.setViewportView(jTable11);
+        if (jTable11.getColumnModel().getColumnCount() > 0) {
+            jTable11.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTable11.getColumnModel().getColumn(2).setMinWidth(130);
+            jTable11.getColumnModel().getColumn(2).setPreferredWidth(130);
+            jTable11.getColumnModel().getColumn(2).setMaxWidth(130);
+            jTable11.getColumnModel().getColumn(3).setMinWidth(130);
+            jTable11.getColumnModel().getColumn(3).setPreferredWidth(130);
+            jTable11.getColumnModel().getColumn(3).setMaxWidth(130);
+            jTable11.getColumnModel().getColumn(4).setMinWidth(130);
+            jTable11.getColumnModel().getColumn(4).setPreferredWidth(130);
+            jTable11.getColumnModel().getColumn(4).setMaxWidth(130);
+        }
+
+        jPanel7.add(jScrollPane11);
+        jScrollPane11.setBounds(0, 40, 810, 480);
+
+        jLabel6.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel6.setText("Дата");
+        jPanel7.add(jLabel6);
+        jLabel6.setBounds(590, 10, 60, 18);
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel7.add(jComboBox3);
+        jComboBox3.setBounds(650, 10, 140, 20);
+
+        jTabbedPane1.addTab("Ревізія", jPanel7);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanel4.setLayout(null);
@@ -1194,6 +1254,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton39;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox7;
     private javax.swing.JComboBox jComboBox8;
     private javax.swing.JLabel jLabel1;
@@ -1214,6 +1275,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1223,9 +1285,11 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1237,6 +1301,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable10;
+    private javax.swing.JTable jTable11;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;

@@ -1295,6 +1295,11 @@ public class MainForm extends javax.swing.JFrame {
                 clearTable(evt);
             }
         });
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
         OrderPanel.add(jButton9);
         jButton9.setBounds(260, 460, 100, 70);
 
@@ -3750,8 +3755,7 @@ public class MainForm extends javax.swing.JFrame {
                         new Ingredient(storageList.get(i).getId(), diff));
             }
         }
-        StorageUtils.addAddedItems(convertDiffIngToJSON(addedProductsToStorage));
-        
+        StorageUtils.addAddedItems(convertDiffIngToJSON(addedProductsToStorage));        
     }
 
     private void removeIngCountFromStorage(JTable table) {
@@ -3778,6 +3782,7 @@ public class MainForm extends javax.swing.JFrame {
     private void updateItemsFromStorage() {
         diffStorage.clear();
         changeList.clear();
+        addedProductsToStorage.clear();
         changeList.addAll(getListFromTable(jTable6, 3, true));
         diffStorage.addAll(changeList);
         for (int i = 0; i < storageList.size(); i++) {
@@ -3788,6 +3793,9 @@ public class MainForm extends javax.swing.JFrame {
                 storageList.get(i).setCount(newCount);
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
+                addedProductsToStorage.add(new Ingredient(
+                        storageList.get(i).getId(), 
+                        diffStorage.get(i).getCount()));
             }
         }
     }
@@ -4173,6 +4181,10 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTable1MousePressed
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
             return orders.get(activeTable).getItems().get(index).isRealized();
@@ -4531,6 +4543,7 @@ public class MainForm extends javax.swing.JFrame {
     public static ArrayList<Ingredient> diffStorage = new ArrayList<>();
     public static ArrayList<Ingredient> changeList = new ArrayList<>();
     public static ArrayList<Ingredient> addedProductsToStorage = new ArrayList<>();
+    public static ArrayList<Ingredient> updatedProductsToStorage = new ArrayList<>();
     public static List<Category> menu = new ArrayList<>();
     private static final ArrayList<Icon> icons = new ArrayList<>();
     public static MainForm mainForm;

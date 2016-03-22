@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,17 +35,17 @@ public class StorageUtils {
             System.out.println(!connection.isClosed() ? "DB connected! readStorage"
                     : "Error DB connecting");
             MainForm.storageList.clear();
-            Statement statement = connection.createStatement();
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {
-                    MainForm.storageList.add(
-                            new Ingredient(
-                                    rs.getInt("Id"),
-                                    rs.getString("title"),
-                                    rs.getDouble("count")
-                            ));
-                }
+            Statement statement = connection.createStatement();        
+            ResultSet rs = statement.executeQuery(SQL);                
+            while (rs.next()) {
+                MainForm.storageList.add(
+                        new Ingredient(
+                                rs.getInt("Id"),
+                                rs.getString("title"),
+                                rs.getDouble("count")
+                        ));
             }
+        
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - readStorage");
         }
@@ -191,6 +192,42 @@ public class StorageUtils {
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - addRevizia");
         }
+    }
+    public static List<Date> getReviziaDates(){ 
+        List<Date> reviziaDates = new ArrayList<>();
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            final String SQL = "SELECT distinct date(date) FROM revizia";    
+            
+            Statement statement = connection.createStatement();        
+            ResultSet rs = statement.executeQuery(SQL);                   
+            while (rs.next()) {
+                reviziaDates.add(rs.getDate(1));
+            }          
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getReviziaDates");
+           
+        }finally{
+            return reviziaDates;
+        }        
+    }
+    public static List<Date> getRevizia(){ 
+        List<Date> reviziaDates = new ArrayList<>();
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            final String SQL = "SELECT distinct date(date) FROM revizia";    
+            
+            Statement statement = connection.createStatement();        
+            ResultSet rs = statement.executeQuery(SQL);                   
+            while (rs.next()) {
+                reviziaDates.add(rs.getDate(1));
+            }          
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getReviziaDates");
+           
+        }finally{
+            return reviziaDates;
+        }        
     }
 
     public static void fullJoinIngLists(List<Ingredient> list1, List<Ingredient> list2) {

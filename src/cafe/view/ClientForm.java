@@ -48,10 +48,9 @@ import javax.swing.table.DefaultTableModel;
 public class ClientForm extends javax.swing.JFrame {
 
     public ClientForm() {
-        initComponents();       
+        initComponents();
 
         initEnabledComponents();
-        
 
     }
 
@@ -535,7 +534,6 @@ public class ClientForm extends javax.swing.JFrame {
         jPanel7.add(jLabel6);
         jLabel6.setBounds(590, 10, 60, 18);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel7.add(jComboBox3);
         jComboBox3.setBounds(650, 10, 140, 20);
 
@@ -903,7 +901,6 @@ public class ClientForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
     //need to fix
     private static void initServer() {
         JFrame frame = new JFrame();
@@ -917,11 +914,9 @@ public class ClientForm extends javax.swing.JFrame {
         if (server != null) {
             System.out.println("server: " + server);
 //            System.out.println("server index" + servers.);
-            chooseServer(employees.indexOf(server));            
+            chooseServer(employees.indexOf(server));
             DbConnect.ConnectDb();
-        }   
-
-        
+        }
 
     }
 
@@ -944,26 +939,25 @@ public class ClientForm extends javax.swing.JFrame {
         }
     }
 
-    public void testCafeConnection() {       
+    public void testCafeConnection() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-            System.out.println(!connection.isClosed() ? "DB connected to " + URL
+            System.out.println(!connection.isClosed() ? "1DB connected to " + URL
                     : "Error DB connecting");
-
         } catch (SQLException e) {
             System.out.println("Connection to DB Failed! ");
             JFrame frame = new JFrame();
             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
                     "Немаэ підключення до бази данних!\nВихід з програми", "ПОМИЛКА!",
                     0, JOptionPane.YES_OPTION, null, new String[]{"ТАК"}, null);
-          
+
         } catch (Exception e) {
 
         }
     }
 
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
-        if (jComboBox1.getSelectedIndex() >= 0 ) {
+        if (jComboBox1.getSelectedIndex() >= 0) {
             jTable1.setEnabled(true);
             jComboBox2.setEnabled(true);
             try {
@@ -988,7 +982,8 @@ public class ClientForm extends javax.swing.JFrame {
             getDishes();
             getEmployeeKeyMoney();
             getInkass();
-        }     
+            refreshReviziaDates();            
+        }
     }//GEN-LAST:event_getAllOrders
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
@@ -1177,10 +1172,9 @@ public class ClientForm extends javax.swing.JFrame {
         model.setRowCount(0);
         List<Ingredient> removedIng = new ArrayList<>();
         removedIng.addAll(getRemovedIngredients(startDate, endDate));
-        for (Ingredient ing : removedIng) {       
+        for (Ingredient ing : removedIng) {
             ing.setTitle(getIngTitleById(ing.getId()));  //fix getIngTitleById
         }
-        
 
         sortListOfIngredients(removedIng, 2);
         for (Ingredient ing : removedIng) {
@@ -1190,10 +1184,10 @@ public class ClientForm extends javax.swing.JFrame {
                 ing.getCount()
             });
         }
-        getStorageTable();        
+        getStorageTable();
 
     }
-    
+
     private void refreshAddedIngTable() {
 
         DefaultTableModel model = (DefaultTableModel) jTable10.getModel();
@@ -1201,7 +1195,7 @@ public class ClientForm extends javax.swing.JFrame {
         List<Ingredient> addedIng = new ArrayList<>();
         addedIng.addAll(getAddedIngredients(startDate, endDate));
         for (Ingredient ing : addedIng) {
-            ing.setTitle(getIngTitleById(ing.getId()));  
+            ing.setTitle(getIngTitleById(ing.getId()));
         }
 
         sortListOfIngredients(addedIng, 2);
@@ -1214,6 +1208,16 @@ public class ClientForm extends javax.swing.JFrame {
         }
         getStorageTable();
 
+    }
+    
+    private void refreshReviziaDates(){
+        DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
+        model.setRowCount(0);
+        jComboBox3.removeAllItems();
+        List<Date> reviziaDates = new ArrayList<>(StorageUtils.getReviziaDates());
+        for (Date reviziaDate : reviziaDates) {
+            jComboBox3.addItem(reviziaDate);
+        }
     }
 
     private void refreshOrderTable(JTable table, List<Order> list) {

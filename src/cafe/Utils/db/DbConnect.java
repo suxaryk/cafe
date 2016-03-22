@@ -33,7 +33,7 @@ public class DbConnect {
             System.out.println("Where is your MySQL JDBC Driver?");
         }
         //coment below for stat ClientForm
-        ConnectDb();
+        
 
         initQueries();
     }
@@ -56,6 +56,17 @@ public class DbConnect {
             }
         } catch (Exception e) {
 
+        }
+
+    }
+    
+    public static void chooseServer(int cafeId) {
+        if (cafeId == 0) {
+//            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
+        } else if (cafeId == 1) {
+            URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
+        } else if (cafeId == 2) {
+            URL = "jdbc:mysql://82.207.112.48:3306/luckyroger";
         }
 
     }
@@ -146,14 +157,5 @@ public class DbConnect {
         sqlUpdatePriceList.add("UPDATE not_alcohol SET price = ? WHERE Id = ?");
     }
 
-    public static void chooseServer(int cafeId) {
-        if (cafeId == 0) {
-            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
-        } else if (cafeId == 1) {
-            URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
-        } else if (cafeId == 2) {
-            URL = "jdbc:mysql://82.207.112.48:3306/luckyroger";
-        }
-
-    }
+    
 }

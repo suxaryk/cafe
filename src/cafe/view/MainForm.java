@@ -1,6 +1,7 @@
 package cafe.view;
 
 import cafe.Utils.db.CheckUtils;
+import static cafe.Utils.db.DbConnect.ConnectDb;
 import cafe.Utils.db.OrderUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
@@ -81,7 +82,7 @@ public class MainForm extends javax.swing.JFrame {
 
     public MainForm() {
         initComponents();
-        
+        ConnectDb();
         StorageUtils.readStorage();
         CheckUtils.readCheck();
         initIcons();
@@ -3762,6 +3763,7 @@ public class MainForm extends javax.swing.JFrame {
         changeList.clear();
         userList.get(User.active).getDayRemovedProducts().clear();
         changeList.addAll(getListFromTable(table, 3, true));
+        
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();

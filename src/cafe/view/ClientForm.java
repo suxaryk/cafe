@@ -9,6 +9,7 @@ import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getSumKeyMoneyForUserBetween;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
+import cafe.Utils.db.ReviziaUtils;
 import cafe.Utils.db.StorageUtils;
 import static cafe.Utils.db.StorageUtils.getAddedIngredients;
 import static cafe.Utils.db.StorageUtils.getIngTitleById;
@@ -91,6 +92,7 @@ public class ClientForm extends javax.swing.JFrame {
         jTable11 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -532,10 +534,19 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel6.setText("Дата");
         jPanel7.add(jLabel6);
-        jLabel6.setBounds(590, 10, 60, 18);
+        jLabel6.setBounds(500, 10, 60, 18);
 
         jPanel7.add(jComboBox3);
-        jComboBox3.setBounds(650, 10, 140, 20);
+        jComboBox3.setBounds(560, 10, 140, 20);
+
+        jToggleButton1.setText("Відкрити");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showRevizia(evt);
+            }
+        });
+        jPanel7.add(jToggleButton1);
+        jToggleButton1.setBounds(713, 10, 90, 23);
 
         jTabbedPane1.addTab("Ревізія", jPanel7);
 
@@ -942,7 +953,7 @@ public class ClientForm extends javax.swing.JFrame {
     public void testCafeConnection() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-            System.out.println(!connection.isClosed() ? "1DB connected to " + URL
+            System.out.println(!connection.isClosed() ? "DB connected to " + URL
                     : "Error DB connecting");
         } catch (SQLException e) {
             System.out.println("Connection to DB Failed! ");
@@ -982,7 +993,7 @@ public class ClientForm extends javax.swing.JFrame {
             getDishes();
             getEmployeeKeyMoney();
             getInkass();
-            refreshReviziaDates();            
+                        
         }
     }//GEN-LAST:event_getAllOrders
 
@@ -1016,6 +1027,7 @@ public class ClientForm extends javax.swing.JFrame {
     private void chooseCafe(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCafe
         chooseServer(jComboBox1.getSelectedIndex());
         testCafeConnection();
+        refreshReviziaDates();
     }//GEN-LAST:event_chooseCafe
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
@@ -1042,6 +1054,14 @@ public class ClientForm extends javax.swing.JFrame {
         sortListOfOrderItems(orderedDishes, jComboBox8.getSelectedIndex());
         refreshDishesTable();
     }//GEN-LAST:event_changeOrderedDishSort
+
+    private void showRevizia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRevizia
+        Date date = (Date) jComboBox3.getSelectedItem();
+        
+        DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
+        model.setRowCount(0);
+        
+    }//GEN-LAST:event_showRevizia
 
     private void getStorageTable() {
         StorageUtils.readStorage();
@@ -1210,12 +1230,10 @@ public class ClientForm extends javax.swing.JFrame {
 
     }
     
-    private void refreshReviziaDates(){
-        DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
-        model.setRowCount(0);
+    private void refreshReviziaDates(){       
         jComboBox3.removeAllItems();
-        List<Date> reviziaDates = new ArrayList<>(StorageUtils.getReviziaDates());
-        for (Date reviziaDate : reviziaDates) {
+        List<Date> reviziaDates = new ArrayList<>(ReviziaUtils.getReviziaDates());
+        for (Date reviziaDate : reviziaDates) {         
             jComboBox3.addItem(reviziaDate);
         }
     }
@@ -1314,6 +1332,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
     private javax.swing.JTable jTable9;
+    private javax.swing.JToggleButton jToggleButton1;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker2;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker3;

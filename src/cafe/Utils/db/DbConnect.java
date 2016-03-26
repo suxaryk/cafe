@@ -54,9 +54,7 @@ public class DbConnect {
             if (reply == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
-        } catch (Exception e) {
-
-        }
+        } 
 
     }
     

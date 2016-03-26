@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -173,62 +172,7 @@ public class StorageUtils {
         }
     }
 
-    public static void addRevizia(int ingredientId, double oldCount, double newCount, double diffCount) {
-        final String SQL = "INSERT INTO revizia(date, ingredient_id, old_count, new_count, diff_count) VALUES(?, ?, ?, ?, ?)";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            
-            PreparedStatement pstatement = connection.prepareStatement(SQL);    
-            pstatement.setTimestamp(1, getCurrentTimeStamp());
-            pstatement.setInt(2, ingredientId);
-            pstatement.setDouble(3, oldCount);
-            pstatement.setDouble(4, newCount);
-            pstatement.setDouble(5, diffCount);
-            int rowsInserted = pstatement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Revizia was added successfully!");
-
-            }
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addRevizia");
-        }
-    }
-    public static List<Date> getReviziaDates(){ 
-        List<Date> reviziaDates = new ArrayList<>();
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            final String SQL = "SELECT distinct date(date) FROM revizia";    
-            
-            Statement statement = connection.createStatement();        
-            ResultSet rs = statement.executeQuery(SQL);                   
-            while (rs.next()) {
-                reviziaDates.add(rs.getDate(1));
-            }          
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getReviziaDates");
-           
-        }finally{
-            return reviziaDates;
-        }        
-    }
-    public static List<Date> getRevizia(){ 
-        List<Date> reviziaDates = new ArrayList<>();
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            final String SQL = "SELECT distinct date(date) FROM revizia";    
-            
-            Statement statement = connection.createStatement();        
-            ResultSet rs = statement.executeQuery(SQL);                   
-            while (rs.next()) {
-                reviziaDates.add(rs.getDate(1));
-            }          
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getReviziaDates");
-           
-        }finally{
-            return reviziaDates;
-        }        
-    }
+ 
 
     public static void fullJoinIngLists(List<Ingredient> list1, List<Ingredient> list2) {
         for (Ingredient ing : list2) {

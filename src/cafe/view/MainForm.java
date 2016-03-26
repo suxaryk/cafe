@@ -11,6 +11,7 @@ import static cafe.Utils.db.DbConnect.PASSWORD;
 import static cafe.Utils.db.DbConnect.USERNAME;
 import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isDayCountStarted;
+import cafe.Utils.db.ReviziaUtils;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
 import static cafe.Utils.json.JSONUtils.convertDiffIngToJSON;
@@ -20,6 +21,7 @@ import cafe.model.OrderItem;
 import cafe.model.Dish;
 import cafe.model.Employee;
 import cafe.model.Ingredient;
+import cafe.model.ReviziaItem;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.awt.Color;
@@ -31,6 +33,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -3763,7 +3766,6 @@ public class MainForm extends javax.swing.JFrame {
         changeList.clear();
         userList.get(User.active).getDayRemovedProducts().clear();
         changeList.addAll(getListFromTable(table, 3, true));
-        
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();
@@ -3782,6 +3784,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void updateItemsFromStorage() {
+        List<ReviziaItem> reviziaList = new ArrayList<>();
         diffStorage.clear();
         changeList.clear();
         addedProductsToStorage.clear();
@@ -3790,15 +3793,27 @@ public class MainForm extends javax.swing.JFrame {
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double newCount = changeList.get(i).getCount();
-            if (newCount != 0.0) {                
-                diffStorage.get(i).setCount(Double.valueOf(decFormat.format(newCount - old)));
+            if (newCount != 0.0) {
+                diffStorage.get(i).setCount(Double.valueOf(
+                                            decFormat.format(newCount - old)));
                 storageList.get(i).setCount(newCount);
-                StorageUtils.addRevizia(storageList.get(i).getId(), old,
-                                    newCount, diffStorage.get(i).getCount());                
+                reviziaList.add(new ReviziaItem(
+                        storageList.get(i).getId(),
+                        old,
+                        newCount,
+                        diffStorage.get(i).getCount())
+                );
                 StorageUtils.updateCount(storageList.get(i).getId(),
-                        storageList.get(i).getCount());                            
+                        storageList.get(i).getCount());
             }
         }
+        try {
+            ReviziaUtils.addRevizia(reviziaList);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("AddRevizia Exception " + ex);
+        }
+        
     }
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
         addIngCountToStorage(jTable6);

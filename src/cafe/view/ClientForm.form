@@ -92,7 +92,6 @@
         <Property name="text" type="java.lang.String" value="&#x43f;&#x456;&#x434;&#x43a;&#x43b;&#x44e;&#x447;&#x438;&#x442;&#x438;&#x441;&#x44c; &#x434;&#x43e; &#x43a;&#x430;&#x444;&#x435;"/>
       </Properties>
       <Events>
-        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MousePressed"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="getAllOrders"/>
       </Events>
       <Constraints>

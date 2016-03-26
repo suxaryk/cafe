@@ -18,9 +18,11 @@ import java.util.List;
 
 public class ReviziaUtils {
 
-    public static void addRevizia(List<ReviziaItem> revizia) throws SQLException {
-        final String SQL = "INSERT INTO revizia(date, ingredient_id, old_count, new_count, diff_count) "
-                + "VALUES(?, ?, ?, ?, ?)";
+    public static void addRevizia(List<ReviziaItem> revizia) 
+                                                        throws SQLException {
+        final String SQL = "INSERT INTO revizia(date, ingredient_id,"
+                                + " old_count, new_count, diff_count) "
+                                + "VALUES(?, ?, ?, ?, ?)";
         Connection dbConnect = null;
         PreparedStatement pstatement = null;
         try {
@@ -69,33 +71,39 @@ public class ReviziaUtils {
                 reviziaDates.add(rs.getDate(1));          
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getReviziaDates");
+            System.out.println("Connection Failed!"
+                            + " Check output console - getReviziaDates" + e);
 
         } finally {
             return reviziaDates;
         }
     }
 
-    public static List<Date> getReviziaByDate(Date date) {
-        List<Date> reviziaDates = new ArrayList<>();
+    public static List<ReviziaItem> getReviziaByDate(Date date) {
+        List<ReviziaItem> revizia = new ArrayList<>();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            final String SQL = "SELECT storage.title, old_count, new_count, diff_count"
-                    + "FROM luckyroger.revizia, storage"
-                    + "WHERE revizia.ingredient_id = storage.Id"
-                    + "AND date(revizia.date) = " + date
-                    + "ORDER BY ingredient_id;";
+            final String SQL = "SELECT ingredient_id, "
+                             + "old_count, new_count, diff_count "
+                             + "WHERE DATE(date) = " + date;
+            
+            
 
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(SQL);            
             while (rs.next()) {
-                reviziaDates.add(rs.getDate(1));
-            }
+                revizia.add(new ReviziaItem(                       
+                        rs.getInt("ingredient_id"), 
+                        rs.getDouble("old_count"), 
+                        rs.getDouble("new_count"), 
+                        rs.getDouble("diff_count")                        
+                ));
+            }            
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getReviziaDates");
-
+            System.out.println("Connection Failed!"
+                            + " Check output console - getReviziaDates" + e);
         } finally {
-            return reviziaDates;
+            return revizia;
         }
     }
 

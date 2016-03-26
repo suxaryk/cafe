@@ -20,6 +20,7 @@ import cafe.model.Employee;
 import cafe.model.Ingredient;
 import cafe.model.Order;
 import cafe.model.OrderItem;
+import cafe.model.ReviziaItem;
 import static cafe.view.LoginForm.userList;
 import static cafe.view.MainForm.GREEN;
 import static cafe.view.MainForm.employees;
@@ -153,11 +154,6 @@ public class ClientForm extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(0, 153, 204));
         jButton1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jButton1.setText("підключитись до кафе");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
-            }
-        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 getAllOrders(evt);
@@ -969,31 +965,33 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
         if (jComboBox1.getSelectedIndex() >= 0) {
-            jTable1.setEnabled(true);
-            jComboBox2.setEnabled(true);
-            try {
-                startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
-                endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime());
-                orders.clear();
-                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
-                System.out.println("orders size " + orders.size());
-                refreshOrderTable(jTable1, orders);
-            } finally {
-                jProgressBar1.setIndeterminate(false);
-            }
-            MainForm.initBDmenu();
-            UsersUtils.readAllUsers();
-            getStorageTable();
+            if (jXDatePicker1.getDate() != null && jXDatePicker2.getDate() != null) {
+                jTable1.setEnabled(true);
+                jComboBox2.setEnabled(true);
+                try {
+                    startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
+                    System.out.println("start " + startDate);
+                    endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime());
+                    orders.clear();
+                    orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
+                    System.out.println("orders size " + orders.size());
+                    refreshOrderTable(jTable1, orders);
+                } finally {
+                    jProgressBar1.setIndeterminate(false);
+                }
+                MainForm.initBDmenu();
+                UsersUtils.readAllUsers();
+                getStorageTable();
 
-            jButton2.setEnabled(true);
-            jButton39.setEnabled(true);
-            refreshBarmensTable();
-            refreshRemovedIngTable();
-            refreshAddedIngTable();
-            getDishes();
-            getEmployeeKeyMoney();
-            getInkass();
-                        
+                jButton2.setEnabled(true);
+                jButton39.setEnabled(true);
+                refreshBarmensTable();
+                refreshRemovedIngTable();
+                refreshAddedIngTable();
+                getDishes();
+                getEmployeeKeyMoney();
+                getInkass();
+            }
         }
     }//GEN-LAST:event_getAllOrders
 
@@ -1030,10 +1028,6 @@ public class ClientForm extends javax.swing.JFrame {
         refreshReviziaDates();
     }//GEN-LAST:event_chooseCafe
 
-    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-        jProgressBar1.setIndeterminate(true);
-    }//GEN-LAST:event_jButton1MousePressed
-
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
         StorageUtils.readStorage();
         setSort(jComboBox7, jTable6);
@@ -1058,8 +1052,18 @@ public class ClientForm extends javax.swing.JFrame {
     private void showRevizia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRevizia
         Date date = (Date) jComboBox3.getSelectedItem();
         
-        DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
-        model.setRowCount(0);
+//        DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
+//        model.setRowCount(0);
+//        List<ReviziaItem> revizia =  ReviziaUtils.getReviziaByDate(date);
+//        for (ReviziaItem item : revizia) {
+//            model.addRow(new Object[]{
+//                item.getId(),
+//                item.getId(),
+//                dfd
+//                
+//            });
+//            
+//        }
         
     }//GEN-LAST:event_showRevizia
 

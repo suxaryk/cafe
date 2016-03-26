@@ -21,6 +21,7 @@ import cafe.model.Ingredient;
 import cafe.model.Order;
 import cafe.model.OrderItem;
 import cafe.model.ReviziaItem;
+import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import static cafe.view.MainForm.GREEN;
 import static cafe.view.MainForm.employees;
@@ -239,7 +240,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(1, 1, 470, 530);
+        jScrollPane1.setBounds(1, 1, 480, 530);
 
         jTable2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -283,7 +284,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(470, 50, 330, 380);
+        jScrollPane2.setBounds(480, 50, 320, 380);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Оплачені страви", "Видалені страви" }));
         jComboBox2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -293,13 +294,13 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(470, 20, 330, 30);
+        jComboBox2.setBounds(480, 20, 320, 30);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 153, 204));
         jLabel3.setText("Чек № ");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(470, 0, 180, 20);
+        jLabel3.setBounds(480, 0, 170, 20);
 
         jTabbedPane1.addTab("Чеки", jPanel1);
 
@@ -988,12 +989,12 @@ public class ClientForm extends javax.swing.JFrame {
 
                 jButton2.setEnabled(true);
                 jButton39.setEnabled(true);
-                refreshBarmensTable();
                 refreshRemovedIngTable();
                 refreshAddedIngTable();
                 getDishes();
                 getEmployeeKeyMoney();
                 getInkass();
+                refreshBarmensTable();
             }
         }
     }//GEN-LAST:event_getAllOrders
@@ -1054,22 +1055,22 @@ public class ClientForm extends javax.swing.JFrame {
     }//GEN-LAST:event_changeOrderedDishSort
 
     private void showRevizia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRevizia
-        Timestamp date  = new java.sql.Timestamp(((Date) jComboBox3.getSelectedItem()).getTime());
-        
+        Timestamp date = new java.sql.Timestamp(((Date) jComboBox3.getSelectedItem()).getTime());
+
         DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
         model.setRowCount(0);
-        List<ReviziaItem> revizia =  ReviziaUtils.getReviziaByDate(date);
+        List<ReviziaItem> revizia = ReviziaUtils.getReviziaByDate(date);
         for (ReviziaItem item : revizia) {
             model.addRow(new Object[]{
                 item.getId(),
-                getIngTitleById(item.getId()),                
+                getIngTitleById(item.getId()),
                 item.getOldCount(),
                 item.getNewCount(),
-                item.getDiffCount()                
+                item.getDiffCount()
             });
-            
+
         }
-        
+
     }//GEN-LAST:event_showRevizia
 
     private void getStorageTable() {
@@ -1115,7 +1116,6 @@ public class ClientForm extends javax.swing.JFrame {
             model.addRow(new Object[]{
                 employee.getName(),
                 employee.getKeyMoney()
-
             });
         }
     }
@@ -1182,17 +1182,22 @@ public class ClientForm extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
         model.setRowCount(0);
 
-        for (int i = 0; i < LoginForm.userList.size(); i++) {
+        for (User user : LoginForm.userList) {
             model.addRow(new Object[]{
-                LoginForm.userList.get(i).getName(),
-                LoginForm.userList.get(i).getKasa()
+                user.getName(),
+                user.getKasa()
             });
         }
-        jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
-        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));
-        jLabel13.setText(String.valueOf(OrderUtils.getAllRemovedSumBetween(startDate, endDate)));
-        jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));
+        int AllAvans = 0;
+        for (Employee employee : employees) {
+            AllAvans += employee.getKeyMoney();
+        }
 
+        jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
+        jLabel13.setText(String.valueOf(OrderUtils.getAllRemovedSumBetween(startDate, endDate)));
+        jLabel19.setText(String.valueOf(AllAvans));
+        jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));
+        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));
     }
 
     private void refreshRemovedIngTable() {
@@ -1238,11 +1243,11 @@ public class ClientForm extends javax.swing.JFrame {
         getStorageTable();
 
     }
-    
-    private void refreshReviziaDates(){       
+
+    private void refreshReviziaDates() {
         jComboBox3.removeAllItems();
         List<Date> reviziaDates = new ArrayList<>(ReviziaUtils.getReviziaDates());
-        for (Date reviziaDate : reviziaDates) {         
+        for (Date reviziaDate : reviziaDates) {
             jComboBox3.addItem(reviziaDate);
         }
     }
@@ -1270,7 +1275,7 @@ public class ClientForm extends javax.swing.JFrame {
         clientForm.setVisible(true);
         clientForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-    
+
     private static final int TWO_HOURS = 3 * 60 * 60 * 1000;
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;

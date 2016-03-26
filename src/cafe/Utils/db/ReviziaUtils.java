@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,15 +80,15 @@ public class ReviziaUtils {
         }
     }
 
-    public static List<ReviziaItem> getReviziaByDate(Date date) {
+    public static List<ReviziaItem> getReviziaByDate(Timestamp date) {
         List<ReviziaItem> revizia = new ArrayList<>();
+        System.out.println("date = " + date);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            final String SQL = "SELECT ingredient_id, "
-                             + "old_count, new_count, diff_count "
-                             + "WHERE DATE(date) = " + date;
-            
-            
+            final String SQL = "SELECT ingredient_id, old_count, "
+                               + "new_count, diff_count "
+                               + "FROM revizia "
+                               + "WHERE DATE(date) = DATE('"+ date +"')";           
 
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(SQL);            
@@ -101,7 +102,7 @@ public class ReviziaUtils {
             }            
         } catch (SQLException e) {
             System.out.println("Connection Failed!"
-                            + " Check output console - getReviziaDates" + e);
+                            + " Check output console - getReviziaDates  " + e);
         } finally {
             return revizia;
         }

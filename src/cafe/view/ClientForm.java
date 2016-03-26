@@ -509,10 +509,13 @@ public class ClientForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable11.setRowHeight(20);
         jScrollPane11.setViewportView(jTable11);
         if (jTable11.getColumnModel().getColumnCount() > 0) {
+            jTable11.getColumnModel().getColumn(0).setMinWidth(40);
             jTable11.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTable11.getColumnModel().getColumn(0).setMaxWidth(40);
             jTable11.getColumnModel().getColumn(2).setMinWidth(130);
             jTable11.getColumnModel().getColumn(2).setPreferredWidth(130);
             jTable11.getColumnModel().getColumn(2).setMaxWidth(130);
@@ -971,7 +974,7 @@ public class ClientForm extends javax.swing.JFrame {
                 try {
                     startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
                     System.out.println("start " + startDate);
-                    endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime());
+                    endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + TWO_HOURS);
                     orders.clear();
                     orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
                     System.out.println("orders size " + orders.size());
@@ -1026,6 +1029,7 @@ public class ClientForm extends javax.swing.JFrame {
         chooseServer(jComboBox1.getSelectedIndex());
         testCafeConnection();
         refreshReviziaDates();
+        StorageUtils.readStorage();
     }//GEN-LAST:event_chooseCafe
 
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
@@ -1050,20 +1054,21 @@ public class ClientForm extends javax.swing.JFrame {
     }//GEN-LAST:event_changeOrderedDishSort
 
     private void showRevizia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRevizia
-        Date date = (Date) jComboBox3.getSelectedItem();
+        Timestamp date  = new java.sql.Timestamp(((Date) jComboBox3.getSelectedItem()).getTime());
         
-//        DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
-//        model.setRowCount(0);
-//        List<ReviziaItem> revizia =  ReviziaUtils.getReviziaByDate(date);
-//        for (ReviziaItem item : revizia) {
-//            model.addRow(new Object[]{
-//                item.getId(),
-//                item.getId(),
-//                dfd
-//                
-//            });
-//            
-//        }
+        DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
+        model.setRowCount(0);
+        List<ReviziaItem> revizia =  ReviziaUtils.getReviziaByDate(date);
+        for (ReviziaItem item : revizia) {
+            model.addRow(new Object[]{
+                item.getId(),
+                getIngTitleById(item.getId()),                
+                item.getOldCount(),
+                item.getNewCount(),
+                item.getDiffCount()                
+            });
+            
+        }
         
     }//GEN-LAST:event_showRevizia
 
@@ -1265,7 +1270,8 @@ public class ClientForm extends javax.swing.JFrame {
         clientForm.setVisible(true);
         clientForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-
+    
+    private static final int TWO_HOURS = 3 * 60 * 60 * 1000;
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();

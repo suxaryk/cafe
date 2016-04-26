@@ -231,6 +231,8 @@ public class MainForm extends javax.swing.JFrame {
         jTextField6 = new javax.swing.JTextField();
         jScrollPane9 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         RecipePanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -1715,7 +1717,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTextPane1);
 
         UsersPanel.add(jScrollPane8);
-        jScrollPane8.setBounds(600, 660, 170, 130);
+        jScrollPane8.setBounds(600, 720, 170, 130);
 
         jTable4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
@@ -1775,7 +1777,17 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane9.setViewportView(jTextPane2);
 
         UsersPanel.add(jScrollPane9);
-        jScrollPane9.setBounds(600, 400, 170, 100);
+        jScrollPane9.setBounds(600, 420, 170, 100);
+
+        jLabel21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel21.setText("Чек для клієнта");
+        UsersPanel.add(jLabel21);
+        jLabel21.setBounds(600, 400, 150, 17);
+
+        jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel22.setText("Чек на кухню");
+        UsersPanel.add(jLabel22);
+        jLabel22.setBounds(600, 700, 150, 17);
 
         getContentPane().add(UsersPanel);
         UsersPanel.setBounds(90, 0, 1130, 1040);
@@ -3815,26 +3827,58 @@ public class MainForm extends javax.swing.JFrame {
         }
         
     }
+    private boolean isTableChanged(){
+        if(getListFromTable(jTable6, 3, false).size() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
-        addIngCountToStorage(jTable6);
-        StorageUtils.readStorage();
-        setSort(jComboBox7, jTable6);
-        showCalcTable(jTable6);
+        if (isTableChanged()) {
+            JFrame frame = new JFrame();
+            String[] options = new String[2];
+            options[0] = "Так";
+            options[1] = "Ні";
+             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
+                    "Підтвердити приход на склад?", "Поповнення складу",
+                    0, JOptionPane.YES_NO_OPTION, null, options, null);       
+            if (reply == JOptionPane.YES_OPTION) {
+                addIngCountToStorage(jTable6);
+                StorageUtils.readStorage();
+                setSort(jComboBox7, jTable6);
+                showCalcTable(jTable6);
+            }
+        }
+        
+       
     }//GEN-LAST:event_addToStorage
 
     private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
-        if (isAdmin()) {
-            removeIngCountFromStorage(jTable6);
-            StorageUtils.readStorage();
-            setSort(jComboBox7, jTable6);
-            showCalcTable(jTable6);
-        } else {
-            removeIngCountFromStorage(jTable5);
-            StorageUtils.readStorage();
-            setSort(jComboBox7, jTable5);
-            showCalcTable(jTable5);
-        }
-
+         if (isTableChanged()) {
+             JFrame frame = new JFrame();
+            String[] options = new String[2];
+            options[0] = "Так";
+            options[1] = "Ні";
+             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
+                    "Підтвердити списання?", "Списання зі складу",
+                    0, JOptionPane.YES_NO_OPTION, null, options, null);       
+            if (reply == JOptionPane.YES_OPTION) {
+                if (isAdmin()) {
+                removeIngCountFromStorage(jTable6);
+                StorageUtils.readStorage();
+                setSort(jComboBox7, jTable6);
+                showCalcTable(jTable6);
+                } else {
+                removeIngCountFromStorage(jTable5);
+                StorageUtils.readStorage();
+                setSort(jComboBox7, jTable5);
+                showCalcTable(jTable5);
+                }
+            }
+        
+        }            
     }//GEN-LAST:event_removeFromStorage
 
     private void changeTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTable
@@ -4097,11 +4141,21 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField12MouseClicked
 
     private void updateIngCountInStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateIngCountInStorage
-        updateItemsFromStorage();
-        StorageUtils.readStorage();
-        setSort(jComboBox7, jTable6);
-        showUpdateStorageTable();
-
+        if (isTableChanged()) {
+            JFrame frame = new JFrame();
+            String[] options = new String[2];
+            options[0] = "Так";
+            options[1] = "Ні";
+             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
+                    "Підтвердити ревізію?", "Оновлення складу",
+                    0, JOptionPane.YES_NO_OPTION, null, options, null);       
+            if (reply == JOptionPane.YES_OPTION) {
+                updateItemsFromStorage();
+                StorageUtils.readStorage();
+                setSort(jComboBox7, jTable6);
+                showUpdateStorageTable();
+            }
+        }     
     }//GEN-LAST:event_updateIngCountInStorage
 
     private void getLastDayKass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getLastDayKass
@@ -4685,6 +4739,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

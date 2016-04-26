@@ -11,8 +11,7 @@ import javax.swing.JOptionPane;
  *
  * @author suxarina
  */
-public class DbConnect {
-//        public static String URL = "jdbc:mysql://server1cafe.ddns.net:3306/luckyroger";
+public class DbConnect {  
 
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String USERNAME = "root";
@@ -32,7 +31,7 @@ public class DbConnect {
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
         }
-        //coment below for stat ClientForm
+      
         
 
         initQueries();
@@ -60,7 +59,7 @@ public class DbConnect {
     
     public static void chooseServer(int cafeId) {
         if (cafeId == 0) {
-//            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
+            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
         } else if (cafeId == 1) {
             URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
         } else if (cafeId == 2) {

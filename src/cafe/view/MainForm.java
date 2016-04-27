@@ -3856,29 +3856,28 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addToStorage
 
     private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
-         if (isTableChanged()) {
-             JFrame frame = new JFrame();
-            String[] options = new String[2];
-            options[0] = "Так";
-            options[1] = "Ні";
-             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
-                    "Підтвердити списання?", "Списання зі складу",
-                    0, JOptionPane.YES_NO_OPTION, null, options, null);       
-            if (reply == JOptionPane.YES_OPTION) {
-                if (isAdmin()) {
-                removeIngCountFromStorage(jTable6);
-                StorageUtils.readStorage();
-                setSort(jComboBox7, jTable6);
-                showCalcTable(jTable6);
-                } else {
-                removeIngCountFromStorage(jTable5);
-                StorageUtils.readStorage();
-                setSort(jComboBox7, jTable5);
-                showCalcTable(jTable5);
+        if (isAdmin()) {
+            if (isTableChanged()) {
+                JFrame frame = new JFrame();
+                String[] options = new String[2];
+                options[0] = "Так";
+                options[1] = "Ні";
+                 int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
+                        "Підтвердити списання?", "Списання зі складу",
+                        0, JOptionPane.YES_NO_OPTION, null, options, null);       
+                if (reply == JOptionPane.YES_OPTION) {
+                   removeIngCountFromStorage(jTable6);
+                    StorageUtils.readStorage();
+                    setSort(jComboBox7, jTable6);
+                    showCalcTable(jTable6);
                 }
-            }
-        
-        }            
+            }           
+        } else {
+        removeIngCountFromStorage(jTable5);
+        StorageUtils.readStorage();
+        setSort(jComboBox7, jTable5);
+        showCalcTable(jTable5);
+        }    
     }//GEN-LAST:event_removeFromStorage
 
     private void changeTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTable

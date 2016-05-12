@@ -3410,11 +3410,11 @@ public class MainForm extends javax.swing.JFrame {
     private static ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn, boolean includeZERO) {
         ArrayList<Ingredient> changedList = new ArrayList<>();
         for (int i = 0; i < table.getRowCount(); i++) {
-            int dbId = Integer.parseInt(table.getValueAt(i, 0).toString());
+            int dbId = Integer.valueOf(table.getValueAt(i, 0).toString());
             String title = table.getValueAt(i, 1).toString();
             double count;
-            try {
-                count = Double.parseDouble(table.getValueAt(i, indexColumn).toString());
+            try {                
+                count = Double.valueOf(table.getValueAt(i, indexColumn).toString());
             } catch (NumberFormatException e) {
                 count = 0.0;
             }
@@ -3805,9 +3805,9 @@ public class MainForm extends javax.swing.JFrame {
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double newCount = changeList.get(i).getCount();
-            if (newCount != 0.0) {
-                diffStorage.get(i).setCount(Double.valueOf(
-                                            decFormat.format(newCount - old)));
+            if (newCount != 0.0) {               
+                String diff = Double.toString(newCount - old).replace(",", ".");
+                diffStorage.get(i).setCount(Double.parseDouble(diff));
                 storageList.get(i).setCount(newCount);
                 reviziaList.add(new ReviziaItem(
                         storageList.get(i).getId(),

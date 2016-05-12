@@ -975,10 +975,13 @@ public class ClientForm extends javax.swing.JFrame {
                 try {
                     startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
                     System.out.println("start " + startDate);
-                    endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + TWO_HOURS);
+                    endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
                     orders.clear();
-                    orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
+                    orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));                    
+                    System.out.println("Start date = " + dateFormat.format(new Date(startDate.getTime())));
+                    System.out.println("End date = " + dateFormat.format(new Date(endDate.getTime())));
                     System.out.println("orders size " + orders.size());
+                    
                     refreshOrderTable(jTable1, orders);
                 } finally {
                     jProgressBar1.setIndeterminate(false);
@@ -1133,7 +1136,6 @@ public class ClientForm extends javax.swing.JFrame {
                 order.getOrderSum()
             });
         }
-
     }
 
     private void refreshEmployeeTable() {
@@ -1276,7 +1278,7 @@ public class ClientForm extends javax.swing.JFrame {
         clientForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    private static final int TWO_HOURS = 3 * 60 * 60 * 1000;
+    private static final int ONE_DAY_PLUS_THREE_HOURS = 27 * 60 * 60 * 1000;
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();

@@ -432,27 +432,6 @@ public class OrderUtils {
         }
     }
 
-    public static int getDayInkassCount() {
-        final String SQL = "SELECT COUNT(*) FROM orders where datatime >  '" + DAY_START_TIME + "' AND sum < 0";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! getDayInkassCount"
-                    : "Error DB connecting");
-            Statement statement = connection.createStatement();
-            int count;
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                count = 0;
-                while (rs.next()) {
-                    count = rs.getInt(1);
-                }
-            }
-            return count;
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getDayInkassCount");
-            return 0;
-        }
-    }
-
     public static List<Order> getInkassOrders(Timestamp start, Timestamp end) {
         final String SQL = "select * from orders where coments != ''" 
                 + "AND datatime >= '" + start + "' "

@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -246,5 +247,34 @@ public class EmployeeUtils {
             System.out.println("Connection Failed! Check output console - addTimeOut");
         }
     }
+    
+    public static void getEmployeeWorksDay(Timestamp start, Timestamp end) {
+        final String SQL = ""
+                + "   SELECT name, Count(hour(TIMEDIFF(date_out, date_in))) as 'day_diff'"
+                + "   FROM employee_time"
+                + "   where month(date_in) = '04' AND hour(TIMEDIFF(date_out, date_in)) >= 12"
+                + "   GROUP BY name";
+        
+        
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            employees.clear();
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    employees.add(new Employee(
+                            rs.getInt("Id"),
+                            rs.getString("name"),
+                            rs.getTimestamp("date_in"),
+                            rs.getTimestamp("date_out")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getEmployeeTime");
+        }
+    }
+    
+    
 
 }

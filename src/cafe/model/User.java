@@ -23,6 +23,8 @@ public class User {
     private int dishCount;
     public Date startTime;
     public Date endTime;
+    public int workDaysCount;
+    public int halfWorkDaysCount;
     private List<Ingredient> dayRemovedProducts = new LinkedList<>();
     public static int active = -1;
 
@@ -106,6 +108,24 @@ public class User {
     public void setKeyMoney(int keyMoney) {
         this.keyMoney = keyMoney;
     }
+
+    public int getWorkDaysCount() {
+        return workDaysCount;
+    }
+
+    public void setWorkDaysCount(int workDaysCount) {
+        this.workDaysCount = workDaysCount;
+    }
+
+    public int getHalfWorkDaysCount() {
+        return halfWorkDaysCount;
+    }
+
+    public void setHalfWorkDaysCount(int halfWorkDaysCount) {
+        this.halfWorkDaysCount = halfWorkDaysCount;
+    }
+    
+    
 
     @Override
     public String toString() {

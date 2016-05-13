@@ -4,6 +4,7 @@ import cafe.Utils.db.DbConnect;
 import static cafe.Utils.db.DbConnect.PASSWORD;
 import static cafe.Utils.db.DbConnect.URL;
 import static cafe.Utils.db.DbConnect.USERNAME;
+import static cafe.Utils.db.DbConnect.chooseLocalServer;
 import static cafe.Utils.db.DbConnect.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.OrderUtils;
@@ -68,7 +69,6 @@ public class ClientForm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
         jXDatePicker2 = new org.jdesktop.swingx.JXDatePicker();
-        jProgressBar1 = new javax.swing.JProgressBar();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -127,6 +127,8 @@ public class ClientForm extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -143,18 +145,18 @@ public class ClientForm extends javax.swing.JFrame {
         jComboBox1.setBounds(0, 0, 220, 30);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        jLabel1.setText("З");
+        jLabel1.setText(" З");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 40, 40, 20);
+        jLabel1.setBounds(0, 30, 40, 20);
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        jLabel2.setText("По");
+        jLabel2.setText(" По");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 80, 40, 20);
+        jLabel2.setBounds(0, 50, 40, 20);
 
         jButton1.setBackground(new java.awt.Color(0, 153, 204));
         jButton1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jButton1.setText("підключитись до кафе");
+        jButton1.setText("Показати дані");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 getAllOrders(evt);
@@ -163,13 +165,9 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(0, 140, 220, 40);
         getContentPane().add(jXDatePicker1);
-        jXDatePicker1.setBounds(50, 40, 170, 22);
+        jXDatePicker1.setBounds(50, 30, 170, 22);
         getContentPane().add(jXDatePicker2);
-        jXDatePicker2.setBounds(50, 80, 170, 22);
-
-        jProgressBar1.setForeground(new java.awt.Color(51, 153, 0));
-        getContentPane().add(jProgressBar1);
-        jProgressBar1.setBounds(0, 120, 220, 10);
+        jXDatePicker2.setBounds(50, 50, 170, 22);
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -625,23 +623,23 @@ public class ClientForm extends javax.swing.JFrame {
         jTable8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable8.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Ім'я", "Сума"
+                "Ім'я", "Сума", "Кільк. змін"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -658,6 +656,9 @@ public class ClientForm extends javax.swing.JFrame {
             jTable8.getColumnModel().getColumn(1).setMinWidth(150);
             jTable8.getColumnModel().getColumn(1).setPreferredWidth(150);
             jTable8.getColumnModel().getColumn(1).setMaxWidth(150);
+            jTable8.getColumnModel().getColumn(2).setMinWidth(150);
+            jTable8.getColumnModel().getColumn(2).setPreferredWidth(150);
+            jTable8.getColumnModel().getColumn(2).setMaxWidth(150);
         }
 
         jPanel5.add(jScrollPane8);
@@ -908,6 +909,14 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().add(jLabel5);
         jLabel5.setBounds(0, 310, 290, 20);
 
+        jLabel23.setText("Підключено до ");
+        getContentPane().add(jLabel23);
+        jLabel23.setBounds(0, 90, 210, 14);
+
+        jCheckBox1.setText("Знахожусь в даному кафе");
+        getContentPane().add(jCheckBox1);
+        jCheckBox1.setBounds(0, 70, 220, 23);
+
         setSize(new java.awt.Dimension(1051, 599));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -915,7 +924,7 @@ public class ClientForm extends javax.swing.JFrame {
     //need to fix
     private static void initServer() {
         JFrame frame = new JFrame();
-        String[] servers = {"Шепетовка", "Староконстянтинів", "Славута"};
+        
         final JComboBox<String> combo = new JComboBox<>(servers);
         String[] options = {"OK"};
         int selection = JOptionPane.showOptionDialog(null, combo, "Виберіть кафе для підключення",
@@ -950,21 +959,16 @@ public class ClientForm extends javax.swing.JFrame {
         }
     }
 
-    public void testCafeConnection() {
+    
+    public void testCafeConnection() throws SQLException {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
             System.out.println(!connection.isClosed() ? "DB connected to " + URL
                     : "Error DB connecting");
         } catch (SQLException e) {
-            System.out.println("Connection to DB Failed! ");
-            JFrame frame = new JFrame();
-            int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                    "Немаэ підключення до бази данних!\nВихід з програми", "ПОМИЛКА!",
-                    0, JOptionPane.YES_OPTION, null, new String[]{"ТАК"}, null);
-
-        } catch (Exception e) {
-
-        }
+            throw new SQLException();
+            
+        } 
     }
 
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
@@ -972,20 +976,18 @@ public class ClientForm extends javax.swing.JFrame {
             if (jXDatePicker1.getDate() != null && jXDatePicker2.getDate() != null) {
                 jTable1.setEnabled(true);
                 jComboBox2.setEnabled(true);
-                try {
-                    startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
-                    System.out.println("start " + startDate);
-                    endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
-                    orders.clear();
-                    orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));                    
-                    System.out.println("Start date = " + dateFormat.format(new Date(startDate.getTime())));
-                    System.out.println("End date = " + dateFormat.format(new Date(endDate.getTime())));
-                    System.out.println("orders size " + orders.size());
-                    
-                    refreshOrderTable(jTable1, orders);
-                } finally {
-                    jProgressBar1.setIndeterminate(false);
-                }
+                
+                startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
+                System.out.println("start " + startDate);
+                endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
+                orders.clear();
+                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));                    
+                System.out.println("Start date = " + dateFormat.format(new Date(startDate.getTime())));
+                System.out.println("End date = " + dateFormat.format(new Date(endDate.getTime())));
+                System.out.println("orders size " + orders.size());
+
+                refreshOrderTable(jTable1, orders);
+               
                 MainForm.initBDmenu();
                 UsersUtils.readAllUsers();
                 getStorageTable();
@@ -1030,8 +1032,34 @@ public class ClientForm extends javax.swing.JFrame {
     }//GEN-LAST:event_showEmployeeShedule
 
     private void chooseCafe(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCafe
-        chooseServer(jComboBox1.getSelectedIndex());
-        testCafeConnection();
+        cafeId = jComboBox1.getSelectedIndex();
+        if (jCheckBox1.isSelected()) {
+            chooseLocalServer(cafeId);
+        }else{
+            chooseServer(cafeId);
+        }        
+        jLabel23.setText("Підключено до " + servers[cafeId]);
+        try {
+            testCafeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);
+            chooseLocalServer(cafeId);
+            try {
+                testCafeConnection();
+            } catch (SQLException ex1) {
+                System.out.println("Connection to DB Failed! ");
+                JFrame frame = new JFrame();               
+                String[] options = new String[2];
+                options[0] = "Так";
+                options[1] = "Ні";
+                int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
+                        "Немаэ підключення до бази данних!\nВихід з програми", "ПОМИЛКА!",
+                        0, JOptionPane.YES_NO_OPTION, null, options, null);
+                if (reply == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        }
         refreshReviziaDates();
         StorageUtils.readStorage();
     }//GEN-LAST:event_chooseCafe
@@ -1279,6 +1307,8 @@ public class ClientForm extends javax.swing.JFrame {
     }
 
     private static final int ONE_DAY_PLUS_THREE_HOURS = 27 * 60 * 60 * 1000;
+    private static int cafeId;
+    private static final String[] servers  = {"Шепетовка", "Староконстянтинів", "Славута"};;
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();
@@ -1291,6 +1321,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton39;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
@@ -1311,6 +1342,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1325,7 +1357,6 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;

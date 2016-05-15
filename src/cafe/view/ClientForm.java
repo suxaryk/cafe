@@ -7,6 +7,8 @@ import static cafe.Utils.db.DbConnect.USERNAME;
 import static cafe.Utils.db.DbConnect.chooseLocalServer;
 import static cafe.Utils.db.DbConnect.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
+import static cafe.Utils.db.EmployeeUtils.getEmployeeFullWorksDay;
+import static cafe.Utils.db.EmployeeUtils.getEmployeeHalfWorksDay;
 import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getSumKeyMoneyForUserBetween;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
@@ -623,23 +625,23 @@ public class ClientForm extends javax.swing.JFrame {
         jTable8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable8.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Ім'я", "Сума", "Кільк. змін"
+                "Ім'я", "Сума", "Кіл. змін", "Кіл. пів змін"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -656,9 +658,12 @@ public class ClientForm extends javax.swing.JFrame {
             jTable8.getColumnModel().getColumn(1).setMinWidth(150);
             jTable8.getColumnModel().getColumn(1).setPreferredWidth(150);
             jTable8.getColumnModel().getColumn(1).setMaxWidth(150);
-            jTable8.getColumnModel().getColumn(2).setMinWidth(150);
-            jTable8.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTable8.getColumnModel().getColumn(2).setMaxWidth(150);
+            jTable8.getColumnModel().getColumn(2).setMinWidth(75);
+            jTable8.getColumnModel().getColumn(2).setPreferredWidth(75);
+            jTable8.getColumnModel().getColumn(2).setMaxWidth(75);
+            jTable8.getColumnModel().getColumn(3).setMinWidth(75);
+            jTable8.getColumnModel().getColumn(3).setPreferredWidth(75);
+            jTable8.getColumnModel().getColumn(3).setMaxWidth(75);
         }
 
         jPanel5.add(jScrollPane8);
@@ -999,7 +1004,9 @@ public class ClientForm extends javax.swing.JFrame {
                 getDishes();
                 getEmployeeKeyMoney();
                 getInkass();
-                refreshBarmensTable();
+                refreshBarmensTable();                
+                getEmployeeFullWorksDay(startDate, endDate);
+                getEmployeeHalfWorksDay(startDate, endDate);
             }
         }
     }//GEN-LAST:event_getAllOrders
@@ -1060,8 +1067,9 @@ public class ClientForm extends javax.swing.JFrame {
                 }
             }
         }
-        refreshReviziaDates();
+        refreshReviziaDates();        
         StorageUtils.readStorage();
+        EmployeeUtils.readAllEmployees();
     }//GEN-LAST:event_chooseCafe
 
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
@@ -1130,8 +1138,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
     }
 
-    private void getEmployeeKeyMoney() {
-        EmployeeUtils.readAllEmployees();
+    private void getEmployeeKeyMoney() {        
         System.out.println("employee size " + employees.size());
         for (Employee employee : employees) {
             employee.setKeyMoney(getSumKeyMoneyForUserBetween(startDate, endDate, employee.getName()));
@@ -1146,7 +1153,9 @@ public class ClientForm extends javax.swing.JFrame {
         for (Employee employee : employees) {
             model.addRow(new Object[]{
                 employee.getName(),
-                employee.getKeyMoney()
+                employee.getKeyMoney(),
+                employee.getWorkDaysCount(),
+                employee.getHalfWorkDaysCount()
             });
         }
     }

@@ -18,6 +18,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EmployeeUtils {
 
@@ -248,33 +250,66 @@ public class EmployeeUtils {
         }
     }
     
-    public static void getEmployeeWorksDay(Timestamp start, Timestamp end) {
+    
+    
+    public static void getEmployeeFullWorksDay(Timestamp start, Timestamp end) {
         final String SQL = ""
-                + "   SELECT name, Count(hour(TIMEDIFF(date_out, date_in))) as 'day_diff'"
+                + "   SELECT name, Count(hour(TIMEDIFF(date_out, date_in))) as 'full_work_day'"
                 + "   FROM employee_time"
-                + "   where month(date_in) = '04' AND hour(TIMEDIFF(date_out, date_in)) >= 12"
-                + "   GROUP BY name";
-        
+                + "   where date_in >= '" + start
+                + "'  AND date_out <= '" + end
+                + "'  AND hour(TIMEDIFF(date_out, date_in)) >= 12"
+                + "   GROUP BY name";        
         
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            employees.clear();
+           
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {
-                    employees.add(new Employee(
-                            rs.getInt("Id"),
-                            rs.getString("name"),
-                            rs.getTimestamp("date_in"),
-                            rs.getTimestamp("date_out")
-                    ));
+                while (rs.next()) {                                      
+                    for(Employee empl: employees){
+                        if (empl.getName().equals(rs.getString("name"))) {
+                            empl.setWorkDaysCount(rs.getInt("full_work_day"));
+                            System.out.println("rez " + empl.getWorkDaysCount());
+                        }
+                    }                                                 
                 }
-            }
+            }        
+            System.out.println("getEmployeeFullWorksDay");
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getEmployeeTime");
+            System.out.println("Connection Failed! Check output console - getEmployeeFullWorksDay");
         }
-    }
-    
+    }   
+    public static void getEmployeeHalfWorksDay(Timestamp start, Timestamp end) {
+        final String SQL = ""
+                + "   SELECT name, Count(hour(TIMEDIFF(date_out, date_in))) as 'half_work_day'"
+                + "   FROM employee_time"
+                + "   where date_in >= '" + start
+                + "'  AND date_out <= '" + end
+                + "'  AND hour(TIMEDIFF(date_out, date_in)) < 12"
+                + "   GROUP BY name";
+        
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+           
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {    
+                    for(Employee empl: employees){
+                        if (empl.getName().equals(rs.getString("name"))) {
+                            empl.setHalfWorkDaysCount(rs.getInt("half_work_day"));
+                            System.out.println("rez " + rs.getInt("half_work_day"));
+                        }
+                    }                                                 
+                }
+            }        
+            System.out.println("getEmployeeHalfWorksDay");
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getEmployeeHalfWorksDay");
+        }
+            
+    }   
+   
     
 
 }

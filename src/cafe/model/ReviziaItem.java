@@ -11,12 +11,21 @@ public class ReviziaItem {
     public ReviziaItem() {
     }
 
-    public ReviziaItem(int id, double oldCount, double newCount, double diffCount) {
+    public ReviziaItem(int id, String title, double oldCount, double newCount, double diffCount) {
         this.id = id;      
+        this.title = title;
         this.oldCount = oldCount;
         this.newCount = newCount;
         this.diffCount = diffCount;
     }
+
+    public ReviziaItem(int id, double oldCount, double newCount, double diffCount) {
+        this.id = id;
+        this.oldCount = oldCount;
+        this.newCount = newCount;
+        this.diffCount = diffCount;
+    }   
+    
 
     public int getId() {
         return id;

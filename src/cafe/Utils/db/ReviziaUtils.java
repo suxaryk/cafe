@@ -80,21 +80,26 @@ public class ReviziaUtils {
         }
     }
 
-    public static List<ReviziaItem> getReviziaByDate(Timestamp date) {
+    public static List<ReviziaItem> getReviziaByDate(Timestamp date, String orderCriteria) {
         List<ReviziaItem> revizia = new ArrayList<>();
         System.out.println("date = " + date);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            final String SQL = "SELECT ingredient_id, old_count, "
+            final String SQL = "SELECT ingredient_id, old_count, storage.title, "
                                + "new_count, diff_count "
                                + "FROM revizia "
-                               + "WHERE DATE(date) = DATE('"+ date +"')";           
+                               + "INNER JOIN storage " 
+                               + "ON revizia.ingredient_id = storage.Id "
+                               + "WHERE DATE(date) = DATE('"+ date +"') "
+                               + "ORDER BY "+ orderCriteria +""; 
+            System.out.println("sql " + SQL);
 
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(SQL);            
             while (rs.next()) {
-                revizia.add(new ReviziaItem(                       
+                revizia.add(new ReviziaItem(                         
                         rs.getInt("ingredient_id"), 
+                        rs.getString("title"),
                         rs.getDouble("old_count"), 
                         rs.getDouble("new_count"), 
                         rs.getDouble("diff_count")                        

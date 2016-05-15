@@ -97,6 +97,7 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox();
         jToggleButton1 = new javax.swing.JToggleButton();
+        jComboBox9 = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -165,7 +166,7 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(0, 140, 220, 40);
+        jButton1.setBounds(0, 110, 220, 40);
         getContentPane().add(jXDatePicker1);
         jXDatePicker1.setBounds(50, 30, 170, 22);
         getContentPane().add(jXDatePicker2);
@@ -548,6 +549,17 @@ public class ClientForm extends javax.swing.JFrame {
         jPanel7.add(jToggleButton1);
         jToggleButton1.setBounds(713, 10, 90, 23);
 
+        jComboBox9.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox9.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за різн.ваги", "за назвою" }));
+        jComboBox9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox9ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jComboBox9);
+        jComboBox9.setBounds(40, 0, 145, 29);
+
         jTabbedPane1.addTab("Ревізія", jPanel7);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -917,12 +929,12 @@ public class ClientForm extends javax.swing.JFrame {
 
         jLabel23.setText("Підключено до ");
         getContentPane().add(jLabel23);
-        jLabel23.setBounds(0, 90, 210, 14);
+        jLabel23.setBounds(5, 90, 210, 14);
 
         jCheckBox1.setText("Знаходжусь в даному кафе");
         jCheckBox1.setToolTipText("");
         getContentPane().add(jCheckBox1);
-        jCheckBox1.setBounds(0, 73, 220, 20);
+        jCheckBox1.setBounds(48, 70, 170, 20);
 
         setSize(new java.awt.Dimension(1051, 624));
         setLocationRelativeTo(null);
@@ -1096,11 +1108,18 @@ public class ClientForm extends javax.swing.JFrame {
     }//GEN-LAST:event_changeOrderedDishSort
 
     private void showRevizia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRevizia
-        Timestamp date = new java.sql.Timestamp(((Date) jComboBox3.getSelectedItem()).getTime());
+        
+        showReviziaa("ingredient_id");  
+        jComboBox9.setSelectedIndex(0);
 
+    }//GEN-LAST:event_showRevizia
+    
+    
+    private void showReviziaa(String orderCriteria){
+        Timestamp date = new java.sql.Timestamp(((Date) jComboBox3.getSelectedItem()).getTime());
         DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
         model.setRowCount(0);
-        List<ReviziaItem> revizia = ReviziaUtils.getReviziaByDate(date);
+        List<ReviziaItem> revizia = ReviziaUtils.getReviziaByDate(date, orderCriteria);
         for (ReviziaItem item : revizia) {
             model.addRow(new Object[]{
                 item.getId(),
@@ -1111,12 +1130,22 @@ public class ClientForm extends javax.swing.JFrame {
             });
 
         }
-
-    }//GEN-LAST:event_showRevizia
+    }
+    
+    
+    private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
+           int index = jComboBox9.getSelectedIndex();
+           if (index == 0) {
+               showReviziaa("ingredient_id");            
+            }else if (index == 1) {                
+                showReviziaa("diff_count");            
+            }else if (index == 2) {
+                showReviziaa("title");            
+        }     
+    }//GEN-LAST:event_jComboBox9ActionPerformed
 
     private void getStorageTable() {
         StorageUtils.readStorage();
-
         setSort(jComboBox7, jTable6);
         showCalcTable(jTable6);
     }
@@ -1338,6 +1367,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox7;
     private javax.swing.JComboBox jComboBox8;
+    private javax.swing.JComboBox jComboBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

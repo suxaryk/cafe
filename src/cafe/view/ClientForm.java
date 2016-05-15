@@ -234,13 +234,13 @@ public class ClientForm extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(5).setMinWidth(40);
             jTable1.getColumnModel().getColumn(5).setPreferredWidth(40);
             jTable1.getColumnModel().getColumn(5).setMaxWidth(40);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(40);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(40);
-            jTable1.getColumnModel().getColumn(6).setMaxWidth(40);
+            jTable1.getColumnModel().getColumn(6).setMinWidth(45);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(45);
+            jTable1.getColumnModel().getColumn(6).setMaxWidth(45);
         }
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(1, 1, 480, 530);
+        jScrollPane1.setBounds(1, 1, 490, 520);
 
         jTable2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -284,7 +284,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(480, 50, 320, 380);
+        jScrollPane2.setBounds(490, 50, 320, 380);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Оплачені страви", "Видалені страви" }));
         jComboBox2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -294,13 +294,13 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(480, 20, 320, 30);
+        jComboBox2.setBounds(490, 20, 320, 30);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 153, 204));
         jLabel3.setText("Чек № ");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(480, 0, 170, 20);
+        jLabel3.setBounds(490, 0, 170, 20);
 
         jTabbedPane1.addTab("Чеки", jPanel1);
 
@@ -385,7 +385,7 @@ public class ClientForm extends javax.swing.JFrame {
                 .addComponent(jButton39, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(139, 139, 139))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -790,18 +790,19 @@ public class ClientForm extends javax.swing.JFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Замовлені страви", jPanel6);
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(220, 0, 820, 570);
+        jTabbedPane1.setBounds(220, 0, 820, 560);
 
         jLabel10.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 153, 0));
@@ -918,11 +919,12 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().add(jLabel23);
         jLabel23.setBounds(0, 90, 210, 14);
 
-        jCheckBox1.setText("Знахожусь в даному кафе");
+        jCheckBox1.setText("Знаходжусь в даному кафе");
+        jCheckBox1.setToolTipText("");
         getContentPane().add(jCheckBox1);
-        jCheckBox1.setBounds(0, 70, 220, 23);
+        jCheckBox1.setBounds(0, 73, 220, 20);
 
-        setSize(new java.awt.Dimension(1051, 599));
+        setSize(new java.awt.Dimension(1051, 624));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -992,11 +994,12 @@ public class ClientForm extends javax.swing.JFrame {
                 System.out.println("orders size " + orders.size());
 
                 refreshOrderTable(jTable1, orders);
-               
+                
                 MainForm.initBDmenu();
                 UsersUtils.readAllUsers();
-                getStorageTable();
-
+                getEmployeeFullWorksDay(startDate, endDate);
+                getEmployeeHalfWorksDay(startDate, endDate);
+                getStorageTable();                
                 jButton2.setEnabled(true);
                 jButton39.setEnabled(true);
                 refreshRemovedIngTable();
@@ -1005,8 +1008,7 @@ public class ClientForm extends javax.swing.JFrame {
                 getEmployeeKeyMoney();
                 getInkass();
                 refreshBarmensTable();                
-                getEmployeeFullWorksDay(startDate, endDate);
-                getEmployeeHalfWorksDay(startDate, endDate);
+                
             }
         }
     }//GEN-LAST:event_getAllOrders

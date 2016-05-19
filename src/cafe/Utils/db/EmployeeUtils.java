@@ -264,27 +264,31 @@ public class EmployeeUtils {
                 + "   where date_in >= '" + start
                 + "'  AND date_out <= '" + end
                 + "'  AND hour(TIMEDIFF(date_out, date_in)) >= 12"
-                + "   GROUP BY name";        
+                + "   AND name = ?";        
         
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-           
-            Statement statement = connection.createStatement();
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {                                      
-                    for(Employee empl: employees){
+            for (Employee empl : employees) {
+                try (PreparedStatement pstatement = connection.prepareStatement(SQL)){                    
+                    pstatement.setString(1, empl.getName());
+                    ResultSet rs = pstatement.executeQuery();
+                    while (rs.next()) {
                         if (empl.getName().equals(rs.getString("name"))) {
                             empl.setWorkDaysCount(rs.getInt("full_work_day"));
                             System.out.println("rez " + empl.getWorkDaysCount());
                         }
-                    }                                                 
-                }
-            }        
+                    }                    
+                } catch (Exception e) {
+                    System.out.println("Error execute query prepare statment getEmployeeFullWorksDay");
+                }                             
+            }                   
             System.out.println("getEmployeeFullWorksDay");
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getEmployeeFullWorksDay");
         }
     }   
+    
+    
     public static void getEmployeeHalfWorksDay(Timestamp start, Timestamp end) {
         final String SQL = ""
                 + "   SELECT name, Count(hour(TIMEDIFF(date_out, date_in))) as 'half_work_day'"
@@ -292,28 +296,30 @@ public class EmployeeUtils {
                 + "   where date_in >= '" + start
                 + "'  AND date_out <= '" + end
                 + "'  AND hour(TIMEDIFF(date_out, date_in)) < 12"
-                + "   GROUP BY name";
+                + "   AND name = ?";        
         
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-           
-            Statement statement = connection.createStatement();
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {    
-                    for(Employee empl: employees){
+            for (Employee empl : employees) {
+                try (PreparedStatement pstatement = connection.prepareStatement(SQL)){                    
+                    pstatement.setString(1, empl.getName());
+                    ResultSet rs = pstatement.executeQuery();
+                    while (rs.next()) {
                         if (empl.getName().equals(rs.getString("name"))) {
                             empl.setHalfWorkDaysCount(rs.getInt("half_work_day"));
-                            System.out.println("rez " + rs.getInt("half_work_day"));
+                            System.out.println("rez " + empl.getWorkDaysCount());
                         }
-                    }                                                 
-                }
-            }        
-            System.out.println("getEmployeeHalfWorksDay");
+                    }                    
+                } catch (Exception e) {
+                    System.out.println("Error execute query prepare statment getEmployeeFullWorksDay");
+                }                             
+            }                   
+            System.out.println("getEmployeeFullWorksDay");
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getEmployeeHalfWorksDay");
+            System.out.println("Connection Failed! Check output console - getEmployeeFullWorksDay");
         }
-            
     }   
+
    
     
 

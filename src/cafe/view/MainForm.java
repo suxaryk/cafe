@@ -10,7 +10,7 @@ import cafe.Utils.db.DishUtils;
 import static cafe.Utils.db.DbConnect.PASSWORD;
 import static cafe.Utils.db.DbConnect.USERNAME;
 import cafe.Utils.db.RecepiesUtils;
-import static cafe.Utils.db.EmployeeUtils.isDayCountStarted;
+import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
 import cafe.Utils.db.ReviziaUtils;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
@@ -2320,7 +2320,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton39.setBackground(new java.awt.Color(204, 204, 204));
         jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton39.setText("<html>поповнити<br/>&nbsp; (додати)</html> ");
+        jButton39.setText("<html>&nbsp;&nbsp;поповнити<br/>&nbsp;&nbsp;(ПРИХОД)</html> ");
         jButton39.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton39.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton39.addActionListener(new java.awt.event.ActionListener() {
@@ -2381,7 +2381,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton46.setBackground(new java.awt.Color(0, 153, 204));
         jButton46.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton46.setText("<html> &nbsp;змінити на нову<br/>   &nbsp;&nbsp; &nbsp;(оновити)</html> ");
+        jButton46.setText("<html> &nbsp;змінити на нову<br/> &nbsp; &nbsp;&nbsp; &nbsp;(РЕВІЗІЯ)</html> ");
         jButton46.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton46.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton46.addActionListener(new java.awt.event.ActionListener() {
@@ -2884,7 +2884,7 @@ public class MainForm extends javax.swing.JFrame {
 
     public static void setStartUserTime() {
         if (new LocalTime().getHourOfDay() > 6) {
-            if (!isDayCountStarted()) {
+            if (!isEmployeeLogged()) {
                 System.out.println("-----" + userList.get(User.active).getName());
                 EmployeeUtils.addTimeIn(userList.get(User.active));
                 EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));

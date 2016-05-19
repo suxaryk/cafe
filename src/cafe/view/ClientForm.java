@@ -98,6 +98,8 @@ public class ClientForm extends javax.swing.JFrame {
         jComboBox3 = new javax.swing.JComboBox();
         jToggleButton1 = new javax.swing.JToggleButton();
         jComboBox9 = new javax.swing.JComboBox();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -559,6 +561,16 @@ public class ClientForm extends javax.swing.JFrame {
         });
         jPanel7.add(jComboBox9);
         jComboBox9.setBounds(40, 0, 145, 29);
+
+        jLabel24.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel24.setText("Вага стара - яка мала би бути");
+        jPanel7.add(jLabel24);
+        jLabel24.setBounds(210, 0, 240, 17);
+
+        jLabel25.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel25.setText("Вага нова - вага фактична яка є на складі");
+        jPanel7.add(jLabel25);
+        jLabel25.setBounds(210, 20, 280, 17);
 
         jTabbedPane1.addTab("Ревізія", jPanel7);
 
@@ -1384,6 +1396,8 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

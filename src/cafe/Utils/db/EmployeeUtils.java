@@ -17,8 +17,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EmployeeUtils {
@@ -44,27 +46,30 @@ public class EmployeeUtils {
         }
     }
 
-    public static boolean isDayCountStarted() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        final String SQL = "SELECT count(*) from employee_time where DATE(date_in)= DATE('" + sdf.format(new Date()) + "')";
+    public static boolean isEmployeeLogged() {      
+        final String SQL = "SELECT name FROM luckyroger.employee_time where DATE(date_in) = DATE(curdate())";
+        List<String> tmpEmplNames = new ArrayList<>(0);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! isDayCountStarted"
                     : "Error DB connecting");
             Statement statement = connection.createStatement();
-
-            int sum;
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                sum = 0;
+           
+            try (ResultSet rs = statement.executeQuery(SQL)) {             
                 while (rs.next()) {
-                    sum = rs.getInt(1);
+                    tmpEmplNames.add(rs.getString("name"));
                 }
             }
-            System.out.println("user count > 0");
-            return sum != 0;
+            for(String empl: tmpEmplNames){
+                if (empl.equals(userList.get(User.active).getName())) {
+                    return true;
+                }
+            }
+            return false;
+            
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - isDayCountStarted");
+            System.out.println("Connection Failed! Check output console - isEmployeeLogged");
             return false;
         }
     }

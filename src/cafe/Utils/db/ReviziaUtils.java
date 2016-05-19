@@ -91,8 +91,7 @@ public class ReviziaUtils {
                                + "INNER JOIN storage " 
                                + "ON revizia.ingredient_id = storage.Id "
                                + "WHERE DATE(date) = DATE('"+ date +"') "
-                               + "ORDER BY "+ orderCriteria +""; 
-            System.out.println("sql " + SQL);
+                               + "ORDER BY "+ orderCriteria +"";            
 
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(SQL);            

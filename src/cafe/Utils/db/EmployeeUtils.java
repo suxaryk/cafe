@@ -297,7 +297,8 @@ public class EmployeeUtils {
                 + "'  AND date_out <= '" + end
                 + "'  AND hour(TIMEDIFF(date_out, date_in)) < 12"
                 + "   AND name = ?";        
-        
+        System.out.println("data in " + new Date(start.getTime()));
+        System.out.println("data in " + new Date(end.getTime()));
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             for (Employee empl : employees) {

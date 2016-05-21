@@ -946,7 +946,7 @@ public class ClientForm extends javax.swing.JFrame {
         jCheckBox1.setText("Знаходжусь в даному кафе");
         jCheckBox1.setToolTipText("");
         getContentPane().add(jCheckBox1);
-        jCheckBox1.setBounds(48, 70, 170, 20);
+        jCheckBox1.setBounds(4, 70, 210, 20);
 
         setSize(new java.awt.Dimension(1051, 624));
         setLocationRelativeTo(null);
@@ -1008,7 +1008,7 @@ public class ClientForm extends javax.swing.JFrame {
                 jTable1.setEnabled(true);
                 jComboBox2.setEnabled(true);
                 
-                startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime()));
+                startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime() + SIX_HOURS));
                 System.out.println("start " + startDate);
                 endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
                 orders.clear();
@@ -1358,6 +1358,7 @@ public class ClientForm extends javax.swing.JFrame {
         clientForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
+    private static final int SIX_HOURS = 6 * 60 * 60 * 1000;
     private static final int ONE_DAY_PLUS_THREE_HOURS = 27 * 60 * 60 * 1000;
     private static int cafeId;
     private static final String[] servers  = {"Шепетовка", "Староконстянтинів", "Славута"};;

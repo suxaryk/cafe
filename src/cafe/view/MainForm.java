@@ -286,6 +286,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton101 = new javax.swing.JButton();
         jButton47 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+        jButton40 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
 
@@ -2473,6 +2474,19 @@ public class MainForm extends javax.swing.JFrame {
         StoragePanel.add(jLabel17);
         jLabel17.setBounds(1080, 540, 90, 16);
 
+        jButton40.setBackground(new java.awt.Color(255, 102, 102));
+        jButton40.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton40.setText("<html>&nbsp;&nbsp;відмінити<br/>останню дію</html> ");
+        jButton40.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton40.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton40.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton40addToStorage(evt);
+            }
+        });
+        StoragePanel.add(jButton40);
+        jButton40.setBounds(1180, 240, 100, 70);
+
         getContentPane().add(StoragePanel);
         StoragePanel.setBounds(0, 0, 1280, 1000);
 
@@ -3182,6 +3196,13 @@ public class MainForm extends javax.swing.JFrame {
                 + "ЗАКРИТТЯ КАСИ\nВиключити програму?", "Закриття каси!",
                 0, JOptionPane.YES_NO_OPTION, null, options, null);
         if (reply == JOptionPane.YES_OPTION) {
+            try {
+                StorageUtils.readStorage();
+                StorageUtils.addStorageHistory(storageList);
+            } catch (SQLException ex) {
+                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("SQL syntax error addStorageHistory");
+            }
             EmployeeUtils.addTimeOut(userList.get(User.active));            
             OrderUtils.addDayInfo(DAY_START_TIME, new Date(), dayInfo());
             System.exit(0);
@@ -4254,6 +4275,10 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void jButton40addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton40addToStorage
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton40addToStorage
+
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
             return orders.get(activeTable).getItems().get(index).isRealized();
@@ -4683,6 +4708,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton34;
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton40;
     private javax.swing.JButton jButton41;
     private javax.swing.JButton jButton42;
     private javax.swing.JButton jButton43;

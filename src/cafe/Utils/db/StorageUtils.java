@@ -280,5 +280,41 @@ public class StorageUtils {
             return null;
         }
     }
+    
+    public static void addStorageHistory(List<Ingredient> storageDump) throws SQLException{
+        final String SQL = "INSERT INTO storage_history(date, ingredient_id, count) VALUES(?, ?, ?)";
+        Connection connection = null;
+        PreparedStatement pstatement = null;
+
+        try {
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            pstatement = connection.prepareStatement(SQL);
+            connection.setAutoCommit(false);
+
+            for (Ingredient ing : storageDump) {
+                pstatement.setTimestamp(1, getCurrentTimeStamp());
+                pstatement.setInt(2, ing.getId());
+                pstatement.setDouble(3, ing.getCount());
+                pstatement.addBatch();
+            }
+            pstatement.executeBatch();
+            connection.commit();
+
+        } catch (SQLException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            System.out.println("Connection Failed! Check output console - addStorageHistory");
+        } finally {
+            if (pstatement != null) {
+                pstatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+    }
 
 }

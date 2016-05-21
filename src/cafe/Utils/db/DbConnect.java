@@ -73,7 +73,7 @@ public class DbConnect {
     public static void chooseLocalServer(int cafeId) {
         if (cafeId == 0) {
             //shep
-//            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
+            URL = "jdbc:mysql://192.168.0.111:3306/luckyroger";
         } else if (cafeId == 1) {
             //star
             URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";

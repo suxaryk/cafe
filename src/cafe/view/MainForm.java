@@ -1801,14 +1801,14 @@ public class MainForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "№", "Назва", "Вага ( кг/ шт )", "Вибраний"
+                "№", "Назва", "Вага ( кг/ шт )"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1835,9 +1835,6 @@ public class MainForm extends javax.swing.JFrame {
             jTable3.getColumnModel().getColumn(2).setMinWidth(100);
             jTable3.getColumnModel().getColumn(2).setPreferredWidth(100);
             jTable3.getColumnModel().getColumn(2).setMaxWidth(100);
-            jTable3.getColumnModel().getColumn(3).setMinWidth(60);
-            jTable3.getColumnModel().getColumn(3).setPreferredWidth(60);
-            jTable3.getColumnModel().getColumn(3).setMaxWidth(60);
         }
 
         RecipePanel.add(jScrollPane4);
@@ -3314,7 +3311,7 @@ public class MainForm extends javax.swing.JFrame {
     public static void showCalcTable(JTable jTable) {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
-        if (jTable.getColumnCount() == 4) {
+        if (jTable.getColumnCount() == 3) {
             for (Ingredient ingredient : storageList) {
                 model.addRow(new Object[]{
                     ingredient.getId(),
@@ -3328,7 +3325,8 @@ public class MainForm extends javax.swing.JFrame {
                     ingredient.getId(),
                     ingredient.getTitle(),
                     ingredient.getCount(),
-                    0.0
+                    0.0,
+                    false
                 });
             }
         } else if (jTable.getColumnCount() == 6) {
@@ -3338,7 +3336,8 @@ public class MainForm extends javax.swing.JFrame {
                     ingredient.getTitle(),
                     ingredient.getCount(),
                     0,
-                    0.0
+                    0.0,
+                    false
                 });
             }
         }
@@ -3347,14 +3346,15 @@ public class MainForm extends javax.swing.JFrame {
     public void showUpdateStorageTable() {
         DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
         model.setRowCount(0);
-        if (jTable6.getColumnCount() == 5) {
+        if (jTable6.getColumnCount() == 6) {
             for (int i = 0; i < storageList.size(); i++) {
                 model.addRow(new Object[]{
                     storageList.get(i).getId(),
                     storageList.get(i).getTitle(),
                     storageList.get(i).getCount(),
                     0,
-                    decFormat.format(diffStorage.get(i).getCount())
+                    decFormat.format(diffStorage.get(i).getCount()),
+                    false
                 });
             }
         }
@@ -3437,15 +3437,13 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
     
-    private static void setTableCheked(JTable table){
-        
-    }
+
 
     private static ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn, boolean includeZERO) {
         ArrayList<Ingredient> changedList = new ArrayList<>();
         int checkColumn = table.getColumnCount()-1;
-        for (int i = 0; i < table.getRowCount(); i++) {
-            if (Boolean.valueOf(table.getValueAt(i, checkColumn).toString())) {
+        for (int i = 0; i < table.getRowCount(); i++) {            
+//            if (Boolean.valueOf(table.getValueAt(i, checkColumn).toString())) {
                 int dbId = Integer.valueOf(table.getValueAt(i, 0).toString());
                 String title = table.getValueAt(i, 1).toString();
                 double count;
@@ -3453,14 +3451,18 @@ public class MainForm extends javax.swing.JFrame {
                     count = Double.valueOf(table.getValueAt(i, indexColumn).toString());
                 } catch (NumberFormatException e) {
                     count = 0.0;
-                }
-                if (includeZERO) {
-                    changedList.add(new Ingredient(dbId, title, count));
-                } else if (count != 0.0) {
-                    changedList.add(new Ingredient(dbId, title, count));
-                }
-            }            
+                } 
+                boolean checked = Boolean.valueOf(table.getValueAt(i, checkColumn).toString());
+                
+//                if (includeZERO) {
+                    changedList.add(new Ingredient(dbId, title, count, checked));
+//                } else if (count != 0.0) {
+//                    changedList.add(new Ingredient(dbId, title, count));
+//                }
+               
+//            }            
         }
+        Logger.getLogger("get removed List from table, size = " + changedList.size());
         return changedList;
     }
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
@@ -3688,19 +3690,22 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
     
-    private void setCheck(JButton button, JTable table, int columnIndex){
+    private void setCheck(JTable table, int columnIndex){
         int rowIndex = table.getSelectedRow();        
         int checkColumn = table.getColumnCount() - 1;
         String old = table.getValueAt(rowIndex, columnIndex).toString();
-        System.out.println("old >" + old + "<");
-        System.out.println("old number >" + new Double(old) + "<");
-        
-        if (old.equals("") || old.equals("0.0")
-                || old.equals("0") || old.equals("0.")) {
-            table.setValueAt(false, rowIndex, checkColumn);
+        Double oldDouble;
+        try {
+             oldDouble = Double.valueOf(table.getValueAt(rowIndex, columnIndex).toString());
+        } catch (NumberFormatException e) {
+            oldDouble = 0.0;
+        }            
+        if (old.isEmpty() || old.equals("0.0")
+                || old.equals("0") || old.equals("0.") || oldDouble.equals(0.0)) {
+            table.setValueAt(false, rowIndex, checkColumn);            
         } else {
             table.setValueAt(true, rowIndex, checkColumn);
-        }
+        }       
     }
 
     private void PressNumber(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PressNumber
@@ -3768,18 +3773,17 @@ public class MainForm extends javax.swing.JFrame {
         JButton myButton = (JButton) evt.getSource();
         if (isAdmin()) {
             setNumber(myButton, jTable6, 3);
-            setCheck(myButton, jTable6, 3);
+            setCheck(jTable6, 3);
             
         } else {
             setNumber(myButton, jTable5, 3);
-            setCheck(myButton, jTable5, 3);
+            setCheck(jTable5, 3);
         }      
 
     }//GEN-LAST:event_pressNumberInStorage
 
     private void clearStorageTableFiled(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearStorageTableFiled
-        int index;
-        JButton myButton = (JButton) evt.getSource();
+        int index;    
         if (isAdmin()) {
             index = jTable6.getSelectedRow();
         } else {
@@ -3788,10 +3792,10 @@ public class MainForm extends javax.swing.JFrame {
         if (index != -1) {
             if (isAdmin()) {
                 jTable6.setValueAt("", index, 3);
-                setCheck(myButton, jTable6, 3);
+                setCheck(jTable6, 3);
             } else {
                 jTable5.setValueAt("", index, 3);
-                setCheck(myButton, jTable5, 3);
+                setCheck(jTable5, 3);
             }
         } else {
             jTextField12.setText("");
@@ -3800,13 +3804,12 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearStorageTableFiled
 
     private void deleteStorageFiledDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStorageFiledDigit
-        JButton myButton = (JButton) evt.getSource();
         if (isAdmin()) {
             deleteDigit(jTable6, 3);
-            setCheck(myButton, jTable6, 3);
+            setCheck(jTable6, 3);
         } else {
             deleteDigit(jTable5, 3);
-            setCheck(myButton, jTable5, 3);
+            setCheck(jTable5, 3);
         }
 
     }//GEN-LAST:event_deleteStorageFiledDigit
@@ -3822,7 +3825,7 @@ public class MainForm extends javax.swing.JFrame {
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();
-            if (diff != 0.0) {
+            if (changeList.get(i).isActive()) {
                 storageList.get(i).setCount(old + diff);
                 System.out.println("new count " + storageList.get(i).getCount());
                 StorageUtils.updateCount(storageList.get(i).getId(),
@@ -3841,7 +3844,7 @@ public class MainForm extends javax.swing.JFrame {
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();
-            if (diff != 0.0) {
+            if (changeList.get(i).isActive()) {
                 storageList.get(i).setCount(old - diff);
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
@@ -3865,7 +3868,7 @@ public class MainForm extends javax.swing.JFrame {
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double newCount = changeList.get(i).getCount();
-//            if (newCount != 0.0) {               
+            if (changeList.get(i).isActive()) {             
                 String diff = Double.toString(newCount - old).replace(",", ".");
                 diffStorage.get(i).setCount(Double.parseDouble(diff));
                 storageList.get(i).setCount(newCount);
@@ -3877,7 +3880,7 @@ public class MainForm extends javax.swing.JFrame {
                 );
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
-//            }
+            }
         }
         try {
             ReviziaUtils.addRevizia(reviziaList);
@@ -3887,47 +3890,42 @@ public class MainForm extends javax.swing.JFrame {
         }
         
     }
-    private boolean isTableChanged(){
-        return getListFromTable(jTable6, 3, false).size() > 0;
-    }
+   
     
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
-        if (isTableChanged()) {
-            JFrame frame = new JFrame();
-            String[] options = new String[2];
-            options[0] = "Так";
-            options[1] = "Ні";
-             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
-                    "Підтвердити приход на склад?", "Поповнення складу",
-                    0, JOptionPane.YES_NO_OPTION, null, options, null);       
-            if (reply == JOptionPane.YES_OPTION) {
-                addIngCountToStorage(jTable6);
-                StorageUtils.readStorage();
-                setSort(jComboBox7, jTable6);
-                showCalcTable(jTable6);
-            }
+        JFrame frame = new JFrame();
+        String[] options = new String[2];
+        options[0] = "Так";
+        options[1] = "Ні";
+         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
+                "Підтвердити приход на склад?", "Поповнення складу",
+                0, JOptionPane.YES_NO_OPTION, null, options, null);       
+        if (reply == JOptionPane.YES_OPTION) {
+            addIngCountToStorage(jTable6);
+            StorageUtils.readStorage();
+            setSort(jComboBox7, jTable6);
+            showCalcTable(jTable6);
         }
+        
         
        
     }//GEN-LAST:event_addToStorage
 
     private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
         if (isAdmin()) {
-            if (isTableChanged()) {
-                JFrame frame = new JFrame();
-                String[] options = new String[2];
-                options[0] = "Так";
-                options[1] = "Ні";
-                 int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
-                        "Підтвердити списання?", "Списання зі складу",
-                        0, JOptionPane.YES_NO_OPTION, null, options, null);       
-                if (reply == JOptionPane.YES_OPTION) {
-                   removeIngCountFromStorage(jTable6);
-                    StorageUtils.readStorage();
-                    setSort(jComboBox7, jTable6);
-                    showCalcTable(jTable6);
-                }
-            }           
+            JFrame frame = new JFrame();
+            String[] options = new String[2];
+            options[0] = "Так";
+            options[1] = "Ні";
+             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
+                    "Підтвердити списання?", "Списання зі складу",
+                    0, JOptionPane.YES_NO_OPTION, null, options, null);       
+            if (reply == JOptionPane.YES_OPTION) {
+               removeIngCountFromStorage(jTable6);
+                StorageUtils.readStorage();
+                setSort(jComboBox7, jTable6);
+                showCalcTable(jTable6);
+            }
         } else {
         removeIngCountFromStorage(jTable5);
         StorageUtils.readStorage();
@@ -4196,21 +4194,19 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField12MouseClicked
 
     private void updateIngCountInStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateIngCountInStorage
-        if (isTableChanged()) {
-            JFrame frame = new JFrame();
-            String[] options = new String[2];
-            options[0] = "Так";
-            options[1] = "Ні";
-             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
-                    "Підтвердити ревізію?", "Оновлення складу",
-                    0, JOptionPane.YES_NO_OPTION, null, options, null);       
-            if (reply == JOptionPane.YES_OPTION) {
-                updateItemsFromStorage();
-                StorageUtils.readStorage();
-                setSort(jComboBox7, jTable6);
-                showUpdateStorageTable();
-            }
-        }     
+        JFrame frame = new JFrame();
+        String[] options = new String[2];
+        options[0] = "Так";
+        options[1] = "Ні";
+         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
+                "Підтвердити ревізію?", "Оновлення складу",
+                0, JOptionPane.YES_NO_OPTION, null, options, null);       
+        if (reply == JOptionPane.YES_OPTION) {
+            updateItemsFromStorage();
+            StorageUtils.readStorage();
+            setSort(jComboBox7, jTable6);
+            showUpdateStorageTable();
+        }
     }//GEN-LAST:event_updateIngCountInStorage
 
     private void getLastDayKass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getLastDayKass
@@ -4459,7 +4455,7 @@ public class MainForm extends javax.swing.JFrame {
         JFormattedTextField formattedTextField = new JFormattedTextField(mf2);
         formattedTextField.setFont(new Font("Verdana", 0, 18));
         DefaultCellEditor dce = new DefaultCellEditor(formattedTextField);
-        column.setCellEditor(dce);
+        column.setCellEditor(dce);   
     }
 
     public static void initBDmenu() {

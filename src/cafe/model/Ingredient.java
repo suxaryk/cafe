@@ -10,6 +10,7 @@ public class Ingredient {
     private int dbId;
     private String title;
     private double count;
+    private boolean active;
 
     public Ingredient() {
     }
@@ -32,6 +33,12 @@ public class Ingredient {
         this.dbId = dbId;
         this.title = title;
         this.count = count;
+    }
+    public Ingredient(int dbId, String title, double count, boolean active) {
+        this.dbId = dbId;
+        this.title = title;
+        this.count = count;
+        this.active = active;
     }
 
     public int getId() {
@@ -62,6 +69,16 @@ public class Ingredient {
         this.count += count;
 
     }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+    
+    
 
     @Override
     public int hashCode() {

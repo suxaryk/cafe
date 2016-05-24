@@ -258,12 +258,12 @@ public class EmployeeUtils {
     public static void addEmployeeTimeDiff(){      
        
         final String SQL = "UPDATE employee_time "
-                         + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out))"
-                         + "ORDER BY id DESC LIMIT 20 ";
+                         + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out)) "
+                         + "ORDER BY id DESC LIMIT 20";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            Statement statement = connection.createStatement();
-            statement.executeQuery(SQL);           
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            pstatement.executeUpdate();           
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - addEmployeeTimeDiff");
         }
@@ -273,13 +273,18 @@ public class EmployeeUtils {
     
     public static void getEmployeeFullWorksDay(Timestamp start, Timestamp end) {
         final String SQL = ""
-                + "   SELECT name, Count(hour(TIMEDIFF(date_out, date_in))) as 'full_work_day'"
+                + "   SELECT name, COUNT(diff) as full_work_day"
                 + "   FROM employee_time"
                 + "   where date_in >= '" + start
-                + "'  AND date_out <= '" + end
-                + "'  AND hour(TIMEDIFF(date_out, date_in)) >= 12"
+                + "'  AND date_in <= '" + end
+                + "'  AND diff >= 12"
                 + "   AND name = ?";        
-        
+        System.out.println("data in " + new Date(start.getTime()));
+        System.out.println("data in " + new Date(end.getTime()));
+        for (Employee empl : employees) {
+            empl.setWorkDaysCount(0);
+            empl.setHalfWorkDaysCount(0);
+        }        
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             for (Employee empl : employees) {
@@ -305,12 +310,12 @@ public class EmployeeUtils {
     
     public static void getEmployeeHalfWorksDay(Timestamp start, Timestamp end) {
         final String SQL = ""
-                + "   SELECT name, Count(hour(TIMEDIFF(date_out, date_in))) as 'half_work_day'"
+                + "   SELECT name, COUNT(diff) as half_work_day"
                 + "   FROM employee_time"
                 + "   where date_in >= '" + start
-                + "'  AND date_out <= '" + end
-                + "'  AND hour(TIMEDIFF(date_out, date_in)) < 12"
-                + "   AND name = ?";        
+                + "'  AND date_in <= '" + end
+                + "'  AND diff < 12"
+                + "   AND name = ?";           
         System.out.println("data in " + new Date(start.getTime()));
         System.out.println("data in " + new Date(end.getTime()));
         try (Connection connection = DriverManager

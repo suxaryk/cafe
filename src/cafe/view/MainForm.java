@@ -3209,7 +3209,8 @@ public class MainForm extends javax.swing.JFrame {
                 Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("SQL syntax error addStorageHistory");
             }
-            EmployeeUtils.addTimeOut(userList.get(User.active));            
+            EmployeeUtils.addTimeOut(userList.get(User.active));         
+            EmployeeUtils.addEmployeeTimeDiff();
             OrderUtils.addDayInfo(DAY_START_TIME, new Date(), dayInfo());
             System.exit(0);
         }

@@ -308,21 +308,23 @@ public class ClientForm extends javax.swing.JFrame {
         jTabbedPane1.addTab("Чеки", jPanel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel2.setLayout(null);
 
         jTable6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTable6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "№", "Назва", "Вага по базі (кг/ шт)", "Різниця"
+                "№", "Назва", "Вага по базі (кг/ шт)", "Різниця", "Вибраний"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -345,7 +347,13 @@ public class ClientForm extends javax.swing.JFrame {
             jTable6.getColumnModel().getColumn(3).setMinWidth(100);
             jTable6.getColumnModel().getColumn(3).setPreferredWidth(100);
             jTable6.getColumnModel().getColumn(3).setMaxWidth(100);
+            jTable6.getColumnModel().getColumn(4).setMinWidth(60);
+            jTable6.getColumnModel().getColumn(4).setPreferredWidth(60);
+            jTable6.getColumnModel().getColumn(4).setMaxWidth(60);
         }
+
+        jPanel2.add(jScrollPane6);
+        jScrollPane6.setBounds(1, 1, 566, 516);
 
         jComboBox7.setBackground(new java.awt.Color(240, 240, 240));
         jComboBox7.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -355,6 +363,8 @@ public class ClientForm extends javax.swing.JFrame {
                 jComboBox7ActionPerformed(evt);
             }
         });
+        jPanel2.add(jComboBox7);
+        jComboBox7.setBounds(573, 1, 198, 25);
 
         jButton39.setBackground(new java.awt.Color(204, 204, 204));
         jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -367,30 +377,8 @@ public class ClientForm extends javax.swing.JFrame {
                 addToStorage(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox7, 0, 198, Short.MAX_VALUE)
-                    .addComponent(jButton39))
-                .addContainerGap(41, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton39, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(139, 139, 139))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel2.add(jButton39);
+        jButton39.setBounds(573, 341, 198, 48);
 
         jTabbedPane1.addTab("Склад", jPanel2);
 
@@ -946,7 +934,7 @@ public class ClientForm extends javax.swing.JFrame {
         jCheckBox1.setText("Знаходжусь в даному кафе");
         jCheckBox1.setToolTipText("");
         getContentPane().add(jCheckBox1);
-        jCheckBox1.setBounds(4, 70, 210, 20);
+        jCheckBox1.setBounds(4, 74, 210, 20);
 
         setSize(new java.awt.Dimension(1051, 624));
         setLocationRelativeTo(null);
@@ -1021,7 +1009,9 @@ public class ClientForm extends javax.swing.JFrame {
                 
                 MainForm.initBDmenu();
                 UsersUtils.readAllUsers();
-                getEmployeeFullWorksDay(startDate, endDate);
+//                getEmployeeFullWorksDay(startDate, new Timestamp(endDate.getTime() - ONE_DAY_PLUS_THREE_HOURS));
+//                getEmployeeHalfWorksDay(startDate, new Timestamp(endDate.getTime() - ONE_DAY_PLUS_THREE_HOURS));
+                    getEmployeeFullWorksDay(startDate, endDate);
                 getEmployeeHalfWorksDay(startDate, endDate);
                 getStorageTable();                
                 jButton2.setEnabled(true);

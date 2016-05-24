@@ -255,6 +255,20 @@ public class EmployeeUtils {
         }
     }
     
+    public static void addEmployeeTimeDiff(){      
+       
+        final String SQL = "UPDATE employee_time "
+                         + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out))"
+                         + "ORDER BY id DESC LIMIT 20 ";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);           
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addEmployeeTimeDiff");
+        }
+    }
+    
     
     
     public static void getEmployeeFullWorksDay(Timestamp start, Timestamp end) {

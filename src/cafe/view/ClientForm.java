@@ -1,6 +1,5 @@
 package cafe.view;
 
-import cafe.Utils.db.DbConnect;
 import static cafe.Utils.db.DbConnect.PASSWORD;
 import static cafe.Utils.db.DbConnect.URL;
 import static cafe.Utils.db.DbConnect.USERNAME;
@@ -45,10 +44,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 public class ClientForm extends javax.swing.JFrame {
@@ -57,6 +57,7 @@ public class ClientForm extends javax.swing.JFrame {
         initComponents();
 
         initEnabledComponents();
+       
 
     }
 
@@ -308,6 +309,11 @@ public class ClientForm extends javax.swing.JFrame {
         jTabbedPane1.addTab("Чеки", jPanel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel2KeyPressed(evt);
+            }
+        });
         jPanel2.setLayout(null);
 
         jTable6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -335,7 +341,6 @@ public class ClientForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable6.setRowHeight(20);
         jScrollPane6.setViewportView(jTable6);
         if (jTable6.getColumnModel().getColumnCount() > 0) {
             jTable6.getColumnModel().getColumn(0).setMinWidth(50);
@@ -347,9 +352,9 @@ public class ClientForm extends javax.swing.JFrame {
             jTable6.getColumnModel().getColumn(3).setMinWidth(100);
             jTable6.getColumnModel().getColumn(3).setPreferredWidth(100);
             jTable6.getColumnModel().getColumn(3).setMaxWidth(100);
-            jTable6.getColumnModel().getColumn(4).setMinWidth(60);
-            jTable6.getColumnModel().getColumn(4).setPreferredWidth(60);
-            jTable6.getColumnModel().getColumn(4).setMaxWidth(60);
+            jTable6.getColumnModel().getColumn(4).setMinWidth(70);
+            jTable6.getColumnModel().getColumn(4).setPreferredWidth(70);
+            jTable6.getColumnModel().getColumn(4).setMaxWidth(70);
         }
 
         jPanel2.add(jScrollPane6);
@@ -940,30 +945,14 @@ public class ClientForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    //need to fix
-    private static void initServer() {
-        JFrame frame = new JFrame();
-        
-        final JComboBox<String> combo = new JComboBox<>(servers);
-        String[] options = {"OK"};
-        int selection = JOptionPane.showOptionDialog(null, combo, "Виберіть кафе для підключення",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-                options, options[0]);
-        Object server = combo.getSelectedItem();
-        if (server != null) {
-            System.out.println("server: " + server);
-//            System.out.println("server index" + servers.);
-            chooseServer(employees.indexOf(server));
-            DbConnect.ConnectDb();
-        }
-
-    }
+ 
 
     private void initEnabledComponents() {
 
         jTable1.setEnabled(false);
         jComboBox2.setEnabled(false);
         jButton39.setBackground(GREEN);
+        addStorageListener();
 
         try {
             setColumnRender(jTable6.getColumnModel().getColumn(2));
@@ -1000,18 +989,13 @@ public class ClientForm extends javax.swing.JFrame {
                 System.out.println("start " + startDate);
                 endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
                 orders.clear();
-                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));                    
-                System.out.println("Start date = " + dateFormat.format(new Date(startDate.getTime())));
-                System.out.println("End date = " + dateFormat.format(new Date(endDate.getTime())));
-                System.out.println("orders size " + orders.size());
+                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));                  
 
                 refreshOrderTable(jTable1, orders);
                 
                 MainForm.initBDmenu();
                 UsersUtils.readAllUsers();
-//                getEmployeeFullWorksDay(startDate, new Timestamp(endDate.getTime() - ONE_DAY_PLUS_THREE_HOURS));
-//                getEmployeeHalfWorksDay(startDate, new Timestamp(endDate.getTime() - ONE_DAY_PLUS_THREE_HOURS));
-                    getEmployeeFullWorksDay(startDate, endDate);
+                getEmployeeFullWorksDay(startDate, endDate);
                 getEmployeeHalfWorksDay(startDate, endDate);
                 getStorageTable();                
                 jButton2.setEnabled(true);
@@ -1021,12 +1005,26 @@ public class ClientForm extends javax.swing.JFrame {
                 getDishes();
                 getEmployeeKeyMoney();
                 getInkass();
-                refreshBarmensTable();                
+                refreshBarmensTable();   
+                
                 
             }
         }
     }//GEN-LAST:event_getAllOrders
 
+    private  void addStorageListener(){
+        jTable6.getModel().addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                System.out.println("changed");
+                MainForm.validateCell(jTable6, 3);
+            }
+        });
+     
+    } 
+    
+    
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         activeOrder = jTable1.getSelectedRow();
         getRemovedDishes(null);
@@ -1145,6 +1143,10 @@ public class ClientForm extends javax.swing.JFrame {
                 showReviziaa("title");            
         }     
     }//GEN-LAST:event_jComboBox9ActionPerformed
+
+    private void jPanel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel2KeyPressed
+        System.out.println("111");        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2KeyPressed
 
     private void getStorageTable() {
         StorageUtils.readStorage();

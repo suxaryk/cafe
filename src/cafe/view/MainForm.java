@@ -3444,7 +3444,6 @@ public class MainForm extends javax.swing.JFrame {
         ArrayList<Ingredient> changedList = new ArrayList<>();
         int checkColumn = table.getColumnCount()-1;
         for (int i = 0; i < table.getRowCount(); i++) {            
-//            if (Boolean.valueOf(table.getValueAt(i, checkColumn).toString())) {
                 int dbId = Integer.valueOf(table.getValueAt(i, 0).toString());
                 String title = table.getValueAt(i, 1).toString();
                 double count;
@@ -3454,14 +3453,9 @@ public class MainForm extends javax.swing.JFrame {
                     count = 0.0;
                 } 
                 boolean checked = Boolean.valueOf(table.getValueAt(i, checkColumn).toString());
-                
-//                if (includeZERO) {
-                    changedList.add(new Ingredient(dbId, title, count, checked));
-//                } else if (count != 0.0) {
-//                    changedList.add(new Ingredient(dbId, title, count));
-//                }
-               
-//            }            
+                System.out.println("cheked " + checked);
+                changedList.add(new Ingredient(dbId, title, count, checked));
+          
         }
         Logger.getLogger("get removed List from table, size = " + changedList.size());
         return changedList;
@@ -3690,23 +3684,27 @@ public class MainForm extends javax.swing.JFrame {
 
         }
     }
-    
-    private void setCheck(JTable table, int columnIndex){
-        int rowIndex = table.getSelectedRow();        
+    //todo fix 0
+    public static void validateCell(JTable table, int columnIndex){
+        int rowIndex = table.getSelectedRow();      
         int checkColumn = table.getColumnCount() - 1;
-        String old = table.getValueAt(rowIndex, columnIndex).toString();
-        Double oldDouble;
-        try {
-             oldDouble = Double.valueOf(table.getValueAt(rowIndex, columnIndex).toString());
-        } catch (NumberFormatException e) {
-            oldDouble = 0.0;
+        if (rowIndex != -1 ) {
+            if (!Boolean.valueOf(table.getValueAt(rowIndex, checkColumn).toString())) {
+                String old = table.getValueAt(rowIndex, columnIndex).toString();
+                Double oldDouble;
+                try {
+                    oldDouble = Double.valueOf(table.getValueAt(rowIndex, columnIndex).toString());
+                } catch (NumberFormatException e) {
+                    oldDouble = 0.0;
+                }
+                if (old.isEmpty() || old.equals("0.0")
+                        || old.equals("0") || old.equals("0.") || oldDouble.equals(0.0)) {
+                    table.setValueAt(false, rowIndex, checkColumn);
+                } else {
+                    table.setValueAt(true, rowIndex, checkColumn);
+                }
+            }                
         }            
-        if (old.isEmpty() || old.equals("0.0")
-                || old.equals("0") || old.equals("0.") || oldDouble.equals(0.0)) {
-            table.setValueAt(false, rowIndex, checkColumn);            
-        } else {
-            table.setValueAt(true, rowIndex, checkColumn);
-        }       
     }
 
     private void PressNumber(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PressNumber
@@ -3774,11 +3772,11 @@ public class MainForm extends javax.swing.JFrame {
         JButton myButton = (JButton) evt.getSource();
         if (isAdmin()) {
             setNumber(myButton, jTable6, 3);
-            setCheck(jTable6, 3);
+            validateCell(jTable6, 3);
             
         } else {
             setNumber(myButton, jTable5, 3);
-            setCheck(jTable5, 3);
+            validateCell(jTable5, 3);
         }      
 
     }//GEN-LAST:event_pressNumberInStorage
@@ -3793,10 +3791,10 @@ public class MainForm extends javax.swing.JFrame {
         if (index != -1) {
             if (isAdmin()) {
                 jTable6.setValueAt("", index, 3);
-                setCheck(jTable6, 3);
+                validateCell(jTable6, 3);
             } else {
                 jTable5.setValueAt("", index, 3);
-                setCheck(jTable5, 3);
+                validateCell(jTable5, 3);
             }
         } else {
             jTextField12.setText("");
@@ -3807,10 +3805,9 @@ public class MainForm extends javax.swing.JFrame {
     private void deleteStorageFiledDigit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStorageFiledDigit
         if (isAdmin()) {
             deleteDigit(jTable6, 3);
-            setCheck(jTable6, 3);
         } else {
             deleteDigit(jTable5, 3);
-            setCheck(jTable5, 3);
+            validateCell(jTable5, 3);
         }
 
     }//GEN-LAST:event_deleteStorageFiledDigit

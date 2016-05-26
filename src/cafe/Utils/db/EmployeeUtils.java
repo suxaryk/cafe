@@ -278,13 +278,14 @@ public class EmployeeUtils {
                 + "   where date_in >= '" + start
                 + "'  AND date_in <= '" + end
                 + "'  AND diff >= 12"
-                + "   AND name = ?";        
-        System.out.println("data in " + new Date(start.getTime()));
-        System.out.println("data in " + new Date(end.getTime()));
+                + "   AND name = ?";         
         for (Employee empl : employees) {
             empl.setWorkDaysCount(0);
             empl.setHalfWorkDaysCount(0);
-        }        
+        }     
+        System.out.println("getEmployeeFullWorksDay->");
+        System.out.println("start " + start.getTime());
+        System.out.println("end " + end.getTime());
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             for (Employee empl : employees) {
@@ -315,9 +316,8 @@ public class EmployeeUtils {
                 + "   where date_in >= '" + start
                 + "'  AND date_in <= '" + end
                 + "'  AND diff < 12"
-                + "   AND name = ?";           
-        System.out.println("data in " + new Date(start.getTime()));
-        System.out.println("data in " + new Date(end.getTime()));
+                + "   AND name = ?";         
+
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             for (Employee empl : employees) {

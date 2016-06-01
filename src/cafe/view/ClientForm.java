@@ -1,10 +1,12 @@
 package cafe.view;
 
+import cafe.Utils.db.DbConnect;
 import static cafe.Utils.db.DbConnect.PASSWORD;
 import static cafe.Utils.db.DbConnect.URL;
 import static cafe.Utils.db.DbConnect.USERNAME;
 import static cafe.Utils.db.DbConnect.chooseLocalServer;
 import static cafe.Utils.db.DbConnect.chooseServer;
+import static cafe.Utils.db.DbConnect.getLastModifiedDate;
 import cafe.Utils.db.EmployeeUtils;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeFullWorksDay;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeHalfWorksDay;
@@ -135,6 +137,7 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel26 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -488,7 +491,7 @@ public class ClientForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "№", "Назва", "Вага стара", "Вага нова", "Різниця"
+                "№", "Назва", "Вага по базі", "Вага ревізії", "Різниця"
             }
         ) {
             Class[] types = new Class [] {
@@ -556,12 +559,12 @@ public class ClientForm extends javax.swing.JFrame {
         jComboBox9.setBounds(40, 0, 145, 29);
 
         jLabel24.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel24.setText("Вага стара - яка мала би бути");
+        jLabel24.setText("Вага по базі - яка мала би бути");
         jPanel7.add(jLabel24);
         jLabel24.setBounds(210, 0, 240, 17);
 
         jLabel25.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel25.setText("Вага нова - вага фактична яка є на складі");
+        jLabel25.setText("Вага ревізії -  фактична яка є на складі");
         jPanel7.add(jLabel25);
         jLabel25.setBounds(210, 20, 280, 17);
 
@@ -934,12 +937,17 @@ public class ClientForm extends javax.swing.JFrame {
 
         jLabel23.setText("Підключено до ");
         getContentPane().add(jLabel23);
-        jLabel23.setBounds(5, 90, 210, 14);
+        jLabel23.setBounds(5, 92, 210, 14);
 
         jCheckBox1.setText("Знаходжусь в даному кафе");
         jCheckBox1.setToolTipText("");
         getContentPane().add(jCheckBox1);
-        jCheckBox1.setBounds(4, 74, 210, 20);
+        jCheckBox1.setBounds(4, 72, 210, 20);
+
+        jLabel26.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel26.setText("Дані актуальні на ");
+        getContentPane().add(jLabel26);
+        jLabel26.setBounds(0, 160, 220, 20);
 
         setSize(new java.awt.Dimension(1051, 624));
         setLocationRelativeTo(null);
@@ -952,7 +960,7 @@ public class ClientForm extends javax.swing.JFrame {
         jTable1.setEnabled(false);
         jComboBox2.setEnabled(false);
         jButton39.setBackground(GREEN);
-        addStorageListener();
+//        addStorageListener();
 
         try {
             setColumnRender(jTable6.getColumnModel().getColumn(2));
@@ -988,13 +996,17 @@ public class ClientForm extends javax.swing.JFrame {
                 startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime() + SIX_HOURS));
                 System.out.println("start " + startDate);
                 endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
+                
+                updateLocalDB();
+                
                 orders.clear();
-                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));                  
-
+                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
+                
                 refreshOrderTable(jTable1, orders);
                 
                 MainForm.initBDmenu();
                 UsersUtils.readAllUsers();
+                EmployeeUtils.addEmployeeTimeDiff();
                 getEmployeeFullWorksDay(startDate, endDate);
                 getEmployeeHalfWorksDay(startDate, endDate);
                 getStorageTable();                
@@ -1012,6 +1024,32 @@ public class ClientForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_getAllOrders
 
+    private void updateLocalDB(){
+        SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");        
+         Date end =  new Date(new Timestamp(endDate.getTime() - ONE_DAY_PLUS_THREE_HOURS).getTime());
+         if (end.after(actualDate)) {      
+             JFrame frame = new JFrame();
+             String[] options = new String[2];
+             options[0] = "Так";
+             options[1] = "Ні";
+             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
+                     "Дані програми актуальні до дати " + df2.format(actualDate)+
+                     "Бажаєте зактуалізувати дані до дати  " +df2.format(end) + " ?", "",
+                     0, JOptionPane.YES_NO_OPTION, null, options, null);
+             if (reply == JOptionPane.YES_OPTION) {
+                 DbConnect.doDBDumpToClientMachine();
+                 actualDate = getLastModifiedDate();
+                 if (end.equals(actualDate)) {
+                     DbConnect.doDBImport();
+                 }
+                 
+             }else if (reply == JOptionPane.YES_OPTION) {
+                 DbConnect.doDBImport();
+             }
+            
+            
+        }
+    }
     private  void addStorageListener(){
         jTable6.getModel().addTableModelListener(new TableModelListener() {
 
@@ -1055,32 +1093,14 @@ public class ClientForm extends javax.swing.JFrame {
     private void chooseCafe(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCafe
         cafeId = jComboBox1.getSelectedIndex();
         if (jCheckBox1.isSelected()) {
-            chooseLocalServer(cafeId);
+            chooseLocalServer(cafeId);           
         }else{
             chooseServer(cafeId);
         }        
+        actualDate = getLastModifiedDate();
+        jLabel26.setText("Дані актуальні на " + actualDate);
         jLabel23.setText("Підключено до " + servers[cafeId]);
-        try {
-            testCafeConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);
-            chooseLocalServer(cafeId);
-            try {
-                testCafeConnection();
-            } catch (SQLException ex1) {
-                System.out.println("Connection to DB Failed! ");
-                JFrame frame = new JFrame();               
-                String[] options = new String[2];
-                options[0] = "Так";
-                options[1] = "Ні";
-                int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                        "Немаэ підключення до бази данних!\nВихід з програми", "ПОМИЛКА!",
-                        0, JOptionPane.YES_NO_OPTION, null, options, null);
-                if (reply == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }
-            }
-        }
+    
         refreshReviziaDates();        
         StorageUtils.readStorage();
         EmployeeUtils.readAllEmployees();
@@ -1349,9 +1369,10 @@ public class ClientForm extends javax.swing.JFrame {
         clientForm.setVisible(true);
         clientForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-
+    
+    private static Date actualDate;
     private static final int SIX_HOURS = 6 * 60 * 60 * 1000;
-    private static final int ONE_DAY_PLUS_THREE_HOURS = 27 * 60 * 60 * 1000;
+    private static final long ONE_DAY_PLUS_THREE_HOURS = 27 * 60 * 60 * 1000;
     private static int cafeId;
     private static final String[] servers  = {"Шепетовка", "Староконстянтинів", "Славута"};;
     private static Timestamp startDate, endDate, EmployeeDate;
@@ -1391,6 +1412,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

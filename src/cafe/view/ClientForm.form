@@ -660,8 +660,8 @@
                       <Table columnCount="5" rowCount="0">
                         <Column editable="false" title="&#x2116;" type="java.lang.Integer"/>
                         <Column editable="false" title="&#x41d;&#x430;&#x437;&#x432;&#x430;" type="java.lang.String"/>
-                        <Column editable="false" title="&#x412;&#x430;&#x433;&#x430; &#x441;&#x442;&#x430;&#x440;&#x430;" type="java.lang.Double"/>
-                        <Column editable="false" title="&#x412;&#x430;&#x433;&#x430; &#x43d;&#x43e;&#x432;&#x430;" type="java.lang.Double"/>
+                        <Column editable="false" title="&#x412;&#x430;&#x433;&#x430; &#x43f;&#x43e; &#x431;&#x430;&#x437;&#x456;" type="java.lang.Double"/>
+                        <Column editable="false" title="&#x412;&#x430;&#x433;&#x430; &#x440;&#x435;&#x432;&#x456;&#x437;&#x456;&#x457;" type="java.lang.Double"/>
                         <Column editable="false" title="&#x420;&#x456;&#x437;&#x43d;&#x438;&#x446;&#x44f;" type="java.lang.Double"/>
                       </Table>
                     </Property>
@@ -773,7 +773,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&#x412;&#x430;&#x433;&#x430; &#x441;&#x442;&#x430;&#x440;&#x430; - &#x44f;&#x43a;&#x430; &#x43c;&#x430;&#x43b;&#x430; &#x431;&#x438; &#x431;&#x443;&#x442;&#x438;"/>
+                <Property name="text" type="java.lang.String" value="&#x412;&#x430;&#x433;&#x430; &#x43f;&#x43e; &#x431;&#x430;&#x437;&#x456; - &#x44f;&#x43a;&#x430; &#x43c;&#x430;&#x43b;&#x430; &#x431;&#x438; &#x431;&#x443;&#x442;&#x438;"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -786,7 +786,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&#x412;&#x430;&#x433;&#x430; &#x43d;&#x43e;&#x432;&#x430; - &#x432;&#x430;&#x433;&#x430; &#x444;&#x430;&#x43a;&#x442;&#x438;&#x447;&#x43d;&#x430; &#x44f;&#x43a;&#x430; &#x454; &#x43d;&#x430; &#x441;&#x43a;&#x43b;&#x430;&#x434;&#x456;"/>
+                <Property name="text" type="java.lang.String" value="&#x412;&#x430;&#x433;&#x430; &#x440;&#x435;&#x432;&#x456;&#x437;&#x456;&#x457; -  &#x444;&#x430;&#x43a;&#x442;&#x438;&#x447;&#x43d;&#x430; &#x44f;&#x43a;&#x430; &#x454; &#x43d;&#x430; &#x441;&#x43a;&#x43b;&#x430;&#x434;&#x456;"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1422,7 +1422,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="5" y="90" width="210" height="-1"/>
+          <AbsoluteConstraints x="5" y="92" width="210" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -1433,7 +1433,20 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="4" y="74" width="210" height="20"/>
+          <AbsoluteConstraints x="4" y="72" width="210" height="20"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel26">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Verdana" size="12" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&#x414;&#x430;&#x43d;&#x456; &#x430;&#x43a;&#x442;&#x443;&#x430;&#x43b;&#x44c;&#x43d;&#x456; &#x43d;&#x430; "/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="0" y="160" width="220" height="20"/>
         </Constraint>
       </Constraints>
     </Component>

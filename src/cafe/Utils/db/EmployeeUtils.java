@@ -222,7 +222,7 @@ public class EmployeeUtils {
         final String SQL = "INSERT INTO employee_time(name, date_in) VALUES(?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
+            System.out.println("time in = " + new Date(getCurrentTimeStamp().getTime()));
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             System.out.println("name" + employee.getName());
             pstatement.setString(1, employee.getName());
@@ -259,7 +259,7 @@ public class EmployeeUtils {
        
         final String SQL = "UPDATE employee_time "
                          + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out)) "
-                         + "ORDER BY id DESC LIMIT 20";
+                         + "ORDER BY Id DESC LIMIT 300";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             PreparedStatement pstatement = connection.prepareStatement(SQL);

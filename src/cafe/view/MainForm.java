@@ -1,14 +1,13 @@
 package cafe.view;
 
 import cafe.Utils.db.CheckUtils;
+import cafe.Utils.db.DbConnect;
 import static cafe.Utils.db.DbConnect.ConnectDb;
 import cafe.Utils.db.OrderUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Order;
 import cafe.Utils.db.DishUtils;
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.USERNAME;
 import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
 import cafe.Utils.db.ReviziaUtils;
@@ -40,7 +39,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -3236,22 +3234,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    private static void doDBDump() {
-        Date currentDate = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(currentDate);
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        if (dayOfWeek == 2) {
-            DateFormat dateFormat = new SimpleDateFormat(
-                    "ddMMyyyy_HH-mm");
-            String command = "cmd /c  mysqldump -u" + USERNAME + " -p" + PASSWORD + " "
-                    + "luckyroger > C:/dump/" + dateFormat.format(new Date()) + "_dump.sql";
-            try {
-                Process process = Runtime.getRuntime().exec(command);
-            } catch (IOException ex) {
-            }
-        }
-    }
+    
 
 
     private void PriceTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceTyped
@@ -3689,7 +3672,7 @@ public class MainForm extends javax.swing.JFrame {
         int rowIndex = table.getSelectedRow();      
         int checkColumn = table.getColumnCount() - 1;
         if (rowIndex != -1 ) {
-            if (!Boolean.valueOf(table.getValueAt(rowIndex, checkColumn).toString())) {
+//            if (!Boolean.valueOf(table.getValueAt(rowIndex, checkColumn).toString())) {
                 String old = table.getValueAt(rowIndex, columnIndex).toString();
                 Double oldDouble;
                 try {
@@ -3698,12 +3681,13 @@ public class MainForm extends javax.swing.JFrame {
                     oldDouble = 0.0;
                 }
                 if (old.isEmpty() || old.equals("0.0")
-                        || old.equals("0") || old.equals("0.") || oldDouble.equals(0.0)) {
+                        || old.equals("0") || old.equals("0.")
+                        || oldDouble.equals(0.0)) {
                     table.setValueAt(false, rowIndex, checkColumn);
                 } else {
                     table.setValueAt(true, rowIndex, checkColumn);
                 }
-            }                
+//            }              
         }            
     }
 
@@ -4473,8 +4457,7 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("3"));
 
         DishUtils.readDBmenu();
-        doDBDump();
-
+        DbConnect.doDBDump();
     }
 
     private void loadTables() {

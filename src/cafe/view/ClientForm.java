@@ -1026,7 +1026,7 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void updateLocalDB(){
         SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");        
-         Date end =  new Date(new Timestamp(endDate.getTime() - ONE_DAY_PLUS_THREE_HOURS).getTime());
+         Date end =  new Date(new Timestamp(endDate.getTime() - ONE_DAY_PLUS_THREE_HOURS).getTime());     
          if (end.after(actualDate)) {      
              JFrame frame = new JFrame();
              String[] options = new String[2];
@@ -1039,16 +1039,10 @@ public class ClientForm extends javax.swing.JFrame {
              if (reply == JOptionPane.YES_OPTION) {
                  DbConnect.doDBDumpToClientMachine();
                  actualDate = getLastModifiedDate();
-                 if (end.equals(actualDate)) {
-                     DbConnect.doDBImport();
-                 }
-                 
-             }else if (reply == JOptionPane.YES_OPTION) {
-                 DbConnect.doDBImport();
-             }
-            
-            
+                 jLabel26.setText("Дані актуальні на " + end);                                
+             }                      
         }
+        DbConnect.doDBImport();
     }
     private  void addStorageListener(){
         jTable6.getModel().addTableModelListener(new TableModelListener() {
@@ -1101,6 +1095,10 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel26.setText("Дані актуальні на " + actualDate);
         jLabel23.setText("Підключено до " + servers[cafeId]);
     
+        
+        
+        
+        //////////////////
         refreshReviziaDates();        
         StorageUtils.readStorage();
         EmployeeUtils.readAllEmployees();

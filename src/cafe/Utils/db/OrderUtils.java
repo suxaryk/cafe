@@ -27,6 +27,7 @@ import java.util.Map;
 
 public class OrderUtils {
 
+        //check if Admin kasa needed in users Kasa
     public static int getUserKasa(Timestamp start, Timestamp end, int index) {
         final String SQL = "SELECT SUM(sum) from orders where"
                 + " datatime >= '" + start

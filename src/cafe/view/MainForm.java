@@ -4411,6 +4411,7 @@ public class MainForm extends javax.swing.JFrame {
         Locale locale = new Locale("uk", "UA");
         DateFormat dateFormat = new SimpleDateFormat("EEEE, dd/MM/yyyy", locale);
         this.setTitle("SmartCafe " + dateFormat.format(new Date()));
+        jButton40.setVisible(false);
     }
 
     private void initCalculationTable() {

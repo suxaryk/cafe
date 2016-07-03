@@ -11,7 +11,8 @@ public class Ingredient {
     private String title;
     private double count;
     private boolean active;
-
+    private int dishId;
+    
     public Ingredient() {
     }
 
@@ -28,18 +29,48 @@ public class Ingredient {
         this.dbId = dbId;
         this.title = title;
     }
-
+    
     public Ingredient(int dbId, String title, double count) {
         this.dbId = dbId;
         this.title = title;
         this.count = count;
     }
+
     public Ingredient(int dbId, String title, double count, boolean active) {
         this.dbId = dbId;
         this.title = title;
         this.count = count;
         this.active = active;
     }
+    
+
+    public int getDbId() {
+        return dbId;
+    }
+
+    public void setDbId(int dbId) {
+        this.dbId = dbId;
+    }
+
+    public int getDishId() {
+        return dishId;
+    }
+
+    public void setDishId(int dishId) {
+        this.dishId = dishId;
+    }
+
+    
+    
+    
+    //utils tmp
+//    public Ingredient(int dbId, int  ing_id, double count) {
+//        this.dbId = dbId;
+//        this.ing_id = ing_id;
+//        this.count = count;
+//    }
+
+   
 
     public int getId() {
         return dbId;
@@ -77,6 +108,16 @@ public class Ingredient {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+//    public int getIng_id() {
+//        return ing_id;
+//    }
+//
+//    public void setIng_id(int ing_id) {
+//        this.ing_id = ing_id;
+//    }
+    
+    
     
     
 

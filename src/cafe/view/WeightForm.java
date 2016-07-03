@@ -8,6 +8,7 @@ import static cafe.view.MainForm.dishCount;
 import static cafe.view.MainForm.mainForm;
 import static cafe.view.MainForm.menu;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 
 /**
@@ -245,12 +246,13 @@ public class WeightForm extends javax.swing.JFrame {
 
     //change ingredient weight if it is equals 0.1 KG
     public void setDishMeetWeight() {
-        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {
-            if (ing.getCount() == 0.1) {
-                if (listOfCoeffic.containsKey(ing.getId())) {
-                    ing.setCount((weightCount * listOfCoeffic.get(ing.getId())) / 1000);
+        Map<Integer, Ingredient> recipe = menu.get(activeCat).getDishes().get(activeDishes).getRecipe();
+        for (Map.Entry<Integer, Ingredient> ing : recipe.entrySet()) {
+            if (ing.getValue().getCount() == 0.1) {
+                if (listOfCoeffic.containsKey(ing.getValue().getId())) {
+                    ing.getValue().setCount((weightCount * listOfCoeffic.get(ing.getValue().getId())) / 1000);
                 } else {
-                    ing.setCount(weightCount / 1000);
+                    ing.getValue().setCount(weightCount / 1000);
                 }
                 String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
                 int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
@@ -283,7 +285,7 @@ public class WeightForm extends javax.swing.JFrame {
             System.out.println("weightCount " + weightCount);
             setDishMeetWeight();
             mainForm.addOrderItemToTable(dishCount);
-            DishUtils.readDBCategoryById(4);
+            DishUtils.readMenuCategoryById(4);
             mainForm.refreshDishList(4);
         }
         if (weightCount != 0) {

@@ -2605,6 +2605,10 @@ public class MainForm extends javax.swing.JFrame {
         jTextField14.setText(Check.getAdress());
         jTextField15.setText(Check.getPassWifi());
         jTextField16.setText(Check.getWish());
+        //utils tmp
+//        StorageUtils.convertAddedStorageTable();
+//        StorageUtils.convertRemovedStorageTable();
+            RecepiesUtils.readCustomDishes();
     }//GEN-LAST:event_PersonalLogining
 
 
@@ -2668,12 +2672,13 @@ public class MainForm extends javax.swing.JFrame {
 
     public boolean calcMeat() {
         boolean calcMeat = false;
-        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {
-            if (ing.getCount() == 0.1) {
+        Map<Integer, Ingredient> recipe = menu.get(activeCat).getDishes().get(activeDishes).getRecipe();
+        for (Map.Entry<Integer, Ingredient> dish_ing : recipe.entrySet()) {
+            if (dish_ing.getValue().getCount() == 0.1) {
                 calcMeat = true;
                 break;
             }
-        }
+        }      
         return calcMeat;
     }
 
@@ -3251,7 +3256,7 @@ public class MainForm extends javax.swing.JFrame {
             boolean cook = jCheckBox3.isSelected();
             DishUtils.addDish(new Dish(title, price, cook), activeCat);
             menu.get(activeCat).getDishes().clear();
-            DishUtils.readDBCategoryById(activeCat);
+            DishUtils.readMenuCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(menu.get(activeCat).getDishes().toArray());
             jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
@@ -3283,7 +3288,7 @@ public class MainForm extends javax.swing.JFrame {
         if (activeIndex >= 0) {
             DishUtils.removeDishById(dbId, activeCat);
             menu.get(activeCat).getDishes().clear();
-            DishUtils.readDBCategoryById(activeCat);
+            DishUtils.readMenuCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(menu.get(activeCat).getDishes().toArray());
             jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
@@ -3344,7 +3349,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-
+    //todo: check 
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
         jTabbedPane1.setVisible(false);
         OrderPanel.setVisible(false);
@@ -3353,7 +3358,10 @@ public class MainForm extends javax.swing.JFrame {
         jLabel12.setText(title);
         //join between storageList(all count = 0) and exist recipe into storageList
         ArrayList<Ingredient> tmpList = new ArrayList<>();
-        tmpList.addAll(menu.get(activeCat).getDishes().get(activeDishes).getRecipe());
+        Map<Integer, Ingredient> recipe = menu.get(activeCat).getDishes().get(activeDishes).getRecipe();
+        for (Map.Entry<Integer, Ingredient> dish_ing : recipe.entrySet()) {
+            tmpList.add(dish_ing.getValue());                     
+        }        
         final int zero = 0;
         for (Ingredient storageList1 : storageList) {
             for (int j = 0; j < tmpList.size(); j++) {
@@ -3400,7 +3408,7 @@ public class MainForm extends javax.swing.JFrame {
                 DishUtils.updateDishPrice(dbId, price, activeCat);
             }
             menu.get(activeCat).getDishes().clear();
-            DishUtils.readDBCategoryById(activeCat);
+            DishUtils.readMenuCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(menu.get(activeCat).getDishes().toArray());
             jList2.ensureIndexIsVisible(index);
@@ -3444,13 +3452,13 @@ public class MainForm extends javax.swing.JFrame {
         return changedList;
     }
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
-        JSONUtils.updateDishIngredients(getListFromTable(jTable3, 2, false),
-                activeCat, activeDishes);
-        String JSONString = RecepiesUtils.readRecipeFromDB(activeCat,
-                menu.get(activeCat).getDishes().get(activeDishes).getDbID());
-        System.out.println("JSONString=" + JSONString);
+        List<Ingredient> changedRecipe = getListFromTable(jTable3, 2, false);
+        for(Ingredient ing: changedRecipe){
+            RecepiesUtils.updateDishIngredient(ing.getDbId(), ing.getCount());
+        }      
+        int dishID = menu.get(activeCat).getDishes().get(activeDishes).getDbID();
         menu.get(activeCat).getDishes().get(activeDishes).getRecipe().clear();
-        menu.get(activeCat).getDishes().get(activeDishes).setRecipe(JSONUtils.getRecipeFromJSON(JSONString));
+        menu.get(activeCat).getDishes().get(activeDishes).setRecipe(RecepiesUtils.getRecipeByDishId(dishID));
         refreshCalc(null);
 
     }//GEN-LAST:event_saveCalculation
@@ -3482,24 +3490,6 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addIngredient
 
-    private void removeIngredientInAllDishes() {
-        int index = jTable6.getSelectedRow();
-
-        for (int i = 0; i < menu.size(); i++) {
-            for (int j = 0; j < menu.get(i).getDishes().size(); j++) {
-                for (int k = 0; k < menu.get(i).getDishes().get(j).getRecipe().size(); k++) {
-                    if (menu.get(i).getDishes().get(j).getRecipe().get(k).getId() == storageList.get(index).getId()) {
-                        List<Ingredient> tmpRecipe = new ArrayList<>();
-                        tmpRecipe.addAll(menu.get(i).getDishes().get(j).getRecipe());
-                        tmpRecipe.remove(k);
-                        JSONUtils.updateDishIngredients(tmpRecipe, i, j);
-                        RecepiesUtils.readRecipeFromDB(i, menu.get(i)
-                                .getDishes().get(j).getDbID());
-                    }
-                }
-            }
-        }
-    }
 
     private String getRemovedDisheTitles(JTable table) {
         int index = table.getSelectedRow();
@@ -3536,10 +3526,12 @@ public class MainForm extends javax.swing.JFrame {
             reply = JOptionPane.showOptionDialog(frame.getContentPane(),
                     dishTitles, "Видалення інгридієнта", 0,
                     JOptionPane.YES_NO_OPTION, null, options, null);
-            if (reply == JOptionPane.YES_OPTION) {
-                removeIngredientInAllDishes();
+            if (reply == JOptionPane.YES_OPTION) {                
+                int ingredientId = storageList.get(index).getId();
+                RecepiesUtils.removeIngredientInAllDishes(ingredientId);                
                 StorageUtils.removeIngredientFromDB(storageList.get(index).getId());
                 StorageUtils.readStorage();
+                DishUtils.readDBmenu();
                 showCalcTable(jTable6);
             }
         }
@@ -3802,21 +3794,23 @@ public class MainForm extends javax.swing.JFrame {
 
     public static void addIngCountToStorage(JTable table) {
         changeList.clear();
-        addedProductsToStorage.clear();
         changeList.addAll(getListFromTable(table, 3, true));
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
             double diff = changeList.get(i).getCount();
             if (changeList.get(i).isActive()) {
-                storageList.get(i).setCount(old + diff);
-                System.out.println("new count " + storageList.get(i).getCount());
-                StorageUtils.updateCount(storageList.get(i).getId(),
-                        storageList.get(i).getCount());
-                addedProductsToStorage.add(
-                        new Ingredient(storageList.get(i).getId(), diff));
+                if (diff != 0.0) {
+                    storageList.get(i).setCount(old + diff);
+                    System.out.println("new count " + storageList.get(i).getCount());
+                    StorageUtils.updateCount(storageList.get(i).getId(),
+                            storageList.get(i).getCount());
+
+                    StorageUtils.addAddedItems(
+                            new Ingredient(storageList.get(i).getId(), diff));
+                }                
             }
         }
-        StorageUtils.addAddedItems(convertDiffIngToJSON(addedProductsToStorage));        
+              
     }
 
     private void removeIngCountFromStorage(JTable table) {
@@ -3829,22 +3823,19 @@ public class MainForm extends javax.swing.JFrame {
             if (changeList.get(i).isActive()) {
                 storageList.get(i).setCount(old - diff);
                 StorageUtils.updateCount(storageList.get(i).getId(),
-                        storageList.get(i).getCount());
+                        storageList.get(i).getCount());                
+                StorageUtils.addRemovedItems(
+                        new Ingredient(storageList.get(i).getId(), diff));
                 userList.get(User.active).getDayRemovedProducts().add(
                         new Ingredient(storageList.get(i).getId(), diff));
             }
-        }
-
-        StorageUtils.addRemovedItems(convertDiffIngToJSON(
-                        userList.get(User.active).getDayRemovedProducts()),
-                userList.get(User.active));
+        }       
     }
 
     private void updateItemsFromStorage() {
         List<ReviziaItem> reviziaList = new ArrayList<>();
         diffStorage.clear();
         changeList.clear();
-        addedProductsToStorage.clear();
         changeList.addAll(getListFromTable(jTable6, 3, true));
         diffStorage.addAll(changeList);
         for (int i = 0; i < storageList.size(); i++) {
@@ -4443,19 +4434,19 @@ public class MainForm extends javax.swing.JFrame {
 
     public static void initBDmenu() {
 
-        menu.add(new Category("1,2 страви"));
-        menu.add(new Category("салати"));
-        menu.add(new Category("страви роджера"));
-        menu.add(new Category("страви на пательні"));
-        menu.add(new Category("мясні страви"));
-        menu.add(new Category("піца мал"));
-        menu.add(new Category("піца вел"));
-        menu.add(new Category("суші"));
-        menu.add(new Category("десерт"));
-        menu.add(new Category("алкоголь"));
-        menu.add(new Category("1"));
-        menu.add(new Category("2"));
-        menu.add(new Category("3"));
+//        menu.add(new Category("1,2 страви"));
+//        menu.add(new Category("салати"));
+//        menu.add(new Category("страви роджера"));
+//        menu.add(new Category("страви на пательні"));
+//        menu.add(new Category("мясні страви"));
+//        menu.add(new Category("піца мал"));
+//        menu.add(new Category("піца вел"));
+//        menu.add(new Category("суші"));
+//        menu.add(new Category("десерт"));
+//        menu.add(new Category("алкоголь"));
+//        menu.add(new Category("1"));
+//        menu.add(new Category("2"));
+//        menu.add(new Category("3"));
 
         DishUtils.readDBmenu();
         DbConnect.doDBDump();
@@ -4649,7 +4640,6 @@ public class MainForm extends javax.swing.JFrame {
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
     public static ArrayList<Ingredient> diffStorage = new ArrayList<>();
     public static ArrayList<Ingredient> changeList = new ArrayList<>();
-    public static ArrayList<Ingredient> addedProductsToStorage = new ArrayList<>();
     public static ArrayList<Ingredient> updatedProductsToStorage = new ArrayList<>();
     public static List<Category> menu = new ArrayList<>();
     private static final ArrayList<Icon> icons = new ArrayList<>();

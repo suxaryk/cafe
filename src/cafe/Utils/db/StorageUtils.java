@@ -31,7 +31,7 @@ public class StorageUtils {
     public static void readStorage() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            String SQL = "SELECT * FROM storage";
+            String SQL = "SELECT * FROM product";
             System.out.println(!connection.isClosed() ? "DB connected! readStorage"
                     : "Error DB connecting");
             MainForm.storageList.clear();
@@ -62,7 +62,7 @@ public class StorageUtils {
     }
 
     public static void addIngredientToDB(Ingredient ingredient) {
-        final String SQL = "INSERT INTO ingredient(title, count) VALUES(?, ?)";
+        final String SQL = "INSERT INTO product(title, count) VALUES(?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
@@ -81,7 +81,7 @@ public class StorageUtils {
     }
 
     public static void removeIngredientFromDB(int dbId) {
-        final String SQL = "DELETE FROM ingredient WHERE Id = ?";
+        final String SQL = "DELETE FROM product WHERE Id = ?";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -99,7 +99,7 @@ public class StorageUtils {
 
     public static void updateCount(int dbId, double count) {
 
-        final String SQL = "UPDATE ingredient SET count = ? WHERE Id = ?";
+        final String SQL = "UPDATE product SET count = ? WHERE Id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             PreparedStatement pst = connection.prepareStatement(SQL);
@@ -118,7 +118,7 @@ public class StorageUtils {
         Ingredient ingredient = new Ingredient();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            String SQL = "SELECT * FROM ingredient WHERE Id =" + id;
+            String SQL = "SELECT * FROM product WHERE Id =" + id;
             System.out.println(!connection.isClosed() ? "DB connected! getIngredientById " + id
                     : "Error DB connecting");
             MainForm.storageList.clear();
@@ -227,6 +227,7 @@ public class StorageUtils {
             return null;
         }
     }
+    //todo fix
     public static List<Ingredient> getAddedIngredients(Timestamp start, Timestamp end) {
         final String SQL = "SELECT * from storage_added where"
                 + " date >= '" + start

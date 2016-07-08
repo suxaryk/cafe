@@ -285,6 +285,7 @@ public class WeightForm extends javax.swing.JFrame {
             System.out.println("weightCount " + weightCount);
             setDishMeetWeight();
             mainForm.addOrderItemToTable(dishCount);
+            menu.get(4).getDishes().clear();
             DishUtils.readMenuCategoryById(4);
             mainForm.refreshDishList(4);
         }

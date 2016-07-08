@@ -13,16 +13,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import org.apache.log4j.Logger;
 
 public class RecepiesUtils {  
-
+    private static final Logger log = Logger.getLogger(RecepiesUtils.class);
     //unused
     public static void addDishIngredient(int dishId, int storageId, double count) {       
-        final String SQL = "INSERT INTO dish_ingredient(dishId, storage_id, count) VALUES(?, ?, ?)";
+        final String SQL = "INSERT INTO dish_product(dishId, storage_id, count) VALUES(?, ?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! addDishIngredient"
@@ -54,7 +54,7 @@ public class RecepiesUtils {
             
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new dish_ingredient was updated successfully!");
+                System.out.println("A new dish_product was updated successfully!");
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateDishIngredient");
@@ -62,12 +62,9 @@ public class RecepiesUtils {
     }
 
     public static Map<Integer, Ingredient> getRecipeByDishId(int dishDbId) {
-        final String SQL = "SELECT * FROM luckyroger.dish_ingredient where dish_id = ?";
+        final String SQL = "SELECT * FROM luckyroger.dish_product where dish_id = ?";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD);) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getRecipeByDishId"
-                    : "Error DB connecting");
+                .getConnection(URL, USERNAME, PASSWORD);) {                    
             PreparedStatement pst = connection.prepareStatement(SQL);
             pst.setInt(1, dishDbId);
 
@@ -79,13 +76,13 @@ public class RecepiesUtils {
             }
             return recipe;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getRecipeByDishId");
+            log.error("Connection Failed! Check output console - getRecipeByDishId " + e.toString());
             return null;
         }
     }
     
     public static void removeIngredientInAllDishes(int ingredientId) {
-        final String SQL = "DELETE FROM luckyroger.dish_ingredient where ingredient_id = ?";
+        final String SQL = "DELETE FROM luckyroger.dish_product where ingredient_id = ?";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

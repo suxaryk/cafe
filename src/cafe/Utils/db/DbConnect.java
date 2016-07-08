@@ -155,7 +155,6 @@ public class DbConnect {
         });
         SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
 
-//        String actualDBDate = df2.format(new Date(files[0].lastModified()));
         Date actualDBDate = new Date(files[0].lastModified());
         System.out.println("actualDBDate " + df2.format(actualDBDate));
         return actualDBDate;

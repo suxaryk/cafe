@@ -3286,7 +3286,7 @@ public class MainForm extends javax.swing.JFrame {
         int activeIndex = jList2.getSelectedIndex();
         int dbId = menu.get(activeCat).getDishes().get(activeIndex).getDbID();
         if (activeIndex >= 0) {
-            DishUtils.removeDishById(dbId, activeCat);
+            DishUtils.removeDishById(dbId);
             menu.get(activeCat).getDishes().clear();
             DishUtils.readMenuCategoryById(activeCat);
             jList2.clearSelection();
@@ -3402,10 +3402,10 @@ public class MainForm extends javax.swing.JFrame {
             System.out.println("title = " + title);
             int price = Integer.parseInt(jTextField2.getText());
             if (!title.equals("")) {
-                DishUtils.updateDishTitle(dbId, title, activeCat);
+                DishUtils.updateTitle(dbId, title);
             }
             if (price != 0) {
-                DishUtils.updateDishPrice(dbId, price, activeCat);
+                DishUtils.updatePrice(dbId, price);
             }
             menu.get(activeCat).getDishes().clear();
             DishUtils.readMenuCategoryById(activeCat);
@@ -4447,7 +4447,9 @@ public class MainForm extends javax.swing.JFrame {
 //        menu.add(new Category("1"));
 //        menu.add(new Category("2"));
 //        menu.add(new Category("3"));
-
+        for (int i = 0; i < 13; i++) {
+            menu.add(new Category());
+        }
         DishUtils.readDBmenu();
         DbConnect.doDBDump();
     }

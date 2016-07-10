@@ -21,19 +21,19 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author suxarina
  */
 public class StorageUtils {
+    private static final Logger log = Logger.getLogger(StorageUtils.class);
 
     public static void readStorage() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            String SQL = "SELECT * FROM product";
-            System.out.println(!connection.isClosed() ? "DB connected! readStorage"
-                    : "Error DB connecting");
+            String SQL = "SELECT * FROM product";        
             MainForm.storageList.clear();
             Statement statement = connection.createStatement();        
             ResultSet rs = statement.executeQuery(SQL);                
@@ -44,23 +44,20 @@ public class StorageUtils {
                                 rs.getString("title"),
                                 rs.getDouble("count")
                         ));
-            }
-        
+            }        
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - readStorage");
+            log.error("Connection Failed! Check output console - readStorage");
         }
-
     }
-
     public static String getIngTitleById(int Id) {
         for (Ingredient ing : MainForm.storageList) {
             if (ing.getId() == Id) {
                 return ing.getTitle();
             }
         }
+        log.error("getIngTitleById - no product with id = " + Id);
         return "";
     }
-
     public static void addIngredientToDB(Ingredient ingredient) {
         final String SQL = "INSERT INTO product(title, count) VALUES(?, ?)";
         try (Connection connection = DriverManager
@@ -71,15 +68,14 @@ public class StorageUtils {
             pstatement.setInt(2, 0);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Ingredient was added successfully!");
+                log.debug("A new Ingredient was added successfully!");
 
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addIngredientToDB");
+            log.error("Connection Failed! Check output console - addIngredientToDB");
         }
 
     }
-
     public static void removeIngredientFromDB(int dbId) {
         final String SQL = "DELETE FROM product WHERE Id = ?";
 
@@ -89,14 +85,13 @@ public class StorageUtils {
             pst.setInt(1, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Ingredient was removed successfully!");
+                log.debug("Ingredient was removed successfully!" + dbId + " " + getIngTitleById(dbId));
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - removeIngredientFromDB");
+            log.error("Connection Failed! Check output console - removeIngredientFromDB");
         }
 
     }
-
     public static void updateCount(int dbId, double count) {
 
         final String SQL = "UPDATE product SET count = ? WHERE Id = ?";
@@ -107,20 +102,17 @@ public class StorageUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Storage count was updated successfully! " + dbId);
+                log.debug("Storage count was updated successfully! " + dbId);
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateCount" + dbId);
+            log.error("Connection Failed! Check output console - updateCount" + dbId);
         }
     }
-
     public static Ingredient getIngredientById(int id) {
         Ingredient ingredient = new Ingredient();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            String SQL = "SELECT * FROM product WHERE Id =" + id;
-            System.out.println(!connection.isClosed() ? "DB connected! getIngredientById " + id
-                    : "Error DB connecting");
+            String SQL = "SELECT * FROM product WHERE Id =" + id;           
             MainForm.storageList.clear();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -131,12 +123,10 @@ public class StorageUtils {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getIngredientById " + id);
+            log.error("Connection Failed! Check output console - getIngredientById " + id);
         }
         return ingredient;
-
     }
-
     public static void addRemovedItems(Ingredient ing) {
         final String SQL = "INSERT INTO storage_removed(date, operator, ingredient_id, count) VALUES(?, ?, ?, ?)";
         try (Connection connection = DriverManager
@@ -149,33 +139,28 @@ public class StorageUtils {
             pstatement.setDouble(4, ing.getCount());
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("New RemovedItem(s) was added successfully!");
-
+                log.debug("New RemovedItem(s) was added successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addRemovedItems");
+            log.error("Connection Failed! Check output console - addRemovedItems");
         }
     }
     public static void addAddedItems(Ingredient ing) {
         final String SQL = "INSERT INTO storage_added(date, ingredient_id, count) VALUES(?, ?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setTimestamp(1, getCurrentTimeStamp());          
             pstatement.setInt(2, ing.getId());
             pstatement.setDouble(3, ing.getCount());
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("New AddedItem(s) was added successfully!");
-
+                log.debug("New AddedProduct was added successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addAddesItems");
+            log.error("Connection Failed! Check output console - addAddesItems");
         }
-    }
-
- 
+    } 
 
     public static void fullJoinIngLists(List<Ingredient> list1, List<Ingredient> list2) {
         for (Ingredient ing : list2) {
@@ -200,59 +185,51 @@ public class StorageUtils {
     }
 
     public static List<Ingredient> getRemovedIngredients(Timestamp start, Timestamp end) {
-        final String SQL = "SELECT * from storage_removed where"
+        final String SQL = "SELECT * FROM luckyroger.storage_removed where"
                 + " date >= '" + start
                 + "' AND date <= '" + end
-                + "'";
+                + "' group by ingredient_id";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getRemovedIngredients"
-                    : "Error DB connecting");
             List<Ingredient> removedList = new ArrayList<>();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-                    fullJoinIngLists(removedList,
-                            JSONUtils.convertJSONToRemovedIng(
-                                    rs.getString("removed_ingredients"))
-                    );
+                    removedList.add(new Ingredient(                         
+                    rs.getInt("ingredient_id"),
+                    rs.getDouble("count")
+                    ));             
                 }
-                System.out.println("read removedList size = " + removedList.size());
+                log.debug("read removedList size = " + removedList.size());
                 return removedList;
             }
-
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getRemovedIngredients ");
+            log.error("Connection Failed! Check output console - getRemovedIngredients ");
             return null;
         }
     }
-    //todo fix
+
     public static List<Ingredient> getAddedIngredients(Timestamp start, Timestamp end) {
         final String SQL = "SELECT * from storage_added where"
                 + " date >= '" + start
                 + "' AND date <= '" + end
-                + "'";
+                + "' group by ingredient_id";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getAddedIngredients"
-                    : "Error DB connecting");
+                .getConnection(URL, USERNAME, PASSWORD)) {            
             List<Ingredient> addedList = new ArrayList<>();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-                    fullJoinIngLists(addedList,
-                            JSONUtils.convertJSONToRemovedIng(
-                                    rs.getString("added_ingredients"))
-                    );
+                    addedList.add(new Ingredient(
+                            rs.getInt("ingredient_id"),
+                            rs.getDouble("count")
+                    ));
                 }
-                System.out.println("read addedList size = " + addedList.size());
+                log.debug("read addedList size = " + addedList.size());
                 return addedList;
             }
-
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getAddedIngredients ");
+            log.error("Connection Failed! Check output console - getAddedIngredients ");
             return null;
         }
     }
@@ -261,10 +238,7 @@ public class StorageUtils {
       public static List<Ingredient> convertAddedStorageTable() {
         final String SQL = "SELECT * from storage_added";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getAddedIngredients"
-                    : "Error DB connecting");
+                .getConnection(URL, USERNAME, PASSWORD)) {       
             List<Ingredient> addedList = new ArrayList<>(0);
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -287,12 +261,12 @@ public class StorageUtils {
                     }
                     
                 }
-                System.out.println("read addedList size = " + addedList.size());
+                log.debug("read addedList size = " + addedList.size());
                 return addedList;
             }
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getAddedIngredients ");
+            log.error("Connection Failed! Check output console - getAddedIngredients ");
             return null;
         }
     }
@@ -311,7 +285,7 @@ public class StorageUtils {
                 System.out.println("Storage id, count count was updated successfully! " + dbId);
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateAddedUtilits" + dbId);
+            log.error("Connection Failed! Check output console - updateAddedUtilits" + dbId);
         }
     }
     //utils tmp
@@ -319,7 +293,6 @@ public class StorageUtils {
         final String SQL = "INSERT INTO storage_added(date, added_ingredients, ingredient_id, count) VALUES(?, ?, ?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setString(1, date);
             pstatement.setString(2, "");
@@ -327,23 +300,19 @@ public class StorageUtils {
             pstatement.setDouble(4, count);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Ingredient was added successfully!");
+                log.debug("A new Ingredient was added successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - insertAddedUtilits");
+            log.error("Connection Failed! Check output console - insertAddedUtilits");
         }
 
-    }   
-   
+    }  
     
 //utils tmp
       public static List<Ingredient> convertRemovedStorageTable() {
         final String SQL = "SELECT * from storage_removed";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getAddedIngredients"
-                    : "Error DB connecting");
             List<Ingredient> addedList = new ArrayList<>(0);
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -372,7 +341,7 @@ public class StorageUtils {
             }
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - convertRemovedStorageTable ");
+            log.error("Connection Failed! Check output console - convertRemovedStorageTable ");
             return null;
         }
     }
@@ -391,7 +360,7 @@ public class StorageUtils {
                 System.out.println("Storage id, count count was updated successfully! " + dbId);
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateAddedUtilits" + dbId);
+            log.error("Connection Failed! Check output console - updateAddedUtilits" + dbId);
         }
     }
     //utils tmp
@@ -399,7 +368,6 @@ public class StorageUtils {
         final String SQL = "INSERT INTO storage_removed(date, operator, removed_ingredients, ingredient_id, count) VALUES(?, ?, ?, ?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setString(1, date);
             pstatement.setString(2, operator);
@@ -411,7 +379,7 @@ public class StorageUtils {
                 System.out.println("A new Ingredient was added successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - insertAddedUtilits");
+            log.error("Connection Failed! Check output console - insertAddedUtilits");
         }
 
     }   
@@ -422,10 +390,7 @@ public class StorageUtils {
                 + "' AND datatime <= '" + end
                 + "' AND sum >= 0 ";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getOrderedDishes"
-                    : "Error DB connecting");
+                .getConnection(URL, USERNAME, PASSWORD)) {          
             List<OrderItem> orderedDishes = new ArrayList<>();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -434,12 +399,11 @@ public class StorageUtils {
                             convertJSONToOrder(rs.getString("order_items"))
                     );
                 }
-                System.out.println("read orderedDishes size = " + orderedDishes.size());
+                log.debug("read orderedDishes size = " + orderedDishes.size());
                 return orderedDishes;
             }
-
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getOrderedDishes ");
+            log.error("Connection Failed! Check output console - getOrderedDishes ");
             return null;
         }
     }
@@ -448,12 +412,10 @@ public class StorageUtils {
         final String SQL = "INSERT INTO storage_history(date, ingredient_id, count) VALUES(?, ?, ?)";
         Connection connection = null;
         PreparedStatement pstatement = null;
-
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             pstatement = connection.prepareStatement(SQL);
             connection.setAutoCommit(false);
-
             for (Ingredient ing : storageDump) {
                 pstatement.setTimestamp(1, getCurrentTimeStamp());
                 pstatement.setInt(2, ing.getId());
@@ -462,17 +424,15 @@ public class StorageUtils {
             }
             pstatement.executeBatch();
             connection.commit();
-
         } catch (SQLException e) {
             if (connection != null) {
                 connection.rollback();
             }
-            System.out.println("Connection Failed! Check output console - addStorageHistory");
+            log.error("Connection Failed! Check output console - addStorageHistory");
         } finally {
             if (pstatement != null) {
                 pstatement.close();
             }
-
             if (connection != null) {
                 connection.close();
             }

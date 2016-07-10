@@ -12,8 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import org.apache.log4j.Logger;
 
 public class UsersUtils {
+    private static final Logger log = Logger.getLogger(UsersUtils.class);
 
     public static void readAllUsers() {
         userList.clear();
@@ -31,7 +33,7 @@ public class UsersUtils {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - readAllUsers");
+            log.error("Connection Failed! Check output console - readAllUsers");
         }
     }
 
@@ -44,10 +46,10 @@ public class UsersUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new User was updated successfully!");
+                log.debug("A new User was updated successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateUserPass");
+            log.error("Connection Failed! Check output console - updateUserPass");
         }
     }
 
@@ -60,10 +62,10 @@ public class UsersUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new User was updated successfully!");
+                log.debug("A new User was updated successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateUserName");
+            log.error("Connection Failed! Check output console - updateUserName");
         }
     }
 
@@ -76,13 +78,13 @@ public class UsersUtils {
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
                     userList.get(User.active).setStartTime(rs.getTimestamp("date_in"));
-                    userList.get(User.active).setEndTime(rs.getTimestamp("date_out"));
-                    System.out.println("date in " + rs.getTimestamp("date_in"));
-                    System.out.println("date out " + rs.getTimestamp("date_out"));
+                    userList.get(User.active).setEndTime(rs.getTimestamp("date_out"));          
+                    log.debug("date in " + userList.get(User.active).getStartTime() 
+                            + "date out " + userList.get(User.active).getEndTime());                    
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getEmployeeDayTime");
+            log.error("Connection Failed! Check output console - getEmployeeDayTime");
         }
     }
 

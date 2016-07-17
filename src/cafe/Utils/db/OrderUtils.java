@@ -180,21 +180,60 @@ public class OrderUtils {
     }
     
     //utils tmp
-    public static String getAllDayInfo() {
-        final String SQL = "SELECT * FROM day_info ORDER BY Id";
+    public static void getAllDayInfo() {
+        final String SQL = "SELECT * FROM day_info";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             Statement statement = connection.createStatement();
             String info = "";
+            int id;
+            
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
                     info = rs.getString("info");
+                    id = rs.getInt("id");
+                    
+                    String[] tokens = info.split(" ");
+                    List<Integer> parsed = new ArrayList<>();
+                    for (String t : tokens) {
+                        if (t.matches("^[-+]?[0-9]*\\.?[0-9]+$")) {
+                            int k = Integer.parseInt(t);
+                            parsed.add(k);
+                        }
+                    }
+                    updateDayInfo(parsed, id);                    
                 }
-            }
-            return info;
+            }                     
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getDaySum");
-            return "";
+            log.error("Connection Failed! Check output console - getDaySum");          
+        }
+    }
+    //utils tmp
+    public static void updateDayInfo(List<Integer> numbers, int id) {
+        final String sql = "UPDATE day_info set start_kasa=?, end_kasa=?,"
+                + " sum=?, spend=?, dish_count=?, order_count=? where Id = ?";
+
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! updateDayInfo" + id
+                    : "Error DB connecting");
+
+            PreparedStatement pstatement = connection.prepareStatement(sql);
+            pstatement.setInt(1, numbers.get(0));
+            pstatement.setInt(2, numbers.get(5));
+            pstatement.setInt(3, numbers.get(1));
+            pstatement.setInt(4, numbers.get(4));
+            pstatement.setInt(5, numbers.get(2));
+            pstatement.setInt(6, numbers.get(3));
+            pstatement.setInt(7, id);
+      
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                log.debug("A new updateDayInfo was added successfully!");
+            }
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - updateDayInfo");
         }
     }
     

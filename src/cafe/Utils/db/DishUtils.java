@@ -3,6 +3,7 @@ package cafe.Utils.db;
 import static cafe.Utils.db.DbConnect.PASSWORD;
 import static cafe.Utils.db.DbConnect.URL;
 import static cafe.Utils.db.DbConnect.USERNAME;
+import cafe.model.Category;
 import cafe.model.Dish;
 import static cafe.view.MainForm.menu;
 
@@ -23,10 +24,12 @@ public class DishUtils {
         return new java.sql.Timestamp(today.getTime());
     }
     public static void readDBmenu() {
-        
+        int dish_count =0;
         for (int i = 0; i < 13; i++) {
             readMenuCategoryById(i);
+            dish_count += menu.get(i).getDishes().size();
         }      
+        log.debug("menu size = " + dish_count + " dishes");
     }
 
     public static void readMenuCategoryById(int categoryId) {
@@ -34,8 +37,8 @@ public class DishUtils {
 //        menu.get(activeCat).getDishes().clear();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-            log.debug(!connection.isClosed() ? "DB connected! readDBCategoryById"
-                    : "Error DB connecting readDBCategoryById");
+            log.debug(!connection.isClosed() ? "DB connected! readDBCategoryById " + categoryId 
+                    : "Error DB connecting readDBCategoryById" + categoryId);
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
@@ -46,12 +49,7 @@ public class DishUtils {
                                     rs.getInt("price"),
                                     rs.getBoolean("isCook"),
                                     RecepiesUtils.getRecipeByDishId(rs.getInt("Id"))
-                            ));
-                    int lastDish = menu.get(categoryId).getDishes().size()-1;
-                    log.info("read dish " + 
-                    menu.get(categoryId).getDishes().get(lastDish).getDbID()+ " " +
-                    menu.get(categoryId).getDishes().get(lastDish).getTitle());
-                    
+                            ));                    
                 }
             }
         } catch (SQLException e) {

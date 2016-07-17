@@ -2608,7 +2608,9 @@ public class MainForm extends javax.swing.JFrame {
         //utils tmp
 //        StorageUtils.convertAddedStorageTable();
 //        StorageUtils.convertRemovedStorageTable();
-            RecepiesUtils.readCustomDishes();
+//            RecepiesUtils.readCustomDishes();
+//        OrderUtils.getAllDayInfo();
+
     }//GEN-LAST:event_PersonalLogining
 
 

@@ -15,9 +15,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 
 public class ReviziaUtils {
+    private static final Logger log = Logger.getLogger(ReviziaUtils.class);
 
     public static void addRevizia(List<ReviziaItem> revizia) 
                                                         throws SQLException {
@@ -42,10 +44,10 @@ public class ReviziaUtils {
             }
             pstatement.executeBatch();
             dbConnect.commit();
-            System.out.println("Revizia was added successfully!");
+            log.debug("Revizia was added successfully!");
 
         } catch (SQLException e) {
-            System.out.println("AddRevizia Exception" + e.getMessage());
+            log.error("AddRevizia Exception" + e.getMessage());
             if (dbConnect != null) {
                 dbConnect.rollback();
             }            

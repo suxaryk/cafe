@@ -11,12 +11,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author suxarina
  */
 public class CheckUtils {
+    private static final Logger log = Logger.getLogger(CheckUtils.class);
 
     public static void readCheck() {
         final String SQL = "SELECT title, adress, passWifi, wish  from check_info ORDER BY Id";
@@ -37,7 +39,7 @@ public class CheckUtils {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - readCheck");
+            log.error("Connection Failed! Check output console - readCheck");
         }
     }
 
@@ -54,10 +56,10 @@ public class CheckUtils {
 
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Check was updated successfully!");
+                log.error("Check was updated successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateCheck");
+            log.error("Connection Failed! Check output console - updateCheck");
 
         }
 

@@ -3,10 +3,6 @@ package cafe.Utils.db;
 import static cafe.Utils.db.DbConnect.PASSWORD;
 import static cafe.Utils.db.DbConnect.URL;
 import static cafe.Utils.db.DbConnect.USERNAME;
-//import static cafe.Utils.db.DbConnect.sqlInsertList;
-//import static cafe.Utils.db.DbConnect.sqlRemoveList;
-//import static cafe.Utils.db.DbConnect.sqlUpdatePriceList;
-//import static cafe.Utils.db.DbConnect.sqlUpdateTitleList;
 import cafe.model.Dish;
 import static cafe.view.MainForm.menu;
 
@@ -97,8 +93,7 @@ public class DishUtils {
             if (rowsInserted > 0) {
                 log.debug("A new dish was removed successfully!");
             }
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - removeDishById");
+        } catch (SQLException e) {          
             log.error("Connection Failed! Check output console - removeDishById " + e.toString());
         }
 

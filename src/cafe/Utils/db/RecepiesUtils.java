@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -34,19 +33,17 @@ public class RecepiesUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new addDishIngredient was added successfully!");
+                log.debug("A new addDishIngredient was added successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addDishIngredient");
+            log.error("Connection Failed! Check output console - addDishIngredient");
         }
     }
 
     public static void updateDishIngredient(int receptId, double count) { 
         final String SQL = "UPDATE dish SET count = ? WHERE Id = ?)";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! updateDishIngredient"
-                    : "Error DB connecting");
+                .getConnection(URL, USERNAME, PASSWORD)) {    
             PreparedStatement pstatement = connection.prepareStatement(SQL);
 
             pstatement.setDouble(1, count);
@@ -54,10 +51,10 @@ public class RecepiesUtils {
             
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new dish_product was updated successfully!");
+                log.debug("A new dish_product was updated successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateDishIngredient");
+            log.error("Connection Failed! Check output console - updateDishIngredient");
         } 
     }
 
@@ -67,7 +64,6 @@ public class RecepiesUtils {
                 .getConnection(URL, USERNAME, PASSWORD);) {                    
             PreparedStatement pst = connection.prepareStatement(SQL);
             pst.setInt(1, dishDbId);
-
             Map<Integer, Ingredient> recipe = new TreeMap<>();
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
@@ -90,24 +86,19 @@ public class RecepiesUtils {
             pst.setInt(1, ingredientId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Ingredient was removed successfully in all dishes!");
+                log.debug("Ingredient was removed successfully in all dishes!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - removeIngredientInAllDishes");
+            log.error("Connection Failed! Check output console - removeIngredientInAllDishes");
         }
-
     }
     
     //utils tmp
     public static void readCustomDishes() {
-        final String SQL = "select * from dish";
-    
+        final String SQL = "select * from dish";    
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getAddedIngredients"
-                    : "Error DB connecting");
-            List<Ingredient> jsons = new ArrayList<>();
+                .getConnection(URL, USERNAME, PASSWORD)) {      
+            List<Ingredient> jsons;
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
@@ -119,26 +110,25 @@ public class RecepiesUtils {
                 }              
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getAddedIngredients ");           
+            log.error("Connection Failed! Check output console - getAddedIngredients ");           
         }
     }
     
     //utils tmp
     public static void insertAddedUtilits(int dish_id, int ingredient_id, double count) {
-        final String SQL = "INSERT INTO recipe(dish_id, ingredient_id, count) VALUES(?, ?, ?)";
+        final String SQL = "INSERT INTO dish_product(dish_id, ingredient_id, count) VALUES(?, ?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setInt(1, dish_id);
             pstatement.setInt(2, ingredient_id);         
             pstatement.setDouble(3, count);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Ingredient was added successfully!");
+                log.debug("A new Ingredient was added successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - insertAddedUtilits");
+            log.error("Connection Failed! Check output console - insertAddedUtilits");
         }
 
     }

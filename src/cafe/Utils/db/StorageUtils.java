@@ -266,7 +266,7 @@ public class StorageUtils {
             }
 
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getAddedIngredients ");
+            log.error("Connection Failed! Check output console - convertAddedStorageTable ");
             return null;
         }
     }

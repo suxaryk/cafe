@@ -137,20 +137,21 @@ public class OrderUtils {
         }
     }
 
-    public static void addDayInfo(Date start, Date end, String info) {
-        final String sql = "INSERT INTO day_info(time_start, time_end, info)"
-                + " VALUES(?, ?, ?)";
-
+    public static void addDayInfo(Date start, Date end, List<Integer> kasaInfo) {
+        final String sql = "INSERT INTO day_info(time_start, time_end, start_kasa, end_kasa,"
+                + " sum, spend, dish_count, order_count)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! addDayInfo"
-                    : "Error DB connecting");
-
+                .getConnection(URL, USERNAME, PASSWORD)) {  
             PreparedStatement pstatement = connection.prepareStatement(sql);
             pstatement.setTimestamp(1, new Timestamp(start.getTime()));
             pstatement.setTimestamp(2, new Timestamp(end.getTime()));
-            pstatement.setString(3, info);
+            pstatement.setInt(3, kasaInfo.get(0));
+            pstatement.setInt(4, kasaInfo.get(1));
+            pstatement.setInt(5, kasaInfo.get(2));
+            pstatement.setInt(6, kasaInfo.get(3));
+            pstatement.setInt(7, kasaInfo.get(4));
+            pstatement.setInt(8, kasaInfo.get(5));       
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -161,21 +162,26 @@ public class OrderUtils {
         }
     }
 
-    public static String getDayInfo() {
+    public static List<Integer> getDayInfo() {
         final String SQL = "SELECT * FROM day_info ORDER BY Id DESC LIMIT 1";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             Statement statement = connection.createStatement();
-            String info = "";
+            List<Integer> dayInfo= new ArrayList<>();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-                    info = rs.getString("info");
+                    dayInfo.add(rs.getInt("start_kasa"));
+                    dayInfo.add(rs.getInt("end_kasa"));
+                    dayInfo.add(rs.getInt("sum"));
+                    dayInfo.add(rs.getInt("spend"));
+                    dayInfo.add(rs.getInt("dish_count"));
+                    dayInfo.add(rs.getInt("order_count"));
                 }
             }
-            return info;
+            return dayInfo;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getDaySum");
-            return "";
+            log.error("Connection Failed! Check output console - getDayInfo");
+            return null;
         }
     }
     

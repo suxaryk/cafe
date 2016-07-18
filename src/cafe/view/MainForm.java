@@ -10,6 +10,7 @@ import cafe.model.Order;
 import cafe.Utils.db.DishUtils;
 import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
+import static cafe.Utils.db.OrderUtils.getDayInfo;
 import cafe.Utils.db.ReviziaUtils;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
@@ -32,6 +33,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -3170,7 +3172,7 @@ public class MainForm extends javax.swing.JFrame {
             jPasswordField1.setText("");
         }
     }//GEN-LAST:event_loginEmployee
-    public static String dayInfo() {
+    public static List<Integer> dayInfo() {
         System.out.println("----------day Info----------");
 
         int ordersCount = OrderUtils.getDayOrdersCount();
@@ -3181,20 +3183,36 @@ public class MainForm extends javax.swing.JFrame {
 
         int startKass = OrderUtils.getAllSumBefore(new Timestamp(DAY_START_TIME.getTime()));
 
+       
+        List<Integer> kasaInfo = new ArrayList<>();
+        kasaInfo.add(startKass);
+        kasaInfo.add(allSum);
+        kasaInfo.add(daySum);
+        kasaInfo.add(dayDiff);
+        kasaInfo.add(cookCount);
+        kasaInfo.add(ordersCount);
+        
+       
+        return kasaInfo;
+    }
+    
+    public static String getDayInfoString(List<Integer> dayInfo){
+        List<Integer> kasainfo = dayInfo;
+        
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
                 + "Інформація за зміну в терміні  \n"
                 + "_з " + dateFormat.format(DAY_START_TIME) + " \n"
                 + "по " + dateFormat.format(new Date()) + "\n"
                 + "------------------------------------------------\n"
-                + "Каса на початок зміни " + startKass + " грн.\n"
-                + "Сума за день " + daySum + " грн.\n"
-                + "Страв за день " + cookCount + " \n"
-                + "Чеків за день " + ordersCount + " \n"
-                + "Витрати за день " + dayDiff + " грн.\n"
-                + "Залишок в касі " + allSum + " грн\n"
+                + "Каса на початок зміни " + kasainfo.get(0) + " грн.\n"
+                + "Сума за день " + kasainfo.get(2) + " грн.\n"
+                + "Страв за день " + kasainfo.get(4) + " \n"
+                + "Чеків за день " + kasainfo.get(5) + " \n"
+                + "Витрати за день " + kasainfo.get(3) + " грн.\n"
+                + "Залишок в касі " + kasainfo.get(1) + " грн\n"
                 + "------------------------------------------------\n";
-        return info;
+            return info;
     }
 
     public static void closeSystem() {
@@ -3203,7 +3221,7 @@ public class MainForm extends javax.swing.JFrame {
         options[0] = "Так";
         options[1] = "Ні";
         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                dayInfo()
+                getDayInfoString(dayInfo())
                 + "ЗАКРИТТЯ КАСИ\nВиключити програму?", "Закриття каси!",
                 0, JOptionPane.YES_NO_OPTION, null, options, null);
         if (reply == JOptionPane.YES_OPTION) {
@@ -4187,7 +4205,7 @@ public class MainForm extends javax.swing.JFrame {
     private void getLastDayKass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getLastDayKass
         JFrame frame = new JFrame();
         JOptionPane.showOptionDialog(frame.getContentPane(),
-                OrderUtils.getDayInfo()
+                getDayInfoString(getDayInfo())
                 + "Повернутись до програми?", "ПОПЕРЕДНЯ зміна!",
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
     }//GEN-LAST:event_getLastDayKass

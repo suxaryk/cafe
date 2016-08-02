@@ -11,6 +11,7 @@ import cafe.model.OrderItem;
 import cafe.model.User;
 import cafe.view.LoginForm;
 import static cafe.view.LoginForm.userList;
+import cafe.view.MainForm;
 import static cafe.view.MainForm.DAY_START_TIME;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -241,7 +242,81 @@ public class OrderUtils {
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - updateDayInfo");
         }
+    } 
+
+    //utils tmp
+    public static List<Order> getAllOrders() {
+        final String SQL = "SELECT * from orders where sum > 0";
+        List<Order> loadOrders = new ArrayList<>();
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    Order tmpOrder = new Order();
+                    tmpOrder.setId(rs.getInt("Id"));
+                    tmpOrder.setDayId(rs.getInt("dayId"));
+                    tmpOrder.setOrderSum(rs.getInt("sum"));
+                    tmpOrder.setCookCount(rs.getInt("cookCount"));
+                    tmpOrder.setDate(rs.getTimestamp("datatime"));
+                    tmpOrder.setUser(rs.getString("operator"));
+                    tmpOrder.setItems(JSONUtils.convertJSONToOrder(rs.getString("order_items")));
+                    tmpOrder.setRemovedItems(JSONUtils.convertJSONToOrder(rs.getString("removed_items")));
+                    loadOrders.add(tmpOrder);
+                }
+            }
+            return loadOrders;
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - getOrdersBetween");
+            return null;
+        }
     }
+    
+    //utils tmp
+    public static void convertOrderItems() throws SQLException {
+        final String SQL = "INSERT INTO order_item(order_id, dish_id, quantity)"
+                + " VALUES(?, ?, ?)";
+        Connection dbConnect = null;
+        PreparedStatement pstatement = null;
+        try {
+            dbConnect = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            pstatement = dbConnect.prepareStatement(SQL);
+
+            dbConnect.setAutoCommit(false);
+
+            List<Order> list = OrderUtils.getAllOrders();
+            for (Order order : list) {
+                if (order.getId() % 5000 == 0) {
+                    System.out.println("id = " + order.getId());
+                }
+                for (OrderItem item : order.getItems()) {
+                    pstatement.setInt(1, order.getId());
+                    pstatement.setInt(2, MainForm.getDishIdByName(item.getDish().getTitle()));
+                    pstatement.setInt(3, item.getCount());
+                    pstatement.addBatch();
+                }
+            }
+            pstatement.executeBatch();
+            dbConnect.commit();
+            System.out.println("------------------End...........");
+
+        } catch (SQLException e) {
+            log.error("convertOrderItems Exception" + e.getMessage());
+            if (dbConnect != null) {
+                dbConnect.rollback();
+            }
+        } finally {
+            if (pstatement != null) {
+                pstatement.close();
+            }
+            if (dbConnect != null) {
+                dbConnect.close();
+            }
+        }
+        
+        
+    }
+    
     
 
     public static void updateTable(Order order, User user, int activeTable) {

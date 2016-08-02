@@ -1006,7 +1006,7 @@ public class ClientForm extends javax.swing.JFrame {
                 
                 MainForm.initBDmenu();
                 UsersUtils.readAllUsers();
-                EmployeeUtils.addEmployeeTimeDiff();
+                EmployeeUtils.updateEmployeesWorkedHours();
                 getEmployeeFullWorksDay(startDate, endDate);
                 getEmployeeHalfWorksDay(startDate, endDate);
                 getStorageTable();                
@@ -1023,7 +1023,7 @@ public class ClientForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_getAllOrders
-
+//custom db import 
     private void updateLocalDB(){
         SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");        
          Date end =  new Date(new Timestamp(endDate.getTime() - ONE_DAY_PLUS_THREE_HOURS).getTime());     
@@ -1091,7 +1091,7 @@ public class ClientForm extends javax.swing.JFrame {
         }else{
             chooseServer(cafeId);
         }        
-        actualDate = getLastModifiedDate();
+//        actualDate = getLastModifiedDate();
         jLabel26.setText("Дані актуальні на " + actualDate);
         jLabel23.setText("Підключено до " + servers[cafeId]);
     

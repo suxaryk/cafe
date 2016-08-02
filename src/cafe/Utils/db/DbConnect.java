@@ -98,6 +98,7 @@ public class DbConnect {
             String command = "cmd /c  mysqldump -u" + USERNAME + " -p" + PASSWORD + " "
                     + "luckyroger > C:/dump/" + dateFormat.format(new Date()) + "_dump.sql";
             try {
+                
                  Runtime.getRuntime().exec(command);
             } catch (IOException ex) {
             }

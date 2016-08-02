@@ -384,6 +384,8 @@ public class StorageUtils {
 
     }   
  
+    //SELECT dish_id, dish.title, sum(quantity) as sm 
+    //FROM luckyroger.order_item inner join dish on order_item.dish_id = dish.id group by dish_id order by sm desc;
     public static List<OrderItem> getOrderedDishes(Timestamp start, Timestamp end) {
         final String SQL = "SELECT * from orders where"
                 + " datatime >= '" + start
@@ -406,7 +408,7 @@ public class StorageUtils {
             log.error("Connection Failed! Check output console - getOrderedDishes ");
             return null;
         }
-    }
+    }   
     
     public static void addStorageHistory(List<Ingredient> storageDump) throws SQLException{
         final String SQL = "INSERT INTO storage_history(date, ingredient_id, count) VALUES(?, ?, ?)";

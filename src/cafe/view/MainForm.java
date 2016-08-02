@@ -2613,6 +2613,18 @@ public class MainForm extends javax.swing.JFrame {
 //            RecepiesUtils.readCustomDishes();
 //        OrderUtils.getAllDayInfo();
 
+
+
+        //!!!check all dish ids before start in getDishIdByName (work for slavutDB)
+//        try {
+//            OrderUtils.convertOrderItems();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+ 
+
+
     }//GEN-LAST:event_PersonalLogining
 
 
@@ -3233,7 +3245,7 @@ public class MainForm extends javax.swing.JFrame {
                 System.out.println("SQL syntax error addStorageHistory");
             }
             EmployeeUtils.addTimeOut(userList.get(User.active));         
-            EmployeeUtils.addEmployeeTimeDiff();
+            EmployeeUtils.updateEmployeesWorkedHours();
             OrderUtils.addDayInfo(DAY_START_TIME, new Date(), dayInfo());
             System.exit(0);
         }
@@ -4625,6 +4637,12 @@ public class MainForm extends javax.swing.JFrame {
                 getResource("/cafe/icons/small/no-drink.png")));
     }
 
+    /**
+     *
+     * @param catId
+     * @param dishId
+     * @return Dish
+     */
     public static Dish getDishById(int catId, int dishId) {
         for (int i = 0; i < menu.size(); i++) {
             if (i == catId) {
@@ -4637,6 +4655,49 @@ public class MainForm extends javax.swing.JFrame {
         }
         return null;
     }
+    public static int getDishIdByName(String dishTitle) {      
+        for (Category category : menu) {
+            for(Dish dish: category.getDishes()){               
+                if (dish.getTitle().equals(dishTitle)) {
+                   return dish.getDbID();                                    
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Хрусткі крильця")) {                 
+                    return 41;
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Ковбаски мисливські")) {                 
+                    return 42;
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Ковбаски салямі до пива")) {                 
+                    return 43;
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Курячий биток")) {                 
+                    return 44;
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Стейк з свинини на ребрі")) {                 
+                    return 45;
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Стейк з свинини,")) {                 
+                    return 46;
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Стейк з телятини")) {                 
+                    return 47;
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Стейк з індички")) {                 
+                    return 48;
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Білий соус")) {                 
+                    return 49;
+                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Червоний соус")) {                 
+                    return 50;
+                }else if(menu.indexOf(category) == 4 && dishTitle.contains("Ковбаски на грилі")){
+                    return 51;                   
+                }else if(menu.indexOf(category) == 4 && dishTitle.contains("Ковбаски Баварські")){
+                    return 52;                    
+                }else if(dishTitle.contains("Сирні пали")){
+                    return 27;                    
+                }else if(dishTitle.contains("Посуд з собою")){
+                    return 219;                    
+                }else if(dish.getTitle().contains(dishTitle)){
+                    System.out.println("-------------------DISH contain" + dishTitle);
+                    return dish.getDbID();
+                }
+            }
+        }
+        System.out.println("NOT FOUND DISH _______________" + dishTitle);
+        return -1;
+    }
+    
 
     /**
      * @param args the command line arguments

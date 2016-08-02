@@ -242,7 +242,7 @@ public class EmployeeUtils {
         }
     }
     
-    public static void addEmployeeTimeDiff(){        
+    public static void updateEmployeesWorkedHours(){        
         final String SQL = "UPDATE employee_time "
                          + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out)) "
                          + "ORDER BY Id DESC LIMIT 300";

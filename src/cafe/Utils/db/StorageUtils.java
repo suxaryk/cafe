@@ -93,7 +93,7 @@ public class StorageUtils {
 
     }
     public static void updateCount(int dbId, double count) {
-
+        System.out.println("count =============" + count);
         final String SQL = "UPDATE product SET count = ? WHERE Id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

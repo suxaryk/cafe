@@ -2613,15 +2613,19 @@ public class MainForm extends javax.swing.JFrame {
 //            RecepiesUtils.readCustomDishes();
 //        OrderUtils.getAllDayInfo();
 
-
-
-        //!!!check all dish ids before start in getDishIdByName (work for slavutDB)
+            //!!!check all dish ids before start in getDishIdByName (work for slavutDB)
 //        try {
 //            OrderUtils.convertOrderItems();
 //        } catch (SQLException ex) {
 //            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        
+
+        try {
+            OrderUtils.updateOrderItems(OrderUtils.getMeatOrders());
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
  
 
 
@@ -4689,7 +4693,7 @@ public class MainForm extends javax.swing.JFrame {
                 }else if(dishTitle.contains("Посуд з собою")){
                     return 219;                    
                 }else if(dish.getTitle().contains(dishTitle)){
-                    System.out.println("-------------------DISH contain" + dishTitle);
+//                    System.out.println("-------------------DISH contain" + dishTitle);
                     return dish.getDbID();
                 }
             }

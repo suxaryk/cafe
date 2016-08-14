@@ -6,6 +6,7 @@ import static cafe.Utils.db.DbConnect.USERNAME;
 
 import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
 import cafe.Utils.json.JSONUtils;
+import cafe.model.Dish;
 import cafe.model.Order;
 import cafe.model.OrderItem;
 import cafe.model.User;
@@ -25,6 +26,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import org.apache.log4j.Logger;
 
 public class OrderUtils {
@@ -285,10 +288,7 @@ public class OrderUtils {
             dbConnect.setAutoCommit(false);
 
             List<Order> list = OrderUtils.getAllOrders();
-            for (Order order : list) {
-                if (order.getId() % 5000 == 0) {
-                    System.out.println("id = " + order.getId());
-                }
+            for (Order order : list) {               
                 for (OrderItem item : order.getItems()) {
                     pstatement.setInt(1, order.getId());
                     pstatement.setInt(2, MainForm.getDishIdByName(item.getDish().getTitle()));
@@ -315,6 +315,84 @@ public class OrderUtils {
         }
         
         
+    }
+    //utils tmp
+    public static Map<Integer, OrderItem> getMeatOrders(){
+        List<Order> list = OrderUtils.getAllOrders();
+        Map<Integer, OrderItem> meatList = new TreeMap<>();
+        for (Order order : list) {            
+            for (OrderItem item : order.getItems()) {
+                int orderId = order.getId();
+                String dishName = item.getDish().getTitle();
+                int dishId = MainForm.getDishIdByName(dishName);
+                // meat dishes ids
+                if (dishId >= 41 && dishId <= 52 && dishId != 49 && dishId != 50) { 
+                    StringBuilder str = new StringBuilder(dishName);
+                    StringBuilder masaString = new StringBuilder(str.reverse().substring(5, 9)).reverse(); 
+                    int masa = 0;
+                    try {
+                         masa = Integer.parseInt(masaString.toString());
+                    } catch (Exception e) {                        
+                        try {
+                            masa = Integer.parseInt(masaString.substring(1, 4));
+                        } catch (Exception ex) {
+                            try {
+                                masa = Integer.parseInt(masaString.substring(2, 4));
+                            } catch (Exception ext) {
+                                System.out.println("---------!!Error" + dishId + " dishName= " + masaString.substring(2, 4) + " masa = " + masa);
+                            }                           
+                        }               
+                    }  
+//                    masa /= 100;
+                    meatList.put(orderId, new OrderItem(new Dish(dishId, null, 0, true, null), masa));
+                    System.out.println(orderId + " dishId = " + dishId + " dish Name =" + dishName + " masa= " + masa);               
+                }                
+            }
+        } 
+        return meatList;
+    }
+    
+    //utils tmp
+    public static void updateOrderItems(Map<Integer, OrderItem> meatList) throws SQLException {
+        final String SQL = "UPDATE order_item SET quantity=?"
+                         + "where order_id=? AND  dish_id=?";
+        Connection dbConnect = null;
+        PreparedStatement pstatement = null;
+        try {
+            dbConnect = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            pstatement = dbConnect.prepareStatement(SQL);
+
+            dbConnect.setAutoCommit(false);
+
+            List<Order> list = OrderUtils.getAllOrders();
+            for (Map.Entry<Integer, OrderItem> entry : meatList.entrySet()) { 
+                float masa = (entry.getValue().getCount());
+                masa /= 100;
+                pstatement.setFloat(1, masa);
+                pstatement.setInt(2, entry.getKey());
+                pstatement.setInt(3, entry.getValue().getDish().getDbID());
+                pstatement.addBatch();
+                System.out.println(entry.getKey() + " dishId = " + entry.getValue().getDish().getDbID() + " dish Name =" +  " masa= " + masa);
+            }            
+            
+            pstatement.executeBatch();
+            dbConnect.commit();
+            System.out.println("------------------End...........");
+
+        } catch (SQLException e) {
+            log.error("convertOrderItems Exception" + e.getMessage());
+            if (dbConnect != null) {
+                dbConnect.rollback();
+            }
+        } finally {
+            if (pstatement != null) {
+                pstatement.close();
+            }
+            if (dbConnect != null) {
+                dbConnect.close();
+            }
+        }
+
     }
     
     

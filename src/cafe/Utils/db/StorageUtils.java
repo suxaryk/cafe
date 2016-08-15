@@ -10,6 +10,7 @@ import static cafe.Utils.json.JSONUtils.convertJSONToOrder;
 import cafe.model.Ingredient;
 import cafe.model.OrderItem;
 import cafe.model.User;
+import static cafe.view.LoginForm.userList;
 import cafe.view.MainForm;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -136,14 +137,14 @@ public class StorageUtils {
 
     }
 
-    public static void addRemovedItems(String JsonItems, User user) {
-        final String SQL = "INSERT INTO storage_removed(date, operator, removed_ingredients) VALUES(?, ?, ?)";
+    public static void addRemovedItems(String JsonItems) {
+        final String SQL = "INSERT INTO storage_removed(date, user, removed_ingredients) VALUES(?, ?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setTimestamp(1, getCurrentTimeStamp());
-            pstatement.setString(2, user.getName());
+            pstatement.setString(2, userList.get(User.active).getName());
             pstatement.setString(3, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -155,13 +156,14 @@ public class StorageUtils {
         }
     }
     public static void addAddedItems(String JsonItems) {
-        final String SQL = "INSERT INTO storage_added(date, added_ingredients) VALUES(?, ?)";
+        final String SQL = "INSERT INTO storage_added(date, user, added_ingredients) VALUES(?, ?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setTimestamp(1, getCurrentTimeStamp());          
-            pstatement.setString(2, JsonItems);
+            pstatement.setString(2, userList.get(User.active).getName());          
+            pstatement.setString(3, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("New AddedItem(s) was added successfully!");

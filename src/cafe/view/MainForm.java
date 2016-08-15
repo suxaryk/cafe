@@ -1769,11 +1769,11 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         UsersPanel.add(jButton21);
-        jButton21.setBounds(600, 610, 100, 40);
+        jButton21.setBounds(600, 610, 160, 40);
 
         jTextField6.setText("нове імя");
         UsersPanel.add(jTextField6);
-        jTextField6.setBounds(600, 570, 480, 30);
+        jTextField6.setBounds(600, 570, 160, 30);
 
         jScrollPane9.setViewportView(jTextPane2);
 
@@ -2858,7 +2858,6 @@ public class MainForm extends javax.swing.JFrame {
             jButton12.setVisible(true);
             jButton13.setVisible(false);
             jButton19.setVisible(true);
-            jButton39.setVisible(true);
             jButton43.setVisible(true);
             jButton44.setVisible(true);
             jButton46.setVisible(true);
@@ -3440,7 +3439,7 @@ public class MainForm extends javax.swing.JFrame {
     
 
 
-    private static ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn, boolean includeZERO) {
+    private static ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn) {
         ArrayList<Ingredient> changedList = new ArrayList<>();
         int checkColumn = table.getColumnCount()-1;
         for (int i = 0; i < table.getRowCount(); i++) {            
@@ -3452,8 +3451,7 @@ public class MainForm extends javax.swing.JFrame {
                 } catch (NumberFormatException e) {
                     count = 0.0;
                 } 
-                boolean checked = Boolean.valueOf(table.getValueAt(i, checkColumn).toString());
-                System.out.println("cheked " + checked);
+                boolean checked = Boolean.valueOf(table.getValueAt(i, checkColumn).toString());                
                 changedList.add(new Ingredient(dbId, title, count, checked));
           
         }
@@ -3461,7 +3459,7 @@ public class MainForm extends javax.swing.JFrame {
         return changedList;
     }
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
-        JSONUtils.updateDishIngredients(getListFromTable(jTable3, 2, false),
+        JSONUtils.updateDishIngredients(getListFromTable(jTable3, 2),
                 activeCat, activeDishes);
         String JSONString = RecepiesUtils.readRecipeFromDB(activeCat,
                 menu.get(activeCat).getDishes().get(activeDishes).getDbID());
@@ -3819,11 +3817,11 @@ public class MainForm extends javax.swing.JFrame {
     public static void addIngCountToStorage(JTable table) {
         changeList.clear();
         addedProductsToStorage.clear();
-        changeList.addAll(getListFromTable(table, 3, true));
-        for (int i = 0; i < storageList.size(); i++) {
-            double old = storageList.get(i).getCount();
-            double diff = changeList.get(i).getCount();
-            if (changeList.get(i).isActive()) {
+        changeList.addAll(getListFromTable(table, 3));
+        for (int i = 0; i < storageList.size(); i++) {           
+            if (changeList.get(i).isActive() && changeList.get(i).getCount() != 0.0) {
+                double old = storageList.get(i).getCount();               
+                double diff = changeList.get(i).getCount();
                 storageList.get(i).setCount(old + diff);
                 System.out.println("new count " + storageList.get(i).getCount());
                 StorageUtils.updateCount(storageList.get(i).getId(),
@@ -3832,17 +3830,19 @@ public class MainForm extends javax.swing.JFrame {
                         new Ingredient(storageList.get(i).getId(), diff));
             }
         }
-        StorageUtils.addAddedItems(convertDiffIngToJSON(addedProductsToStorage));        
+        if (!addedProductsToStorage.isEmpty()) {
+            StorageUtils.addAddedItems(convertDiffIngToJSON(addedProductsToStorage));
+        }             
     }
 
     private void removeIngCountFromStorage(JTable table) {
         changeList.clear();
         userList.get(User.active).getDayRemovedProducts().clear();
-        changeList.addAll(getListFromTable(table, 3, true));
+        changeList.addAll(getListFromTable(table, 3));      
         for (int i = 0; i < storageList.size(); i++) {
-            double old = storageList.get(i).getCount();
-            double diff = changeList.get(i).getCount();
-            if (changeList.get(i).isActive()) {
+            if (changeList.get(i).isActive() && changeList.get(i).getCount() != 0.0) {
+                double old = storageList.get(i).getCount();
+                double diff = changeList.get(i).getCount();
                 storageList.get(i).setCount(old - diff);
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());
@@ -3850,10 +3850,10 @@ public class MainForm extends javax.swing.JFrame {
                         new Ingredient(storageList.get(i).getId(), diff));
             }
         }
-
-        StorageUtils.addRemovedItems(convertDiffIngToJSON(
-                        userList.get(User.active).getDayRemovedProducts()),
-                userList.get(User.active));
+        if (!userList.get(User.active).getDayRemovedProducts().isEmpty()) {
+            StorageUtils.addRemovedItems(convertDiffIngToJSON(
+                    userList.get(User.active).getDayRemovedProducts()));  
+        }        
     }
 
     private void updateItemsFromStorage() {
@@ -3861,7 +3861,7 @@ public class MainForm extends javax.swing.JFrame {
         diffStorage.clear();
         changeList.clear();
         addedProductsToStorage.clear();
-        changeList.addAll(getListFromTable(jTable6, 3, true));
+        changeList.addAll(getListFromTable(jTable6, 3));
         diffStorage.addAll(changeList);
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
@@ -3891,22 +3891,26 @@ public class MainForm extends javax.swing.JFrame {
    
     
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
-        JFrame frame = new JFrame();
-        String[] options = new String[2];
-        options[0] = "Так";
-        options[1] = "Ні";
-         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
-                "Підтвердити приход на склад?", "Поповнення складу",
-                0, JOptionPane.YES_NO_OPTION, null, options, null);       
-        if (reply == JOptionPane.YES_OPTION) {
-            addIngCountToStorage(jTable6);
+        if (isAdmin()) {
+            JFrame frame = new JFrame();
+            String[] options = new String[2];
+            options[0] = "Так";
+            options[1] = "Ні";
+             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
+                    "Підтвердити приход на склад?", "Поповнення складу",
+                    0, JOptionPane.YES_NO_OPTION, null, options, null);       
+            if (reply == JOptionPane.YES_OPTION) {
+                addIngCountToStorage(jTable6);
+                StorageUtils.readStorage();
+                setSort(jComboBox7, jTable6);
+                showCalcTable(jTable6);
+            }
+        }else{
+            addIngCountToStorage(jTable5);
             StorageUtils.readStorage();
-            setSort(jComboBox7, jTable6);
-            showCalcTable(jTable6);
-        }
-        
-        
-       
+            setSort(jComboBox7, jTable5);
+            showCalcTable(jTable5);  
+        }       
     }//GEN-LAST:event_addToStorage
 
     private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
@@ -4032,7 +4036,6 @@ public class MainForm extends javax.swing.JFrame {
         jTextField3.setVisible(false);
         jLabel16.setVisible(false);
         jTextField13.setVisible(false);
-        jButton39.setVisible(false);
         jButton43.setVisible(false);
         jButton44.setVisible(false);
         jButton46.setVisible(false);
@@ -4563,7 +4566,6 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4.setVisible(false);
         jLabel16.setVisible(false);
         jTextField13.setVisible(false);
-        jButton39.setVisible(false);
         jButton43.setVisible(false);
         jButton44.setVisible(false);
         jButton46.setVisible(false);

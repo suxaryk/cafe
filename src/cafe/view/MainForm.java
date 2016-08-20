@@ -4155,8 +4155,14 @@ public class MainForm extends javax.swing.JFrame {
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
                 PrintClientCheck();
-                OrderUtils.addOrder(orders.get(activeTable),
-                        userList.get(User.active), "");
+               
+                try {
+                    OrderUtils.addOrder(orders.get(activeTable),
+                            userList.get(User.active), "");
+                    OrderUtils.addOrderItems(orders.get(activeTable));
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
                 jTable1.setBackground(lightRed);

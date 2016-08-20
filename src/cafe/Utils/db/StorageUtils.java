@@ -271,6 +271,7 @@ public class StorageUtils {
         }
     }
       //utils tmp
+      //todo add user column to prepare statment
     public static void updateAddedUtilits(int dbId, int ingredient_id,  double count) {
 
         final String SQL = "UPDATE storage_added SET ingredient_id = ?, count = ? WHERE Id = ?";

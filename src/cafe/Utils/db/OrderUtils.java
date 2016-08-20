@@ -108,8 +108,8 @@ public class OrderUtils {
 
     public static void addOrder(Order order, User user, String message) {
         final String sql = "INSERT INTO orders(dayId, sum, cookCount, datatime,"
-                + " operator, order_items, removed_items, coments)"
-                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+                + " operator, removed_items, coments)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -126,21 +126,53 @@ public class OrderUtils {
             pstatement.setInt(2, order.getOrderSum());
             pstatement.setInt(3, order.getCookCount());
             pstatement.setTimestamp(4, getCurrentTimeStamp());
-            pstatement.setString(5, user.getName());
-            pstatement.setString(6, order.getJSONItems());
-            pstatement.setString(7, order.getJSONRemovedItems());
-            pstatement.setString(8, message);
+            pstatement.setString(5, user.getName());          
+            pstatement.setString(6, order.getJSONRemovedItems());
+            pstatement.setString(7, message);
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
                 log.debug("A new check was added successfully!");
             }
-
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - addOrder");
         }
     }
+    
+    public static void addOrderItems(Order order) throws SQLException {
+        final String SQL = "INSERT INTO order_item(order_id, dish_id, quantity)"
+                + " VALUES(?, ?, ?)";
+        Connection dbConnect = null;
+        PreparedStatement pstatement = null;
+        try {
+            dbConnect = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            pstatement = dbConnect.prepareStatement(SQL);
 
+            dbConnect.setAutoCommit(false);
+
+            for (OrderItem item : order.getItems()) {
+                pstatement.setInt(1, order.getId());
+                pstatement.setInt(2, item.getDish().getDbID());
+                pstatement.setInt(3, item.getCount());
+                pstatement.addBatch();
+            }         
+            pstatement.executeBatch();
+            dbConnect.commit();          
+        } catch (SQLException e) {
+            log.error("addOrderItems Exception " + e.getMessage());
+            if (dbConnect != null) {
+                dbConnect.rollback();
+            }
+        } finally {
+            if (pstatement != null) {
+                pstatement.close();
+            }
+            if (dbConnect != null) {
+                dbConnect.close();
+            }
+        }
+    } 
+    
     public static void addDayInfo(Date start, Date end, List<Integer> kasaInfo) {
         final String sql = "INSERT INTO day_info(time_start, time_end, start_kasa, end_kasa,"
                 + " sum, spend, dish_count, order_count)"
@@ -312,9 +344,7 @@ public class OrderUtils {
             if (dbConnect != null) {
                 dbConnect.close();
             }
-        }
-        
-        
+        }           
     }
     //utils tmp
     public static Map<Integer, OrderItem> getMeatOrders(){

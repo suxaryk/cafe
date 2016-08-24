@@ -997,10 +997,11 @@ public class ClientForm extends javax.swing.JFrame {
                 System.out.println("start " + startDate);
                 endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
                 
-                updateLocalDB();
+//                updateLocalDB();
                 
                 orders.clear();
-                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
+                //todo change
+//                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
                 
                 refreshOrderTable(jTable1, orders);
                 
@@ -1174,7 +1175,8 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void getDishes() {
         orderedDishes.clear();
-        orderedDishes.addAll(getOrderedDishes(startDate, endDate));
+        //todo fix
+//        orderedDishes.addAll(getOrderedDishes(startDate, endDate));
         sortListOfOrderItems(orderedDishes, jComboBox8.getSelectedIndex());
         refreshDishesTable();
 

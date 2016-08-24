@@ -1353,7 +1353,7 @@ public class ClientForm extends javax.swing.JFrame {
 
     private static final int SIX_HOURS = 6 * 60 * 60 * 1000;
     private static final int ONE_DAY_PLUS_THREE_HOURS = 27 * 60 * 60 * 1000;
-    private static int cafeId;
+    public static int cafeId;
     private static final String[] servers  = {"Шепетовка", "Староконстянтинів", "Славута"};;
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;

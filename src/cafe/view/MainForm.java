@@ -3831,7 +3831,8 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
         if (!addedProductsToStorage.isEmpty()) {
-            StorageUtils.addAddedItems(convertDiffIngToJSON(addedProductsToStorage));
+            StorageUtils.addAddedItems(convertDiffIngToJSON(addedProductsToStorage),
+            userList.get(User.active));
         }             
     }
 
@@ -3852,7 +3853,9 @@ public class MainForm extends javax.swing.JFrame {
         }
         if (!userList.get(User.active).getDayRemovedProducts().isEmpty()) {
             StorageUtils.addRemovedItems(convertDiffIngToJSON(
-                    userList.get(User.active).getDayRemovedProducts()));  
+                    userList.get(User.active).getDayRemovedProducts()), 
+                    userList.get(User.active));  
+            
         }        
     }
 

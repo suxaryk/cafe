@@ -10,6 +10,7 @@ import static cafe.Utils.json.JSONUtils.convertJSONToOrder;
 import cafe.model.Ingredient;
 import cafe.model.OrderItem;
 import cafe.model.User;
+import cafe.view.ClientForm;
 import static cafe.view.LoginForm.userList;
 import cafe.view.MainForm;
 import java.sql.Connection;
@@ -136,15 +137,19 @@ public class StorageUtils {
         return ingredient;
 
     }
-
-    public static void addRemovedItems(String JsonItems) {
-        final String SQL = "INSERT INTO storage_removed(date, user, removed_ingredients) VALUES(?, ?, ?)";
+//TODO fix hardcore
+    public static void addRemovedItems(String JsonItems, User user) {
+        final String SQL1 = "INSERT INTO storage_removed(date, user, removed_ingredients) VALUES(?, ?, ?)";
+        String SQL = "INSERT INTO storage_removed(date, operator, removed_ingredients) VALUES(?, ?, ?)";
+        if (ClientForm.cafeId == 0) {
+            SQL = SQL1;            
+        }
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setTimestamp(1, getCurrentTimeStamp());
-            pstatement.setString(2, userList.get(User.active).getName());
+            pstatement.setString(2, user.getName());
             pstatement.setString(3, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -155,14 +160,19 @@ public class StorageUtils {
             System.out.println("Connection Failed! Check output console - addRemovedItems");
         }
     }
-    public static void addAddedItems(String JsonItems) {
-        final String SQL = "INSERT INTO storage_added(date, user, added_ingredients) VALUES(?, ?, ?)";
+//TODO fix hardcore
+    public static void addAddedItems(String JsonItems, User user) {
+        final String SQL1 = "INSERT INTO storage_added(date, user, added_ingredients) VALUES(?, ?, ?)";
+        String SQL = "INSERT INTO storage_added(date, operator, added_ingredients) VALUES(?, ?, ?)";
+        if (ClientForm.cafeId == 0) {
+            SQL = SQL1;
+        }
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setTimestamp(1, getCurrentTimeStamp());          
-            pstatement.setString(2, userList.get(User.active).getName());          
+            pstatement.setString(2, user.getName());          
             pstatement.setString(3, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {

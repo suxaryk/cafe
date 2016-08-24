@@ -4270,7 +4270,7 @@ public class MainForm extends javax.swing.JFrame {
             Object[] message = {"Введіть призначення інкасації"};
             String option = JOptionPane.showInputDialog(null, message, "Інкасація", JOptionPane.OK_CANCEL_OPTION);
             if (option == null) {
-                System.out.println("Cancell is clicked..");
+                System.out.println("Cancel is clicked..");
             } else {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));

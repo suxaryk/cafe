@@ -953,6 +953,7 @@ public class ClientForm extends javax.swing.JFrame {
         jComboBox2.setEnabled(false);
         jButton39.setBackground(GREEN);
         addStorageListener();
+        User.active = 5;
 
         try {
             setColumnRender(jTable6.getColumnModel().getColumn(2));

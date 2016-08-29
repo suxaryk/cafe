@@ -1170,7 +1170,7 @@ public class ClientForm extends javax.swing.JFrame {
     private void getDishes() {
         orderedDishes.clear();
         //todo fix
-        orderedDishes.addAll(getOrderedDishes(startDate, endDate));
+//        orderedDishes.addAll(getOrderedDishes(startDate, endDate));
         sortListOfOrderItems(orderedDishes, jComboBox8.getSelectedIndex());
         refreshDishesTable();
 

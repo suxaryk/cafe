@@ -108,7 +108,7 @@ public class StorageUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Storage count was updated successfully! " + dbId);
+                System.out.println("Storage count was updated successfully! Product id = " + dbId);
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateCount" + dbId);
@@ -137,7 +137,7 @@ public class StorageUtils {
         return ingredient;
 
     }
-//TODO fix hardcore
+//TODO fix hardcode
     public static void addRemovedItems(String JsonItems, User user) {
         final String SQL1 = "INSERT INTO storage_removed(date, user, removed_ingredients) VALUES(?, ?, ?)";
         String SQL = "INSERT INTO storage_removed(date, operator, removed_ingredients) VALUES(?, ?, ?)";
@@ -160,13 +160,26 @@ public class StorageUtils {
             System.out.println("Connection Failed! Check output console - addRemovedItems");
         }
     }
-//TODO fix hardcore
-    public static void addAddedItems(String JsonItems, User user) {
-        final String SQL1 = "INSERT INTO storage_added(date, user, added_ingredients) VALUES(?, ?, ?)";
-        String SQL = "INSERT INTO storage_added(date, operator, added_ingredients) VALUES(?, ?, ?)";
-        if (ClientForm.cafeId == 0) {
-            SQL = SQL1;
+//TODO fix hardcode
+    public static void addAddedItems(String JsonItems) {     
+        String SQL = "INSERT INTO storage_added(date, added_ingredients) VALUES(?, ?)";          
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            pstatement.setTimestamp(1, getCurrentTimeStamp());        
+            pstatement.setString(2, JsonItems);
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("New AddedItem(s) was added successfully!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addAddesItems");
         }
+    }
+    
+    public static void addAddedItemsWithUser(String JsonItems, User user) {
+        final String SQL = "INSERT INTO storage_added(date, user, added_ingredients) VALUES(?, ?, ?)";    
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
@@ -177,10 +190,9 @@ public class StorageUtils {
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("New AddedItem(s) was added successfully!");
-
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addAddesItems");
+            System.out.println("Connection Failed! Check output console - addAddedItemsWithUser");
         }
     }
 

@@ -14,7 +14,6 @@ import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
 import cafe.Utils.db.ReviziaUtils;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
-import static cafe.Utils.json.JSONUtils.convertDiffIngToJSON;
 import cafe.model.Category;
 import cafe.model.Check;
 import cafe.model.OrderItem;
@@ -74,6 +73,7 @@ import org.joda.time.LocalTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import static cafe.Utils.json.JSONUtils.convertToJSON;
 
 /**
  * all methods in one class it`s very bad i know
@@ -3209,7 +3209,7 @@ public class MainForm extends javax.swing.JFrame {
                 System.out.println("SQL syntax error addStorageHistory");
             }
             EmployeeUtils.addTimeOut(userList.get(User.active));         
-            EmployeeUtils.addEmployeeTimeDiff();
+            EmployeeUtils.updateEmployeesWorkedHours();
             OrderUtils.addDayInfo(DAY_START_TIME, new Date(), dayInfo());
             System.exit(0);
         }
@@ -3830,9 +3830,18 @@ public class MainForm extends javax.swing.JFrame {
                         new Ingredient(storageList.get(i).getId(), diff));
             }
         }
+        //need to fix for server app(work only for shepet)
         if (!addedProductsToStorage.isEmpty()) {
-            StorageUtils.addAddedItems(convertDiffIngToJSON(addedProductsToStorage),
-            userList.get(User.active));
+            if (ClientForm.cafeId == 0) { //Shepet
+                StorageUtils.addAddedItemsWithUser(
+                        convertToJSON(addedProductsToStorage),
+                        userList.get(User.active)
+                );
+            }else{
+                StorageUtils.addAddedItems(
+                        convertToJSON(addedProductsToStorage)                        
+                );                
+            }            
         }             
     }
 
@@ -3852,7 +3861,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
         if (!userList.get(User.active).getDayRemovedProducts().isEmpty()) {
-            StorageUtils.addRemovedItems(convertDiffIngToJSON(
+            StorageUtils.addRemovedItems(convertToJSON(
                     userList.get(User.active).getDayRemovedProducts()), 
                     userList.get(User.active));  
             

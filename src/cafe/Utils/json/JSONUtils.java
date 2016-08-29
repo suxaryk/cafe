@@ -99,7 +99,7 @@ public class JSONUtils {
         return new ArrayList<>();
     }
 
-    public static String convertDiffIngToJSON(List<Ingredient> removedList) {
+    public static String convertToJSON(List<Ingredient> removedList) {
         JSONArray jsonArr = new JSONArray();
         for (Ingredient ing : removedList) {
             JSONObject itemObj = new JSONObject();

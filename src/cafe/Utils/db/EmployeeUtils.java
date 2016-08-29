@@ -22,8 +22,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 public class EmployeeUtils {
+    private static final Logger log = Logger.getLogger(EmployeeUtils.class);
 
     public static void getEmployeeTime(Date date) {
         final String SQL = "SELECT * from employee_time WHERE DATE(date_in) = DATE('" + date + "')";
@@ -255,17 +257,16 @@ public class EmployeeUtils {
         }
     }
     
-    public static void addEmployeeTimeDiff(){      
-       
+    public static void updateEmployeesWorkedHours() {
         final String SQL = "UPDATE employee_time "
-                         + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out)) "
-                         + "ORDER BY id DESC LIMIT 20";
+                + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out)) "
+                + "ORDER BY Id DESC LIMIT 300";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.executeUpdate();           
+            pstatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addEmployeeTimeDiff");
+            log.error("Connection Failed! Check output console - addEmployeeTimeDiff");
         }
     }
     

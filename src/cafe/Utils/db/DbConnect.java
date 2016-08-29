@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class DbConnect {  
 
-    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_test";
+    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
     public static String USERNAME = "root";
     public static String PASSWORD = "root";
 
@@ -64,7 +64,7 @@ public class DbConnect {
 //            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
         } else if (cafeId == 1) {
             //star
-            URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
+//            URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
         } else if (cafeId == 2) {
             //slav
             URL = "jdbc:mysql://82.207.112.48:3306/luckyroger";         

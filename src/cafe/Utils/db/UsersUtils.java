@@ -1,8 +1,8 @@
 package cafe.Utils.db;
 
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.URL;
-import static cafe.Utils.db.DbConnect.USERNAME;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import java.sql.Connection;

@@ -1,13 +1,13 @@
 package cafe.Utils.db;
 
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.URL;
-import static cafe.Utils.db.DbConnect.USERNAME;
-import static cafe.Utils.db.DbConnect.sqlInsertList;
-import static cafe.Utils.db.DbConnect.sqlRemoveList;
-import static cafe.Utils.db.DbConnect.sqlSelectList;
-import static cafe.Utils.db.DbConnect.sqlUpdatePriceList;
-import static cafe.Utils.db.DbConnect.sqlUpdateTitleList;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
+import static cafe.Utils.db.DBUtils.sqlInsertList;
+import static cafe.Utils.db.DBUtils.sqlRemoveList;
+import static cafe.Utils.db.DBUtils.sqlSelectList;
+import static cafe.Utils.db.DBUtils.sqlUpdatePriceList;
+import static cafe.Utils.db.DBUtils.sqlUpdateTitleList;
 import cafe.Utils.json.JSONUtils;
 import cafe.model.Dish;
 import static cafe.view.MainForm.menu;

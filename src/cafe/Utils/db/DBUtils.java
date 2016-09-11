@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  *
  * @author suxarina
  */
-public class DbConnect {  
+public class DBUtils {  
 
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
     public static String USERNAME = "root";

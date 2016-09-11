@@ -1,10 +1,10 @@
 package cafe.Utils.db;
 
 
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.URL;
-import static cafe.Utils.db.DbConnect.USERNAME;
-import static cafe.Utils.db.DbConnect.sqlSelectByIdList;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
+import static cafe.Utils.db.DBUtils.sqlSelectByIdList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

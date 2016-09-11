@@ -1,11 +1,11 @@
 package cafe.view;
 
-import cafe.Utils.db.DbConnect;
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.URL;
-import static cafe.Utils.db.DbConnect.USERNAME;
-import static cafe.Utils.db.DbConnect.chooseLocalServer;
-import static cafe.Utils.db.DbConnect.chooseServer;
+import cafe.Utils.db.DBUtils;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
+import static cafe.Utils.db.DBUtils.chooseLocalServer;
+import static cafe.Utils.db.DBUtils.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeFullWorksDay;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeHalfWorksDay;
@@ -1032,12 +1032,12 @@ public class ClientForm extends javax.swing.JFrame {
 //                     "Бажаєте зактуалізувати дані до дати  " +df2.format(end) + " ?", "",
 //                     0, JOptionPane.YES_NO_OPTION, null, options, null);
 //             if (reply == JOptionPane.YES_OPTION) {
-//                 DbConnect.doDBDumpToClientMachine();
+//                 DBUtils.doDBDumpToClientMachine();
 //                 actualDate = getLastModifiedDate();
 //                 jLabel26.setText("Дані актуальні на " + end);                                
 //             }                      
 //        }
-//        DbConnect.doDBImport();
+//        DBUtils.doDBImport();
 //    }
     private  void addStorageListener(){
         jTable6.getModel().addTableModelListener(new TableModelListener() {

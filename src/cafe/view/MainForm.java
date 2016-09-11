@@ -1,14 +1,14 @@
 package cafe.view;
 
 import cafe.Utils.db.CheckUtils;
-import static cafe.Utils.db.DbConnect.ConnectDb;
+import static cafe.Utils.db.DBUtils.ConnectDb;
 import cafe.Utils.db.OrderUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Order;
 import cafe.Utils.db.DishUtils;
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.USERNAME;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.USERNAME;
 import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
 import cafe.Utils.db.ReviziaUtils;

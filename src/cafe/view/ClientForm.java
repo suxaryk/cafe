@@ -1,9 +1,6 @@
 package cafe.view;
 
 import cafe.Utils.db.DBUtils;
-import static cafe.Utils.db.DBUtils.PASSWORD;
-import static cafe.Utils.db.DBUtils.URL;
-import static cafe.Utils.db.DBUtils.USERNAME;
 import static cafe.Utils.db.DBUtils.chooseLocalServer;
 import static cafe.Utils.db.DBUtils.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
@@ -27,6 +24,7 @@ import cafe.model.ReviziaItem;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import static cafe.view.MainForm.GREEN;
+import static cafe.view.MainForm.RED;
 import static cafe.view.MainForm.employees;
 import static cafe.view.MainForm.setColumnRender;
 import static cafe.view.MainForm.setSort;
@@ -34,9 +32,6 @@ import static cafe.view.MainForm.showCalcTable;
 import static cafe.view.MainForm.sortListOfIngredients;
 import static cafe.view.MainForm.sortListOfOrderItems;
 import java.net.ConnectException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -47,7 +42,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -966,19 +960,19 @@ public class ClientForm extends javax.swing.JFrame {
             userList.get(i).setKasa(getUserKasa(startDate, endDate, i));
         }
     }
+    
+    private void readInputDates(){
+            startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime() + SIX_HOURS));
+            endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
+    }
 
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
         if (jComboBox1.getSelectedIndex() >= 0) {
             if (jXDatePicker1.getDate() != null && jXDatePicker2.getDate() != null) {
                 jTable1.setEnabled(true);
                 jComboBox2.setEnabled(true);
-                
-                startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime() + SIX_HOURS));
-                System.out.println("start " + startDate);
-                endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
-                
-//                updateLocalDB();
-                
+                readInputDates();                
+          
                 orders.clear();
                 //todo change
                 orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
@@ -989,20 +983,22 @@ public class ClientForm extends javax.swing.JFrame {
                 EmployeeUtils.updateEmployeesWorkedHours();
                 getEmployeeFullWorksDay(startDate, endDate);
                 getEmployeeHalfWorksDay(startDate, endDate);
-                getStorageTable();                
-                jButton2.setEnabled(true);
-                jButton39.setEnabled(true);
+                getStorageTable();                           
                 refreshRemovedIngTable();
                 refreshAddedIngTable();
                 getDishes();
                 getEmployeeKeyMoney();
                 getInkass();
-                refreshBarmensTable();   
+                refreshBarmensTable();  
+                
+                jButton2.setEnabled(true);
+                jButton39.setEnabled(true);
                 
                 
             }
         }
     }//GEN-LAST:event_getAllOrders
+
 //custom db import 
 //    private void updateLocalDB(){
 //        SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");        
@@ -1075,13 +1071,16 @@ public class ClientForm extends javax.swing.JFrame {
             DBUtils.checkConnection(cafeId);
             
             jLabel23.setText("Підключено до " + servers[cafeId]);
+            jLabel23.setForeground(GREEN);
             UsersUtils.readAllUsers();
             User.active = 5;
             refreshReviziaDates();
             StorageUtils.readStorage();
             EmployeeUtils.readAllEmployees();            
         } catch (ConnectException ex) {
-            Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR DB Connection");
+            jLabel23.setText("Немає підключення до " + servers[cafeId]);
+            jLabel23.setForeground(RED);
         }      
     }//GEN-LAST:event_chooseCafe
 

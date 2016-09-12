@@ -4489,7 +4489,6 @@ public class MainForm extends javax.swing.JFrame {
 
         DishUtils.readDBmenu();
         doDBDump();
-
     }
 
     private void loadTables() {
@@ -4685,7 +4684,7 @@ public class MainForm extends javax.swing.JFrame {
     private static final ArrayList<Icon> icons = new ArrayList<>();
     public static MainForm mainForm;
     private static LoginForm loginForm;
-    private static final Color RED = new Color(255, 102, 102);
+    public static final Color RED = new Color(255, 102, 102);
     private static final Color BLUE = new Color(0, 153, 204);
     private static final Color lightRed = new Color(255, 102, 102);
     public static final Color GREEN = new Color(0, 153, 102);

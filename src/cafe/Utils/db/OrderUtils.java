@@ -103,7 +103,7 @@ public class OrderUtils {
                     tmpOrder.setRemovedItems(JSONUtils.convertJSONToOrder(rs.getString("removed_items")));
                     loadOrders.add(tmpOrder);
                 }
-            }
+            }          
             return loadOrders;
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getOrdersBetween");

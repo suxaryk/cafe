@@ -1,6 +1,7 @@
 package cafe.Utils.db;
 
 import java.net.ConnectException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,11 +20,12 @@ public class DBUtils {
 
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String USERNAME = "root";
-    public static String PASSWORD = "root";
+    public static String PASSWORD = "dbiytdbq18";
     
     private static final String HOST_0 = "93.183.216.29";
     private static final String HOST_1 = "185.15.6.103";
     private static final String HOST_2 = "82.207.112.48";
+    private static final int TIMEOUT = 1_000;
 
     public static final ArrayList<String> sqlSelectList = new ArrayList<>();
     public static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
@@ -72,7 +74,8 @@ public class DBUtils {
             //slav
             HOST = HOST_2;
         }
-        try (Socket socket = new Socket(HOST, 3306)) {
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(HOST, 3306), TIMEOUT);
             boolean isConnected = socket.isConnected();
             if (isConnected) {
                 System.out.println("Connection is reached");
@@ -80,17 +83,16 @@ public class DBUtils {
                 System.out.println("Connection ERROR");
             }
             return isConnected;
-        } catch (Exception e) {
-            Logger.getLogger(DBUtils.class.getName()).log(Level.SEVERE, null, e);
+        } catch (Exception e) {            
             showMessage("");
             throw new ConnectException();            
         }
     }
     
     public static void showMessage(String msg){
-        String defaultMessage = "Помилка підключення до бази данних!"
-                              + "Перевірте підклюення до інтернету або перезавантажте роутер"
-                              + "\nВихід з програми";
+        String defaultMessage = "Помилка підключення до бази данних!\n"
+                              + "Перевірте підклюення до інтернету \n"
+                              + "або перезавантажте роутер\n";
         if (!msg.equals("")) {
             defaultMessage = msg;                        
         }        

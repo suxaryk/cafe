@@ -99,6 +99,7 @@ public class MainForm extends javax.swing.JFrame {
         loadTables();
         initStartOrderId();
         initBDmenu();
+        doDBDump();
 
     }
 
@@ -4488,7 +4489,7 @@ public class MainForm extends javax.swing.JFrame {
         menu.add(new Category("3"));
 
         DishUtils.readDBmenu();
-        doDBDump();
+      
     }
 
     private void loadTables() {

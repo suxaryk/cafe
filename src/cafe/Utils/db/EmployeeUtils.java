@@ -285,9 +285,10 @@ public class EmployeeUtils {
             empl.setWorkDaysCount(0);
             empl.setHalfWorkDaysCount(0);
         }     
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("getEmployeeFullWorksDay->");
-        System.out.println("start " + start.getTime());
-        System.out.println("end " + end.getTime());
+        System.out.println("start " + sdf.format(new Date(start.getTime())));
+        System.out.println("end " + sdf.format(new Date(end.getTime())));
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             for (Employee empl : employees) {
@@ -296,15 +297,14 @@ public class EmployeeUtils {
                     ResultSet rs = pstatement.executeQuery();
                     while (rs.next()) {
                         if (empl.getName().equals(rs.getString("name"))) {
-                            empl.setWorkDaysCount(rs.getInt("full_work_day"));
-                            System.out.println("rez " + empl.getWorkDaysCount());
+                            empl.setWorkDaysCount(rs.getInt("full_work_day"));                           
                         }
                     }                    
                 } catch (Exception e) {
                     System.out.println("Error execute query prepare statment getEmployeeFullWorksDay");
                 }                             
             }                   
-            System.out.println("getEmployeeFullWorksDay");
+            System.out.println("DB connection getEmployeeFullWorksDay");
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getEmployeeFullWorksDay");
         }
@@ -328,17 +328,16 @@ public class EmployeeUtils {
                     ResultSet rs = pstatement.executeQuery();
                     while (rs.next()) {
                         if (empl.getName().equals(rs.getString("name"))) {
-                            empl.setHalfWorkDaysCount(rs.getInt("half_work_day"));
-                            System.out.println("rez " + empl.getWorkDaysCount());
+                            empl.setHalfWorkDaysCount(rs.getInt("half_work_day"));                         
                         }
                     }                    
                 } catch (Exception e) {
-                    System.out.println("Error execute query prepare statment getEmployeeFullWorksDay");
+                    System.out.println("Error execute query prepare statment getEmployeeHalfWorksDay");
                 }                             
             }                   
-            System.out.println("getEmployeeFullWorksDay");
+            System.out.println("DB connection getEmployeeHalfWorksDay");
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getEmployeeFullWorksDay");
+            System.out.println("Connection Failed! Check output console - getEmployeeHalfWorksDay");
         }
     }   
 

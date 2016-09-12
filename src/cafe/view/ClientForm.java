@@ -7,6 +7,7 @@ import cafe.Utils.db.EmployeeUtils;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeFullWorksDay;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeHalfWorksDay;
 import cafe.Utils.db.OrderUtils;
+import static cafe.Utils.db.OrderUtils.getCustomSumKeyMoneyForUserBetween;
 import static cafe.Utils.db.OrderUtils.getSumKeyMoneyForUserBetween;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
 import cafe.Utils.db.ReviziaUtils;
@@ -979,7 +980,7 @@ public class ClientForm extends javax.swing.JFrame {
                 
                 refreshOrderTable(jTable1, orders);
                 
-                MainForm.initBDmenu();                
+//                MainForm.initBDmenu();                
                 EmployeeUtils.updateEmployeesWorkedHours();
                 getEmployeeFullWorksDay(startDate, endDate);
                 getEmployeeHalfWorksDay(startDate, endDate);
@@ -1076,7 +1077,7 @@ public class ClientForm extends javax.swing.JFrame {
             UsersUtils.readAllUsers();
             User.active = 5;
             refreshReviziaDates();
-            StorageUtils.readStorage();
+//            StorageUtils.readStorage();
             EmployeeUtils.readAllEmployees();            
         } catch (ConnectException ex) {
             System.out.println("ERROR DB Connection");
@@ -1176,9 +1177,10 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void getEmployeeKeyMoney() {        
         System.out.println("employee size " + employees.size());
-        for (Employee employee : employees) {
-            employee.setKeyMoney(getSumKeyMoneyForUserBetween(startDate, endDate, employee.getName()));
-        }
+        getCustomSumKeyMoneyForUserBetween(startDate, endDate);
+//        for (Employee employee : employees) {
+//            employee.setKeyMoney(getSumKeyMoneyForUserBetween(startDate, endDate, employee.getName()));
+//        }
         refresEmployeeKeyMoneyTable();
 
     }

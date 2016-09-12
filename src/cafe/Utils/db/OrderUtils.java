@@ -6,12 +6,14 @@ import static cafe.Utils.db.DBUtils.USERNAME;
 
 import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
 import cafe.Utils.json.JSONUtils;
+import cafe.model.Employee;
 import cafe.model.Order;
 import cafe.model.OrderItem;
 import cafe.model.User;
 import cafe.view.LoginForm;
 import static cafe.view.LoginForm.userList;
 import static cafe.view.MainForm.DAY_START_TIME;
+import static cafe.view.MainForm.employees;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -485,6 +487,35 @@ public class OrderUtils {
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getSumKeyMoneyForUser = " + employeeName);
             return 0;
+        }
+    }
+    
+    public static void getCustomSumKeyMoneyForUserBetween(Timestamp start, Timestamp end) {
+        final String SQL = "select SUM(sum) from orders where"
+                + " operator  = ?"
+                + "AND sum < 0 AND coments = ''"
+                + "AND datatime >= '" + start + "' "
+                + "AND datatime <= '" + end + "'";     
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD);
+                PreparedStatement pstatement = connection.prepareStatement(SQL)) {
+            System.out.println(!connection.isClosed() ? "DB connected! " 
+                    : "Error DB connecting");
+
+            for (Employee employee : employees) {           
+                pstatement.setString(1, employee.getName());  
+                int sum;
+                try (ResultSet rs = pstatement.executeQuery()) {
+                    sum = 0;
+                    while (rs.next()) {
+                        sum = rs.getInt(1);
+                    }
+                }
+                employee.setKeyMoney(sum);  
+                System.out.println("getSumKeyMoneyForUser = " + employee.getName());
+            }       
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getSumKeyMoney= ");
         }
     }
 

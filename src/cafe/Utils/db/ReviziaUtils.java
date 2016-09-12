@@ -76,6 +76,7 @@ public class ReviziaUtils {
                             + " Check output console - getReviziaDates" + e);
 
         } finally {
+            System.out.println("DB getReviziaDates");
             return reviziaDates;
         }
     }

@@ -1,9 +1,13 @@
 package cafe.Utils.db;
 
+import java.net.ConnectException;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -13,9 +17,13 @@ import javax.swing.JOptionPane;
  */
 public class DBUtils {  
 
-    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
+    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String USERNAME = "root";
     public static String PASSWORD = "root";
+    
+    private static final String HOST_0 = "93.183.216.29";
+    private static final String HOST_1 = "185.15.6.103";
+    private static final String HOST_2 = "82.207.112.48";
 
     public static final ArrayList<String> sqlSelectList = new ArrayList<>();
     public static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
@@ -30,10 +38,7 @@ public class DBUtils {
             System.out.println("MySQL JDBC Driver Registered!");
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
-        }
-      
-        
-
+        }   
         initQueries();
     }
 
@@ -54,17 +59,58 @@ public class DBUtils {
                 System.exit(0);
             }
         } 
-
+    }
+    
+    public static boolean checkConnection(int cafeId) throws ConnectException {
+        String HOST = HOST_0;
+        if (cafeId == 0) { 
+             HOST  = HOST_0;
+        } else if (cafeId == 1) {
+            //star
+            HOST = HOST_1;
+        } else if (cafeId == 2) {
+            //slav
+            HOST = HOST_2;
+        }
+        try (Socket socket = new Socket(HOST, 3306)) {
+            boolean isConnected = socket.isConnected();
+            if (isConnected) {
+                System.out.println("Connection is reached");
+            } else {
+                System.out.println("Connection ERROR");
+            }
+            return isConnected;
+        } catch (Exception e) {
+            Logger.getLogger(DBUtils.class.getName()).log(Level.SEVERE, null, e);
+            showMessage("");
+            throw new ConnectException();            
+        }
+    }
+    
+    public static void showMessage(String msg){
+        String defaultMessage = "Помилка підключення до бази данних!"
+                              + "Перевірте підклюення до інтернету або перезавантажте роутер"
+                              + "\nВихід з програми";
+        if (!msg.equals("")) {
+            defaultMessage = msg;                        
+        }        
+        JFrame frame = new JFrame();
+        int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
+                defaultMessage, "ПОМИЛКА!",
+                0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
+//        if (reply == JOptionPane.YES_OPTION) {
+//            System.exit(0);
+//        }
     }
     
     public static void chooseServer(int cafeId) {
         
         if (cafeId == 0) {
             //shep
-//            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
+            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
         } else if (cafeId == 1) {
             //star
-//            URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
+            URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
         } else if (cafeId == 2) {
             //slav
             URL = "jdbc:mysql://82.207.112.48:3306/luckyroger";         
@@ -82,6 +128,8 @@ public class DBUtils {
             URL = "jdbc:mysql://192.168.1.51:3306/luckyroger";
         }
     }
+    
+    
     
 
     private static void initQueries() {

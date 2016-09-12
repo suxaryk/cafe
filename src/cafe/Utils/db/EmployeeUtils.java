@@ -160,6 +160,7 @@ public class EmployeeUtils {
                             rs.getInt("pass")
                     ));
                 }
+                System.out.println("DB readAllEmployees");
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - setAllEmployees");

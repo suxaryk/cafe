@@ -33,6 +33,7 @@ import static cafe.view.MainForm.setSort;
 import static cafe.view.MainForm.showCalcTable;
 import static cafe.view.MainForm.sortListOfIngredients;
 import static cafe.view.MainForm.sortListOfOrderItems;
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -57,11 +58,7 @@ public class ClientForm extends javax.swing.JFrame {
     public ClientForm() {
         initComponents();
 
-        initEnabledComponents();        
-        UsersUtils.readAllUsers();
-        User.active = 5;
-       
-
+        initEnabledComponents();       
     }
 
     @SuppressWarnings("unchecked")
@@ -970,18 +967,6 @@ public class ClientForm extends javax.swing.JFrame {
         }
     }
 
-    
-    public void testCafeConnection() throws SQLException {
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD);) {
-            System.out.println(!connection.isClosed() ? "DB connected to " + URL
-                    : "Error DB connecting");
-        } catch (SQLException e) {
-            throw new SQLException();
-            
-        } 
-    }
-
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
         if (jComboBox1.getSelectedIndex() >= 0) {
             if (jXDatePicker1.getDate() != null && jXDatePicker2.getDate() != null) {
@@ -1085,18 +1070,19 @@ public class ClientForm extends javax.swing.JFrame {
             chooseLocalServer(cafeId);           
         }else{
             chooseServer(cafeId);
-        }        
-//        actualDate = getLastModifiedDate();
-//        jLabel26.setText("Дані актуальні на " + actualDate);
-//        jLabel23.setText("Підключено до " + servers[cafeId]);
-    
-        
-        
-        
-        //////////////////
-        refreshReviziaDates();        
-        StorageUtils.readStorage();
-        EmployeeUtils.readAllEmployees();
+        }            
+        try {
+            DBUtils.checkConnection(cafeId);
+            
+            jLabel23.setText("Підключено до " + servers[cafeId]);
+            UsersUtils.readAllUsers();
+            User.active = 5;
+            refreshReviziaDates();
+            StorageUtils.readStorage();
+            EmployeeUtils.readAllEmployees();            
+        } catch (ConnectException ex) {
+            Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);
+        }      
     }//GEN-LAST:event_chooseCafe
 
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage

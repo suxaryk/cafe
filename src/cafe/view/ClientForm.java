@@ -1072,6 +1072,7 @@ public class ClientForm extends javax.swing.JFrame {
             
             jLabel23.setText("Підключено до " + servers[cafeId]);
             jLabel23.setForeground(GREEN);
+            jButton1.setEnabled(true);
             UsersUtils.readAllUsers();
             User.active = 5;
             refreshReviziaDates();
@@ -1081,6 +1082,7 @@ public class ClientForm extends javax.swing.JFrame {
             System.out.println("ERROR DB Connection");
             jLabel23.setText("Немає підключення до " + servers[cafeId]);
             jLabel23.setForeground(RED);
+            jButton1.setEnabled(false);
         }      
     }//GEN-LAST:event_chooseCafe
 

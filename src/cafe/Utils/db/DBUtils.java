@@ -18,13 +18,18 @@ import javax.swing.JOptionPane;
  */
 public class DBUtils {  
 
-    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
+    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
     public static String USERNAME = "root";
-    public static String PASSWORD = "dbiytdbq18";
+    public static String PASSWORD = "root";
     
     private static final String HOST_0 = "93.183.216.29";
     private static final String HOST_1 = "185.15.6.103";
     private static final String HOST_2 = "82.207.112.48";
+    
+    private static final String LOCALHOST_0 = "192.168.0.111";
+    private static final String LOCALHOST_1 = "185.15.6.103";
+    private static final String LOCALHOST_2 = "192.168.1.51";
+    
     private static final int TIMEOUT = 1_000;
 
     public static final ArrayList<String> sqlSelectList = new ArrayList<>();
@@ -64,9 +69,9 @@ public class DBUtils {
     }
     
     public static boolean checkConnection(int cafeId) throws ConnectException {
-        String HOST = HOST_0;
+        String HOST = "localhost";
         if (cafeId == 0) { 
-             HOST  = HOST_0;
+//             HOST  = HOST_0;
         } else if (cafeId == 1) {
             //star
             HOST = HOST_1;
@@ -92,7 +97,7 @@ public class DBUtils {
     public static void showMessage(String msg){
         String defaultMessage = "Помилка підключення до бази данних!\n"
                               + "Перевірте підклюення до інтернету \n"
-                              + "або перезавантажте роутер\n";
+                              + "або перезавантажте роутер в кафе\n";
         if (!msg.equals("")) {
             defaultMessage = msg;                        
         }        
@@ -100,34 +105,30 @@ public class DBUtils {
         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
                 defaultMessage, "ПОМИЛКА!",
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
-//        if (reply == JOptionPane.YES_OPTION) {
-//            System.exit(0);
-//        }
     }
     
-    public static void chooseServer(int cafeId) {
-        
+    public static void chooseServer(int cafeId) {        
         if (cafeId == 0) {
             //shep
-            URL = "jdbc:mysql://93.183.216.29:3306/luckyroger";
+//           URL = "jdbc:mysql://" + HOST_0 + ":3306/luckyroger";  
         } else if (cafeId == 1) {
             //star
-            URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
+            URL = "jdbc:mysql://" + HOST_1 + ":3306/luckyroger";
         } else if (cafeId == 2) {
             //slav
-            URL = "jdbc:mysql://82.207.112.48:3306/luckyroger";         
+            URL = "jdbc:mysql://" + HOST_2 + ":3306/luckyroger";         
         }
     }
     public static void chooseLocalServer(int cafeId) {
         if (cafeId == 0) {
             //shep
-            URL = "jdbc:mysql://192.168.0.111:3306/luckyroger";
+            URL = "jdbc:mysql://" + LOCALHOST_0 + ":3306/luckyroger";
         } else if (cafeId == 1) {
             //star
-            URL = "jdbc:mysql://185.15.6.103:3306/luckyroger";
+            URL = "jdbc:mysql://" + LOCALHOST_1 + ":3306/luckyroger";
         } else if (cafeId == 2) {
             //slav          
-            URL = "jdbc:mysql://192.168.1.51:3306/luckyroger";
+            URL = "jdbc:mysql://" + LOCALHOST_2 + ":3306/luckyroger";
         }
     }
     

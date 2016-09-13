@@ -1,14 +1,12 @@
 package cafe.view;
 
 import cafe.Utils.db.DBUtils;
-import static cafe.Utils.db.DBUtils.chooseLocalServer;
 import static cafe.Utils.db.DBUtils.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeFullWorksDay;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeHalfWorksDay;
 import cafe.Utils.db.OrderUtils;
 import static cafe.Utils.db.OrderUtils.getCustomSumKeyMoneyForUserBetween;
-import static cafe.Utils.db.OrderUtils.getSumKeyMoneyForUserBetween;
 import static cafe.Utils.db.OrderUtils.getUserKasa;
 import cafe.Utils.db.ReviziaUtils;
 import cafe.Utils.db.StorageUtils;
@@ -960,6 +958,7 @@ public class ClientForm extends javax.swing.JFrame {
         for (int i = 0; i < LoginForm.userList.size(); i++) {
             userList.get(i).setKasa(getUserKasa(startDate, endDate, i));
         }
+        //fix
     }
     
     private void readInputDates(){
@@ -987,7 +986,8 @@ public class ClientForm extends javax.swing.JFrame {
                 getStorageTable();                           
                 refreshRemovedIngTable();
                 refreshAddedIngTable();
-                getDishes();
+                showOrderedDishes();
+                //awans
                 getEmployeeKeyMoney();
                 getInkass();
                 refreshBarmensTable();  
@@ -1063,11 +1063,12 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void chooseCafe(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCafe
         cafeId = jComboBox1.getSelectedIndex();
-        if (jCheckBox1.isSelected()) {
-            chooseLocalServer(cafeId);           
-        }else{
-            chooseServer(cafeId);
-        }            
+        if (jCheckBox1.isSelected()) {                   
+            isLocalHost = true;
+        }else{            
+            isLocalHost = false;
+        }       
+        chooseServer(cafeId);
         try {
             DBUtils.checkConnection(cafeId);
             
@@ -1155,7 +1156,7 @@ public class ClientForm extends javax.swing.JFrame {
         showCalcTable(jTable6);
     }
 
-    private void getDishes() {
+    private void showOrderedDishes() {
         orderedDishes.clear();
         //todo fix
         orderedDishes.addAll(getOrderedDishes(startDate, endDate));
@@ -1294,8 +1295,7 @@ public class ClientForm extends javax.swing.JFrame {
                 ing.getTitle(),
                 ing.getCount()
             });
-        }
-        getStorageTable();
+        }      
 
     }
 
@@ -1316,9 +1316,7 @@ public class ClientForm extends javax.swing.JFrame {
                 ing.getTitle(),
                 ing.getCount()
             });
-        }
-        getStorageTable();
-
+        }    
     }
 
     private void refreshReviziaDates() {
@@ -1357,6 +1355,7 @@ public class ClientForm extends javax.swing.JFrame {
     private static final int SIX_HOURS = 6 * 60 * 60 * 1000;
     private static final long ONE_DAY_PLUS_THREE_HOURS = 27 * 60 * 60 * 1000;
     public static int cafeId;
+    public static boolean isLocalHost;
     private static final String[] servers  = {"Шепетовка", "Староконстянтинів", "Славута"};;
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;

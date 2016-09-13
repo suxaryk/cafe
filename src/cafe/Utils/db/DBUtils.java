@@ -1,5 +1,6 @@
 package cafe.Utils.db;
 
+import static cafe.view.ClientForm.isLocalHost;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -65,11 +66,10 @@ public class DBUtils {
             }
         } 
     }
-    
-    public static boolean checkConnection(int cafeId) throws ConnectException {
+    public static String getHost(int cafeId){
         String HOST = "localhost";
-        if (cafeId == 0) { 
-//             HOST  = HOST_0;
+        if (cafeId == 0) {
+            HOST = HOST_0;
         } else if (cafeId == 1) {
             //star
             HOST = HOST_1;
@@ -77,6 +77,22 @@ public class DBUtils {
             //slav
             HOST = HOST_2;
         }
+        if (isLocalHost) {
+            if (cafeId == 0) {
+                HOST = LOCALHOST_0;
+            } else if (cafeId == 1) {
+                //star
+                HOST = LOCALHOST_1;
+            } else if (cafeId == 2) {
+                //slav
+                HOST = LOCALHOST_2;
+            }
+        }
+        return HOST;
+    }
+    
+    public static boolean checkConnection(int cafeId) throws ConnectException {
+        String HOST = getHost(cafeId);
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(HOST, 3306), TIMEOUT);
             boolean isConnected = socket.isConnected();
@@ -105,32 +121,32 @@ public class DBUtils {
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
     }
     
-    public static void chooseServer(int cafeId) {        
-        if (cafeId == 0) {
-            //shep
-//           URL = "jdbc:mysql://" + HOST_0 + ":3306/luckyroger";  
-        } else if (cafeId == 1) {
-            //star
-            URL = "jdbc:mysql://" + HOST_1 + ":3306/luckyroger";
-        } else if (cafeId == 2) {
-            //slav
-            URL = "jdbc:mysql://" + HOST_2 + ":3306/luckyroger";         
+    public static void chooseServer(int cafeId) {  
+        if (isLocalHost) {
+            if (cafeId == 0) {
+                //shep
+                URL = "jdbc:mysql://" + LOCALHOST_0 + ":3306/luckyroger";
+            } else if (cafeId == 1) {
+                //star
+                URL = "jdbc:mysql://" + LOCALHOST_1 + ":3306/luckyroger";
+            } else if (cafeId == 2) {
+                //slav          
+                URL = "jdbc:mysql://" + LOCALHOST_2 + ":3306/luckyroger";
+            }
+        }else{
+            if (cafeId == 0) {
+                //shep
+                URL = "jdbc:mysql://" + HOST_0 + ":3306/luckyroger";
+            } else if (cafeId == 1) {
+                //star
+                URL = "jdbc:mysql://" + HOST_1 + ":3306/luckyroger";
+            } else if (cafeId == 2) {
+                //slav
+                URL = "jdbc:mysql://" + HOST_2 + ":3306/luckyroger";
+            }
         }
-    }
-    public static void chooseLocalServer(int cafeId) {
-        if (cafeId == 0) {
-            //shep
-            URL = "jdbc:mysql://" + LOCALHOST_0 + ":3306/luckyroger";
-        } else if (cafeId == 1) {
-            //star
-            URL = "jdbc:mysql://" + LOCALHOST_1 + ":3306/luckyroger";
-        } else if (cafeId == 2) {
-            //slav          
-            URL = "jdbc:mysql://" + LOCALHOST_2 + ":3306/luckyroger";
-        }
-    }
-    
-    
+      
+    } 
     
 
     private static void initQueries() {

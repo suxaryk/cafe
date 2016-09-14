@@ -29,30 +29,30 @@ import java.util.Map;
 
 public class OrderUtils {
 
-    public static int getUserKasa(Timestamp start, Timestamp end, int index) {
+    public static void getUserKasa(Timestamp start, Timestamp end) {
         final String SQL = "SELECT SUM(sum) from orders where"
                 + " datatime >= '" + start
                 + "' AND datatime <= '" + end
                 + "' AND sum > 0"
-                + " AND operator ='"
-                + LoginForm.userList.get(index).getName() + "'";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getUserKasa" + index
-                    : "Error DB connecting");
-
-            Statement statement = connection.createStatement();
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {
-                    return rs.getInt(1);
+                + " AND operator = ? ";
+        try (
+            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement pstatement = connection.prepareStatement(SQL)) { 
+            for(User user: userList){
+                pstatement.setString(1, user.getName());
+                int kasa = 0;
+                try (ResultSet rs = pstatement.executeQuery()) {                    
+                    while (rs.next()) {
+                        kasa = rs.getInt(1);
+                    }
                 }
-            }
+                user.setKasa(kasa);
+                System.out.println("getUserKasa" + user.getName() + " kasa = " + kasa);                         
+            }              
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getUserKasa " + index);
-            return 0;
+            System.out.println("Connection Failed! Check output console - getUserKasa ");          
         }
-        return 0;
+    
     }
 
     public static int getUserDishCount(Timestamp start, Timestamp end, int index) {

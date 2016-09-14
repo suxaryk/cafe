@@ -29,7 +29,7 @@ public class DBUtils {
     private static final String LOCALHOST_1 = "185.15.6.103";
     private static final String LOCALHOST_2 = "192.168.1.51";
     
-    private static final int TIMEOUT = 1_000;
+    private static final int TIMEOUT = 2_000;
 
     public static final ArrayList<String> sqlSelectList = new ArrayList<>();
     public static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();

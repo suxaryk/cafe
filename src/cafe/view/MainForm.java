@@ -1,6 +1,7 @@
 package cafe.view;
 
 import cafe.Utils.db.CheckUtils;
+import cafe.Utils.db.DBUtils;
 import static cafe.Utils.db.DBUtils.ConnectDb;
 import cafe.Utils.db.OrderUtils;
 import cafe.Utils.db.EmployeeUtils;
@@ -9,6 +10,7 @@ import cafe.model.Order;
 import cafe.Utils.db.DishUtils;
 import static cafe.Utils.db.DBUtils.PASSWORD;
 import static cafe.Utils.db.DBUtils.USERNAME;
+import static cafe.Utils.db.DBUtils.showMessageYesNo;
 import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
 import cafe.Utils.db.ReviziaUtils;
@@ -3169,12 +3171,16 @@ public class MainForm extends javax.swing.JFrame {
         System.out.println("----------day Info----------");
 
         int ordersCount = OrderUtils.getDayOrdersCount();
-        int dayDiff = OrderUtils.getAllRemovedSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime())) * (-1);
-        int daySum = OrderUtils.getAllBarmenSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
-        int allSum = OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
-        int cookCount = OrderUtils.getAllCookCountBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
+        Timestamp start = new Timestamp(DAY_START_TIME.getTime());
+        Timestamp end = new Timestamp(new Date().getTime());
+        int dayDiff = OrderUtils.getAllRemovedSumBetween(start, end) * (-1);
+        int daySumCash = OrderUtils.getAllBarmenSumWithCardBetween(start, end, false);
+        int daySumCard = OrderUtils.getAllBarmenSumWithCardBetween(start, end, true);
+        int daySum = OrderUtils.getAllBarmenSumBetween(start, end);
+        int allSum = OrderUtils.getAllSumBefore(end);
+        int cookCount = OrderUtils.getAllCookCountBetween(start, end);
 
-        int startKass = OrderUtils.getAllSumBefore(new Timestamp(DAY_START_TIME.getTime()));
+        int startKass = OrderUtils.getAllSumBefore(start);
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
@@ -3183,7 +3189,9 @@ public class MainForm extends javax.swing.JFrame {
                 + "по " + dateFormat.format(new Date()) + "\n"
                 + "------------------------------------------------\n"
                 + "Каса на початок зміни " + startKass + " грн.\n"
-                + "Сума за день " + daySum + " грн.\n"
+                + "Сума за день готівка " + daySumCash + " грн.\n"
+                + "Сума за день карта " + daySumCard + " грн.\n"
+                + "Сума загальна за день " + daySum + " грн.\n"
                 + "Страв за день " + cookCount + " \n"
                 + "Чеків за день " + ordersCount + " \n"
                 + "Витрати за день " + dayDiff + " грн.\n"
@@ -4159,6 +4167,8 @@ public class MainForm extends javax.swing.JFrame {
                     jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
+                choosePaymentMethod();
+                
                 PrintClientCheck();
                 OrderUtils.addOrder(orders.get(activeTable),
                         userList.get(User.active), "");
@@ -4180,6 +4190,11 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_payOrder
+
+    private void choosePaymentMethod() {    
+        String msg = "Виберіть спосіб оплати чеку";
+        orders.get(activeTable).setCardPayed(showMessageYesNo(msg));     
+    }
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
         setSort(jComboBox6, jTable3);

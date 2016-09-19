@@ -117,8 +117,28 @@ public class DBUtils {
         }        
         JFrame frame = new JFrame();
         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                defaultMessage, "ПОМИЛКА!",
+                defaultMessage, null,
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
+    }
+    public static boolean showMessageYesNo(String msg){
+        String defaultMessage = "Помилка підключення до бази данних!\n"
+                              + "Перевірте підклюення до інтернету \n"
+                              + "або перезавантажте роутер в кафе\n";
+        if (!msg.equals("")) {
+            defaultMessage = msg;                        
+        }        
+        JFrame frame = new JFrame();
+        int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
+                defaultMessage, null,
+                0, JOptionPane.YES_NO_OPTION, null, new String[]{"Карта", "Готівка"}, null);
+        
+        return (reply == JOptionPane.YES_OPTION);
+        
+//        if (reply == JOptionPane.YES_OPTION) {
+//              return true;
+//        }else{
+//            return false;
+//        }
     }
     
     public static void chooseServer(int cafeId) {  

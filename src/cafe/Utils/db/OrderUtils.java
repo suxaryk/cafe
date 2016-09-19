@@ -115,8 +115,8 @@ public class OrderUtils {
 
     public static void addOrder(Order order, User user, String message) {
         final String sql = "INSERT INTO orders(dayId, sum, cookCount, datatime,"
-                + " operator, order_items, removed_items, coments)"
-                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+                + " operator, order_items, removed_items, coments, pay_card)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -137,6 +137,7 @@ public class OrderUtils {
             pstatement.setString(6, order.getJSONItems());
             pstatement.setString(7, order.getJSONRemovedItems());
             pstatement.setString(8, message);
+            pstatement.setBoolean(9, order.isCardPayed());
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -359,6 +360,32 @@ public class OrderUtils {
             return sum;
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getAllBarmenSumBetween");
+            return 0;
+        }
+    }
+    
+    public static int getAllBarmenSumWithCardBetween(Timestamp start, Timestamp end, boolean isCard) {
+        String SQL = " select SUM(sum) from orders where sum > 0 "
+                + "    AND datatime >= '" + start + "' "
+                + "    AND datatime <= '" + end + "'"
+                + "    AND pay_card = " + isCard + ""
+                + "    AND operator != '" + userList.get(5).getName() + "'";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getAllBarmenSumWithCardBetween"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+
+            int sum;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                sum = 0;
+                while (rs.next()) {
+                    sum = rs.getInt(1);
+                }
+            }
+            return sum;
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getAllBarmenSumWithCardBetween");
             return 0;
         }
     }

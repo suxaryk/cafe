@@ -6,8 +6,13 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -167,6 +172,44 @@ public class DBUtils {
         }
       
     } 
+    
+    public static Map<String, String> getSystemVariables(){
+        final String SQL = "SELECT * from sys_var";  
+        Map<String, String> sysVar = new HashMap<>();
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getSystemVariables"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    sysVar.put(rs.getString("name"), rs.getString("value"));           
+                }
+            }
+            return sysVar;
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getSystemVariables");
+            return null;
+        }    
+    }
+    
+    public static void updateSystemVariables(String sysVarName, String value){
+        final String SQL = "UPDATE sys_var set value=? where name = ?";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! updateSystemVariables"
+                    : "Error DB connecting");
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            pstatement.setString(1, value);         
+            pstatement.setString(2, sysVarName);         
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new sysVarName was updated successfully!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - updateSystemVariables");
+        }
+    }
     
 
     private static void initQueries() {

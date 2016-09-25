@@ -318,6 +318,7 @@ public class OrderUtils {
                 + "OR (operator = '" + userList.get(5).getName() + "' AND sum < 0)"
                 + "OR datatime < '2015-11-17 10:40:00'"
                 + ")"
+                + "AND pay_card = false "
                 + "AND datatime <= '" + time + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {

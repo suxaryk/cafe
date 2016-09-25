@@ -11,6 +11,7 @@ import cafe.Utils.db.DishUtils;
 import static cafe.Utils.db.DBUtils.PASSWORD;
 import static cafe.Utils.db.DBUtils.USERNAME;
 import static cafe.Utils.db.DBUtils.showMessageYesNo;
+import static cafe.Utils.db.DBUtils.updateSystemVariables;
 import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
 import cafe.Utils.db.ReviziaUtils;
@@ -101,6 +102,7 @@ public class MainForm extends javax.swing.JFrame {
         loadTables();
         initStartOrderId();
         initBDmenu();
+        initSystemVariables();
         doDBDump();
 
     }
@@ -236,6 +238,8 @@ public class MainForm extends javax.swing.JFrame {
         jTextPane2 = new javax.swing.JTextPane();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox4 = new javax.swing.JComboBox<>();
         RecipePanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -1785,12 +1789,30 @@ public class MainForm extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel21.setText("Чек для клієнта");
         UsersPanel.add(jLabel21);
-        jLabel21.setBounds(790, 550, 150, 17);
+        jLabel21.setBounds(790, 550, 120, 17);
 
         jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel22.setText("Чек на кухню");
         UsersPanel.add(jLabel22);
-        jLabel22.setBounds(600, 550, 150, 17);
+        jLabel22.setBounds(600, 550, 110, 17);
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+        UsersPanel.add(jComboBox3);
+        jComboBox3.setBounds(730, 550, 40, 20);
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15" }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
+        UsersPanel.add(jComboBox4);
+        jComboBox4.setBounds(920, 550, 40, 20);
 
         getContentPane().add(UsersPanel);
         UsersPanel.setBounds(90, 0, 1130, 1040);
@@ -2499,7 +2521,7 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(jLabel20);
         jLabel20.setBounds(545, 35, 200, 30);
 
-        setSize(new java.awt.Dimension(1410, 1080));
+        setSize(new java.awt.Dimension(1410, 789));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -2939,15 +2961,15 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void PrintClientCheck() {
-        DateFormat dateFormat = new SimpleDateFormat(
-                "dd-MM-yyyy HH:mm");
-
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");      
+        String fontSize = systemVariables.get(CHECK_FONT_SIZE);   
         PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
         set.add(OrientationRequested.PORTRAIT);
         set.add(MediaSizeName.INVOICE);
 
         String style = ""
                 + "<html>\n"
+                + "<meta charset=\"utf-8\">"
                 + "<style>\n"
                 + "table{\n"
                 + "border-spacing: 0px; "
@@ -2955,7 +2977,7 @@ public class MainForm extends javax.swing.JFrame {
                 + " tr {\n"
                 + "    border-collapse: collapse;\n"
                 + "    margin: 0px;"
-                + "    font-size: 7pt;"
+                + "    font-size: " + fontSize +"pt;"
                 + "    padding: 0px;"
                 + "border-spacing: 0px; "
                 + ""
@@ -3012,9 +3034,9 @@ public class MainForm extends javax.swing.JFrame {
                 + "</tr> "
                 + "</table>"
                 + "</html>";
-
-        jTextPane2.setContentType("text/html");
-        jTextPane2.setText(checkHtml);
+        
+        clientCheck = checkHtml;
+        showClientCheckText(checkHtml);
 
         try {
             jTextPane2.print(null, null, false, null, set, false);
@@ -3028,6 +3050,11 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
                     + "\n" + ex);
         }
+    }
+
+    private void showClientCheckText(String checkHtml) {
+        jTextPane2.setContentType("text/html");
+        jTextPane2.setText(checkHtml);
     }
 
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
@@ -4009,6 +4036,7 @@ public class MainForm extends javax.swing.JFrame {
             if (value != null) {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
+                order.setCardPayed(false);
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
                 OrderUtils.addOrder(order, employees.get(index), "");
                 jTextField5.setText(String.valueOf(getRealKasa()));
@@ -4069,9 +4097,8 @@ public class MainForm extends javax.swing.JFrame {
         closeSystem();
     }//GEN-LAST:event_exitSystem
     private void printKitchenCheck() {
-        DateFormat dateFormat = new SimpleDateFormat(
-                "dd-MM-yyyy HH:mm");
-
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");        
+        Integer fontSize = Integer.valueOf(systemVariables.get(KITCHEN_CHECK_FONT_SIZE));
         PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
         set.add(OrientationRequested.PORTRAIT);
         set.add(MediaSizeName.INVOICE);
@@ -4079,13 +4106,14 @@ public class MainForm extends javax.swing.JFrame {
         int i = 1;
         String style = ""
                 + "<html>\n"
+                + "<meta charset=\"utf-8\">"
                 + "<style>\n"
                 + "table{\n"
                 + "border-spacing: 0px; "
                 + "}"
                 + " tr {\n"
                 + "    margin: 0px;"
-                + "    font-size: 10pt;"
+                + "    font-size: " + fontSize + "pt;"
                 + "    padding: 0px;"
                 + "border-spacing: 0px; "
                 + ""
@@ -4117,7 +4145,7 @@ public class MainForm extends javax.swing.JFrame {
 
                     dishes += "  <tr>"
                             + "    <td style=\"width:3%\"> " + i++ + " </td> "
-                            + "    <td font-size: 10pt style=\"width:100%\"> " + item.getDish().getTitle() + " </td> "
+                            + "    <td font-size: " + fontSize + "pt style=\"width:100%\"> " + item.getDish().getTitle() + " </td> "
                             + "    <td style=\"width:3%\"> " + item.getCount() + "</td>"
                             + "  </tr>";
                 }
@@ -4125,9 +4153,8 @@ public class MainForm extends javax.swing.JFrame {
         }
         dishes += "</table>"
                 + "</html>";
-
-        jTextPane1.setContentType("text/html");
-        jTextPane1.setText(dishes);
+        showKitchenCheckText(dishes);
+        kitchenCheck = dishes;
 
         try {
             jTextPane1.print(null, null, false, null, set, false);
@@ -4141,6 +4168,10 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
                     + "\n" + ex);
         }
+    }  
+    private void showKitchenCheckText(String html){
+        jTextPane1.setContentType("text/html");
+        jTextPane1.setText(html);
     }
 
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
@@ -4288,6 +4319,7 @@ public class MainForm extends javax.swing.JFrame {
             } else {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
+                order.setCardPayed(false);
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
                 OrderUtils.addOrder(order, userList.get(User.active), option);
                 jTextField5.setText(String.valueOf(getRealKasa()));
@@ -4320,6 +4352,18 @@ public class MainForm extends javax.swing.JFrame {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        String size = (String) jComboBox3.getSelectedItem();
+        updateSystemVariables(KITCHEN_CHECK_FONT_SIZE, size);
+        systemVariables = DBUtils.getSystemVariables();
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        String size = (String) jComboBox4.getSelectedItem();
+        updateSystemVariables(CHECK_FONT_SIZE, size);   
+        systemVariables = DBUtils.getSystemVariables();
+    }//GEN-LAST:event_jComboBox4ActionPerformed
 
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
@@ -4651,6 +4695,14 @@ public class MainForm extends javax.swing.JFrame {
         }
         return null;
     }
+    
+    private void initSystemVariables() {
+        systemVariables = DBUtils.getSystemVariables();   
+        
+        jComboBox3.setSelectedItem(systemVariables.get(KITCHEN_CHECK_FONT_SIZE));
+        jComboBox4.setSelectedItem(systemVariables.get(CHECK_FONT_SIZE));
+        
+    }
 
     /**
      * @param args the command line arguments
@@ -4660,7 +4712,12 @@ public class MainForm extends javax.swing.JFrame {
         mainForm.setIconImage(null);
         mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-
+    
+    private static String clientCheck; 
+    private static String kitchenCheck; 
+    private static final String CHECK_FONT_SIZE = "check_font_size";
+    private static final String KITCHEN_CHECK_FONT_SIZE = "kitchen_check_font_size";
+    private static Map<String, String> systemVariables = new HashMap<>();
     public static int renderRow, renderCol;
     public static Date DAY_START_TIME;
     private static int maxSavedOrderId;
@@ -4788,6 +4845,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox jComboBox6;
     private javax.swing.JComboBox jComboBox7;
     private javax.swing.JLabel jLabel1;

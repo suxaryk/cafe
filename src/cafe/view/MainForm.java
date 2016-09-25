@@ -240,6 +240,8 @@ public class MainForm extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jComboBox4 = new javax.swing.JComboBox<>();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
         RecipePanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -1724,7 +1726,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTextPane1);
 
         UsersPanel.add(jScrollPane8);
-        jScrollPane8.setBounds(600, 570, 170, 130);
+        jScrollPane8.setBounds(610, 560, 170, 130);
 
         jTable4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
@@ -1784,17 +1786,17 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane9.setViewportView(jTextPane2);
 
         UsersPanel.add(jScrollPane9);
-        jScrollPane9.setBounds(790, 570, 170, 130);
+        jScrollPane9.setBounds(800, 560, 170, 130);
 
         jLabel21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel21.setText("Чек для клієнта");
         UsersPanel.add(jLabel21);
-        jLabel21.setBounds(790, 550, 120, 17);
+        jLabel21.setBounds(830, 690, 120, 17);
 
         jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel22.setText("Чек на кухню");
         UsersPanel.add(jLabel22);
-        jLabel22.setBounds(600, 550, 110, 17);
+        jLabel22.setBounds(640, 690, 110, 17);
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15" }));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -1803,7 +1805,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         UsersPanel.add(jComboBox3);
-        jComboBox3.setBounds(730, 550, 40, 20);
+        jComboBox3.setBounds(740, 540, 40, 20);
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15" }));
         jComboBox4.addActionListener(new java.awt.event.ActionListener() {
@@ -1812,7 +1814,15 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         UsersPanel.add(jComboBox4);
-        jComboBox4.setBounds(920, 550, 40, 20);
+        jComboBox4.setBounds(930, 540, 40, 20);
+
+        jLabel23.setText("розмір тексту");
+        UsersPanel.add(jLabel23);
+        jLabel23.setBounds(630, 540, 90, 14);
+
+        jLabel24.setText("розмір тексту");
+        UsersPanel.add(jLabel24);
+        jLabel24.setBounds(820, 540, 90, 14);
 
         getContentPane().add(UsersPanel);
         UsersPanel.setBounds(90, 0, 1130, 1040);
@@ -3000,7 +3010,8 @@ public class MainForm extends javax.swing.JFrame {
                 + "    <td style=\"width:3%\"> " + orders.get(activeTable).getDayId() + " </td> "
                 + "  </tr>"
                 + "<tr>"
-                + "    <td style=\"width:100%\"> " + "- - - - - - - - - - - - - - - - - - - - - - - - - " + "</td> "
+//                + "    <td style=\"width:100%\"> " + "- - - - - - - - - - - - - - - - - - - - - - - - - " + "</td> "
+                + "    <td style=\"width:100%\"> " + "- - - - - - - - - -" + "</td> "
                 + "</tr>"
                 + "</table>";
 
@@ -3009,16 +3020,17 @@ public class MainForm extends javax.swing.JFrame {
 
         for (OrderItem item : orders.get(activeTable).getItems()) {
             checkHtml += "  <tr>"
-                    + "    <td  style=\"width:100%\"> " + item.getDish().getTitle().toUpperCase() + " </td> "
-                    + "    <td style=\"width:1%\"> " + item.getCount() + " x" + "</td>"
-                    + "    <td style=\"width:3%\"> " + item.getDish().getPrice() + "</td>"
-                    + "    <td style=\"width:3%\" align=\"right\"> " + " " + item.getSum() + "</td>"
+                    + "    <td  style=\"max-width: 70%\"> " + item.getDish().getTitle().toUpperCase() + " </td> "
+                    + "    <td style=\"width:5%\"> " + " " + item.getCount() + " x" + "</td>"
+                    + "    <td style=\"width:5%\"> " + item.getDish().getPrice() + "</td>"
+                    + "    <td style=\"width:10%; margin-right: 2px;\" align=\"right\"> " + " " + item.getSum() + "</td>"
                     + "  </tr>";
 
         }
         checkHtml += ""
                 + "<tr>"
-                + "    <td style=\"width:100%\"> " + "- - - - - - - - - - - - - - - - - - - - - - - - - - " + "</td> "
+//                + "    <td style=\"width:100%\"> " + "- - - - - - - - - - - - - - - - - - - - - - - - - - " + "</td> "
+                + "    <td style=\"width:100%\"> " + "- - - - - - - - - -" + "</td> "
                 + "</tr>"
                 + "<tr>"
                 + "    <td style=\"width:10%\"> <b>" + "СУМА " + " </b></td> "
@@ -4864,6 +4876,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

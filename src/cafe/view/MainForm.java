@@ -77,6 +77,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import static cafe.Utils.json.JSONUtils.convertToJSON;
+import java.net.ConnectException;
 
 /**
  * all methods in one class it`s very bad i know
@@ -87,8 +88,9 @@ import static cafe.Utils.json.JSONUtils.convertToJSON;
 public class MainForm extends javax.swing.JFrame {
 
     public MainForm() {
-        initComponents();
+        initComponents();       
         ConnectDb();
+    
         StorageUtils.readStorage();
         CheckUtils.readCheck();
         initIcons();
@@ -3023,7 +3025,7 @@ public class MainForm extends javax.swing.JFrame {
                     + "    <td  style=\"max-width: 70%\"> " + item.getDish().getTitle().toUpperCase() + " </td> "
                     + "    <td style=\"width:5%\"> " + " " + item.getCount() + " x" + "</td>"
                     + "    <td style=\"width:5%\"> " + item.getDish().getPrice() + "</td>"
-                    + "    <td style=\"width:10%; margin-right: 2px;\" align=\"right\"> " + " " + item.getSum() + "</td>"
+                    + "    <td style=\"width:10%; margin-right: 5px;\" align=\"right\"> " + " " + item.getSum() + "    "+ "</td>"
                     + "  </tr>";
 
         }
@@ -3202,10 +3204,10 @@ public class MainForm extends javax.swing.JFrame {
         int daySumCash = OrderUtils.getAllBarmenSumWithCardBetween(start, end, false);
         int daySumCard = OrderUtils.getAllBarmenSumWithCardBetween(start, end, true);
         int daySum = OrderUtils.getAllBarmenSumBetween(start, end);
-        int allSum = OrderUtils.getAllSumBefore(end);
+        int allSum = OrderUtils.getAllCashSumBefore(end);
         int cookCount = OrderUtils.getAllCookCountBetween(start, end);
 
-        int startKass = OrderUtils.getAllSumBefore(start);
+        int startKass = OrderUtils.getAllCashSumBefore(start);
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
@@ -4057,7 +4059,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_payForStorageAddition
     private int getRealKasa() {
-        return OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
+        return OrderUtils.getAllCashSumBefore(new Timestamp(new Date().getTime()));
     }
 
 

@@ -22,17 +22,19 @@ import javax.swing.JOptionPane;
  */
 public class DBUtils {  
 
-    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
+    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String USERNAME = "root";
     public static String PASSWORD = "root";
     
     private static final String HOST_0 = "93.183.216.29";
     private static final String HOST_1 = "185.15.6.103";
     private static final String HOST_2 = "82.207.112.48";
+    private static final String HOST_3 = "46.63.25.213";
     
     private static final String LOCALHOST_0 = "192.168.0.111";
     private static final String LOCALHOST_1 = "185.15.6.103";
     private static final String LOCALHOST_2 = "192.168.1.51";
+    private static final String LOCALHOST_3 = "192.168.0.106";
     
     private static final int TIMEOUT = 2_000;
 
@@ -53,23 +55,18 @@ public class DBUtils {
         initQueries();
     }
 
-    public static void ConnectDb() {
-
+    public static boolean ConnectDb() {
+            DriverManager.setLoginTimeout(2);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
             System.out.println(!connection.isClosed() ? "DB connected to " + URL
                     : "Error DB connecting");
-
+            return true;
         } catch (SQLException e) {
             System.out.println("Connection to DB Failed! ");
-            JFrame frame = new JFrame();
-            int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                    "Помилка підключення до бази данних!\nВихід з програми", "ПОМИЛКА!",
-                    0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
-            if (reply == JOptionPane.YES_OPTION) {
-                System.exit(0);
-            }
-        } 
+            showMessage("");           
+            return false;
+        }         
     }
     public static String getHost(int cafeId){
         String HOST = "localhost";
@@ -156,7 +153,10 @@ public class DBUtils {
                 URL = "jdbc:mysql://" + LOCALHOST_1 + ":3306/luckyroger";
             } else if (cafeId == 2) {
                 //slav          
-                URL = "jdbc:mysql://" + LOCALHOST_2 + ":3306/luckyroger";
+                URL = "jdbc:mysql://" + LOCALHOST_2 + ":3306/luckyroger";            
+            } else if (cafeId == 3) {
+                //hm         
+                URL = "jdbc:mysql://" + LOCALHOST_3 + ":3306/luckyroger";
             }
         }else{
             if (cafeId == 0) {
@@ -167,8 +167,16 @@ public class DBUtils {
                 URL = "jdbc:mysql://" + HOST_1 + ":3306/luckyroger";
             } else if (cafeId == 2) {
                 //slav
-                URL = "jdbc:mysql://" + HOST_2 + ":3306/luckyroger";
+                URL = "jdbc:mysql://" + HOST_2 + ":3306/luckyroger";            
+            } else if (cafeId == 3) {
+                //hm
+                URL = "jdbc:mysql://" + HOST_3 + ":3306/luckyroger";               
             }
+        }
+        if (cafeId == 3) {
+            PASSWORD = "___agneshka17";            
+        }else{
+            PASSWORD = "dbiytdbq18";
         }
       
     } 

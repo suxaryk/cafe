@@ -22,9 +22,11 @@ import javax.swing.JOptionPane;
  */
 public class DBUtils {  
 
+//    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
-    public static String USERNAME = "root";
-    public static String PASSWORD = "root";
+    public static String USERNAME = "root";   
+//    public static String PASSWORD = "root";
+    public static String PASSWORD = "___agneshka17";
     
     private static final String HOST_0 = "93.183.216.29";
     private static final String HOST_1 = "185.15.6.103";

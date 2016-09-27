@@ -1052,7 +1052,7 @@ public class ClientForm extends javax.swing.JFrame {
     }
 
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
-        if (validInputDates() && DBUtils.ConnectDb()) {
+        if (validInputDates()) {
             jTable1.setEnabled(true);
             jComboBox2.setEnabled(true);                             
 

@@ -23,7 +23,8 @@ import javax.swing.JOptionPane;
 public class DBUtils {  
 
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
-    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
+//    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
+    public static String URL = "jdbc:mysql://46.63.25.213:3306/luckyroger";
     public static String USERNAME = "root";   
 //    public static String PASSWORD = "root";
     public static String PASSWORD = "___agneshka17";
@@ -79,7 +80,10 @@ public class DBUtils {
             HOST = HOST_1;
         } else if (cafeId == 2) {
             //slav
-            HOST = HOST_2;
+            HOST = HOST_2;        
+        } else if (cafeId == 3) {
+            //hm
+            HOST = HOST_3;
         }
         if (isLocalHost) {
             if (cafeId == 0) {
@@ -89,13 +93,16 @@ public class DBUtils {
                 HOST = LOCALHOST_1;
             } else if (cafeId == 2) {
                 //slav
-                HOST = LOCALHOST_2;
+                HOST = LOCALHOST_2;            
+            } else if (cafeId == 3) {
+                //hm
+                HOST = LOCALHOST_3;
             }
         }
         return HOST;
     }
     
-    public static boolean checkConnection(int cafeId) throws ConnectException {
+    public static boolean checkConnection(int cafeId) {
         String HOST = getHost(cafeId);
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(HOST, 3306), TIMEOUT);
@@ -106,9 +113,8 @@ public class DBUtils {
                 System.out.println("Connection ERROR");
             }
             return isConnected;
-        } catch (Exception e) {            
-            showMessage("");
-            throw new ConnectException();            
+        } catch (Exception e) {                
+            return false;                   
         }
     }
     

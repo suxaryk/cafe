@@ -140,7 +140,9 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Шепетівка", "Староконстянтинів", "Славута", "Хмельницький" }));
+        jComboBox1.setSelectedIndex(3);
         jComboBox1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jComboBox1.setEnabled(false);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chooseCafe(evt);
@@ -1176,22 +1178,20 @@ public class ClientForm extends javax.swing.JFrame {
         tryConnectToCafe();      
     }//GEN-LAST:event_chooseCafe
 
-    private boolean tryConnectToCafe() {
-        try {
-            DBUtils.checkConnection(cafeId);            
-            jLabel23.setText("Є підключення до " + servers[cafeId]);
-            jLabel23.setForeground(GREEN);
-            jButton1.setEnabled(true);
-            jTabbedPane1.setEnabled(true);
-            return true;
-        } catch (ConnectException ex) {
-            System.out.println("ERROR DB Connection");
-            jLabel23.setText("Немає підключення до " + servers[cafeId]);
-            jLabel23.setForeground(RED);
-            jButton1.setEnabled(false);
-            jTabbedPane1.setEnabled(false);
-            return false;
-        }
+    private boolean tryConnectToCafe() {      
+        cafeId = jComboBox1.getSelectedIndex();     
+            if (DBUtils.checkConnection(cafeId)) {
+                jLabel23.setText("Є підключення до " + servers[3]);
+                jLabel23.setForeground(GREEN);            
+                jTabbedPane1.setEnabled(true);
+                return true;
+            }else{
+                System.out.println("ERROR DB Connection");
+                jLabel23.setText("Немає підключення до " + servers[3]);
+                jLabel23.setForeground(RED);              
+                jTabbedPane1.setEnabled(false);
+                return false;         
+            }                     
     }
 
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage

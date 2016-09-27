@@ -40,11 +40,13 @@
             <StringItem index="3" value="&#x425;&#x43c;&#x435;&#x43b;&#x44c;&#x43d;&#x438;&#x446;&#x44c;&#x43a;&#x438;&#x439;"/>
           </StringArray>
         </Property>
+        <Property name="selectedIndex" type="int" value="3"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
             <BevelBorder/>
           </Border>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chooseCafe"/>

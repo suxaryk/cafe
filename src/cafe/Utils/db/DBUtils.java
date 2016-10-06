@@ -1,7 +1,6 @@
 package cafe.Utils.db;
 
 import static cafe.view.ClientForm.isLocalHost;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.sql.Connection;
@@ -26,17 +25,18 @@ public class DBUtils {
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String URL = "jdbc:mysql://46.63.25.213:3306/luckyroger";
     public static String USERNAME = "root";   
-//    public static String PASSWORD = "root";
-    public static String PASSWORD = "___agneshka17";
+    public static String PASSWORD = "root";
+    private static final String PASSWORD_MAIN = "dbiytdbq18";
+    public static String PASSWORD_HM = "___agneshka17";
     
     private static final String HOST_0 = "93.183.216.29";
     private static final String HOST_1 = "185.15.6.103";
-    private static final String HOST_2 = "82.207.112.48";
+    private static final String HOST_2 = "46.63.96.79";
     private static final String HOST_3 = "46.63.25.213";
     
     private static final String LOCALHOST_0 = "192.168.0.111";
     private static final String LOCALHOST_1 = "185.15.6.103";
-    private static final String LOCALHOST_2 = "192.168.1.51";
+    private static final String LOCALHOST_2 = "192.168.0.102";
     private static final String LOCALHOST_3 = "192.168.0.106";
     
     private static final int TIMEOUT = 2_000;
@@ -50,6 +50,8 @@ public class DBUtils {
 
     static {
         try {
+            setHost(HOST_0);
+            PASSWORD = PASSWORD_MAIN;
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("MySQL JDBC Driver Registered!");
         } catch (ClassNotFoundException e) {
@@ -63,7 +65,8 @@ public class DBUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
             System.out.println(!connection.isClosed() ? "DB connected to " + URL
-                    : "Error DB connecting");
+                    : "Error DB connecting " +
+                        URL + USERNAME+PASSWORD);
             return true;
         } catch (SQLException e) {
             System.out.println("Connection to DB Failed! ");
@@ -83,6 +86,10 @@ public class DBUtils {
             HOST = HOST_2;        
         } else if (cafeId == 3) {
             //hm
+
+            HOST = HOST_2;
+        } else if (cafeId == 3) {
+            //slav
             HOST = HOST_3;
         }
         if (isLocalHost) {
@@ -96,8 +103,16 @@ public class DBUtils {
                 HOST = LOCALHOST_2;            
             } else if (cafeId == 3) {
                 //hm
+                HOST = LOCALHOST_2;
+            } else if (cafeId == 3) {
+                //slav
                 HOST = LOCALHOST_3;
             }
+        }
+        if (cafeId == 3) {
+            PASSWORD = PASSWORD_HM;
+        }else{
+            PASSWORD = PASSWORD_MAIN;
         }
         return HOST;
     }
@@ -142,52 +157,50 @@ public class DBUtils {
                 defaultMessage, null,
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"Карта", "Готівка"}, null);
         
-        return (reply == JOptionPane.YES_OPTION);
-        
-//        if (reply == JOptionPane.YES_OPTION) {
-//              return true;
-//        }else{
-//            return false;
-//        }
+        return (reply == JOptionPane.YES_OPTION);        
     }
     
     public static void chooseServer(int cafeId) {  
         if (isLocalHost) {
             if (cafeId == 0) {
                 //shep
-                URL = "jdbc:mysql://" + LOCALHOST_0 + ":3306/luckyroger";
+                setHost(LOCALHOST_0);
             } else if (cafeId == 1) {
                 //star
-                URL = "jdbc:mysql://" + LOCALHOST_1 + ":3306/luckyroger";
+                setHost(LOCALHOST_1);;
             } else if (cafeId == 2) {
                 //slav          
-                URL = "jdbc:mysql://" + LOCALHOST_2 + ":3306/luckyroger";            
+                setHost(LOCALHOST_2);            
             } else if (cafeId == 3) {
                 //hm         
-                URL = "jdbc:mysql://" + LOCALHOST_3 + ":3306/luckyroger";
+                setHost(LOCALHOST_3);
             }
         }else{
             if (cafeId == 0) {
                 //shep
-                URL = "jdbc:mysql://" + HOST_0 + ":3306/luckyroger";
+                setHost(HOST_0);
             } else if (cafeId == 1) {
                 //star
-                URL = "jdbc:mysql://" + HOST_1 + ":3306/luckyroger";
+                setHost(HOST_1);
             } else if (cafeId == 2) {
                 //slav
-                URL = "jdbc:mysql://" + HOST_2 + ":3306/luckyroger";            
+                setHost(HOST_2);            
             } else if (cafeId == 3) {
                 //hm
-                URL = "jdbc:mysql://" + HOST_3 + ":3306/luckyroger";               
+                setHost(HOST_3);             
             }
         }
         if (cafeId == 3) {
-            PASSWORD = "___agneshka17";            
+            PASSWORD = PASSWORD_HM;            
         }else{
-            PASSWORD = "dbiytdbq18";
-        }
-      
+            PASSWORD = PASSWORD_MAIN;
+        }      
     } 
+
+    private static void setHost(String host) { 
+        URL = "jdbc:mysql://" + host + ":3306/luckyroger";
+    }
+ 
     
     public static Map<String, String> getSystemVariables(){
         final String SQL = "SELECT * from sys_var";  

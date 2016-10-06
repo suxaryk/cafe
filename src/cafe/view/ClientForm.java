@@ -1,6 +1,9 @@
 package cafe.view;
 
 import cafe.Utils.db.DBUtils;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
 import static cafe.Utils.db.DBUtils.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeFullWorksDay;
@@ -1178,20 +1181,21 @@ public class ClientForm extends javax.swing.JFrame {
         tryConnectToCafe();      
     }//GEN-LAST:event_chooseCafe
 
-    private boolean tryConnectToCafe() {      
-        cafeId = jComboBox1.getSelectedIndex();     
-            if (DBUtils.checkConnection(cafeId)) {
-                jLabel23.setText("Є підключення до " + servers[3]);
-                jLabel23.setForeground(GREEN);            
-                jTabbedPane1.setEnabled(true);
-                return true;
-            }else{
-                System.out.println("ERROR DB Connection");
-                jLabel23.setText("Немає підключення до " + servers[3]);
-                jLabel23.setForeground(RED);              
-                jTabbedPane1.setEnabled(false);
-                return false;         
-            }                     
+    private boolean tryConnectToCafe() {  
+        if (DBUtils.checkConnection(cafeId)) {
+            jLabel23.setText("Є підключення до " + servers[cafeId]);
+            jLabel23.setForeground(GREEN);
+            jButton1.setEnabled(true);
+            jTabbedPane1.setEnabled(true);
+            return true;                
+        }else{
+            System.out.println("ERROR DB Connection " + "cafeId " + cafeId + URL + "/" + USERNAME + "/" + PASSWORD);
+            jLabel23.setText("Немає підключення до " + servers[cafeId]);
+            jLabel23.setForeground(RED);
+            jButton1.setEnabled(false);
+            jTabbedPane1.setEnabled(false);
+            return false;
+        }   
     }
 
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage

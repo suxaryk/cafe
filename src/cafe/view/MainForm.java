@@ -3009,7 +3009,7 @@ public class MainForm extends javax.swing.JFrame {
                 + "</tr> "
                 + "<tr>"
                 + "    <td style=\"width:100%\"> " + dateFormat.format(new Date()) + "</td>"
-                + "    <td style=\"width:3%\"> " + orders.get(activeTable).getDayId() + " </td> "
+                + "    <td style=\"width:10%; margin-right: 5px;\" align=\"right\"> " + " " + orders.get(activeTable).getDayId() + " </td> "
                 + "  </tr>"
                 + "<tr>"
 //                + "    <td style=\"width:100%\"> " + "- - - - - - - - - - - - - - - - - - - - - - - - - " + "</td> "

@@ -2621,11 +2621,11 @@ public class MainForm extends javax.swing.JFrame {
 //        }
 //        
 
-        try {
-            OrderUtils.updateOrderItems(OrderUtils.getMeatOrders());
-        } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            OrderUtils.updateOrderItems(OrderUtils.getMeatOrders());
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+//        }
  
 
 

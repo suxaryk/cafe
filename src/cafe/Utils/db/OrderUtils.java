@@ -132,6 +132,7 @@ public class OrderUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
+                order.setId(getMaxOrderId());
                 log.debug("A new check was added successfully!");
             }
         } catch (SQLException e) {
@@ -151,14 +152,19 @@ public class OrderUtils {
             dbConnect.setAutoCommit(false);
 
             for (OrderItem item : order.getItems()) {
+                double meatK = 1;
+                int dishId = item.getDish().getDbID();
+                if (dishId >= 41 && dishId <= 52 && dishId != 49 && dishId != 50){             
+                    meatK = item.getDish().getRecipe().get(0).getCount();
+                }
                 pstatement.setInt(1, order.getId());
-                pstatement.setInt(2, item.getDish().getDbID());
-                pstatement.setInt(3, item.getCount());
+                pstatement.setInt(2, dishId);
+                pstatement.setDouble(3, item.getCount() * meatK);
                 pstatement.addBatch();
             }         
             pstatement.executeBatch();
             dbConnect.commit();          
-        } catch (SQLException e) {
+        } catch (SQLException e) {            
             log.error("addOrderItems Exception " + e.getMessage());
             if (dbConnect != null) {
                 dbConnect.rollback();
@@ -247,7 +253,7 @@ public class OrderUtils {
                 }
             }                     
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getDaySum");          
+            log.error("Connection Failed! Check output console - getAllDayInfo");          
         }
     }
     //utils tmp
@@ -302,7 +308,7 @@ public class OrderUtils {
             }
             return loadOrders;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getOrdersBetween");
+            log.error("Connection Failed! Check output console - getAllOrders");
             return null;
         }
     }
@@ -445,7 +451,7 @@ public class OrderUtils {
             pstatement.setInt(8, activeTable);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new check was added successfully!");
+                log.debug("updateTable");
             }
 
         } catch (SQLException e) {
@@ -473,7 +479,7 @@ public class OrderUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new check was added successfully!");
+                log.debug("fillTableById");
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - fillTableById");
@@ -500,7 +506,7 @@ public class OrderUtils {
             }
             return loadOrders;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updateTable");
+            log.error("Connection Failed! Check output console - loadTables");
             return null;
         }
 
@@ -709,6 +715,25 @@ public class OrderUtils {
             return max;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getMaxDbDayId");
+            return 0;
+        }
+    }
+    public static int getMaxOrderId() {
+        final String SQL = "SELECT max(id) FROM orders";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+
+            int max;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                max = 0;
+                while (rs.next()) {
+                    max = rs.getInt(1);
+                }
+            }
+            return max;
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - getMaxOrderId");
             return 0;
         }
     }

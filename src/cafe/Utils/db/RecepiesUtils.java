@@ -20,15 +20,15 @@ import org.apache.log4j.Logger;
 public class RecepiesUtils {  
     private static final Logger log = Logger.getLogger(RecepiesUtils.class);
     //unused
-    public static void addDishIngredient(int dishId, int storageId, double count) {       
-        final String SQL = "INSERT INTO dish_product(dishId, storage_id, count) VALUES(?, ?, ?)";
+    public static void addDishIngredient(int dishId, int ingredientId, double count) {       
+        final String SQL = "INSERT INTO dish_product(dishId, ingredient_id, count) VALUES(?, ?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! addDishIngredient"
                     : "Error DB connecting");
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setInt(1, dishId);
-            pstatement.setInt(2, storageId);
+            pstatement.setInt(2, ingredientId);
             pstatement.setDouble(3, count);
 
             int rowsInserted = pstatement.executeUpdate();
@@ -114,7 +114,7 @@ public class RecepiesUtils {
         }
     }
     
-    //utils tmp
+    //utils tmp //dish_calculation table
     public static void insertAddedUtilits(int dish_id, int ingredient_id, double count) {
         final String SQL = "INSERT INTO dish_product(dish_id, ingredient_id, count) VALUES(?, ?, ?)";
         try (Connection connection = DriverManager

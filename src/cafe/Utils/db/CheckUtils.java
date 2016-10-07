@@ -56,7 +56,7 @@ public class CheckUtils {
 
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                log.error("Check was updated successfully!");
+                log.debug("Check was updated successfully!");
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - updateCheck");

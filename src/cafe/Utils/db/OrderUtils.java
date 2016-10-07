@@ -154,7 +154,8 @@ public class OrderUtils {
             for (OrderItem item : order.getItems()) {
                 double meatK = 1;
                 int dishId = item.getDish().getDbID();
-                if (dishId >= 41 && dishId <= 52 && dishId != 49 && dishId != 50){             
+                if (dishId >= 41 && dishId <= 52 && dishId != 49 && dishId != 50){     
+                    //TODO check meatK!!
                     meatK = item.getDish().getRecipe().get(0).getCount();
                 }
                 pstatement.setInt(1, order.getId());

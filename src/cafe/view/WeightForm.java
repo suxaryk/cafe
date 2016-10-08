@@ -264,14 +264,14 @@ public class WeightForm extends javax.swing.JFrame {
 
     private void initCoeffic() {
         listOfCoeffic = new HashMap<>();
-        listOfCoeffic.put(47, 1.2);
-        listOfCoeffic.put(48, 1.3);
-        listOfCoeffic.put(35, 1.12);
-        listOfCoeffic.put(49, 1.14);
-        listOfCoeffic.put(50, 1.27);
-        listOfCoeffic.put(94, 1.22);
-        listOfCoeffic.put(103, 1.38);
-        listOfCoeffic.put(52, 1.38);        
+        listOfCoeffic.put(47, 1.2); //Ковбаски баварські
+        listOfCoeffic.put(48, 1.3);//Ковбаски на грилі
+        listOfCoeffic.put(35, 1.12);//Ковбаски мисливські
+        listOfCoeffic.put(49, 1.14);//Ковбаски салямі до пива
+        listOfCoeffic.put(50, 1.27);//М'ясо (свинина)
+        listOfCoeffic.put(94, 1.22);//М'ясо (телятина)
+        listOfCoeffic.put(103, 1.38);//індичка
+        listOfCoeffic.put(52, 1.38);//Філе куряче     
     }
 
     private void setWeightCount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setWeightCount

@@ -21,9 +21,9 @@ import javax.swing.JOptionPane;
  */
 public class DBUtils {  
 
-    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
+//    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
-//    public static String URL = "jdbc:mysql://46.63.25.213:3306/luckyroger";
+    public static String URL = "jdbc:mysql://46.63.25.213:3306/luckyroger";
     public static String USERNAME = "root";   
     public static String PASSWORD = "root";
     
@@ -36,7 +36,7 @@ public class DBUtils {
     
     private static final String LOCALHOST_0 = "192.168.0.111";
     private static final String LOCALHOST_1 = "192.168.0.102";
-    private static final String LOCALHOST_2 = "192.168.0.102";
+    private static final String LOCALHOST_2 = "192.168.0.2";
     private static final String LOCALHOST_3 = "192.168.0.106";
     
     private static final int TIMEOUT = 2_000;
@@ -51,8 +51,8 @@ public class DBUtils {
     static {
         try {
             //statistic
-//            setHost(HOST_0);
-//            PASSWORD = PASSWORD_MAIN;
+            setHost(HOST_0);
+            PASSWORD = PASSWORD_MAIN;
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("MySQL JDBC Driver Registered!");
         } catch (ClassNotFoundException e) {
@@ -78,6 +78,7 @@ public class DBUtils {
     public static String getHost(int cafeId){
         String HOST = "localhost";
         if (cafeId == 0) {
+            //shep
             HOST = HOST_0;
         } else if (cafeId == 1) {
             //star
@@ -87,14 +88,11 @@ public class DBUtils {
             HOST = HOST_2;        
         } else if (cafeId == 3) {
             //hm
-
-            HOST = HOST_2;
-        } else if (cafeId == 3) {
-            //slav
             HOST = HOST_3;
-        }
+        } 
         if (isLocalHost) {
             if (cafeId == 0) {
+                //shep
                 HOST = LOCALHOST_0;
             } else if (cafeId == 1) {
                 //star
@@ -104,9 +102,6 @@ public class DBUtils {
                 HOST = LOCALHOST_2;            
             } else if (cafeId == 3) {
                 //hm
-                HOST = LOCALHOST_2;
-            } else if (cafeId == 3) {
-                //slav
                 HOST = LOCALHOST_3;
             }
         }

@@ -1070,7 +1070,7 @@ public class ClientForm extends javax.swing.JFrame {
             refreshOrderTable(jTable1, orders);
 
 //                MainForm.initBDmenu();                
-            EmployeeUtils.updateEmployeesWorkedHours();
+//            EmployeeUtils.updateEmployeesWorkedHours();
             getEmployeeFullWorksDay(startDate, endDate);
             getEmployeeHalfWorksDay(startDate, endDate);
             getStorageTable();                           

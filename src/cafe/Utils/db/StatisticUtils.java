@@ -1,8 +1,5 @@
 package cafe.Utils.db;
 
-import static cafe.Utils.db.DBUtils.PASSWORD;
-import static cafe.Utils.db.DBUtils.URL;
-import static cafe.Utils.db.DBUtils.USERNAME;
 import static cafe.Utils.db.StorageUtils.fullJoinIngLists;
 import static cafe.Utils.db.StorageUtils.fullJoinOrderItemLists;
 import cafe.Utils.json.JSONUtils;
@@ -15,6 +12,8 @@ import cafe.model.User;
 import static cafe.view.LoginForm.userList;
 import cafe.view.MainForm;
 import static cafe.view.MainForm.employees;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -28,6 +27,29 @@ import java.util.Date;
 import java.util.List;
 
 public class StatisticUtils {
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
+    private static final String HOST = "root";
+    private static final String R_HOST = "localhost";
+    private static final int PORT = 22;
+    private static final int L_PORT = 3306;
+    private static final int R_PORT = 3306;
+    
+    
+    public static void connectBySSH() {       
+        try {
+            JSch jsch = new JSch();
+            Session session = jsch.getSession(USERNAME, HOST, PORT);      
+            session.setPassword(PASSWORD);
+            java.util.Properties config = new java.util.Properties();
+            config.put("ConnectionAttempts", "3");
+            System.out.println("Establishing Connection...");
+            session.connect();
+            session.setPortForwardingL(L_PORT, R_HOST, R_PORT);
+        } catch (Exception e) {
+            System.err.print(e);
+        }
+    }
     
   
     
@@ -130,20 +152,7 @@ public class StatisticUtils {
             return null;
         }
     }
-    
-    private static void updateEmployeesWorkedHours() {
-        final String SQL = "UPDATE employee_time "
-                + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out)) "
-                + "ORDER BY Id DESC LIMIT 300";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addEmployeeTimeDiff");
-        }
-    }
-    
+        
     private static void getEmployeeFullWorksDay(Timestamp start, Timestamp end) {
         final String SQL = ""
                 + "   SELECT name, COUNT(diff) as full_work_day"

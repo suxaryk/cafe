@@ -2,6 +2,7 @@ package cafe.view;
 
 import cafe.Utils.db.CheckUtils;
 import cafe.Utils.db.DBUtils;
+import static cafe.Utils.db.DBUtils.CARD_PAYMENT;
 import static cafe.Utils.db.DBUtils.ConnectDb;
 import cafe.Utils.db.OrderUtils;
 import cafe.Utils.db.EmployeeUtils;
@@ -1837,14 +1838,14 @@ public class MainForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "№", "Назва", "Вага ( кг/ шт )"
+                "№", "Назва", "Вага ( кг/ шт )", "Вибраний"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1871,6 +1872,9 @@ public class MainForm extends javax.swing.JFrame {
             jTable3.getColumnModel().getColumn(2).setMinWidth(100);
             jTable3.getColumnModel().getColumn(2).setPreferredWidth(100);
             jTable3.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTable3.getColumnModel().getColumn(3).setMinWidth(60);
+            jTable3.getColumnModel().getColumn(3).setPreferredWidth(60);
+            jTable3.getColumnModel().getColumn(3).setMaxWidth(60);
         }
 
         RecipePanel.add(jScrollPane4);
@@ -3204,10 +3208,20 @@ public class MainForm extends javax.swing.JFrame {
         int daySumCash = OrderUtils.getAllBarmenSumWithCardBetween(start, end, false);
         int daySumCard = OrderUtils.getAllBarmenSumWithCardBetween(start, end, true);
         int daySum = OrderUtils.getAllBarmenSumBetween(start, end);
-        int allSum = OrderUtils.getAllCashSumBefore(end);
+        
+       
+        int allSum = OrderUtils.getAllSumBefore(end);
+        int startKass = OrderUtils.getAllSumBefore(start);
+        //getAllCashSumBefore for HM3
+        if (CARD_PAYMENT) {
+            allSum = OrderUtils.getAllCashSumBefore(end);
+            startKass = OrderUtils.getAllCashSumBefore(start);
+            
+        }
+        
         int cookCount = OrderUtils.getAllCookCountBetween(start, end);
 
-        int startKass = OrderUtils.getAllCashSumBefore(start);
+        
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
@@ -3355,7 +3369,16 @@ public class MainForm extends javax.swing.JFrame {
                     ingredient.getCount()                                              
                 });
             }
-        } else if (jTable.getColumnCount() == 5) {
+        } else if (jTable.getColumnCount() == 4) { //recipe
+            for (Ingredient ingredient : storageList) {
+                model.addRow(new Object[]{
+                    ingredient.getId(),
+                    ingredient.getTitle(),
+                    ingredient.getCount(), 
+                    ingredient.getCount() != 0
+                });
+            }
+        } else if (jTable.getColumnCount() == 5) { // barmen storage
             for (Ingredient ingredient : storageList) {
                 model.addRow(new Object[]{
                     ingredient.getId(),
@@ -3366,7 +3389,7 @@ public class MainForm extends javax.swing.JFrame {
                 });
             }
         } else if (jTable.getColumnCount() == 6) {
-            for (Ingredient ingredient : storageList) {
+            for (Ingredient ingredient : storageList) { //admin 
                 model.addRow(new Object[]{
                     ingredient.getId(),
                     ingredient.getTitle(),
@@ -3909,7 +3932,7 @@ public class MainForm extends javax.swing.JFrame {
         diffStorage.clear();
         changeList.clear();
         addedProductsToStorage.clear();
-        changeList.addAll(getListFromTable(jTable6, 3));
+        changeList.addAll(getListFromTable(jTable6, 3));     
         diffStorage.addAll(changeList);
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
@@ -4059,7 +4082,8 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_payForStorageAddition
     private int getRealKasa() {
-        return OrderUtils.getAllCashSumBefore(new Timestamp(new Date().getTime()));
+        //for hm getAllCashSumBefore
+        return OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
     }
 
 
@@ -4224,7 +4248,12 @@ public class MainForm extends javax.swing.JFrame {
 
     private void choosePaymentMethod() {    
         String msg = "Виберіть спосіб оплати чеку";
-        orders.get(activeTable).setCardPayed(showMessageYesNo(msg));     
+        if (CARD_PAYMENT) {
+            orders.get(activeTable).setCardPayed(showMessageYesNo(msg));
+        }else{
+            orders.get(activeTable).setCardPayed(CARD_PAYMENT);
+        }
+            
     }
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
@@ -4711,11 +4740,9 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     private void initSystemVariables() {
-        systemVariables = DBUtils.getSystemVariables();   
-        
+        systemVariables = DBUtils.getSystemVariables();           
         jComboBox3.setSelectedItem(systemVariables.get(KITCHEN_CHECK_FONT_SIZE));
         jComboBox4.setSelectedItem(systemVariables.get(CHECK_FONT_SIZE));
-        
     }
 
     /**

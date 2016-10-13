@@ -24,11 +24,13 @@ public class JSONUtils {
             int activeCat, int activeDish) {
         JSONArray jsonArr = new JSONArray();
         for (Ingredient ing : recipes) {
-            JSONObject ingrObj = new JSONObject();
-            ingrObj.put("id", ing.getId());
-            ingrObj.put("c", ing.getCount());
-            jsonArr.add(ingrObj);
-        }
+            if (ing.isActive()) {
+                JSONObject ingrObj = new JSONObject();
+                ingrObj.put("id", ing.getId());
+                ingrObj.put("c", ing.getCount());
+                jsonArr.add(ingrObj); 
+            }          
+        }       
         RecepiesUtils.updateRecipes(activeCat, menu.get(activeCat).getDishes()
                 .get(activeDish)
                 .getDbID(), jsonArr.toJSONString());

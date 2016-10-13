@@ -1,5 +1,6 @@
 package cafe.Utils.db;
 
+import static cafe.Utils.db.DBUtils.URL;
 import static cafe.Utils.db.StorageUtils.fullJoinIngLists;
 import static cafe.Utils.db.StorageUtils.fullJoinOrderItemLists;
 import cafe.Utils.json.JSONUtils;
@@ -14,6 +15,7 @@ import cafe.view.MainForm;
 import static cafe.view.MainForm.employees;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
+import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,40 +27,96 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StatisticUtils {
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-    private static final String HOST = "root";
+    private static final String PASSWORD = "dbiytdbq18";
+    private static final String HOST = "HOST_1";
     private static final String R_HOST = "localhost";
     private static final int PORT = 22;
     private static final int L_PORT = 3306;
     private static final int R_PORT = 3306;
     
+    private static Connection connect = null;
+    private static Session session = null;
+    
+   
+    
     
     public static void connectBySSH() {       
         try {
             JSch jsch = new JSch();
-            Session session = jsch.getSession(USERNAME, HOST, PORT);      
+            session = jsch.getSession(USERNAME, HOST, PORT);      
             session.setPassword(PASSWORD);
             java.util.Properties config = new java.util.Properties();
+            config.put("StrictHostKeyChecking", "no");
             config.put("ConnectionAttempts", "3");
+            session.setConfig(config);
             System.out.println("Establishing Connection...");
             session.connect();
-            session.setPortForwardingL(L_PORT, R_HOST, R_PORT);
+            if (session.isConnected()) {
+                System.out.println("Ssh session is open...");
+            }
+//            session.setPortForwardingL(L_PORT, R_HOST, R_PORT);            
+//            String url = "jdbc:mysql://" + R_HOST + ":" + L_PORT + "/";
+            String url = "jdbc:mysql://localhost:3306/luckyroger";
+            String db = "luckyroger";
+            Class.forName("com.mysql.jdbc.Driver");
+            try {
+                connect = DriverManager.getConnection(url, USERNAME, PASSWORD);
+                if (!connect.isClosed()) {
+                    System.out.println("Mysql connection is open...");                    
+                }
+                
+                readAllUsers(connect);
+                
+                for(User user: userList){
+                    System.out.println(user.getName());
+                }             
+
+            } catch (SQLException ex) {
+                Logger.getLogger(StatisticUtils.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (Exception e) {
+            
             System.err.print(e);
+        }finally{
+            closeConnections();
+        }
+    }
+    
+    private static void closeConnections() {
+        CloseDataBaseConnection();
+        CloseSSHConnection();
+    }
+
+    private static void CloseDataBaseConnection() {
+        try {
+            if (connect != null && !connect.isClosed()) {
+                System.out.println("Closing Database Connection");
+                connect.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void CloseSSHConnection() {
+        if (session != null && session.isConnected()) {
+            System.out.println("Closing SSH Connection");
+            session.disconnect();
         }
     }
     
   
     
-    private static void readAllUsers() {
+    private static void readAllUsers(Connection connection) {
         userList.clear();
         final String SQL = "SELECT * from users";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()) {            
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
                     userList.add(new User(

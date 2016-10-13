@@ -312,6 +312,7 @@ public class OrderUtils {
     }
 
     ///TEST
+    //for hm
     public static int getAllCashSumBefore(Timestamp time) {
         final String SQL = "select SUM(sum) from orders where "
                 + "(operator != '" + userList.get(5).getName() + "'  "

@@ -22,15 +22,14 @@ import javax.swing.JOptionPane;
 public class DBUtils {  
 
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
-//    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
-    public static String URL = "jdbc:mysql://46.63.25.213:3306/luckyroger";
+    public static String URL = "jdbc:mysql://localhost:3306/hm";
     public static String USERNAME = "root";   
     public static String PASSWORD = "root";
     
     private static final String PASSWORD_MAIN = "dbiytdbq18";
     private static String PASSWORD_HM = "___agneshka17";
-    private static final String HOST_0 = "93.183.216.29";
-    private static final String HOST_1 = "185.15.6.103";
+    public static final String HOST_0 = "93.183.216.29";
+    public static final String HOST_1 = "185.15.6.103";
     private static final String HOST_2 = "46.63.96.79";
     private static final String HOST_3 = "46.63.25.213";
     
@@ -40,6 +39,8 @@ public class DBUtils {
     private static final String LOCALHOST_3 = "192.168.0.106";
     
     private static final int TIMEOUT = 2_000;
+    //for hm = true
+    public static final boolean CARD_PAYMENT = false;
 
     public static final ArrayList<String> sqlSelectList = new ArrayList<>();
     public static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
@@ -51,8 +52,8 @@ public class DBUtils {
     static {
         try {
             //statistic
-            setHost(HOST_0);
-            PASSWORD = PASSWORD_MAIN;
+//            setHost(HOST_1);
+//            PASSWORD = PASSWORD_MAIN;
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("MySQL JDBC Driver Registered!");
         } catch (ClassNotFoundException e) {

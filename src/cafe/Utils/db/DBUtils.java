@@ -22,10 +22,11 @@ import javax.swing.JOptionPane;
 public class DBUtils {  
 
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
-    public static String URL = "jdbc:mysql://localhost:3306/hm";
+    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String USERNAME = "root";   
     public static String PASSWORD = "root";
-    
+   
+//for stat
     private static final String PASSWORD_MAIN = "dbiytdbq18";
     private static String PASSWORD_HM = "___agneshka17";
     public static final String HOST_0 = "93.183.216.29";
@@ -52,8 +53,8 @@ public class DBUtils {
     static {
         try {
             //statistic
-//            setHost(HOST_1);
-//            PASSWORD = PASSWORD_MAIN;
+            setHost(HOST_1);
+            PASSWORD = PASSWORD_MAIN;
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("MySQL JDBC Driver Registered!");
         } catch (ClassNotFoundException e) {
@@ -120,7 +121,7 @@ public class DBUtils {
             socket.connect(new InetSocketAddress(HOST, 3306), TIMEOUT);
             boolean isConnected = socket.isConnected();
             if (isConnected) {
-                System.out.println("Connection is reached");
+                System.out.println("Connection is reached " + HOST);
             } else {
                 System.out.println("Connection ERROR");
             }
@@ -230,7 +231,7 @@ public class DBUtils {
             pstatement.setString(2, sysVarName);         
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new sysVarName was updated successfully!");
+//                System.out.println("A new sysVarName was updated successfully!");
             }
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateSystemVariables");

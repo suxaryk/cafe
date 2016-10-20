@@ -14,3 +14,4 @@ dist/*
 icons/*
 src/cafe/icons/*
 nbproject/*
+lib/*

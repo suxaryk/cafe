@@ -181,7 +181,6 @@ public class MainForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jButton19 = new javax.swing.JButton();
-        jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
         OrderPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -1208,17 +1207,6 @@ public class MainForm extends javax.swing.JFrame {
         });
         DishesPanel.add(jButton19);
         jButton19.setBounds(370, 530, 100, 70);
-
-        jCheckBox2.setBackground(new java.awt.Color(255, 102, 102));
-        jCheckBox2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jCheckBox2.setText("по грамах");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chengeScaleToGrams(evt);
-            }
-        });
-        DishesPanel.add(jCheckBox2);
-        jCheckBox2.setBounds(0, 530, 170, 31);
 
         jCheckBox3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jCheckBox3.setText("страва");
@@ -2640,6 +2628,7 @@ public class MainForm extends javax.swing.JFrame {
     private void getListItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getListItem
         clearCountButton();
         activeDishes = jList2.getSelectedIndex();
+        System.out.println("active " + jList2.getLeadSelectionIndex());
         System.out.println("selected index " + jList2.getSelectedIndex());
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
@@ -2647,7 +2636,7 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4.setText(title);
         jTextField2.setText(String.valueOf(price));
 
-        refreshListOfPrices();
+        refreshListOfPrices();      
 
 
     }//GEN-LAST:event_getListItem
@@ -2718,11 +2707,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void refreshListOfPrices() {
         String unit = "шт.";
-        int minValue = 1;
-        if (activeCat == 11 && jCheckBox2.isSelected()) {
-            unit = "грам";
-            minValue = 50;
-        }
+        int minValue = 1;  
         int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         jTextField4.setText(title);
@@ -2777,12 +2762,7 @@ public class MainForm extends javax.swing.JFrame {
             jCheckBox1.setSelected(false);
         } else {
             jCheckBox1.setVisible(false);
-        }
-        if (activeCat == 11) {
-            jCheckBox2.setVisible(true);
-        } else {
-            jCheckBox2.setVisible(false);
-        }
+        }   
     }//GEN-LAST:event_chooseCat
 
     public void refreshDishList(int cat) {
@@ -3888,19 +3868,12 @@ public class MainForm extends javax.swing.JFrame {
                 addedProductsToStorage.add(
                         new Ingredient(storageList.get(i).getId(), diff));
             }
-        }
-        //need to fix for server app(work only for shepet)
+        }      
         if (!addedProductsToStorage.isEmpty()) {
-            if (ClientForm.cafeId == 0) { //Shepet
                 StorageUtils.addAddedItemsWithUser(
                         convertToJSON(addedProductsToStorage),
                         userList.get(User.active)
-                );
-            }else{
-                StorageUtils.addAddedItems(
-                        convertToJSON(addedProductsToStorage)                        
-                );                
-            }            
+                );          
         }             
     }
 
@@ -4044,15 +4017,6 @@ public class MainForm extends javax.swing.JFrame {
         jTextField16.setText(Check.getWish());
 
     }//GEN-LAST:event_updateCheckInfo
-
-    private void chengeScaleToGrams(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chengeScaleToGrams
-        if (jCheckBox2.isSelected()) {
-            jCheckBox2.setBackground(GREEN);
-        } else {
-            jCheckBox2.setBackground(RED);
-        }
-        refreshListOfPrices();
-    }//GEN-LAST:event_chengeScaleToGrams
 
     private void payForStorageAddition(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payForStorageAddition
         String line = jTextField12.getText();
@@ -4396,17 +4360,18 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        String size = (String) jComboBox3.getSelectedItem();
-        updateSystemVariables(KITCHEN_CHECK_FONT_SIZE, size);
-        systemVariables = DBUtils.getSystemVariables();
-    }//GEN-LAST:event_jComboBox3ActionPerformed
-
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
         String size = (String) jComboBox4.getSelectedItem();
         updateSystemVariables(CHECK_FONT_SIZE, size);   
         systemVariables = DBUtils.getSystemVariables();
     }//GEN-LAST:event_jComboBox4ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+        String size = (String) jComboBox3.getSelectedItem();
+        updateSystemVariables(KITCHEN_CHECK_FONT_SIZE, size);
+        systemVariables = DBUtils.getSystemVariables();
+    }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
@@ -4882,7 +4847,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton98;
     private javax.swing.JButton jButton99;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;

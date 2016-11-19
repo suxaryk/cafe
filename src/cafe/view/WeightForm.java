@@ -219,7 +219,6 @@ public class WeightForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-
     private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
         mainForm.setVisible(true);
 
@@ -247,13 +246,12 @@ public class WeightForm extends javax.swing.JFrame {
 
     //change ingredient weight if it is equals 0.1 KG
     public void setDishMeetWeight() {
-        List<Ingredient> recipe = menu.get(activeCat).getDishes().get(activeDishes).getRecipe();
-        for (Map.Entry<Integer, Ingredient> ing : recipe.entrySet()) {
-            if (ing.getValue().getCount() == 0.1) {
-                if (listOfCoeffic.containsKey(ing.getValue().getId())) {
-                    ing.getValue().setCount((weightCount * listOfCoeffic.get(ing.getValue().getId())) / 1000);
+        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {
+            if (ing.getCount() == 0.1) {
+                if (listOfCoeffic.containsKey(ing.getId())) {
+                    ing.setCount((weightCount * listOfCoeffic.get(ing.getId())) / 1000);
                 } else {
-                    ing.getValue().setCount(weightCount / 1000);
+                    ing.setCount(weightCount / 1000);
                 }
                 String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
                 int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
@@ -285,15 +283,13 @@ public class WeightForm extends javax.swing.JFrame {
             System.out.println("weightCount " + weightCount);
             setDishMeetWeight();
             mainForm.addOrderItemToTable(dishCount);
-            menu.get(4).getDishes().clear();
-            DishUtils.readMenuCategoryById(4);
+            DishUtils.readDBCategoryById(4);
             mainForm.refreshDishList(4);
         }
         if (weightCount != 0) {
             this.dispose();
             mainForm.setEnabled(true);
         }
-
     }//GEN-LAST:event_setWeightCount
 
     /**

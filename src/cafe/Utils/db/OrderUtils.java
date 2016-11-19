@@ -1,19 +1,19 @@
 package cafe.Utils.db;
 
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.URL;
-import static cafe.Utils.db.DbConnect.USERNAME;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
 
 import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
 import cafe.Utils.json.JSONUtils;
-import cafe.model.Dish;
+import cafe.model.Employee;
 import cafe.model.Order;
 import cafe.model.OrderItem;
 import cafe.model.User;
 import cafe.view.LoginForm;
 import static cafe.view.LoginForm.userList;
-import cafe.view.MainForm;
 import static cafe.view.MainForm.DAY_START_TIME;
+import static cafe.view.MainForm.employees;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -26,34 +26,33 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import org.apache.log4j.Logger;
 
 public class OrderUtils {
-    private static final Logger log = Logger.getLogger(OrderUtils.class);
 
-        //check if Admin kasa needed in users Kasa
-    public static int getUserKasa(Timestamp start, Timestamp end, int index) {
+    public static void getUserKasa(Timestamp start, Timestamp end) {
         final String SQL = "SELECT SUM(sum) from orders where"
                 + " datatime >= '" + start
                 + "' AND datatime <= '" + end
                 + "' AND sum > 0"
-                + " AND operator ='"
-                + LoginForm.userList.get(index).getName() + "'";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {        
-            Statement statement = connection.createStatement();
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {
-                    return rs.getInt(1);
+                + " AND operator = ? ";
+        try (
+            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement pstatement = connection.prepareStatement(SQL)) { 
+            for(User user: userList){
+                pstatement.setString(1, user.getName());
+                int kasa = 0;
+                try (ResultSet rs = pstatement.executeQuery()) {                    
+                    while (rs.next()) {
+                        kasa = rs.getInt(1);
+                    }
                 }
-            }
+                user.setKasa(kasa);
+                System.out.println("getUserKasa" + user.getName() + " kasa = " + kasa);                         
+            }              
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getUserKasa " + index);
-            return 0;
+            System.out.println("Connection Failed! Check output console - getUserKasa ");          
         }
-        return 0;
+    
     }
 
     public static int getUserDishCount(Timestamp start, Timestamp end, int index) {
@@ -63,6 +62,10 @@ public class OrderUtils {
                 + LoginForm.userList.get(index).getName() + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! getUserDishCount" + index
+                    : "Error DB connecting");
+
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
@@ -70,7 +73,7 @@ public class OrderUtils {
                 }
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getUserDishCount " + index);
+            System.out.println("Connection Failed! Check output console - getUserDishCount " + index);
             return 0;
         }
         return 0;
@@ -84,6 +87,10 @@ public class OrderUtils {
         List<Order> loadOrders = new ArrayList<>();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! getOrders"
+                    : "Error DB connecting");
+
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
@@ -98,18 +105,18 @@ public class OrderUtils {
                     tmpOrder.setRemovedItems(JSONUtils.convertJSONToOrder(rs.getString("removed_items")));
                     loadOrders.add(tmpOrder);
                 }
-            }
+            }          
             return loadOrders;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getOrdersBetween");
+            System.out.println("Connection Failed! Check output console - getOrdersBetween");
             return null;
         }
     }
 
     public static void addOrder(Order order, User user, String message) {
         final String sql = "INSERT INTO orders(dayId, sum, cookCount, datatime,"
-                + " operator, removed_items, coments)"
-                + " VALUES(?, ?, ?, ?, ?, ?, ?)";
+                + " operator, order_items, removed_items, coments, pay_card)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -126,313 +133,66 @@ public class OrderUtils {
             pstatement.setInt(2, order.getOrderSum());
             pstatement.setInt(3, order.getCookCount());
             pstatement.setTimestamp(4, getCurrentTimeStamp());
-            pstatement.setString(5, user.getName());          
-            pstatement.setString(6, order.getJSONRemovedItems());
-            pstatement.setString(7, message);
+            pstatement.setString(5, user.getName());
+            pstatement.setString(6, order.getJSONItems());
+            pstatement.setString(7, order.getJSONRemovedItems());
+            pstatement.setString(8, message);
+            pstatement.setBoolean(9, order.isCardPayed());
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                order.setId(getMaxOrderId());
-                log.debug("A new check was added successfully!");
+                System.out.println("A new check was added successfully!");
             }
+
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - addOrder");
+            System.out.println("Connection Failed! Check output console - addOrder");
         }
     }
-    
-    public static void addOrderItems(Order order) throws SQLException {
-        final String SQL = "INSERT INTO order_item(order_id, dish_id, quantity)"
+
+    public static void addDayInfo(Date start, Date end, String info) {
+        final String sql = "INSERT INTO day_info(time_start, time_end, info)"
                 + " VALUES(?, ?, ?)";
-        Connection dbConnect = null;
-        PreparedStatement pstatement = null;
-        try {
-            dbConnect = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            pstatement = dbConnect.prepareStatement(SQL);
-
-            dbConnect.setAutoCommit(false);
-
-            for (OrderItem item : order.getItems()) {
-                double meatK = 1;
-                int dishId = item.getDish().getDbID();
-                if (dishId >= 41 && dishId <= 52 && dishId != 49 && dishId != 50){     
-                    //TODO check meatK!!
-                    meatK = item.getDish().getRecipe().get(0).getCount();
-                }
-                pstatement.setInt(1, order.getId());
-                pstatement.setInt(2, dishId);
-                pstatement.setDouble(3, item.getCount() * meatK);
-                pstatement.addBatch();
-            }         
-            pstatement.executeBatch();
-            dbConnect.commit();          
-        } catch (SQLException e) {            
-            log.error("addOrderItems Exception " + e.getMessage());
-            if (dbConnect != null) {
-                dbConnect.rollback();
-            }
-        } finally {
-            if (pstatement != null) {
-                pstatement.close();
-            }
-            if (dbConnect != null) {
-                dbConnect.close();
-            }
-        }
-    } 
-    
-    public static void addDayInfo(Date start, Date end, List<Integer> kasaInfo) {
-        final String sql = "INSERT INTO day_info(time_start, time_end, start_kasa, end_kasa,"
-                + " sum, spend, dish_count, order_count)"
-                + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {  
-            PreparedStatement pstatement = connection.prepareStatement(sql);
-            pstatement.setTimestamp(1, new Timestamp(start.getTime()));
-            pstatement.setTimestamp(2, new Timestamp(end.getTime()));
-            pstatement.setInt(3, kasaInfo.get(0));
-            pstatement.setInt(4, kasaInfo.get(1));
-            pstatement.setInt(5, kasaInfo.get(2));
-            pstatement.setInt(6, kasaInfo.get(3));
-            pstatement.setInt(7, kasaInfo.get(4));
-            pstatement.setInt(8, kasaInfo.get(5));       
-
-            int rowsInserted = pstatement.executeUpdate();
-            if (rowsInserted > 0) {
-                log.debug("A new DayInfo was added successfully!");
-            }
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - addDayInfo");
-        }
-    }
-
-    public static List<Integer> getDayInfo() {
-        final String SQL = "SELECT * FROM day_info ORDER BY Id DESC LIMIT 1";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            Statement statement = connection.createStatement();
-            List<Integer> dayInfo= new ArrayList<>();
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {
-                    dayInfo.add(rs.getInt("start_kasa"));
-                    dayInfo.add(rs.getInt("end_kasa"));
-                    dayInfo.add(rs.getInt("sum"));
-                    dayInfo.add(rs.getInt("spend"));
-                    dayInfo.add(rs.getInt("dish_count"));
-                    dayInfo.add(rs.getInt("order_count"));
-                }
-            }
-            return dayInfo;
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getDayInfo");
-            return null;
-        }
-    }
-    
-    //utils tmp
-    public static void getAllDayInfo() {
-        final String SQL = "SELECT * FROM day_info";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            Statement statement = connection.createStatement();
-            String info = "";
-            int id;
-            
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {
-                    info = rs.getString("info");
-                    id = rs.getInt("id");
-                    
-                    String[] tokens = info.split(" ");
-                    List<Integer> parsed = new ArrayList<>();
-                    for (String t : tokens) {
-                        if (t.matches("^[-+]?[0-9]*\\.?[0-9]+$")) {
-                            int k = Integer.parseInt(t);
-                            parsed.add(k);
-                        }
-                    }
-                    updateDayInfo(parsed, id);                    
-                }
-            }                     
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getAllDayInfo");          
-        }
-    }
-    //utils tmp
-    public static void updateDayInfo(List<Integer> numbers, int id) {
-        final String sql = "UPDATE day_info set start_kasa=?, end_kasa=?,"
-                + " sum=?, spend=?, dish_count=?, order_count=? where Id = ?";
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            System.out.println(!connection.isClosed() ? "DB connected! updateDayInfo" + id
+            System.out.println(!connection.isClosed() ? "DB connected! addDayInfo"
                     : "Error DB connecting");
 
             PreparedStatement pstatement = connection.prepareStatement(sql);
-            pstatement.setInt(1, numbers.get(0));
-            pstatement.setInt(2, numbers.get(5));
-            pstatement.setInt(3, numbers.get(1));
-            pstatement.setInt(4, numbers.get(4));
-            pstatement.setInt(5, numbers.get(2));
-            pstatement.setInt(6, numbers.get(3));
-            pstatement.setInt(7, id);
-      
+            pstatement.setTimestamp(1, new Timestamp(start.getTime()));
+            pstatement.setTimestamp(2, new Timestamp(end.getTime()));
+            pstatement.setString(3, info);
+
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new updateDayInfo was added successfully!");
+                System.out.println("A new DayInfo was added successfully!");
             }
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updateDayInfo");
-        }
-    } 
 
-    //utils tmp
-    public static List<Order> getAllOrders() {
-        final String SQL = "SELECT * from orders where sum > 0";
-        List<Order> loadOrders = new ArrayList<>();
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - addDayInfo");
+        }
+    }
+
+    public static String getDayInfo() {
+        final String SQL = "SELECT * FROM day_info ORDER BY Id DESC LIMIT 1";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getDaySum"
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
+            String info = "";
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-                    Order tmpOrder = new Order();
-                    tmpOrder.setId(rs.getInt("Id"));
-                    tmpOrder.setDayId(rs.getInt("dayId"));
-                    tmpOrder.setOrderSum(rs.getInt("sum"));
-                    tmpOrder.setCookCount(rs.getInt("cookCount"));
-                    tmpOrder.setDate(rs.getTimestamp("datatime"));
-                    tmpOrder.setUser(rs.getString("operator"));
-                    tmpOrder.setItems(JSONUtils.convertJSONToOrder(rs.getString("order_items")));
-                    tmpOrder.setRemovedItems(JSONUtils.convertJSONToOrder(rs.getString("removed_items")));
-                    loadOrders.add(tmpOrder);
+                    info = rs.getString("info");
                 }
             }
-            return loadOrders;
+            return info;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getAllOrders");
-            return null;
+            System.out.println("Connection Failed! Check output console - getDaySum");
+            return "";
         }
     }
-    
-    //utils tmp
-    public static void convertOrderItems() throws SQLException {
-        final String SQL = "INSERT INTO order_item(order_id, dish_id, quantity)"
-                + " VALUES(?, ?, ?)";
-        Connection dbConnect = null;
-        PreparedStatement pstatement = null;
-        try {
-            dbConnect = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            pstatement = dbConnect.prepareStatement(SQL);
-
-            dbConnect.setAutoCommit(false);
-
-            List<Order> list = OrderUtils.getAllOrders();
-            for (Order order : list) {               
-                for (OrderItem item : order.getItems()) {
-                    pstatement.setInt(1, order.getId());
-                    pstatement.setInt(2, MainForm.getDishIdByName(item.getDish().getTitle()));
-                    pstatement.setInt(3, item.getCount());
-                    pstatement.addBatch();
-                }
-            }
-            pstatement.executeBatch();
-            dbConnect.commit();
-            System.out.println("------------------End...........");
-
-        } catch (SQLException e) {
-            log.error("convertOrderItems Exception" + e.getMessage());
-            if (dbConnect != null) {
-                dbConnect.rollback();
-            }
-        } finally {
-            if (pstatement != null) {
-                pstatement.close();
-            }
-            if (dbConnect != null) {
-                dbConnect.close();
-            }
-        }           
-    }
-    //utils tmp
-    public static Map<Integer, OrderItem> getMeatOrders(){
-        List<Order> list = OrderUtils.getAllOrders();
-        Map<Integer, OrderItem> meatList = new TreeMap<>();
-        for (Order order : list) {            
-            for (OrderItem item : order.getItems()) {
-                int orderId = order.getId();
-                String dishName = item.getDish().getTitle();
-                int dishId = MainForm.getDishIdByName(dishName);
-                // meat dishes ids
-                if (dishId >= 41 && dishId <= 52 && dishId != 49 && dishId != 50) { 
-                    StringBuilder str = new StringBuilder(dishName);
-                    StringBuilder masaString = new StringBuilder(str.reverse().substring(5, 9)).reverse(); 
-                    int masa = 0;
-                    try {
-                         masa = Integer.parseInt(masaString.toString());
-                    } catch (Exception e) {                        
-                        try {
-                            masa = Integer.parseInt(masaString.substring(1, 4));
-                        } catch (Exception ex) {
-                            try {
-                                masa = Integer.parseInt(masaString.substring(2, 4));
-                            } catch (Exception ext) {
-                                System.out.println("---------!!Error" + dishId + " dishName= " + masaString.substring(2, 4) + " masa = " + masa);
-                            }                           
-                        }               
-                    }  
-//                    masa /= 100;
-                    meatList.put(orderId, new OrderItem(new Dish(dishId, null, 0, true, null), masa));
-                    System.out.println(orderId + " dishId = " + dishId + " dish Name =" + dishName + " masa= " + masa);               
-                }                
-            }
-        } 
-        return meatList;
-    }
-    
-    //utils tmp
-    public static void updateOrderItems(Map<Integer, OrderItem> meatList) throws SQLException {
-        final String SQL = "UPDATE order_item SET quantity=?"
-                         + "where order_id=? AND  dish_id=?";
-        Connection dbConnect = null;
-        PreparedStatement pstatement = null;
-        try {
-            dbConnect = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            pstatement = dbConnect.prepareStatement(SQL);
-
-            dbConnect.setAutoCommit(false);
-
-            List<Order> list = OrderUtils.getAllOrders();
-            for (Map.Entry<Integer, OrderItem> entry : meatList.entrySet()) { 
-                float masa = (entry.getValue().getCount());
-                masa /= 100;
-                pstatement.setFloat(1, masa);
-                pstatement.setInt(2, entry.getKey());
-                pstatement.setInt(3, entry.getValue().getDish().getDbID());
-                pstatement.addBatch();
-                System.out.println(entry.getKey() + " dishId = " + entry.getValue().getDish().getDbID() + " dish Name =" +  " masa= " + masa);
-            }            
-            
-            pstatement.executeBatch();
-            dbConnect.commit();
-            System.out.println("------------------End...........");
-
-        } catch (SQLException e) {
-            log.error("convertOrderItems Exception" + e.getMessage());
-            if (dbConnect != null) {
-                dbConnect.rollback();
-            }
-        } finally {
-            if (pstatement != null) {
-                pstatement.close();
-            }
-            if (dbConnect != null) {
-                dbConnect.close();
-            }
-        }
-
-    }
-    
-    
 
     public static void updateTable(Order order, User user, int activeTable) {
         final String SQL = "UPDATE tables set dayId=?, sum=?, cookCount=?,"
@@ -441,7 +201,12 @@ public class OrderUtils {
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! updateTable"
+                    : "Error DB connecting");
+
             PreparedStatement pstatement = connection.prepareStatement(SQL);
+
             pstatement.setInt(1, order.getDayId());
             pstatement.setInt(2, order.getOrderSum());
             pstatement.setInt(3, order.getCookCount());
@@ -450,13 +215,14 @@ public class OrderUtils {
             pstatement.setString(6, order.getJSONItems());
             pstatement.setString(7, order.getJSONRemovedItems());
             pstatement.setInt(8, activeTable);
+
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("updateTable");
+                System.out.println("A new check was added successfully!");
             }
 
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updateTable");
+            System.out.println("Connection Failed! Check output console - updateTable");
         }
 
     }
@@ -468,6 +234,10 @@ public class OrderUtils {
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! fillTableById"
+                    : "Error DB connecting");
+
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setInt(1, 0);
             pstatement.setInt(2, 0);
@@ -480,10 +250,11 @@ public class OrderUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("fillTableById");
+                System.out.println("A new check was added successfully!");
             }
+
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - fillTableById");
+            System.out.println("Connection Failed! Check output console - fillTableById");
         }
     }
 
@@ -492,6 +263,10 @@ public class OrderUtils {
 
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! loadTables"
+                    : "Error DB connecting");
+
             Statement statement = connection.createStatement();
             Map<Integer, Order> loadOrders = new HashMap();
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -507,7 +282,7 @@ public class OrderUtils {
             }
             return loadOrders;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - loadTables");
+            System.out.println("Connection Failed! Check output console - updateTable");
             return null;
         }
 
@@ -518,6 +293,8 @@ public class OrderUtils {
                 + "(SELECT * FROM orders order by id desc limit ?) as daysum";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getDaySum"
+                    : "Error DB connecting");
             PreparedStatement pst = connection.prepareStatement(SQL);
             pst.setInt(1, dayOrderCount);
             int sum;
@@ -529,21 +306,25 @@ public class OrderUtils {
             }
             return sum;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getDaySum");
+            System.out.println("Connection Failed! Check output console - getDaySum");
             return 0;
         }
     }
 
     ///TEST
-    public static int getAllSumBefore(Timestamp time) {
+    //for hm
+    public static int getAllCashSumBefore(Timestamp time) {
         final String SQL = "select SUM(sum) from orders where "
                 + "(operator != '" + userList.get(5).getName() + "'  "
                 + "OR (operator = '" + userList.get(5).getName() + "' AND sum < 0)"
                 + "OR datatime < '2015-11-17 10:40:00'"
                 + ")"
+                + "AND pay_card = false "
                 + "AND datatime <= '" + time + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getAllCashSumBefore"
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
 
             int sum;
@@ -555,7 +336,33 @@ public class OrderUtils {
             }
             return sum;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getAllSum");
+            System.out.println("Connection Failed! Check output console - getAllCashSumBefore");
+            return 0;
+        }
+    }
+    public static int getAllSumBefore(Timestamp time) {
+        final String SQL = "select SUM(sum) from orders where "
+                + "(operator != '" + userList.get(5).getName() + "'  "
+                + "OR (operator = '" + userList.get(5).getName() + "' AND sum < 0)"
+                + "OR datatime < '2015-11-17 10:40:00'"
+                + ")"       
+                + "AND datatime <= '" + time + "'";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getAllSum"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+
+            int sum;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                sum = 0;
+                while (rs.next()) {
+                    sum = rs.getInt(1);
+                }
+            }
+            return sum;
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getAllSum");
             return 0;
         }
     }
@@ -580,7 +387,33 @@ public class OrderUtils {
             }
             return sum;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getAllBarmenSumBetween");
+            System.out.println("Connection Failed! Check output console - getAllBarmenSumBetween");
+            return 0;
+        }
+    }
+    
+    public static int getAllBarmenSumWithCardBetween(Timestamp start, Timestamp end, boolean isCard) {
+        String SQL = " select SUM(sum) from orders where sum > 0 "
+                + "    AND datatime >= '" + start + "' "
+                + "    AND datatime <= '" + end + "'"
+                + "    AND pay_card = " + isCard + ""
+                + "    AND operator != '" + userList.get(5).getName() + "'";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getAllBarmenSumWithCardBetween"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+
+            int sum;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                sum = 0;
+                while (rs.next()) {
+                    sum = rs.getInt(1);
+                }
+            }
+            return sum;
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getAllBarmenSumWithCardBetween");
             return 0;
         }
     }
@@ -591,7 +424,10 @@ public class OrderUtils {
                 + "AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getAllRemovedSumBetween"
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
+
             int sum;
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 sum = 0;
@@ -601,7 +437,7 @@ public class OrderUtils {
             }
             return sum;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getAllRemovedSumBetween");
+            System.out.println("Connection Failed! Check output console - getAllRemovedSumBetween");
             return 0;
         }
     }
@@ -612,6 +448,8 @@ public class OrderUtils {
                 + "AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getAllCookCountBetween"
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
 
             int sum;
@@ -623,7 +461,7 @@ public class OrderUtils {
             }
             return sum;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getAllCookCountBetween");
+            System.out.println("Connection Failed! Check output console - getAllCookCountBetween");
             return 0;
         }
     }
@@ -634,6 +472,8 @@ public class OrderUtils {
                 + "AND sum > 0";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getDayOrdersCount"
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
             int count;
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -644,7 +484,7 @@ public class OrderUtils {
             }
             return count;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getDayOrdersCount");
+            System.out.println("Connection Failed! Check output console - getDayOrdersCount");
             return 0;
         }
     }
@@ -656,6 +496,10 @@ public class OrderUtils {
         List<Order> inkassOrders = new ArrayList<>();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! getInkassOrders"
+                    : "Error DB connecting");
+
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
@@ -670,7 +514,7 @@ public class OrderUtils {
             }
             return inkassOrders;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getInkassOrders");
+            System.out.println("Connection Failed! Check output console - getInkassOrders");
             return null;
         }
     }
@@ -683,6 +527,8 @@ public class OrderUtils {
                 + "AND datatime <= '" + end + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getSumKeyMoneyForUser = " + employeeName
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
 
             int sum;
@@ -694,8 +540,37 @@ public class OrderUtils {
             }
             return sum;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getSumKeyMoneyForUser = " + employeeName);
+            System.out.println("Connection Failed! Check output console - getSumKeyMoneyForUser = " + employeeName);
             return 0;
+        }
+    }
+    
+    public static void getCustomSumKeyMoneyForUserBetween(Timestamp start, Timestamp end) {
+        final String SQL = "select SUM(sum) from orders where"
+                + " operator  = ?"
+                + "AND sum < 0 AND coments = ''"
+                + "AND datatime >= '" + start + "' "
+                + "AND datatime <= '" + end + "'";     
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD);
+                PreparedStatement pstatement = connection.prepareStatement(SQL)) {
+            System.out.println(!connection.isClosed() ? "DB connected! " 
+                    : "Error DB connecting");
+
+            for (Employee employee : employees) {           
+                pstatement.setString(1, employee.getName());  
+                int sum;
+                try (ResultSet rs = pstatement.executeQuery()) {
+                    sum = 0;
+                    while (rs.next()) {
+                        sum = rs.getInt(1);
+                    }
+                }
+                employee.setKeyMoney(sum);  
+                System.out.println("getSumKeyMoneyForUser = " + employee.getName());
+            }       
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - getSumKeyMoney= ");
         }
     }
 
@@ -704,6 +579,8 @@ public class OrderUtils {
                 + "datatime > '" + DAY_START_TIME + "' ";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getMaxDbDayId"
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
 
             int max;
@@ -715,26 +592,7 @@ public class OrderUtils {
             }
             return max;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getMaxDbDayId");
-            return 0;
-        }
-    }
-    public static int getMaxOrderId() {
-        final String SQL = "SELECT max(id) FROM orders";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            Statement statement = connection.createStatement();
-
-            int max;
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                max = 0;
-                while (rs.next()) {
-                    max = rs.getInt(1);
-                }
-            }
-            return max;
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getMaxOrderId");
+            System.out.println("Connection Failed! Check output console - getMaxDbDayId");
             return 0;
         }
     }

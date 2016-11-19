@@ -1,135 +1,103 @@
 package cafe.Utils.db;
 
 
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.URL;
-import static cafe.Utils.db.DbConnect.USERNAME;
-import cafe.Utils.json.JSONUtils;
-import cafe.model.Ingredient;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
+import static cafe.Utils.db.DBUtils.sqlSelectByIdList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
 
-public class RecepiesUtils {  
-    private static final Logger log = Logger.getLogger(RecepiesUtils.class);
-    //unused
-    public static void addDishIngredient(int dishId, int ingredientId, double count) {       
-        final String SQL = "INSERT INTO dish_product(dishId, ingredient_id, count) VALUES(?, ?, ?)";
+public class RecepiesUtils {
+
+    private static final ArrayList<String> sqlUpdateRecepiesById = new ArrayList<>();
+
+    static {
+
+        sqlUpdateRecepiesById.add("UPDATE firstdishes SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE salats SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE rogerdishes SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE pandishes SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE meat SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE pizzaS SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE pizzaB SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE sushi SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE dessert SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE drinks SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE bear SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE alcohol SET ingredients = ? WHERE Id = ?");
+        sqlUpdateRecepiesById.add("UPDATE not_alcohol SET ingredients = ? WHERE Id = ?");
+
+    }
+
+    public static void addRecipes(int dishDbId, String ingredients) {
+        System.out.println("dvID" + dishDbId);
+        final String SQL = "INSERT INTO recipes(dishId, ingredients) VALUES(?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! addDishIngredient"
+            System.out.println(!connection.isClosed() ? "DB connected! addRecipes"
                     : "Error DB connecting");
             PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.setInt(1, dishId);
-            pstatement.setInt(2, ingredientId);
-            pstatement.setDouble(3, count);
+
+            pstatement.setInt(1, dishDbId);
+            pstatement.setString(2, ingredients);
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new addDishIngredient was added successfully!");
+                System.out.println("A new recipes was added successfully!");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - addDishIngredient");
+            System.out.println("Connection Failed! Check output console - addRecepies");
         }
     }
 
-    public static void updateDishIngredient(int receptId, double count) { 
-        final String SQL = "UPDATE dish SET count = ? WHERE Id = ?)";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {    
-            PreparedStatement pstatement = connection.prepareStatement(SQL);
+    public static void updateRecipes(int activeCat, int dishDbId, String ingredients) {
+        for (int i = 0; i < sqlUpdateRecepiesById.size(); i++) {
+            if (i == activeCat) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
+                    System.out.println(!connection.isClosed() ? "DB connected! updateRecipes"
+                            : "Error DB connecting");
+                    PreparedStatement pstatement = connection.
+                            prepareStatement(sqlUpdateRecepiesById.get(i));
 
-            pstatement.setDouble(1, count);
-            pstatement.setInt(2, receptId);
-            
-            int rowsInserted = pstatement.executeUpdate();
-            if (rowsInserted > 0) {
-                log.debug("A new dish_product was updated successfully!");
-            }
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updateDishIngredient");
-        } 
-    }
+                    pstatement.setString(1, ingredients);
+                    pstatement.setInt(2, dishDbId);
 
-    public static Map<Integer, Ingredient> getRecipeByDishId(int dishDbId) {
-        final String SQL = "SELECT * FROM luckyroger.dish_product where dish_id = ?";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD);) {                    
-            PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, dishDbId);
-            Map<Integer, Ingredient> recipe = new TreeMap<>();
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    recipe.put(rs.getInt("id"), new Ingredient(rs.getInt("ingredient_id"), rs.getDouble("count")));                  
+                    int rowsInserted = pstatement.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("A new recipes was added successfully!");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console - updateRecipes");
                 }
             }
-            return recipe;
+        }
+    }
+
+    public static String readRecipeFromDB(int activeCat, int dishDbId) {
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD);) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! readRecipeFromDB"
+                    : "Error DB connecting");
+            PreparedStatement pst = connection.prepareStatement(sqlSelectByIdList.get(activeCat));
+            pst.setInt(1, dishDbId);
+
+            String jsonRecepies = "";
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    jsonRecepies += rs.getString("ingredients");
+                }
+            }
+            return jsonRecepies;
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getRecipeByDishId " + e.toString());
+            System.out.println("Connection Failed! Check output console - readRecipesFromDB");
             return null;
         }
-    }
-    
-    public static void removeIngredientInAllDishes(int ingredientId) {
-        final String SQL = "DELETE FROM luckyroger.dish_product where ingredient_id = ?";
-
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, ingredientId);
-            int rowsInserted = pst.executeUpdate();
-            if (rowsInserted > 0) {
-                log.debug("Ingredient was removed successfully in all dishes!");
-            }
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - removeIngredientInAllDishes");
-        }
-    }
-    
-    //utils tmp
-    public static void readCustomDishes() {
-        final String SQL = "select * from dish";    
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {      
-            List<Ingredient> jsons;
-            Statement statement = connection.createStatement();
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {
-                    int dishId = rs.getInt("id");
-                       jsons = JSONUtils.getRecipeFromJSON(rs.getString("ingredients"));
-                       for (Ingredient json : jsons) {
-                           insertAddedUtilits(dishId, json.getId(), json.getCount());
-                    }
-                }              
-            }
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getAddedIngredients ");           
-        }
-    }
-    
-    //utils tmp //dish_calculation table
-    public static void insertAddedUtilits(int dish_id, int ingredient_id, double count) {
-        final String SQL = "INSERT INTO dish_product(dish_id, ingredient_id, count) VALUES(?, ?, ?)";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.setInt(1, dish_id);
-            pstatement.setInt(2, ingredient_id);         
-            pstatement.setDouble(3, count);
-            int rowsInserted = pstatement.executeUpdate();
-            if (rowsInserted > 0) {
-                log.debug("A new Ingredient was added successfully!");
-            }
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - insertAddedUtilits");
-        }
-
     }
 }

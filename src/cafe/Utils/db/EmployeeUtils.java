@@ -1,9 +1,9 @@
 package cafe.Utils.db;
 
 
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.URL;
-import static cafe.Utils.db.DbConnect.USERNAME;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
 import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
 import cafe.model.Employee;
 import cafe.model.User;
@@ -19,7 +19,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.log4j.Logger;
 
 public class EmployeeUtils {
@@ -42,7 +44,7 @@ public class EmployeeUtils {
                 }
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getEmployeeTime");
+            System.out.println("Connection Failed! Check output console - getEmployeeTime");
         }
     }
 
@@ -50,7 +52,9 @@ public class EmployeeUtils {
         final String SQL = "SELECT name FROM luckyroger.employee_time where DATE(date_in) = DATE(curdate())";
         List<String> tmpEmplNames = new ArrayList<>(0);
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {         
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! isDayCountStarted"
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
            
             try (ResultSet rs = statement.executeQuery(SQL)) {             
@@ -63,10 +67,11 @@ public class EmployeeUtils {
                     return true;
                 }
             }
-            return false;            
+            return false;
+            
 
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - isEmployeeLogged");
+            System.out.println("Connection Failed! Check output console - isEmployeeLogged");
             return false;
         }
     }
@@ -77,7 +82,9 @@ public class EmployeeUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         final String SQL = "SELECT date_in from employee_time where DATE(date_in)=DATE('" + sdf.format(date) + "') LIMIT 1";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {            
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            System.out.println(!connection.isClosed() ? "DB connected! getStartDayTime"
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
 
             Date newdate = new Date();
@@ -89,7 +96,7 @@ public class EmployeeUtils {
             return newdate;
 
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getStartDayTime");
+            System.out.println("Connection Failed! Check output console - getStartDayTime");
             return null;
         }
     }
@@ -117,7 +124,7 @@ public class EmployeeUtils {
                 }
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getEmployeeDayTime");
+            System.out.println("Connection Failed! Check output console - getEmployeeDayTime");
         }
     }
 
@@ -125,15 +132,16 @@ public class EmployeeUtils {
         final String SQL = "INSERT INTO employee(name, pass) VALUES(?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setString(1, name);
             pstatement.setInt(2, pass);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new Employee was added successfully!");
+                System.out.println("A new Employee was added successfully!");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - addEmployeeToDB");
+            System.out.println("Connection Failed! Check output console - addEmployeeToDB");
         }
     }
 
@@ -142,6 +150,7 @@ public class EmployeeUtils {
         final String SQL = "SELECT Id, name, pass from employee ORDER BY Id";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
@@ -151,25 +160,27 @@ public class EmployeeUtils {
                             rs.getInt("pass")
                     ));
                 }
+                System.out.println("DB readAllEmployees");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - setAllEmployees");
+            System.out.println("Connection Failed! Check output console - setAllEmployees");
         }
 
     }
 
     public static void removeById(int dbId) {
         final String SQL = "DELETE FROM employee WHERE Id = ?";
+
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             PreparedStatement pst = connection.prepareStatement(SQL);
             pst.setInt(1, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("Employee was removed successfully!");
+                System.out.println("Employee was removed successfully!");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - removeEmployee " + dbId);
+            System.out.println("Connection Failed! Check output console - removeEmployee");
         }
 
     }
@@ -178,20 +189,23 @@ public class EmployeeUtils {
         final String SQL = "UPDATE employee SET pass = ? WHERE Id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
             PreparedStatement pst = connection.prepareStatement(SQL);
             pst.setInt(1, pass);
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("Employee was updated successfully!" + dbId);
+                System.out.println("Employee was updated successfully!");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updateEmployeePass" + dbId);
+            System.out.println("Connection Failed! Check output console - updateEmployeePass");
         }
+
     }
 
     public static void updateEmployeeName(int dbId, String name) {
         final String SQL = "UPDATE employee SET name = ? WHERE Id = ?";
+
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             PreparedStatement pst = connection.prepareStatement(SQL);
@@ -199,28 +213,29 @@ public class EmployeeUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("Employee was updated successfully!");
+                System.out.println("Employee was updated successfully!");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updateEmployeeName");
+            System.out.println("Connection Failed! Check output console - updateEmployeeName");
         }
+
     }
 
     public static void addTimeIn(User employee) {
         final String SQL = "INSERT INTO employee_time(name, date_in) VALUES(?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println("time in = " + new Date(getCurrentTimeStamp().getTime()));
+
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             System.out.println("name" + employee.getName());
             pstatement.setString(1, employee.getName());
             pstatement.setTimestamp(2, getCurrentTimeStamp());
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new Time was added successfully!");
+                System.out.println("A new Time was added successfully!");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - addTimeIn");
+            System.out.println("Connection Failed! Check output console - addTimeIn");
         }
     }
 
@@ -231,25 +246,26 @@ public class EmployeeUtils {
                 + "ORDER BY Id DESC limit 1";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
+
             PreparedStatement pstatement = connection.prepareStatement(SQL);          
             pstatement.setString(1, employee.getName());
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new Time was added successfully!");
+                System.out.println("A new Time was added successfully!");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - addTimeOut");
+            System.out.println("Connection Failed! Check output console - addTimeOut");
         }
     }
     
-    public static void updateEmployeesWorkedHours(){        
+    public static void updateEmployeesWorkedHours() {
         final String SQL = "UPDATE employee_time "
-                         + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out)) "
-                         + "ORDER BY Id DESC LIMIT 300";
+                + "SET diff = (TIMESTAMPDIFF(hour, date_in, date_out)) "
+                + "ORDER BY Id DESC LIMIT 300";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.executeUpdate();           
+            pstatement.executeUpdate();
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - addEmployeeTimeDiff");
         }
@@ -269,6 +285,10 @@ public class EmployeeUtils {
             empl.setWorkDaysCount(0);
             empl.setHalfWorkDaysCount(0);
         }     
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("getEmployeeFullWorksDay->");
+        System.out.println("start " + sdf.format(new Date(start.getTime())));
+        System.out.println("end " + sdf.format(new Date(end.getTime())));
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             for (Employee empl : employees) {
@@ -277,16 +297,16 @@ public class EmployeeUtils {
                     ResultSet rs = pstatement.executeQuery();
                     while (rs.next()) {
                         if (empl.getName().equals(rs.getString("name"))) {
-                            empl.setWorkDaysCount(rs.getInt("full_work_day"));
-                            log.debug("rez " + empl.getWorkDaysCount());
+                            empl.setWorkDaysCount(rs.getInt("full_work_day"));                           
                         }
                     }                    
                 } catch (Exception e) {
-                    log.debug("Error execute query prepare statment getEmployeeFullWorksDay");
+                    System.out.println("Error execute query prepare statment getEmployeeFullWorksDay");
                 }                             
-            }                            
+            }                   
+            System.out.println("DB connection getEmployeeFullWorksDay");
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getEmployeeFullWorksDay");
+            System.out.println("Connection Failed! Check output console - getEmployeeFullWorksDay");
         }
     }   
     
@@ -308,16 +328,16 @@ public class EmployeeUtils {
                     ResultSet rs = pstatement.executeQuery();
                     while (rs.next()) {
                         if (empl.getName().equals(rs.getString("name"))) {
-                            empl.setHalfWorkDaysCount(rs.getInt("half_work_day"));
-                            log.debug("rez " + empl.getWorkDaysCount());
+                            empl.setHalfWorkDaysCount(rs.getInt("half_work_day"));                         
                         }
                     }                    
                 } catch (Exception e) {
-                    log.error("Error execute query prepare statment getEmployeeFullWorksDay");
+                    System.out.println("Error execute query prepare statment getEmployeeHalfWorksDay");
                 }                             
-            }                      
+            }                   
+            System.out.println("DB connection getEmployeeHalfWorksDay");
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getEmployeeFullWorksDay");
+            System.out.println("Connection Failed! Check output console - getEmployeeHalfWorksDay");
         }
     }   
 

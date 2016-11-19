@@ -1,20 +1,23 @@
 package cafe.view;
 
 import cafe.Utils.db.CheckUtils;
-import cafe.Utils.db.DbConnect;
-import static cafe.Utils.db.DbConnect.ConnectDb;
+import cafe.Utils.db.DBUtils;
+import static cafe.Utils.db.DBUtils.CARD_PAYMENT;
+import static cafe.Utils.db.DBUtils.ConnectDb;
 import cafe.Utils.db.OrderUtils;
 import cafe.Utils.db.EmployeeUtils;
 import cafe.Utils.db.UsersUtils;
 import cafe.model.Order;
 import cafe.Utils.db.DishUtils;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.USERNAME;
+import static cafe.Utils.db.DBUtils.showMessageYesNo;
+import static cafe.Utils.db.DBUtils.updateSystemVariables;
 import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
-import static cafe.Utils.db.OrderUtils.getDayInfo;
 import cafe.Utils.db.ReviziaUtils;
 import cafe.Utils.db.StorageUtils;
 import cafe.Utils.json.JSONUtils;
-import static cafe.Utils.json.JSONUtils.convertDiffIngToJSON;
 import cafe.model.Category;
 import cafe.model.Check;
 import cafe.model.OrderItem;
@@ -33,7 +36,6 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
 import java.io.IOException;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -41,6 +43,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -74,6 +77,8 @@ import org.joda.time.LocalTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import static cafe.Utils.json.JSONUtils.convertToJSON;
+import java.net.ConnectException;
 
 /**
  * all methods in one class it`s very bad i know
@@ -84,8 +89,9 @@ import org.jsoup.nodes.Element;
 public class MainForm extends javax.swing.JFrame {
 
     public MainForm() {
-        initComponents();
+        initComponents();       
         ConnectDb();
+    
         StorageUtils.readStorage();
         CheckUtils.readCheck();
         initIcons();
@@ -99,6 +105,8 @@ public class MainForm extends javax.swing.JFrame {
         loadTables();
         initStartOrderId();
         initBDmenu();
+        initSystemVariables();
+        doDBDump();
 
     }
 
@@ -173,7 +181,6 @@ public class MainForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jButton19 = new javax.swing.JButton();
-        jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
         OrderPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -233,6 +240,10 @@ public class MainForm extends javax.swing.JFrame {
         jTextPane2 = new javax.swing.JTextPane();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
         RecipePanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -286,7 +297,6 @@ public class MainForm extends javax.swing.JFrame {
         jButton101 = new javax.swing.JButton();
         jButton47 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
-        jButton40 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
 
@@ -1198,17 +1208,6 @@ public class MainForm extends javax.swing.JFrame {
         DishesPanel.add(jButton19);
         jButton19.setBounds(370, 530, 100, 70);
 
-        jCheckBox2.setBackground(new java.awt.Color(255, 102, 102));
-        jCheckBox2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jCheckBox2.setText("по грамах");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chengeScaleToGrams(evt);
-            }
-        });
-        DishesPanel.add(jCheckBox2);
-        jCheckBox2.setBounds(0, 530, 170, 31);
-
         jCheckBox3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jCheckBox3.setText("страва");
         DishesPanel.add(jCheckBox3);
@@ -1217,7 +1216,7 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.addTab("                 ", new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/hot-food.png")), DishesPanel); // NOI18N
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(68, 100, 643, 680);
+        jTabbedPane1.setBounds(68, 5, 643, 680);
         jTabbedPane1.getAccessibleContext().setAccessibleName("");
 
         OrderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1428,7 +1427,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel13.setBounds(120, 540, 280, 30);
 
         getContentPane().add(OrderPanel);
-        OrderPanel.setBounds(710, 100, 500, 680);
+        OrderPanel.setBounds(710, 5, 500, 680);
 
         UsersPanel.setLayout(null);
 
@@ -1469,7 +1468,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
 
         UsersPanel.add(jScrollPane2);
-        jScrollPane2.setBounds(0, 10, 589, 510);
+        jScrollPane2.setBounds(0, 10, 589, 390);
 
         jButton8.setBackground(new java.awt.Color(255, 255, 255));
         jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1480,7 +1479,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         UsersPanel.add(jButton8);
-        jButton8.setBounds(980, 800, 100, 73);
+        jButton8.setBounds(980, 630, 100, 73);
 
         jButton24.setBackground(new java.awt.Color(204, 204, 204));
         jButton24.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -1718,7 +1717,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTextPane1);
 
         UsersPanel.add(jScrollPane8);
-        jScrollPane8.setBounds(600, 720, 170, 130);
+        jScrollPane8.setBounds(610, 560, 170, 130);
 
         jTable4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
@@ -1754,12 +1753,12 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane5.setViewportView(jTable4);
 
         UsersPanel.add(jScrollPane5);
-        jScrollPane5.setBounds(0, 570, 589, 303);
+        jScrollPane5.setBounds(0, 450, 589, 250);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Бармени");
         UsersPanel.add(jLabel1);
-        jLabel1.setBounds(10, 530, 150, 30);
+        jLabel1.setBounds(10, 410, 150, 30);
 
         jButton21.setBackground(new java.awt.Color(102, 153, 255));
         jButton21.setText("змінити");
@@ -1769,26 +1768,52 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         UsersPanel.add(jButton21);
-        jButton21.setBounds(600, 610, 100, 40);
+        jButton21.setBounds(600, 490, 160, 40);
 
         jTextField6.setText("нове імя");
         UsersPanel.add(jTextField6);
-        jTextField6.setBounds(600, 570, 480, 30);
+        jTextField6.setBounds(600, 450, 160, 30);
 
         jScrollPane9.setViewportView(jTextPane2);
 
         UsersPanel.add(jScrollPane9);
-        jScrollPane9.setBounds(600, 420, 170, 100);
+        jScrollPane9.setBounds(800, 560, 170, 130);
 
         jLabel21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel21.setText("Чек для клієнта");
         UsersPanel.add(jLabel21);
-        jLabel21.setBounds(600, 400, 150, 17);
+        jLabel21.setBounds(830, 690, 120, 17);
 
         jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel22.setText("Чек на кухню");
         UsersPanel.add(jLabel22);
-        jLabel22.setBounds(600, 700, 150, 17);
+        jLabel22.setBounds(640, 690, 110, 17);
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+        UsersPanel.add(jComboBox3);
+        jComboBox3.setBounds(740, 540, 40, 20);
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15" }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
+        UsersPanel.add(jComboBox4);
+        jComboBox4.setBounds(930, 540, 40, 20);
+
+        jLabel23.setText("розмір тексту");
+        UsersPanel.add(jLabel23);
+        jLabel23.setBounds(630, 540, 90, 14);
+
+        jLabel24.setText("розмір тексту");
+        UsersPanel.add(jLabel24);
+        jLabel24.setBounds(820, 540, 90, 14);
 
         getContentPane().add(UsersPanel);
         UsersPanel.setBounds(90, 0, 1130, 1040);
@@ -1801,14 +1826,14 @@ public class MainForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "№", "Назва", "Вага ( кг/ шт )"
+                "№", "Назва", "Вага ( кг/ шт )", "Вибраний"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1835,10 +1860,13 @@ public class MainForm extends javax.swing.JFrame {
             jTable3.getColumnModel().getColumn(2).setMinWidth(100);
             jTable3.getColumnModel().getColumn(2).setPreferredWidth(100);
             jTable3.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTable3.getColumnModel().getColumn(3).setMinWidth(60);
+            jTable3.getColumnModel().getColumn(3).setPreferredWidth(60);
+            jTable3.getColumnModel().getColumn(3).setMaxWidth(60);
         }
 
         RecipePanel.add(jScrollPane4);
-        jScrollPane4.setBounds(0, 30, 1080, 940);
+        jScrollPane4.setBounds(0, 30, 1080, 650);
 
         jLabel12.setBackground(new java.awt.Color(0, 153, 204));
         jLabel12.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -2032,7 +2060,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         RecipePanel.add(jButton41);
-        jButton41.setBounds(1080, 560, 200, 70);
+        jButton41.setBounds(1080, 470, 200, 70);
 
         jButton22.setBackground(new java.awt.Color(255, 255, 255));
         jButton22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -2043,7 +2071,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         RecipePanel.add(jButton22);
-        jButton22.setBounds(1080, 830, 200, 73);
+        jButton22.setBounds(1080, 610, 200, 73);
 
         getContentPane().add(RecipePanel);
         RecipePanel.setBounds(0, 0, 1280, 1000);
@@ -2098,7 +2126,7 @@ public class MainForm extends javax.swing.JFrame {
         }
 
         StoragePanel.add(jScrollPane6);
-        jScrollPane6.setBounds(0, 30, 1080, 940);
+        jScrollPane6.setBounds(0, 30, 1080, 640);
 
         jLabel14.setBackground(new java.awt.Color(0, 153, 204));
         jLabel14.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -2141,7 +2169,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jTextField12);
-        jTextField12.setBounds(1080, 560, 198, 30);
+        jTextField12.setBounds(1080, 430, 198, 24);
 
         jButton42.setBackground(new java.awt.Color(204, 204, 204));
         jButton42.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -2154,16 +2182,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton42);
-        jButton42.setBounds(1080, 600, 100, 70);
+        jButton42.setBounds(1080, 460, 100, 40);
 
         jLabel16.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel16.setText(" Назва");
         StoragePanel.add(jLabel16);
-        jLabel16.setBounds(1080, 700, 90, 16);
+        jLabel16.setBounds(1080, 500, 90, 16);
 
         jTextField13.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         StoragePanel.add(jTextField13);
-        jTextField13.setBounds(1080, 720, 198, 30);
+        jTextField13.setBounds(1080, 520, 198, 24);
 
         jButton89.setBackground(new java.awt.Color(204, 204, 204));
         jButton89.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
@@ -2176,7 +2204,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton89);
-        jButton89.setBounds(1080, 90, 50, 50);
+        jButton89.setBounds(1080, 60, 50, 50);
 
         jButton90.setBackground(new java.awt.Color(204, 204, 204));
         jButton90.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
@@ -2190,7 +2218,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton90);
-        jButton90.setBounds(1080, 140, 50, 50);
+        jButton90.setBounds(1080, 110, 50, 50);
 
         jButton91.setBackground(new java.awt.Color(204, 204, 204));
         jButton91.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2203,7 +2231,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton91);
-        jButton91.setBounds(1080, 190, 50, 50);
+        jButton91.setBounds(1080, 160, 50, 50);
 
         jButton92.setBackground(new java.awt.Color(204, 204, 204));
         jButton92.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2216,7 +2244,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton92);
-        jButton92.setBounds(1130, 190, 50, 50);
+        jButton92.setBounds(1130, 160, 50, 50);
 
         jButton93.setBackground(new java.awt.Color(204, 204, 204));
         jButton93.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2229,7 +2257,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton93);
-        jButton93.setBounds(1180, 190, 50, 50);
+        jButton93.setBounds(1180, 160, 50, 50);
 
         jButton94.setBackground(new java.awt.Color(204, 204, 204));
         jButton94.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2242,7 +2270,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton94);
-        jButton94.setBounds(1230, 190, 50, 50);
+        jButton94.setBounds(1230, 160, 50, 50);
 
         jButton95.setBackground(new java.awt.Color(204, 204, 204));
         jButton95.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2255,7 +2283,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton95);
-        jButton95.setBounds(1130, 140, 50, 50);
+        jButton95.setBounds(1130, 110, 50, 50);
 
         jButton96.setBackground(new java.awt.Color(204, 204, 204));
         jButton96.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2268,7 +2296,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton96);
-        jButton96.setBounds(1180, 140, 50, 50);
+        jButton96.setBounds(1180, 110, 50, 50);
 
         jButton97.setBackground(new java.awt.Color(204, 204, 204));
         jButton97.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2281,7 +2309,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton97);
-        jButton97.setBounds(1230, 140, 50, 50);
+        jButton97.setBounds(1230, 110, 50, 50);
 
         jButton98.setBackground(new java.awt.Color(204, 204, 204));
         jButton98.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2294,7 +2322,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton98);
-        jButton98.setBounds(1230, 90, 50, 50);
+        jButton98.setBounds(1230, 60, 50, 50);
 
         jButton99.setBackground(new java.awt.Color(204, 204, 204));
         jButton99.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2307,7 +2335,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton99);
-        jButton99.setBounds(1180, 90, 50, 50);
+        jButton99.setBounds(1180, 60, 50, 50);
 
         jButton100.setBackground(new java.awt.Color(204, 204, 204));
         jButton100.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2320,7 +2348,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton100);
-        jButton100.setBounds(1130, 90, 50, 50);
+        jButton100.setBounds(1130, 60, 50, 50);
 
         jButton39.setBackground(new java.awt.Color(204, 204, 204));
         jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2333,7 +2361,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton39);
-        jButton39.setBounds(1080, 330, 200, 70);
+        jButton39.setBounds(1080, 260, 200, 50);
 
         jButton43.setBackground(new java.awt.Color(204, 204, 204));
         jButton43.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2345,7 +2373,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton43);
-        jButton43.setBounds(1080, 760, 100, 70);
+        jButton43.setBounds(1080, 550, 100, 50);
 
         jButton44.setBackground(new java.awt.Color(204, 204, 204));
         jButton44.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2357,7 +2385,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton44);
-        jButton44.setBounds(1180, 760, 100, 70);
+        jButton44.setBounds(1180, 550, 100, 50);
 
         jButton23.setBackground(new java.awt.Color(255, 255, 255));
         jButton23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -2368,7 +2396,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton23);
-        jButton23.setBounds(1080, 890, 200, 73);
+        jButton23.setBounds(1080, 600, 200, 70);
 
         jButton45.setBackground(new java.awt.Color(204, 204, 204));
         jButton45.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2381,7 +2409,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton45);
-        jButton45.setBounds(1080, 400, 200, 70);
+        jButton45.setBounds(1080, 310, 200, 50);
 
         jButton46.setBackground(new java.awt.Color(0, 153, 204));
         jButton46.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -2394,7 +2422,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton46);
-        jButton46.setBounds(1080, 470, 200, 70);
+        jButton46.setBounds(1080, 360, 200, 50);
 
         jTable6.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jTable6.setModel(new javax.swing.table.DefaultTableModel(
@@ -2447,7 +2475,7 @@ public class MainForm extends javax.swing.JFrame {
         }
 
         StoragePanel.add(jScrollPane7);
-        jScrollPane7.setBounds(0, 30, 1080, 940);
+        jScrollPane7.setBounds(0, 30, 1080, 640);
 
         jButton101.setBackground(new java.awt.Color(204, 204, 204));
         jButton101.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
@@ -2460,7 +2488,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton101);
-        jButton101.setBounds(1080, 240, 50, 50);
+        jButton101.setBounds(1080, 210, 50, 50);
 
         jButton47.setBackground(new java.awt.Color(204, 204, 204));
         jButton47.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -2473,25 +2501,12 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         StoragePanel.add(jButton47);
-        jButton47.setBounds(1180, 600, 100, 70);
+        jButton47.setBounds(1180, 460, 100, 40);
 
         jLabel17.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel17.setText("Сума");
         StoragePanel.add(jLabel17);
-        jLabel17.setBounds(1080, 540, 90, 16);
-
-        jButton40.setBackground(new java.awt.Color(255, 102, 102));
-        jButton40.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton40.setText("<html>&nbsp;&nbsp;відмінити<br/>останню дію</html> ");
-        jButton40.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton40.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton40.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton40addToStorage(evt);
-            }
-        });
-        StoragePanel.add(jButton40);
-        jButton40.setBounds(1180, 240, 100, 70);
+        jLabel17.setBounds(1080, 410, 90, 16);
 
         getContentPane().add(StoragePanel);
         StoragePanel.setBounds(0, 0, 1280, 1000);
@@ -2501,16 +2516,16 @@ public class MainForm extends javax.swing.JFrame {
         jLabel15.setText(" готуються");
         jLabel15.setOpaque(true);
         getContentPane().add(jLabel15);
-        jLabel15.setBounds(545, 105, 200, 30);
+        jLabel15.setBounds(545, 5, 200, 30);
 
         jLabel20.setBackground(java.awt.Color.green);
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel20.setText(" видані страви");
         jLabel20.setOpaque(true);
         getContentPane().add(jLabel20);
-        jLabel20.setBounds(545, 140, 200, 30);
+        jLabel20.setBounds(545, 35, 200, 30);
 
-        setSize(new java.awt.Dimension(1292, 1051));
+        setSize(new java.awt.Dimension(1410, 789));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -2607,34 +2622,13 @@ public class MainForm extends javax.swing.JFrame {
         jTextField14.setText(Check.getAdress());
         jTextField15.setText(Check.getPassWifi());
         jTextField16.setText(Check.getWish());
-        //utils tmp
-//        StorageUtils.convertAddedStorageTable();
-//        StorageUtils.convertRemovedStorageTable();
-//            RecepiesUtils.readCustomDishes();
-//        OrderUtils.getAllDayInfo();
-
-            //!!!check all dish ids before start in getDishIdByName (work for slavutDB)
-//        try {
-//            OrderUtils.convertOrderItems();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-
-//        try {
-//            OrderUtils.updateOrderItems(OrderUtils.getMeatOrders());
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-//        }
- 
-
-
     }//GEN-LAST:event_PersonalLogining
 
 
     private void getListItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getListItem
         clearCountButton();
         activeDishes = jList2.getSelectedIndex();
+        System.out.println("active " + jList2.getLeadSelectionIndex());
         System.out.println("selected index " + jList2.getSelectedIndex());
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
@@ -2642,7 +2636,7 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4.setText(title);
         jTextField2.setText(String.valueOf(price));
 
-        refreshListOfPrices();
+        refreshListOfPrices();      
 
 
     }//GEN-LAST:event_getListItem
@@ -2692,13 +2686,12 @@ public class MainForm extends javax.swing.JFrame {
 
     public boolean calcMeat() {
         boolean calcMeat = false;
-        Map<Integer, Ingredient> recipe = menu.get(activeCat).getDishes().get(activeDishes).getRecipe();
-        for (Map.Entry<Integer, Ingredient> dish_ing : recipe.entrySet()) {
-            if (dish_ing.getValue().getCount() == 0.1) {
+        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {
+            if (ing.getCount() == 0.1) {
                 calcMeat = true;
                 break;
             }
-        }      
+        }
         return calcMeat;
     }
 
@@ -2714,11 +2707,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void refreshListOfPrices() {
         String unit = "шт.";
-        int minValue = 1;
-        if (activeCat == 11 && jCheckBox2.isSelected()) {
-            unit = "грам";
-            minValue = 50;
-        }
+        int minValue = 1;  
         int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         jTextField4.setText(title);
@@ -2773,12 +2762,7 @@ public class MainForm extends javax.swing.JFrame {
             jCheckBox1.setSelected(false);
         } else {
             jCheckBox1.setVisible(false);
-        }
-        if (activeCat == 11) {
-            jCheckBox2.setVisible(true);
-        } else {
-            jCheckBox2.setVisible(false);
-        }
+        }   
     }//GEN-LAST:event_chooseCat
 
     public void refreshDishList(int cat) {
@@ -2881,7 +2865,6 @@ public class MainForm extends javax.swing.JFrame {
             jButton12.setVisible(true);
             jButton13.setVisible(false);
             jButton19.setVisible(true);
-            jButton39.setVisible(true);
             jButton43.setVisible(true);
             jButton44.setVisible(true);
             jButton46.setVisible(true);
@@ -2974,15 +2957,15 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void PrintClientCheck() {
-        DateFormat dateFormat = new SimpleDateFormat(
-                "dd-MM-yyyy HH:mm");
-
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");      
+        String fontSize = systemVariables.get(CHECK_FONT_SIZE);   
         PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
         set.add(OrientationRequested.PORTRAIT);
         set.add(MediaSizeName.INVOICE);
 
         String style = ""
                 + "<html>\n"
+                + "<meta charset=\"utf-8\">"
                 + "<style>\n"
                 + "table{\n"
                 + "border-spacing: 0px; "
@@ -2990,7 +2973,7 @@ public class MainForm extends javax.swing.JFrame {
                 + " tr {\n"
                 + "    border-collapse: collapse;\n"
                 + "    margin: 0px;"
-                + "    font-size: 7pt;"
+                + "    font-size: " + fontSize +"pt;"
                 + "    padding: 0px;"
                 + "border-spacing: 0px; "
                 + ""
@@ -3010,10 +2993,11 @@ public class MainForm extends javax.swing.JFrame {
                 + "</tr> "
                 + "<tr>"
                 + "    <td style=\"width:100%\"> " + dateFormat.format(new Date()) + "</td>"
-                + "    <td style=\"width:3%\"> " + orders.get(activeTable).getDayId() + " </td> "
+                + "    <td style=\"width:10%; margin-right: 5px;\" align=\"right\"> " + " " + orders.get(activeTable).getDayId() + " </td> "
                 + "  </tr>"
                 + "<tr>"
-                + "    <td style=\"width:100%\"> " + "- - - - - - - - - - - - - - - - - - - - - - - - - " + "</td> "
+//                + "    <td style=\"width:100%\"> " + "- - - - - - - - - - - - - - - - - - - - - - - - - " + "</td> "
+                + "    <td style=\"width:100%\"> " + "- - - - - - - - - -" + "</td> "
                 + "</tr>"
                 + "</table>";
 
@@ -3022,16 +3006,17 @@ public class MainForm extends javax.swing.JFrame {
 
         for (OrderItem item : orders.get(activeTable).getItems()) {
             checkHtml += "  <tr>"
-                    + "    <td  style=\"width:100%\"> " + item.getDish().getTitle().toUpperCase() + " </td> "
-                    + "    <td style=\"width:1%\"> " + item.getCount() + " x" + "</td>"
-                    + "    <td style=\"width:3%\"> " + item.getDish().getPrice() + "</td>"
-                    + "    <td style=\"width:3%\" align=\"right\"> " + " " + item.getSum() + "</td>"
+                    + "    <td  style=\"max-width: 70%\"> " + item.getDish().getTitle().toUpperCase() + " </td> "
+                    + "    <td style=\"width:5%\"> " + " " + item.getCount() + " x" + "</td>"
+                    + "    <td style=\"width:5%\"> " + item.getDish().getPrice() + "</td>"
+                    + "    <td style=\"width:10%; margin-right: 5px;\" align=\"right\"> " + " " + item.getSum() + "    "+ "</td>"
                     + "  </tr>";
 
         }
         checkHtml += ""
                 + "<tr>"
-                + "    <td style=\"width:100%\"> " + "- - - - - - - - - - - - - - - - - - - - - - - - - - " + "</td> "
+//                + "    <td style=\"width:100%\"> " + "- - - - - - - - - - - - - - - - - - - - - - - - - - " + "</td> "
+                + "    <td style=\"width:100%\"> " + "- - - - - - - - - -" + "</td> "
                 + "</tr>"
                 + "<tr>"
                 + "    <td style=\"width:10%\"> <b>" + "СУМА " + " </b></td> "
@@ -3047,9 +3032,9 @@ public class MainForm extends javax.swing.JFrame {
                 + "</tr> "
                 + "</table>"
                 + "</html>";
-
-        jTextPane2.setContentType("text/html");
-        jTextPane2.setText(checkHtml);
+        
+        clientCheck = checkHtml;
+        showClientCheckText(checkHtml);
 
         try {
             jTextPane2.print(null, null, false, null, set, false);
@@ -3063,6 +3048,11 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
                     + "\n" + ex);
         }
+    }
+
+    private void showClientCheckText(String checkHtml) {
+        jTextPane2.setContentType("text/html");
+        jTextPane2.setText(checkHtml);
     }
 
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
@@ -3188,47 +3178,46 @@ public class MainForm extends javax.swing.JFrame {
             jPasswordField1.setText("");
         }
     }//GEN-LAST:event_loginEmployee
-    public static List<Integer> dayInfo() {
+    public static String dayInfo() {
         System.out.println("----------day Info----------");
 
         int ordersCount = OrderUtils.getDayOrdersCount();
-        int dayDiff = OrderUtils.getAllRemovedSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime())) * (-1);
-        int daySum = OrderUtils.getAllBarmenSumBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
-        int allSum = OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
-        int cookCount = OrderUtils.getAllCookCountBetween(new Timestamp(DAY_START_TIME.getTime()), new Timestamp(new Date().getTime()));
-
-        int startKass = OrderUtils.getAllSumBefore(new Timestamp(DAY_START_TIME.getTime()));
-
-       
-        List<Integer> kasaInfo = new ArrayList<>();
-        kasaInfo.add(startKass);
-        kasaInfo.add(allSum);
-        kasaInfo.add(daySum);
-        kasaInfo.add(dayDiff);
-        kasaInfo.add(cookCount);
-        kasaInfo.add(ordersCount);
+        Timestamp start = new Timestamp(DAY_START_TIME.getTime());
+        Timestamp end = new Timestamp(new Date().getTime());
+        int dayDiff = OrderUtils.getAllRemovedSumBetween(start, end) * (-1);
+        int daySumCash = OrderUtils.getAllBarmenSumWithCardBetween(start, end, false);
+        int daySumCard = OrderUtils.getAllBarmenSumWithCardBetween(start, end, true);
+        int daySum = OrderUtils.getAllBarmenSumBetween(start, end);
         
        
-        return kasaInfo;
-    }
-    
-    public static String getDayInfoString(List<Integer> dayInfo){
-        List<Integer> kasainfo = dayInfo;
+        int allSum = OrderUtils.getAllSumBefore(end);
+        int startKass = OrderUtils.getAllSumBefore(start);
+        //getAllCashSumBefore for HM3
+        if (CARD_PAYMENT) {
+            allSum = OrderUtils.getAllCashSumBefore(end);
+            startKass = OrderUtils.getAllCashSumBefore(start);            
+        }
         
+        int cookCount = OrderUtils.getAllCookCountBetween(start, end);
+
+        
+
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
                 + "Інформація за зміну в терміні  \n"
                 + "_з " + dateFormat.format(DAY_START_TIME) + " \n"
                 + "по " + dateFormat.format(new Date()) + "\n"
                 + "------------------------------------------------\n"
-                + "Каса на початок зміни " + kasainfo.get(0) + " грн.\n"
-                + "Сума за день " + kasainfo.get(2) + " грн.\n"
-                + "Страв за день " + kasainfo.get(4) + " \n"
-                + "Чеків за день " + kasainfo.get(5) + " \n"
-                + "Витрати за день " + kasainfo.get(3) + " грн.\n"
-                + "Залишок в касі " + kasainfo.get(1) + " грн\n"
+                + "Каса на початок зміни " + startKass + " грн.\n"
+                + "Сума за день готівка " + daySumCash + " грн.\n"
+                + "Сума за день карта " + daySumCard + " грн.\n"
+                + "Сума загальна за день " + daySum + " грн.\n"
+                + "Страв за день " + cookCount + " \n"
+                + "Чеків за день " + ordersCount + " \n"
+                + "Витрати за день " + dayDiff + " грн.\n"
+                + "Залишок в касі " + allSum + " грн\n"
                 + "------------------------------------------------\n";
-            return info;
+        return info;
     }
 
     public static void closeSystem() {
@@ -3237,7 +3226,7 @@ public class MainForm extends javax.swing.JFrame {
         options[0] = "Так";
         options[1] = "Ні";
         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-                getDayInfoString(dayInfo())
+                dayInfo()
                 + "ЗАКРИТТЯ КАСИ\nВиключити програму?", "Закриття каси!",
                 0, JOptionPane.YES_NO_OPTION, null, options, null);
         if (reply == JOptionPane.YES_OPTION) {
@@ -3275,7 +3264,22 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    
+    private static void doDBDump() {
+        Date currentDate = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+        if (dayOfWeek == 2) {
+            DateFormat dateFormat = new SimpleDateFormat(
+                    "ddMMyyyy_HH-mm");
+            String command = "cmd /c  mysqldump -u" + USERNAME + " -p" + PASSWORD + " "
+                    + "luckyroger > C:/dump/" + dateFormat.format(new Date()) + "_dump.sql";
+            try {
+                Process process = Runtime.getRuntime().exec(command);
+            } catch (IOException ex) {
+            }
+        }
+    }
 
 
     private void PriceTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceTyped
@@ -3292,7 +3296,7 @@ public class MainForm extends javax.swing.JFrame {
             boolean cook = jCheckBox3.isSelected();
             DishUtils.addDish(new Dish(title, price, cook), activeCat);
             menu.get(activeCat).getDishes().clear();
-            DishUtils.readMenuCategoryById(activeCat);
+            DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(menu.get(activeCat).getDishes().toArray());
             jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
@@ -3322,9 +3326,9 @@ public class MainForm extends javax.swing.JFrame {
         int activeIndex = jList2.getSelectedIndex();
         int dbId = menu.get(activeCat).getDishes().get(activeIndex).getDbID();
         if (activeIndex >= 0) {
-            DishUtils.removeDishById(dbId);
+            DishUtils.removeDishById(dbId, activeCat);
             menu.get(activeCat).getDishes().clear();
-            DishUtils.readMenuCategoryById(activeCat);
+            DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(menu.get(activeCat).getDishes().toArray());
             jList2.ensureIndexIsVisible(jList2.getModel().getSize() - 1);
@@ -3344,7 +3348,16 @@ public class MainForm extends javax.swing.JFrame {
                     ingredient.getCount()                                              
                 });
             }
-        } else if (jTable.getColumnCount() == 5) {
+        } else if (jTable.getColumnCount() == 4) { //recipe
+            for (Ingredient ingredient : storageList) {
+                model.addRow(new Object[]{
+                    ingredient.getId(),
+                    ingredient.getTitle(),
+                    ingredient.getCount(), 
+                    ingredient.getCount() != 0
+                });
+            }
+        } else if (jTable.getColumnCount() == 5) { // barmen storage
             for (Ingredient ingredient : storageList) {
                 model.addRow(new Object[]{
                     ingredient.getId(),
@@ -3355,7 +3368,7 @@ public class MainForm extends javax.swing.JFrame {
                 });
             }
         } else if (jTable.getColumnCount() == 6) {
-            for (Ingredient ingredient : storageList) {
+            for (Ingredient ingredient : storageList) { //admin 
                 model.addRow(new Object[]{
                     ingredient.getId(),
                     ingredient.getTitle(),
@@ -3385,7 +3398,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    //todo: check 
+
     private void refreshCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCalc
         jTabbedPane1.setVisible(false);
         OrderPanel.setVisible(false);
@@ -3394,10 +3407,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel12.setText(title);
         //join between storageList(all count = 0) and exist recipe into storageList
         ArrayList<Ingredient> tmpList = new ArrayList<>();
-        Map<Integer, Ingredient> recipe = menu.get(activeCat).getDishes().get(activeDishes).getRecipe();
-        for (Map.Entry<Integer, Ingredient> dish_ing : recipe.entrySet()) {
-            tmpList.add(dish_ing.getValue());                     
-        }        
+        tmpList.addAll(menu.get(activeCat).getDishes().get(activeDishes).getRecipe());
         final int zero = 0;
         for (Ingredient storageList1 : storageList) {
             for (int j = 0; j < tmpList.size(); j++) {
@@ -3438,13 +3448,13 @@ public class MainForm extends javax.swing.JFrame {
             System.out.println("title = " + title);
             int price = Integer.parseInt(jTextField2.getText());
             if (!title.equals("")) {
-                DishUtils.updateTitle(dbId, title);
+                DishUtils.updateDishTitle(dbId, title, activeCat);
             }
             if (price != 0) {
-                DishUtils.updatePrice(dbId, price);
+                DishUtils.updateDishPrice(dbId, price, activeCat);
             }
             menu.get(activeCat).getDishes().clear();
-            DishUtils.readMenuCategoryById(activeCat);
+            DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
             jList2.setListData(menu.get(activeCat).getDishes().toArray());
             jList2.ensureIndexIsVisible(index);
@@ -3467,7 +3477,7 @@ public class MainForm extends javax.swing.JFrame {
     
 
 
-    private static ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn, boolean includeZERO) {
+    private static ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn) {
         ArrayList<Ingredient> changedList = new ArrayList<>();
         int checkColumn = table.getColumnCount()-1;
         for (int i = 0; i < table.getRowCount(); i++) {            
@@ -3479,8 +3489,7 @@ public class MainForm extends javax.swing.JFrame {
                 } catch (NumberFormatException e) {
                     count = 0.0;
                 } 
-                boolean checked = Boolean.valueOf(table.getValueAt(i, checkColumn).toString());
-                System.out.println("cheked " + checked);
+                boolean checked = Boolean.valueOf(table.getValueAt(i, checkColumn).toString());                
                 changedList.add(new Ingredient(dbId, title, count, checked));
           
         }
@@ -3488,13 +3497,13 @@ public class MainForm extends javax.swing.JFrame {
         return changedList;
     }
     private void saveCalculation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCalculation
-        List<Ingredient> changedRecipe = getListFromTable(jTable3, 2, false);
-        for(Ingredient ing: changedRecipe){
-            RecepiesUtils.updateDishIngredient(ing.getDbId(), ing.getCount());
-        }      
-        int dishID = menu.get(activeCat).getDishes().get(activeDishes).getDbID();
+        JSONUtils.updateDishIngredients(getListFromTable(jTable3, 2),
+                activeCat, activeDishes);
+        String JSONString = RecepiesUtils.readRecipeFromDB(activeCat,
+                menu.get(activeCat).getDishes().get(activeDishes).getDbID());
+        System.out.println("JSONString=" + JSONString);
         menu.get(activeCat).getDishes().get(activeDishes).getRecipe().clear();
-        menu.get(activeCat).getDishes().get(activeDishes).setRecipe(RecepiesUtils.getRecipeByDishId(dishID));
+        menu.get(activeCat).getDishes().get(activeDishes).setRecipe(JSONUtils.getRecipeFromJSON(JSONString));
         refreshCalc(null);
 
     }//GEN-LAST:event_saveCalculation
@@ -3526,6 +3535,24 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addIngredient
 
+    private void removeIngredientInAllDishes() {
+        int index = jTable6.getSelectedRow();
+
+        for (int i = 0; i < menu.size(); i++) {
+            for (int j = 0; j < menu.get(i).getDishes().size(); j++) {
+                for (int k = 0; k < menu.get(i).getDishes().get(j).getRecipe().size(); k++) {
+                    if (menu.get(i).getDishes().get(j).getRecipe().get(k).getId() == storageList.get(index).getId()) {
+                        List<Ingredient> tmpRecipe = new ArrayList<>();
+                        tmpRecipe.addAll(menu.get(i).getDishes().get(j).getRecipe());
+                        tmpRecipe.remove(k);
+                        JSONUtils.updateDishIngredients(tmpRecipe, i, j);
+                        RecepiesUtils.readRecipeFromDB(i, menu.get(i)
+                                .getDishes().get(j).getDbID());
+                    }
+                }
+            }
+        }
+    }
 
     private String getRemovedDisheTitles(JTable table) {
         int index = table.getSelectedRow();
@@ -3562,12 +3589,10 @@ public class MainForm extends javax.swing.JFrame {
             reply = JOptionPane.showOptionDialog(frame.getContentPane(),
                     dishTitles, "Видалення інгридієнта", 0,
                     JOptionPane.YES_NO_OPTION, null, options, null);
-            if (reply == JOptionPane.YES_OPTION) {                
-                int ingredientId = storageList.get(index).getId();
-                RecepiesUtils.removeIngredientInAllDishes(ingredientId);                
+            if (reply == JOptionPane.YES_OPTION) {
+                removeIngredientInAllDishes();
                 StorageUtils.removeIngredientFromDB(storageList.get(index).getId());
                 StorageUtils.readStorage();
-                DishUtils.readDBmenu();
                 showCalcTable(jTable6);
             }
         }
@@ -3700,7 +3725,7 @@ public class MainForm extends javax.swing.JFrame {
         int rowIndex = table.getSelectedRow();      
         int checkColumn = table.getColumnCount() - 1;
         if (rowIndex != -1 ) {
-//            if (!Boolean.valueOf(table.getValueAt(rowIndex, checkColumn).toString())) {
+            if (!Boolean.valueOf(table.getValueAt(rowIndex, checkColumn).toString())) {
                 String old = table.getValueAt(rowIndex, columnIndex).toString();
                 Double oldDouble;
                 try {
@@ -3709,13 +3734,12 @@ public class MainForm extends javax.swing.JFrame {
                     oldDouble = 0.0;
                 }
                 if (old.isEmpty() || old.equals("0.0")
-                        || old.equals("0") || old.equals("0.")
-                        || oldDouble.equals(0.0)) {
+                        || old.equals("0") || old.equals("0.") || oldDouble.equals(0.0)) {
                     table.setValueAt(false, rowIndex, checkColumn);
                 } else {
                     table.setValueAt(true, rowIndex, checkColumn);
                 }
-//            }              
+            }                
         }            
     }
 
@@ -3830,49 +3854,57 @@ public class MainForm extends javax.swing.JFrame {
 
     public static void addIngCountToStorage(JTable table) {
         changeList.clear();
-        changeList.addAll(getListFromTable(table, 3, true));
-        for (int i = 0; i < storageList.size(); i++) {
-            double old = storageList.get(i).getCount();
-            double diff = changeList.get(i).getCount();
-            if (changeList.get(i).isActive()) {
-                if (diff != 0.0) {
-                    storageList.get(i).setCount(old + diff);
-                    System.out.println("new count " + storageList.get(i).getCount());
-                    StorageUtils.updateCount(storageList.get(i).getId(),
-                            storageList.get(i).getCount());
-
-                    StorageUtils.addAddedItems(
-                            new Ingredient(storageList.get(i).getId(), diff));
-                }                
+        addedProductsToStorage.clear();
+        changeList.addAll(getListFromTable(table, 3));
+        for (int i = 0; i < storageList.size(); i++) {           
+            if (changeList.get(i).isActive() && changeList.get(i).getCount() != 0.0) {
+                double old = storageList.get(i).getCount();               
+                double diff = changeList.get(i).getCount();
+                storageList.get(i).setCount(old + diff);
+                System.out.println("new count " + storageList.get(i).getCount());
+                StorageUtils.updateCount(storageList.get(i).getId(),
+                        storageList.get(i).getCount());
+                addedProductsToStorage.add(
+                        new Ingredient(storageList.get(i).getId(), diff));
             }
-        }
-              
+        }      
+        if (!addedProductsToStorage.isEmpty()) {
+                StorageUtils.addAddedItemsWithUser(
+                        convertToJSON(addedProductsToStorage),
+                        userList.get(User.active)
+                );          
+        }             
     }
 
     private void removeIngCountFromStorage(JTable table) {
         changeList.clear();
         userList.get(User.active).getDayRemovedProducts().clear();
-        changeList.addAll(getListFromTable(table, 3, true));
+        changeList.addAll(getListFromTable(table, 3));      
         for (int i = 0; i < storageList.size(); i++) {
-            double old = storageList.get(i).getCount();
-            double diff = changeList.get(i).getCount();
-            if (changeList.get(i).isActive()) {
+            if (changeList.get(i).isActive() && changeList.get(i).getCount() != 0.0) {
+                double old = storageList.get(i).getCount();
+                double diff = changeList.get(i).getCount();
                 storageList.get(i).setCount(old - diff);
                 StorageUtils.updateCount(storageList.get(i).getId(),
-                        storageList.get(i).getCount());                
-                StorageUtils.addRemovedItems(
-                        new Ingredient(storageList.get(i).getId(), diff));
+                        storageList.get(i).getCount());
                 userList.get(User.active).getDayRemovedProducts().add(
                         new Ingredient(storageList.get(i).getId(), diff));
             }
-        }       
+        }
+        if (!userList.get(User.active).getDayRemovedProducts().isEmpty()) {
+            StorageUtils.addRemovedItems(convertToJSON(
+                    userList.get(User.active).getDayRemovedProducts()), 
+                    userList.get(User.active));  
+            
+        }        
     }
 
     private void updateItemsFromStorage() {
         List<ReviziaItem> reviziaList = new ArrayList<>();
         diffStorage.clear();
         changeList.clear();
-        changeList.addAll(getListFromTable(jTable6, 3, true));
+        addedProductsToStorage.clear();
+        changeList.addAll(getListFromTable(jTable6, 3));     
         diffStorage.addAll(changeList);
         for (int i = 0; i < storageList.size(); i++) {
             double old = storageList.get(i).getCount();
@@ -3902,22 +3934,26 @@ public class MainForm extends javax.swing.JFrame {
    
     
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
-        JFrame frame = new JFrame();
-        String[] options = new String[2];
-        options[0] = "Так";
-        options[1] = "Ні";
-         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
-                "Підтвердити приход на склад?", "Поповнення складу",
-                0, JOptionPane.YES_NO_OPTION, null, options, null);       
-        if (reply == JOptionPane.YES_OPTION) {
-            addIngCountToStorage(jTable6);
+        if (isAdmin()) {
+            JFrame frame = new JFrame();
+            String[] options = new String[2];
+            options[0] = "Так";
+            options[1] = "Ні";
+             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),                
+                    "Підтвердити приход на склад?", "Поповнення складу",
+                    0, JOptionPane.YES_NO_OPTION, null, options, null);       
+            if (reply == JOptionPane.YES_OPTION) {
+                addIngCountToStorage(jTable6);
+                StorageUtils.readStorage();
+                setSort(jComboBox7, jTable6);
+                showCalcTable(jTable6);
+            }
+        }else{
+            addIngCountToStorage(jTable5);
             StorageUtils.readStorage();
-            setSort(jComboBox7, jTable6);
-            showCalcTable(jTable6);
-        }
-        
-        
-       
+            setSort(jComboBox7, jTable5);
+            showCalcTable(jTable5);  
+        }       
     }//GEN-LAST:event_addToStorage
 
     private void removeFromStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromStorage
@@ -3981,15 +4017,6 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_updateCheckInfo
 
-    private void chengeScaleToGrams(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chengeScaleToGrams
-        if (jCheckBox2.isSelected()) {
-            jCheckBox2.setBackground(GREEN);
-        } else {
-            jCheckBox2.setBackground(RED);
-        }
-        refreshListOfPrices();
-    }//GEN-LAST:event_chengeScaleToGrams
-
     private void payForStorageAddition(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payForStorageAddition
         String line = jTextField12.getText();
         if (!line.equals("")) {
@@ -4009,6 +4036,7 @@ public class MainForm extends javax.swing.JFrame {
             if (value != null) {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
+                order.setCardPayed(false);
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
                 OrderUtils.addOrder(order, employees.get(index), "");
                 jTextField5.setText(String.valueOf(getRealKasa()));
@@ -4017,6 +4045,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_payForStorageAddition
     private int getRealKasa() {
+        //for hm getAllCashSumBefore
         return OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
     }
 
@@ -4043,7 +4072,6 @@ public class MainForm extends javax.swing.JFrame {
         jTextField3.setVisible(false);
         jLabel16.setVisible(false);
         jTextField13.setVisible(false);
-        jButton39.setVisible(false);
         jButton43.setVisible(false);
         jButton44.setVisible(false);
         jButton46.setVisible(false);
@@ -4070,9 +4098,8 @@ public class MainForm extends javax.swing.JFrame {
         closeSystem();
     }//GEN-LAST:event_exitSystem
     private void printKitchenCheck() {
-        DateFormat dateFormat = new SimpleDateFormat(
-                "dd-MM-yyyy HH:mm");
-
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");        
+        Integer fontSize = Integer.valueOf(systemVariables.get(KITCHEN_CHECK_FONT_SIZE));
         PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
         set.add(OrientationRequested.PORTRAIT);
         set.add(MediaSizeName.INVOICE);
@@ -4080,13 +4107,14 @@ public class MainForm extends javax.swing.JFrame {
         int i = 1;
         String style = ""
                 + "<html>\n"
+                + "<meta charset=\"utf-8\">"
                 + "<style>\n"
                 + "table{\n"
                 + "border-spacing: 0px; "
                 + "}"
                 + " tr {\n"
                 + "    margin: 0px;"
-                + "    font-size: 10pt;"
+                + "    font-size: " + fontSize + "pt;"
                 + "    padding: 0px;"
                 + "border-spacing: 0px; "
                 + ""
@@ -4118,7 +4146,7 @@ public class MainForm extends javax.swing.JFrame {
 
                     dishes += "  <tr>"
                             + "    <td style=\"width:3%\"> " + i++ + " </td> "
-                            + "    <td font-size: 10pt style=\"width:100%\"> " + item.getDish().getTitle() + " </td> "
+                            + "    <td font-size: " + fontSize + "pt style=\"width:100%\"> " + item.getDish().getTitle() + " </td> "
                             + "    <td style=\"width:3%\"> " + item.getCount() + "</td>"
                             + "  </tr>";
                 }
@@ -4126,9 +4154,8 @@ public class MainForm extends javax.swing.JFrame {
         }
         dishes += "</table>"
                 + "</html>";
-
-        jTextPane1.setContentType("text/html");
-        jTextPane1.setText(dishes);
+        showKitchenCheckText(dishes);
+        kitchenCheck = dishes;
 
         try {
             jTextPane1.print(null, null, false, null, set, false);
@@ -4142,6 +4169,10 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
                     + "\n" + ex);
         }
+    }  
+    private void showKitchenCheckText(String html){
+        jTextPane1.setContentType("text/html");
+        jTextPane1.setText(html);
     }
 
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
@@ -4154,15 +4185,11 @@ public class MainForm extends javax.swing.JFrame {
                     jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
+                choosePaymentMethod();
+                
                 PrintClientCheck();
-               
-                try {
-                    OrderUtils.addOrder(orders.get(activeTable),
-                            userList.get(User.active), "");
-                    OrderUtils.addOrderItems(orders.get(activeTable));
-                } catch (SQLException ex) {
-                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                OrderUtils.addOrder(orders.get(activeTable),
+                        userList.get(User.active), "");
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
                 jTable1.setBackground(lightRed);
@@ -4181,6 +4208,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_payOrder
+
+    private void choosePaymentMethod() {    
+        String msg = "Виберіть спосіб оплати чеку";
+        if (CARD_PAYMENT) {
+            orders.get(activeTable).setCardPayed(showMessageYesNo(msg));
+        }else{
+            orders.get(activeTable).setCardPayed(CARD_PAYMENT);
+        }
+            
+    }
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
         setSort(jComboBox6, jTable3);
@@ -4227,7 +4264,7 @@ public class MainForm extends javax.swing.JFrame {
     private void getLastDayKass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getLastDayKass
         JFrame frame = new JFrame();
         JOptionPane.showOptionDialog(frame.getContentPane(),
-                getDayInfoString(getDayInfo())
+                OrderUtils.getDayInfo()
                 + "Повернутись до програми?", "ПОПЕРЕДНЯ зміна!",
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
     }//GEN-LAST:event_getLastDayKass
@@ -4284,10 +4321,11 @@ public class MainForm extends javax.swing.JFrame {
             Object[] message = {"Введіть призначення інкасації"};
             String option = JOptionPane.showInputDialog(null, message, "Інкасація", JOptionPane.OK_CANCEL_OPTION);
             if (option == null) {
-                System.out.println("Cancell is clicked..");
+                System.out.println("Cancel is clicked..");
             } else {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
+                order.setCardPayed(false);
                 System.out.println("Incasacia - diff =" + order.getOrderSum());
                 OrderUtils.addOrder(order, userList.get(User.active), option);
                 jTextField5.setText(String.valueOf(getRealKasa()));
@@ -4321,9 +4359,18 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jButton40addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton40addToStorage
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        String size = (String) jComboBox4.getSelectedItem();
+        updateSystemVariables(CHECK_FONT_SIZE, size);   
+        systemVariables = DBUtils.getSystemVariables();
+    }//GEN-LAST:event_jComboBox4ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton40addToStorage
+        String size = (String) jComboBox3.getSelectedItem();
+        updateSystemVariables(KITCHEN_CHECK_FONT_SIZE, size);
+        systemVariables = DBUtils.getSystemVariables();
+    }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
@@ -4444,7 +4491,6 @@ public class MainForm extends javax.swing.JFrame {
         Locale locale = new Locale("uk", "UA");
         DateFormat dateFormat = new SimpleDateFormat("EEEE, dd/MM/yyyy", locale);
         this.setTitle("SmartCafe " + dateFormat.format(new Date()));
-        jButton40.setVisible(false);
     }
 
     private void initCalculationTable() {
@@ -4476,24 +4522,22 @@ public class MainForm extends javax.swing.JFrame {
 
     public static void initBDmenu() {
 
-//        menu.add(new Category("1,2 страви"));
-//        menu.add(new Category("салати"));
-//        menu.add(new Category("страви роджера"));
-//        menu.add(new Category("страви на пательні"));
-//        menu.add(new Category("мясні страви"));
-//        menu.add(new Category("піца мал"));
-//        menu.add(new Category("піца вел"));
-//        menu.add(new Category("суші"));
-//        menu.add(new Category("десерт"));
-//        menu.add(new Category("алкоголь"));
-//        menu.add(new Category("1"));
-//        menu.add(new Category("2"));
-//        menu.add(new Category("3"));
-        for (int i = 0; i < 13; i++) {
-            menu.add(new Category());
-        }
+        menu.add(new Category("1,2 страви"));
+        menu.add(new Category("салати"));
+        menu.add(new Category("страви роджера"));
+        menu.add(new Category("страви на пательні"));
+        menu.add(new Category("мясні страви"));
+        menu.add(new Category("піца мал"));
+        menu.add(new Category("піца вел"));
+        menu.add(new Category("суші"));
+        menu.add(new Category("десерт"));
+        menu.add(new Category("алкоголь"));
+        menu.add(new Category("1"));
+        menu.add(new Category("2"));
+        menu.add(new Category("3"));
+
         DishUtils.readDBmenu();
-        DbConnect.doDBDump();
+      
     }
 
     private void loadTables() {
@@ -4582,7 +4626,6 @@ public class MainForm extends javax.swing.JFrame {
         jTextField4.setVisible(false);
         jLabel16.setVisible(false);
         jTextField13.setVisible(false);
-        jButton39.setVisible(false);
         jButton43.setVisible(false);
         jButton44.setVisible(false);
         jButton46.setVisible(false);
@@ -4647,12 +4690,6 @@ public class MainForm extends javax.swing.JFrame {
                 getResource("/cafe/icons/small/no-drink.png")));
     }
 
-    /**
-     *
-     * @param catId
-     * @param dishId
-     * @return Dish
-     */
     public static Dish getDishById(int catId, int dishId) {
         for (int i = 0; i < menu.size(); i++) {
             if (i == catId) {
@@ -4665,49 +4702,12 @@ public class MainForm extends javax.swing.JFrame {
         }
         return null;
     }
-    public static int getDishIdByName(String dishTitle) {      
-        for (Category category : menu) {
-            for(Dish dish: category.getDishes()){               
-                if (dish.getTitle().equals(dishTitle)) {
-                   return dish.getDbID();                                    
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Хрусткі крильця")) {                 
-                    return 41;
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Ковбаски мисливські")) {                 
-                    return 42;
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Ковбаски салямі до пива")) {                 
-                    return 43;
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Курячий биток")) {                 
-                    return 44;
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Стейк з свинини на ребрі")) {                 
-                    return 45;
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Стейк з свинини,")) {                 
-                    return 46;
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Стейк з телятини")) {                 
-                    return 47;
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Стейк з індички")) {                 
-                    return 48;
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Білий соус")) {                 
-                    return 49;
-                }else if (menu.indexOf(category) == 4 && dishTitle.contains("Червоний соус")) {                 
-                    return 50;
-                }else if(menu.indexOf(category) == 4 && dishTitle.contains("Ковбаски на грилі")){
-                    return 51;                   
-                }else if(menu.indexOf(category) == 4 && dishTitle.contains("Ковбаски Баварські")){
-                    return 52;                    
-                }else if(dishTitle.contains("Сирні пали")){
-                    return 27;                    
-                }else if(dishTitle.contains("Посуд з собою")){
-                    return 219;                    
-                }else if(dish.getTitle().contains(dishTitle)){
-//                    System.out.println("-------------------DISH contain" + dishTitle);
-                    return dish.getDbID();
-                }
-            }
-        }
-        System.out.println("NOT FOUND DISH _______________" + dishTitle);
-        return -1;
-    }
     
+    private void initSystemVariables() {
+        systemVariables = DBUtils.getSystemVariables();           
+        jComboBox3.setSelectedItem(systemVariables.get(KITCHEN_CHECK_FONT_SIZE));
+        jComboBox4.setSelectedItem(systemVariables.get(CHECK_FONT_SIZE));
+    }
 
     /**
      * @param args the command line arguments
@@ -4717,7 +4717,12 @@ public class MainForm extends javax.swing.JFrame {
         mainForm.setIconImage(null);
         mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-
+    
+    private static String clientCheck; 
+    private static String kitchenCheck; 
+    private static final String CHECK_FONT_SIZE = "check_font_size";
+    private static final String KITCHEN_CHECK_FONT_SIZE = "kitchen_check_font_size";
+    private static Map<String, String> systemVariables = new HashMap<>();
     public static int renderRow, renderCol;
     public static Date DAY_START_TIME;
     private static int maxSavedOrderId;
@@ -4733,12 +4738,13 @@ public class MainForm extends javax.swing.JFrame {
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
     public static ArrayList<Ingredient> diffStorage = new ArrayList<>();
     public static ArrayList<Ingredient> changeList = new ArrayList<>();
+    public static ArrayList<Ingredient> addedProductsToStorage = new ArrayList<>();
     public static ArrayList<Ingredient> updatedProductsToStorage = new ArrayList<>();
     public static List<Category> menu = new ArrayList<>();
     private static final ArrayList<Icon> icons = new ArrayList<>();
     public static MainForm mainForm;
     private static LoginForm loginForm;
-    private static final Color RED = new Color(255, 102, 102);
+    public static final Color RED = new Color(255, 102, 102);
     private static final Color BLUE = new Color(0, 153, 204);
     private static final Color lightRed = new Color(255, 102, 102);
     public static final Color GREEN = new Color(0, 153, 102);
@@ -4804,7 +4810,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton34;
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton40;
     private javax.swing.JButton jButton41;
     private javax.swing.JButton jButton42;
     private javax.swing.JButton jButton43;
@@ -4841,10 +4846,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton98;
     private javax.swing.JButton jButton99;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox jComboBox6;
     private javax.swing.JComboBox jComboBox7;
     private javax.swing.JLabel jLabel1;
@@ -4862,6 +4868,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -20,6 +20,8 @@ public class Order {
     private ArrayList<OrderItem> items = new ArrayList<>();
     private ArrayList<OrderItem> removeditems = new ArrayList<>();
     private String coment;
+    private Boolean cardPayed;
+
 
     public int getId() {
         return id;
@@ -135,6 +137,15 @@ public class Order {
             return "";
         }
     }
+    
+    public Boolean isCardPayed() {
+        return cardPayed;
+    }
+
+    public void setCardPayed(Boolean cardPayed) {
+        this.cardPayed = cardPayed;
+    }
+
 
     public String getJSONRemovedItems() {
         if (!items.isEmpty()) {

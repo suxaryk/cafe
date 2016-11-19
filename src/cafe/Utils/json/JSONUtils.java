@@ -20,20 +20,22 @@ import org.json.simple.parser.ParseException;
 public class JSONUtils {
 
     //data to JSON
-//    public static void updateDishIngredients(List<Ingredient> recipes,
-//            int activeCat, int activeDish) {
-//        JSONArray jsonArr = new JSONArray();
-//        for (Ingredient ing : recipes) {
-//            JSONObject ingrObj = new JSONObject();
-//            ingrObj.put("id", ing.getId());
-//            ingrObj.put("c", ing.getCount());
-//            jsonArr.add(ingrObj);
-//        }
-//        RecepiesUtils.updateRecipes(activeCat, menu.get(activeCat).getDishes()
-//                .get(activeDish)
-//                .getDbID(), jsonArr.toJSONString());
-//
-//    }
+    public static void updateDishIngredients(List<Ingredient> recipes,
+            int activeCat, int activeDish) {
+        JSONArray jsonArr = new JSONArray();
+        for (Ingredient ing : recipes) {
+            if (ing.isActive()) {
+                JSONObject ingrObj = new JSONObject();
+                ingrObj.put("id", ing.getId());
+                ingrObj.put("c", ing.getCount());
+                jsonArr.add(ingrObj); 
+            }          
+        }       
+        RecepiesUtils.updateRecipes(activeCat, menu.get(activeCat).getDishes()
+                .get(activeDish)
+                .getDbID(), jsonArr.toJSONString());
+
+    }
 
     public static List<Ingredient> getRecipeFromJSON(String jsonRecipes) {
         if (!"".equals(jsonRecipes)) {
@@ -99,7 +101,7 @@ public class JSONUtils {
         return new ArrayList<>();
     }
 
-    public static String convertDiffIngToJSON(List<Ingredient> removedList) {
+    public static String convertToJSON(List<Ingredient> removedList) {
         JSONArray jsonArr = new JSONArray();
         for (Ingredient ing : removedList) {
             JSONObject itemObj = new JSONObject();

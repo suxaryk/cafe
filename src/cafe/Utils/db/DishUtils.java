@@ -1,9 +1,14 @@
 package cafe.Utils.db;
 
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.URL;
-import static cafe.Utils.db.DbConnect.USERNAME;
-import cafe.model.Category;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
+import static cafe.Utils.db.DBUtils.sqlInsertList;
+import static cafe.Utils.db.DBUtils.sqlRemoveList;
+import static cafe.Utils.db.DBUtils.sqlSelectList;
+import static cafe.Utils.db.DBUtils.sqlUpdatePriceList;
+import static cafe.Utils.db.DBUtils.sqlUpdateTitleList;
+import cafe.Utils.json.JSONUtils;
 import cafe.model.Dish;
 import static cafe.view.MainForm.menu;
 
@@ -14,125 +19,151 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-import org.apache.log4j.Logger;
 
 public class DishUtils {
-    private static final Logger log = Logger.getLogger(DishUtils.class);
+
+
 
     public static java.sql.Timestamp getCurrentTimeStamp() {
         Date today = new Date();
         return new java.sql.Timestamp(today.getTime());
     }
-    public static void readDBmenu() {
-        int dish_count =0;
-        for (int i = 0; i < 13; i++) {
-            readMenuCategoryById(i);
-            dish_count += menu.get(i).getDishes().size();
-        }      
-        log.debug("menu size = " + dish_count + " dishes");
-    }
 
-    public static void readMenuCategoryById(int categoryId) {
-        final String SQL = "SELECT * FROM dish where category_id = " + (categoryId +1) ;
-//        menu.get(activeCat).getDishes().clear();
+    public static void readDBmenu() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-            log.debug(!connection.isClosed() ? "DB connected! readDBCategoryById " + categoryId 
-                    : "Error DB connecting readDBCategoryById" + categoryId);
+            System.out.println(!connection.isClosed() ? "DB connected! readDBmenu"
+                    : "Error DB connecting");
             Statement statement = connection.createStatement();
-            try (ResultSet rs = statement.executeQuery(SQL)) {
-                while (rs.next()) {
-                    menu.get(categoryId).getDishes().add(
-                            new Dish(Integer.parseInt(
-                                    rs.getString("Id")),
-                                    rs.getString("title"),
-                                    rs.getInt("price"),
-                                    rs.getBoolean("isCook"),
-                                    RecepiesUtils.getRecipeByDishId(rs.getInt("Id"))
-                            ));                    
+            for (int i = 0; i < sqlSelectList.size(); i++) {
+                try (ResultSet rs = statement.executeQuery(sqlSelectList.get(i))) {
+                    while (rs.next()) {
+                        menu.get(i).
+                                getDishes().add(
+                                        new Dish(Integer.parseInt(
+                                                        rs.getString("Id")),
+                                                rs.getString("title"),
+                                                rs.getInt("price"),
+                                                rs.getBoolean("isCook"),
+                                                JSONUtils.getRecipeFromJSON(
+                                                        rs.getString("ingredients"))
+                                        ));
+                    }
                 }
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - readDBCategoryById " + e.toString());
+            System.out.println("Connection Failed! Check output console - readDBmenu");
+        }
+    }
+
+    public static void readDBCategoryById(int activeCat) {
+        menu.get(activeCat).getDishes().clear();
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD);) {
+
+            System.out.println(!connection.isClosed() ? "DB connected! readDBCategoryById"
+                    : "Error DB connecting");
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(sqlSelectList.get(activeCat))) {
+                while (rs.next()) {
+                    menu.get(activeCat).getDishes().add(
+                            new Dish(Integer.parseInt(
+                                            rs.getString("Id")),
+                                    rs.getString("title"),
+                                    rs.getInt("price"),
+                                    rs.getBoolean("isCook"),
+                                    JSONUtils.getRecipeFromJSON(
+                                            rs.getString("ingredients"))
+                            ));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - readDBCategoryById");
         }
     }
 
     public static void addDish(Dish dish, int activeCat) {
-        final String SQL = "INSERT INTO dish(category_id, title, price, isCook) VALUES(?, ?, ?, ?)";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            log.debug(!connection.isClosed() ? "DB connected! addDish"
-                    : "Error DB connecting addDish");
-            PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.setInt(1, activeCat);
-            pstatement.setString(2, dish.getTitle());
-            pstatement.setInt(3, dish.getPrice());
-            pstatement.setBoolean(4, dish.isCook());
-            int rowsInserted = pstatement.executeUpdate();
-            if (rowsInserted > 0) {
-                log.debug("A new dish was added successfully!");
+        for (int i = 0; i < sqlInsertList.size(); i++) {
+            if (i == activeCat) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
+                    System.out.println(!connection.isClosed() ? "DB connected! addDish"
+                            : "Error DB connecting");
+                    PreparedStatement pstatement = connection.prepareStatement(sqlInsertList.get(i));
+                    pstatement.setString(1, dish.getTitle());
+                    pstatement.setInt(2, dish.getPrice());
+                    pstatement.setBoolean(3, dish.isCook());
+                    pstatement.setString(4, "");
+                    int rowsInserted = pstatement.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("A new dish was added successfully!");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console - addDish");
+                }
             }
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - addDish " + e.toString());
         }
 
     }
 
-    public static void removeDishById(int dbId) {
-        final String SQL = "DELETE FROM dish WHERE Id = ?";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            log.debug(!connection.isClosed() ? "DB connected! removeDishById"
-                    : "Error DB connecting removeDishById");
-            PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.setInt(1, dbId);
+    public static void removeDishById(int dbId, int activeCat) {
+        for (int i = 0; i < sqlRemoveList.size(); i++) {
+            if (i == activeCat) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
+                    System.out.println(!connection.isClosed() ? "DB connected! removeDishById"
+                            : "Error DB connecting");
+                    PreparedStatement pstatement = connection.prepareStatement(sqlRemoveList.get(i));
+                    pstatement.setInt(1, dbId);
 
-            int rowsInserted = pstatement.executeUpdate();
-            if (rowsInserted > 0) {
-                log.debug("A new dish was removed successfully!");
+                    int rowsInserted = pstatement.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("A new dish was removed successfully!");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console - removeDishById");
+                }
             }
-        } catch (SQLException e) {          
-            log.error("Connection Failed! Check output console - removeDishById " + e.toString());
+        }
+    }
+
+    public static void updateDishTitle(int dbId, String name, int activeCat) {
+        for (int i = 0; i < sqlUpdateTitleList.size(); i++) {
+            if (i == activeCat) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
+                    PreparedStatement pst = connection.prepareStatement(sqlUpdateTitleList.get(i));
+                    pst.setString(1, name);
+                    pst.setInt(2, dbId);
+                    int rowsInserted = pst.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("Name was updated successfully!");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console - updateDishTitle");
+                }
+            }
         }
 
     }
 
-    public static void updateTitle(int dbId, String title) {   
-        final String SQL = "UPDATE dish SET title = ? WHERE Id = ?";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            log.debug(!connection.isClosed() ? "DB connected! updateDishTitle"
-                    : "Error DB connecting updateDishTitle");
-            PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setString(1, title);
-            pst.setInt(2, dbId);
-            int rowsInserted = pst.executeUpdate();
-            if (rowsInserted > 0) {
-                log.debug("Dish title was updated successfully!");
+    public static void updateDishPrice(int dbId, int pass, int activeCat) {
+        for (int i = 0; i < sqlUpdatePriceList.size(); i++) {
+            if (i == activeCat) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
+                    PreparedStatement pst = connection.prepareStatement(sqlUpdatePriceList.get(i));
+                    pst.setInt(1, pass);
+                    pst.setInt(2, dbId);
+                    int rowsInserted = pst.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("Price was updated successfully!");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console - updateDishPrice");
+                }
             }
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updateDishTitle " + e.toString());
         }
-     
-
     }
-
-    public static void updatePrice(int dbId, int pass) { 
-        final String SQL = "UPDATE dish SET price = ? WHERE Id = ?";
-        try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            log.debug(!connection.isClosed() ? "DB connected! updatePrice"
-                    : "Error DB connecting updatePrice");
-            PreparedStatement pst = connection.prepareStatement(SQL);
-            pst.setInt(1, pass);
-            pst.setInt(2, dbId);
-            int rowsInserted = pst.executeUpdate();
-            if (rowsInserted > 0) {
-                log.debug("Dish price was updated successfully!");
-            }
-        } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updatePrice " + e.toString());
-        }
-    }   
 
 }

@@ -1,0 +1,9 @@
+------------14.08.2016------
+1)
+ALTER TABLE `luckyroger`.`storage_added` 
+ADD COLUMN `user` VARCHAR(45) NOT NULL  AFTER `Id`;
+
+2)
+UPDATE storage_added SET user = 'Адміністратор' 
+ALTER TABLE `luckyroger_prod`.`storage_removed` 
+CHANGE COLUMN `operator` `user` VARCHAR(45) NOT NULL ;

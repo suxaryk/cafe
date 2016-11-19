@@ -1,8 +1,8 @@
 package cafe.Utils.db;
 
-import static cafe.Utils.db.DbConnect.PASSWORD;
-import static cafe.Utils.db.DbConnect.URL;
-import static cafe.Utils.db.DbConnect.USERNAME;
+import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.URL;
+import static cafe.Utils.db.DBUtils.USERNAME;
 import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
 import cafe.model.ReviziaItem;
 import java.sql.Connection;
@@ -78,6 +78,7 @@ public class ReviziaUtils {
                             + " Check output console - getReviziaDates" + e);
 
         } finally {
+            System.out.println("DB getReviziaDates");
             return reviziaDates;
         }
     }

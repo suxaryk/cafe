@@ -1,11 +1,7 @@
 package cafe.model;
 
-import static cafe.view.MainForm.activeCat;
-import static cafe.view.MainForm.activeDishes;
-import static cafe.view.MainForm.menu;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class OrderItem {
 
@@ -100,10 +96,9 @@ public class OrderItem {
 
     public List<Ingredient> getOrderItemRecipe() {
         List<Ingredient> itemRecipe = new ArrayList<>();
-        Map<Integer, Ingredient> recipe = menu.get(activeCat).getDishes().get(activeDishes).getRecipe();
-        for (Map.Entry<Integer, Ingredient> dish_ing : recipe.entrySet()) {
-            itemRecipe.add(new Ingredient(dish_ing.getValue().getId(), dish_ing.getValue().getCount() * count));
-        }       
+        for (Ingredient ingredient : dish.getRecipe()) {
+            itemRecipe.add(new Ingredient(ingredient.getId(), ingredient.getCount() * count));
+        }
         return itemRecipe;
     }
 

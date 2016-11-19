@@ -8,6 +8,7 @@ import static cafe.view.MainForm.dishCount;
 import static cafe.view.MainForm.mainForm;
 import static cafe.view.MainForm.menu;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
 
@@ -246,7 +247,7 @@ public class WeightForm extends javax.swing.JFrame {
 
     //change ingredient weight if it is equals 0.1 KG
     public void setDishMeetWeight() {
-        Map<Integer, Ingredient> recipe = menu.get(activeCat).getDishes().get(activeDishes).getRecipe();
+        List<Ingredient> recipe = menu.get(activeCat).getDishes().get(activeDishes).getRecipe();
         for (Map.Entry<Integer, Ingredient> ing : recipe.entrySet()) {
             if (ing.getValue().getCount() == 0.1) {
                 if (listOfCoeffic.containsKey(ing.getValue().getId())) {

@@ -1,8 +1,7 @@
 package cafe.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dish {
 
@@ -10,12 +9,12 @@ public class Dish {
     private String title;
     private int price;
     private boolean cook;
-    private Map<Integer, Ingredient> recipe = new TreeMap<>();
+    private List<Ingredient> recipe = new ArrayList<>();
 
     public Dish() {
     }
 
-    public Dish(int dbId, String title, int price, boolean cook, Map<Integer, Ingredient> recipe) {
+    public Dish(int dbId, String title, int price, boolean cook, List<Ingredient> recipe) {
         this.dbId = dbId;
         this.title = title;
         this.price = price;
@@ -23,7 +22,6 @@ public class Dish {
         if (recipe != null) {
             this.recipe = recipe;
         }
-
     }
 
     public Dish(String title, int price, boolean cook) {
@@ -69,12 +67,12 @@ public class Dish {
         this.price = price;
     }
 
-    public Map<Integer, Ingredient> getRecipe() {
+    public List<Ingredient> getRecipe() {
         return recipe;
     }
 
-    public void setRecipe(Map<Integer, Ingredient> list) {
-        this.recipe = list;
+    public void setRecipe(List<Ingredient> recipe) {
+        this.recipe = recipe;
     }
 
     public boolean isCook() {

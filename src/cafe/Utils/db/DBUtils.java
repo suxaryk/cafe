@@ -19,29 +19,29 @@ import javax.swing.JOptionPane;
  *
  * @author suxarina
  */
-public class DBUtils {  
+public class DBUtils {
 
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
-    public static String USERNAME = "root";   
-    public static String PASSWORD = "root";
-   
+    public static String USERNAME = "root";
+    public static String PASSWORD = "dbiytdbq18";
+
 //for stat
-    private static final String PASSWORD_MAIN = "dbiytdbq18";
-    private static String PASSWORD_HM = "___agneshka17";
-    public static final String HOST_0 = "93.183.216.29";
-    public static final String HOST_1 = "185.15.6.103";
-    private static final String HOST_2 = "46.63.96.79";
-    private static final String HOST_3 = "46.63.25.213";
-    
-    private static final String LOCALHOST_0 = "192.168.0.111";
-    private static final String LOCALHOST_1 = "192.168.0.102";
-    private static final String LOCALHOST_2 = "192.168.0.2";
-    private static final String LOCALHOST_3 = "192.168.0.106";
-    
+//    private static final String PASSWORD_MAIN = "dbiytdbq18";
+//    private static String PASSWORD_HM = "___agneshka17";
+//    public static final String HOST_0 = "93.183.216.29";
+//    public static final String HOST_1 = "185.15.6.103";
+//    private static final String HOST_2 = "46.63.96.79";
+//    private static final String HOST_3 = "46.63.25.213";
+//
+//    private static final String LOCALHOST_0 = "192.168.0.111";
+//    private static final String LOCALHOST_1 = "192.168.0.102";
+//    private static final String LOCALHOST_2 = "192.168.0.2";
+//    private static final String LOCALHOST_3 = "192.168.0.106";
+
     private static final int TIMEOUT = 2_000;
     //for hm = true
-    public static final boolean CARD_PAYMENT = false;
+    public static final boolean CARD_PAYMENT = true;
 
     public static final ArrayList<String> sqlSelectList = new ArrayList<>();
     public static final ArrayList<String> sqlSelectByIdList = new ArrayList<>();
@@ -53,68 +53,69 @@ public class DBUtils {
     static {
         try {
             //statistic
-            setHost(HOST_1);
-            PASSWORD = PASSWORD_MAIN;
+//            setHost(HOST_1);
+//            PASSWORD = PASSWORD_MAIN;
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("MySQL JDBC Driver Registered!");
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
-        }   
+        }
         initQueries();
     }
 
     public static boolean ConnectDb() {
-            DriverManager.setLoginTimeout(2);
+        DriverManager.setLoginTimeout(2);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
             System.out.println(!connection.isClosed() ? "DB connected to " + URL
-                    : "Error DB connecting " +
-                        URL + USERNAME+PASSWORD);
+                    : "Error DB connecting "
+                    + URL + USERNAME + PASSWORD);
             return true;
         } catch (SQLException e) {
             System.out.println("Connection to DB Failed! ");
-            showMessage("");           
+            showMessage("");
             return false;
-        }         
+        }
     }
-    public static String getHost(int cafeId){
+
+    public static String getHost(int cafeId) {
         String HOST = "localhost";
-        if (cafeId == 0) {
-            //shep
-            HOST = HOST_0;
-        } else if (cafeId == 1) {
-            //star
-            HOST = HOST_1;
-        } else if (cafeId == 2) {
-            //slav
-            HOST = HOST_2;        
-        } else if (cafeId == 3) {
-            //hm
-            HOST = HOST_3;
-        } 
-        if (isLocalHost) {
-            if (cafeId == 0) {
-                //shep
-                HOST = LOCALHOST_0;
-            } else if (cafeId == 1) {
-                //star
-                HOST = LOCALHOST_1;
-            } else if (cafeId == 2) {
-                //slav
-                HOST = LOCALHOST_2;            
-            } else if (cafeId == 3) {
-                //hm
-                HOST = LOCALHOST_3;
-            }
-        }
-        if (cafeId == 3) {
-            PASSWORD = PASSWORD_HM;
-        }else{
-            PASSWORD = PASSWORD_MAIN;
-        }
+//        if (cafeId == 0) {
+//            //shep
+//            HOST = HOST_0;
+//        } else if (cafeId == 1) {
+//            //star
+//            HOST = HOST_1;
+//        } else if (cafeId == 2) {
+//            //slav
+//            HOST = HOST_2;
+//        } else if (cafeId == 3) {
+//            //hm
+//            HOST = HOST_3;
+//        }
+//        if (isLocalHost) {
+//            if (cafeId == 0) {
+//                //shep
+//                HOST = LOCALHOST_0;
+//            } else if (cafeId == 1) {
+//                //star
+//                HOST = LOCALHOST_1;
+//            } else if (cafeId == 2) {
+//                //slav
+//                HOST = LOCALHOST_2;
+//            } else if (cafeId == 3) {
+//                //hm
+//                HOST = LOCALHOST_3;
+//            }
+//        }
+//        if (cafeId == 3) {
+//            PASSWORD = PASSWORD_HM;
+//        } else {
+//            PASSWORD = PASSWORD_MAIN;
+//        }
         return HOST;
     }
-    
+
     public static boolean checkConnection(int cafeId) {
         String HOST = getHost(cafeId);
         try (Socket socket = new Socket()) {
@@ -126,82 +127,80 @@ public class DBUtils {
                 System.out.println("Connection ERROR");
             }
             return isConnected;
-        } catch (Exception e) {                
-            return false;                   
+        } catch (Exception e) {
+            return false;
         }
     }
-    
-    public static void showMessage(String msg){
+
+    public static void showMessage(String msg) {
         String defaultMessage = "Помилка підключення до бази данних!\n"
-                              + "Перевірте підклюення до інтернету \n"
-                              + "або перезавантажте роутер в кафе\n";
+                + "Перевірте підклюення до інтернету \n"
+                + "або перезавантажте роутер в кафе\n";
         if (!msg.equals("")) {
-            defaultMessage = msg;                        
-        }        
+            defaultMessage = msg;
+        }
         JFrame frame = new JFrame();
         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
                 defaultMessage, null,
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
     }
-    public static boolean showMessageYesNo(String msg){
+
+    public static boolean showMessageYesNo(String msg) {
         String defaultMessage = "Помилка підключення до бази данних!\n"
-                              + "Перевірте підклюення до інтернету \n"
-                              + "або перезавантажте роутер в кафе\n";
+                + "Перевірте підклюення до інтернету \n"
+                + "або перезавантажте роутер в кафе\n";
         if (!msg.equals("")) {
-            defaultMessage = msg;                        
-        }        
+            defaultMessage = msg;
+        }
         JFrame frame = new JFrame();
         int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
                 defaultMessage, null,
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"Карта", "Готівка"}, null);
-        
-        return (reply == JOptionPane.YES_OPTION);        
-    }
-    
-    public static void chooseServer(int cafeId) {  
-        if (isLocalHost) {
-            if (cafeId == 0) {
-                //shep
-                setHost(LOCALHOST_0);
-            } else if (cafeId == 1) {
-                //star
-                setHost(LOCALHOST_1);;
-            } else if (cafeId == 2) {
-                //slav          
-                setHost(LOCALHOST_2);            
-            } else if (cafeId == 3) {
-                //hm         
-                setHost(LOCALHOST_3);
-            }
-        }else{
-            if (cafeId == 0) {
-                //shep
-                setHost(HOST_0);
-            } else if (cafeId == 1) {
-                //star
-                setHost(HOST_1);
-            } else if (cafeId == 2) {
-                //slav
-                setHost(HOST_2);            
-            } else if (cafeId == 3) {
-                //hm
-                setHost(HOST_3);             
-            }
-        }
-        if (cafeId == 3) {
-            PASSWORD = PASSWORD_HM;            
-        }else{
-            PASSWORD = PASSWORD_MAIN;
-        }      
-    } 
 
-    private static void setHost(String host) { 
+        return (reply == JOptionPane.YES_OPTION);
+    }
+
+    public static void chooseServer(int cafeId) {
+//        if (isLocalHost) {
+//            if (cafeId == 0) {
+//                //shep
+//                setHost(LOCALHOST_0);
+//            } else if (cafeId == 1) {
+//                //star
+//                setHost(LOCALHOST_1);;
+//            } else if (cafeId == 2) {
+//                //slav          
+//                setHost(LOCALHOST_2);
+//            } else if (cafeId == 3) {
+//                //hm         
+//                setHost(LOCALHOST_3);
+//            }
+//        } else if (cafeId == 0) {
+//            //shep
+//            setHost(HOST_0);
+//        } else if (cafeId == 1) {
+//            //star
+//            setHost(HOST_1);
+//        } else if (cafeId == 2) {
+//            //slav
+//            setHost(HOST_2);
+//        } else if (cafeId == 3) {
+//            //hm
+//            setHost(HOST_3);
+//        }
+//        if (cafeId == 3) {
+//            PASSWORD = PASSWORD_HM;
+//        } else {
+//            PASSWORD = PASSWORD_MAIN;
+//        }
+    }
+
+    private static void setHost(String host) {
         URL = "jdbc:mysql://" + host + ":3306/luckyroger";
     }
- 
-    
-    public static Map<String, String> getSystemVariables(){
-        final String SQL = "SELECT * from sys_var";  
+
+    public static Map<String, String> getSystemVariables() {
+        final String SQL = "SELECT * from sys_var";
         Map<String, String> sysVar = new HashMap<>();
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
@@ -210,25 +209,25 @@ public class DBUtils {
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
-                    sysVar.put(rs.getString("name"), rs.getString("value"));           
+                    sysVar.put(rs.getString("name"), rs.getString("value"));
                 }
             }
             return sysVar;
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - getSystemVariables");
             return null;
-        }    
+        }
     }
-    
-    public static void updateSystemVariables(String sysVarName, String value){
+
+    public static void updateSystemVariables(String sysVarName, String value) {
         final String SQL = "UPDATE sys_var set value=? where name = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             System.out.println(!connection.isClosed() ? "DB connected! updateSystemVariables"
                     : "Error DB connecting");
             PreparedStatement pstatement = connection.prepareStatement(SQL);
-            pstatement.setString(1, value);         
-            pstatement.setString(2, sysVarName);         
+            pstatement.setString(1, value);
+            pstatement.setString(2, sysVarName);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
 //                System.out.println("A new sysVarName was updated successfully!");
@@ -237,7 +236,6 @@ public class DBUtils {
             System.out.println("Connection Failed! Check output console - updateSystemVariables");
         }
     }
-    
 
     private static void initQueries() {
         sqlSelectList.add("select * from firstdishes");
@@ -325,5 +323,4 @@ public class DBUtils {
         sqlUpdatePriceList.add("UPDATE not_alcohol SET price = ? WHERE Id = ?");
     }
 
-    
 }

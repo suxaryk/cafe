@@ -137,6 +137,8 @@ public class ClientForm extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -1009,7 +1011,7 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel26.setForeground(new java.awt.Color(102, 102, 255));
         jLabel26.setText("Безнал. каса:");
         getContentPane().add(jLabel26);
-        jLabel26.setBounds(0, 290, 140, 18);
+        jLabel26.setBounds(0, 290, 130, 18);
 
         jLabel27.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(102, 102, 255));
@@ -1018,6 +1020,20 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel27.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         getContentPane().add(jLabel27);
         jLabel27.setBounds(140, 290, 80, 23);
+
+        jLabel28.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(0, 204, 102));
+        jLabel28.setText("Готівка:");
+        getContentPane().add(jLabel28);
+        jLabel28.setBounds(0, 270, 130, 18);
+
+        jLabel29.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(0, 204, 102));
+        jLabel29.setText("0");
+        jLabel29.setFocusable(false);
+        jLabel29.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(jLabel29);
+        jLabel29.setBounds(140, 270, 80, 23);
 
         setSize(new java.awt.Dimension(1051, 624));
         setLocationRelativeTo(null);
@@ -1441,6 +1457,7 @@ public class ClientForm extends javax.swing.JFrame {
             jLabel27.setText("0");
             jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));
         }
+        jLabel29.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, false)));
 
         jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
         jLabel13.setText(String.valueOf(OrderUtils.getAllRemovedSumBetween(startDate, endDate)));
@@ -1573,6 +1590,8 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;

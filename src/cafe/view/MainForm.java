@@ -3195,8 +3195,7 @@ public class MainForm extends javax.swing.JFrame {
         //getAllCashSumBefore for HM3
         if (CARD_PAYMENT) {
             allSum = OrderUtils.getAllCashSumBefore(end);
-            startKass = OrderUtils.getAllCashSumBefore(start);
-            
+            startKass = OrderUtils.getAllCashSumBefore(start);            
         }
         
         int cookCount = OrderUtils.getAllCookCountBetween(start, end);

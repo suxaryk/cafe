@@ -15,7 +15,6 @@ import cafe.view.MainForm;
 import static cafe.view.MainForm.employees;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -33,7 +32,7 @@ import java.util.logging.Logger;
 public class StatisticUtils {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "dbiytdbq18";
-    private static final String HOST = "HOST_1";
+    private static final String HOST = "";
     private static final String R_HOST = "localhost";
     private static final int PORT = 22;
     private static final int L_PORT = 3306;
@@ -42,10 +41,25 @@ public class StatisticUtils {
     private static Connection connect = null;
     private static Session session = null;
     
+    
+    public static void main(String args[]) {
+        try {
+            Connection connection = getSSHConnection();
+            readAllUsers(connection);
+            for (User user : userList) {
+                System.out.println(user.getName());
+            }         
+        } catch (SQLException e) {
+            System.err.println("SQL Exception in ssh");
+        }finally{
+            closeAllConnections();
+        }                 
+    }
+    
    
     
     
-    public static void connectBySSH() {       
+    public static Connection getSSHConnection() throws SQLException{       
         try {
             JSch jsch = new JSch();
             session = jsch.getSession(USERNAME, HOST, PORT);      
@@ -68,26 +82,19 @@ public class StatisticUtils {
                 connect = DriverManager.getConnection(url, USERNAME, PASSWORD);
                 if (!connect.isClosed()) {
                     System.out.println("Mysql connection is open...");                    
-                }
-                
-                readAllUsers(connect);
-                
-                for(User user: userList){
-                    System.out.println(user.getName());
                 }             
-
             } catch (SQLException ex) {
                 Logger.getLogger(StatisticUtils.class.getName()).log(Level.SEVERE, null, ex);
+                throw new SQLException();
             }
-        } catch (Exception e) {
-            
-            System.err.print(e);
-        }finally{
-            closeConnections();
+        } catch (Exception e) {            
+            System.err.println(e);
+        }finally{                
+            return connect;            
         }
     }
     
-    private static void closeConnections() {
+    private static void closeAllConnections() {
         CloseDataBaseConnection();
         CloseSSHConnection();
     }

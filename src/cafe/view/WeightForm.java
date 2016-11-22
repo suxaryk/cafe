@@ -273,8 +273,7 @@ public class WeightForm extends javax.swing.JFrame {
         listOfCoeffic.put(50, 1.27);
         listOfCoeffic.put(94, 1.22);
         listOfCoeffic.put(103, 1.38);
-        listOfCoeffic.put(52, 1.38);
-
+        listOfCoeffic.put(52, 1.38);        
     }
 
     private void setWeightCount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setWeightCount

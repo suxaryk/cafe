@@ -12,9 +12,8 @@ import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
 import static cafe.Utils.db.OrderUtils.getDayInfo;
 import cafe.Utils.db.ReviziaUtils;
+import cafe.Utils.db.StorageMoveUtils;
 import cafe.Utils.db.StorageUtils;
-import cafe.Utils.json.JSONUtils;
-import static cafe.Utils.json.JSONUtils.convertDiffIngToJSON;
 import cafe.model.Category;
 import cafe.model.Check;
 import cafe.model.OrderItem;
@@ -33,7 +32,6 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
 import java.io.IOException;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -2608,8 +2606,8 @@ public class MainForm extends javax.swing.JFrame {
         jTextField15.setText(Check.getPassWifi());
         jTextField16.setText(Check.getWish());
         //utils tmp
-//        StorageUtils.convertAddedStorageTable();
-//        StorageUtils.convertRemovedStorageTable();
+//        StorageMoveUtils.convertAddedStorageTable();
+//        StorageMoveUtils.convertRemovedStorageTable();
 //            RecepiesUtils.readCustomDishes();
 //        OrderUtils.getAllDayInfo();
 
@@ -3841,7 +3839,7 @@ public class MainForm extends javax.swing.JFrame {
                     StorageUtils.updateCount(storageList.get(i).getId(),
                             storageList.get(i).getCount());
 
-                    StorageUtils.addAddedItems(
+                    StorageMoveUtils.addAddedItems(
                             new Ingredient(storageList.get(i).getId(), diff));
                 }                
             }
@@ -3860,7 +3858,7 @@ public class MainForm extends javax.swing.JFrame {
                 storageList.get(i).setCount(old - diff);
                 StorageUtils.updateCount(storageList.get(i).getId(),
                         storageList.get(i).getCount());                
-                StorageUtils.addRemovedItems(
+                StorageMoveUtils.addRemovedItems(
                         new Ingredient(storageList.get(i).getId(), diff));
                 userList.get(User.active).getDayRemovedProducts().add(
                         new Ingredient(storageList.get(i).getId(), diff));

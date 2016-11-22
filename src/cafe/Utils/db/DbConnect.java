@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 public class DbConnect {  
     
     public static String dbName = "luckyroger";
-    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
+    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_new";
     public static String USERNAME = "root";
     public static String PASSWORD = "root";
 
@@ -32,11 +32,7 @@ public class DbConnect {
             System.out.println("MySQL JDBC Driver Registered!");
         } catch (ClassNotFoundException e) {
             System.out.println("Where is your MySQL JDBC Driver?");
-        }
-      
-        
-
-      
+        }   
     }
 
     public static void ConnectDb() {

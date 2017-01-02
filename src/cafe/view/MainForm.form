@@ -1653,7 +1653,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Verdana" size="14" style="0"/>
+                  <Font name="Imprint MT Shadow" size="12" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&#x432;&#x438;&#x434;&#x430;&#x43b;&#x438;&#x442;&#x438;&lt;br/&gt;&amp;nbsp; &#x441;&#x442;&#x440;&#x430;&#x432;&#x443; &lt;/html&gt; "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1667,7 +1667,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="270" y="530" width="100" height="70"/>
+                  <AbsoluteConstraints x="360" y="530" width="70" height="70"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1677,7 +1677,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Verdana" size="14" style="0"/>
+                  <Font name="Imprint MT Shadow" size="12" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&amp;nbsp;&#x434;&#x43e;&#x434;&#x430;&#x442;&#x438;&lt;br/&gt;&amp;nbsp; &#x441;&#x442;&#x440;&#x430;&#x432;&#x443; &lt;/html&gt; "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1691,7 +1691,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="170" y="530" width="100" height="70"/>
+                  <AbsoluteConstraints x="290" y="530" width="70" height="70"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1701,9 +1701,9 @@
                   <Color blue="ff" green="99" red="66" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Verdana" size="14" style="0"/>
+                  <Font name="Imprint MT Shadow" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&#x43e;&#x43d;&#x43e;&#x432;&#x438;&#x442;&#x438;&lt;br/&gt;  &#x43a;&#x430;&#x43b;&#x44c;&#x43a;&#x443;&#x43b;&#x44f;&#x446;&#x456;&#x44e; &lt;/html&gt;&#xa;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&amp;nbsp;&#x43e;&#x43d;&#x43e;&#x432;&#x438;&#x442;&#x438;&lt;br/&gt;  &#x43a;&#x430;&#x43b;&#x44c;&#x43a;&#x443;&#x43b;&#x44f;&#x446; &lt;/html&gt;&#xa;"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                     <BevelBorder/>
@@ -1716,7 +1716,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="470" y="530" width="100" height="70"/>
+                  <AbsoluteConstraints x="500" y="530" width="70" height="70"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1764,9 +1764,9 @@
                   <Color blue="ff" green="99" red="66" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Verdana" size="14" style="0"/>
+                  <Font name="Imprint MT Shadow" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&amp;nbsp;&#x43e;&#x43d;&#x43e;&#x432;&#x438;&#x442;&#x438;&lt;br/&gt;  &#x43d;&#x430;&#x437;&#x432;&#x443;/&#x446;&#x456;&#x43d;&#x443; &lt;/html&gt;&#xa;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&amp;nbsp;&#x43e;&#x43d;&#x43e;&#x432;&#x438;&#x442;&#x438;&lt;br/&gt;&amp;nbsp;&amp;nbsp; &#x441;&#x442;&#x440;&#x430;&#x432;&#x443; &lt;/html&gt;&#xa;"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                     <BevelBorder/>
@@ -1779,7 +1779,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="370" y="530" width="100" height="70"/>
+                  <AbsoluteConstraints x="430" y="530" width="70" height="70"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -3093,7 +3093,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="1130" y="120" width="120" height="-1"/>
+              <AbsoluteConstraints x="1130" y="30" width="120" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -3118,7 +3118,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="1080" y="140" width="198" height="30"/>
+              <AbsoluteConstraints x="1080" y="50" width="198" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -3433,7 +3433,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt; &amp;nbsp;&#x437;&#x431;&#x435;&#x440;&#x435;&#x433;&#x442;&#x438;&lt;br/&gt; &amp;nbsp;&amp;nbsp; &#x437;&#x43c;&#x456;&#x43d;&#x438;&lt;/html&gt; "/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&#x437;&#x431;&#x435;&#x440;&#x435;&#x433;&#x442;&#x438;&lt;br/&gt;  &#x437;&#x43c;&#x456;&#x43d;&#x438; &#x43a;&#x430;&#x43b;&#x44c;&#x443;&#x43a;&#x443;&#x43b;&#x44f;&#x446;&#x456;&#x457;&lt;/html&gt; "/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -3468,6 +3468,42 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="1080" y="610" width="200" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextField7">
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="enableRecipeKeyboard"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="PriceTyped"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="1080" y="120" width="200" height="30"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton48">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="99" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Verdana" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt; &amp;nbsp; &amp;nbsp;&#x43e;&#x43d;&#x43e;&#x432;&#x438;&#x442;&#x438;&lt;br/&gt;   &amp;nbsp;&amp;nbsp;&#x43f;&#x440;&#x43e;&#x436;&#x430;&#x440;&#x43a;&#x443;&lt;/html&gt; "/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createOrUpdateMeatWeight"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="1080" y="160" width="200" height="70"/>
             </Constraint>
           </Constraints>
         </Component>

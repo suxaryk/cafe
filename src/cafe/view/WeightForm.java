@@ -264,20 +264,20 @@ public class WeightForm extends javax.swing.JFrame {
     }
 
     private void initCoeffic() {
-        listOfCoeffic = new HashMap<>();
-        listOfCoeffic.put(47, 1.2); //Ковбаски баварські
-        listOfCoeffic.put(48, 1.3);//Ковбаски на грилі
-        listOfCoeffic.put(35, 1.12);//Ковбаски мисливські
-        listOfCoeffic.put(49, 1.14);//Ковбаски салямі до пива
-        listOfCoeffic.put(50, 1.27);//М'ясо (свинина)
-        listOfCoeffic.put(94, 1.22);//М'ясо (телятина)
-        listOfCoeffic.put(103, 1.38);//індичка
-        listOfCoeffic.put(52, 1.38);//Філе куряче     
+       
+//        listOfCoeffic = new HashMap<>();
+//        listOfCoeffic.put(47, 1.2); //Ковбаски баварські
+//        listOfCoeffic.put(48, 1.3);//Ковбаски на грилі
+//        listOfCoeffic.put(35, 1.12);//Ковбаски мисливські
+//        listOfCoeffic.put(49, 1.14);//Ковбаски салямі до пива
+//        listOfCoeffic.put(50, 1.27);//М'ясо (свинина)
+//        listOfCoeffic.put(94, 1.22);//М'ясо (телятина)
+//        listOfCoeffic.put(103, 1.38);//індичка
+//        listOfCoeffic.put(52, 1.38);//Філе куряче     
     }
 
     private void setWeightCount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setWeightCount
         String line = jTextField1.getText();
-        initCoeffic();
         if (line.length() > 0) {
             weightCount = Double.parseDouble(line);
             System.out.println("weightCount " + weightCount);
@@ -305,7 +305,7 @@ public class WeightForm extends javax.swing.JFrame {
         });
     }
     public static Double weightCount;
-    public static HashMap<Integer, Double> listOfCoeffic;
+    public static HashMap<Integer, Double> listOfCoeffic = new HashMap<>();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -22,9 +22,9 @@ import javax.swing.JOptionPane;
 public class DBUtils {
 
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
-    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
+    public static String URL = "jdbc:mysql://localhost:3306/hm";
     public static String USERNAME = "root";
-    public static String PASSWORD = "dbiytdbq18";
+    public static String PASSWORD = "root";
 
 //for stat
 //    private static final String PASSWORD_MAIN = "dbiytdbq18";
@@ -33,6 +33,7 @@ public class DBUtils {
 //    public static final String HOST_1 = "185.15.6.103";
 //    private static final String HOST_2 = "46.63.96.79";
 //    private static final String HOST_3 = "46.63.25.213";
+//    private static final String HOST_4 = "46.63.25.213";
 //
 //    private static final String LOCALHOST_0 = "192.168.0.111";
 //    private static final String LOCALHOST_1 = "192.168.0.102";
@@ -49,6 +50,8 @@ public class DBUtils {
     public static final ArrayList<String> sqlRemoveList = new ArrayList<>();
     public static final ArrayList<String> sqlUpdateTitleList = new ArrayList<>();
     public static final ArrayList<String> sqlUpdatePriceList = new ArrayList<>();
+    public static final ArrayList<String> sqlUpdateIsCookList = new ArrayList<>();
+    
 
     static {
         try {
@@ -131,6 +134,10 @@ public class DBUtils {
             return false;
         }
     }
+    
+    public static void showInfo(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
+    }
 
     public static void showMessage(String msg) {
         String defaultMessage = "Помилка підключення до бази данних!\n"
@@ -145,7 +152,7 @@ public class DBUtils {
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
     }
 
-    public static boolean showMessageYesNo(String msg) {
+    public static boolean setPayMethod(String msg) {
         String defaultMessage = "Помилка підключення до бази данних!\n"
                 + "Перевірте підклюення до інтернету \n"
                 + "або перезавантажте роутер в кафе\n";
@@ -307,7 +314,7 @@ public class DBUtils {
         sqlUpdateTitleList.add("UPDATE bear SET title = ? WHERE Id = ?");
         sqlUpdateTitleList.add("UPDATE alcohol SET title = ? WHERE Id = ?");
         sqlUpdateTitleList.add("UPDATE not_alcohol SET title = ? WHERE Id = ?");
-
+        
         sqlUpdatePriceList.add("UPDATE firstdishes SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE salats SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE rogerdishes SET price = ? WHERE Id = ?");
@@ -321,6 +328,19 @@ public class DBUtils {
         sqlUpdatePriceList.add("UPDATE bear SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE alcohol SET price = ? WHERE Id = ?");
         sqlUpdatePriceList.add("UPDATE not_alcohol SET price = ? WHERE Id = ?");
+        
+        sqlUpdateIsCookList.add("UPDATE firstdishes SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE salats SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE rogerdishes SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE pandishes SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE meat SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE pizzaS SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE pizzaB SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE sushi SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE dessert SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE drinks SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE bear SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE alcohol SET isCook = ? WHERE Id = ?");
+        sqlUpdateIsCookList.add("UPDATE not_alcohol SET isCook = ? WHERE Id = ?");
     }
-
 }

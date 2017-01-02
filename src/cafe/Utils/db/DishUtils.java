@@ -6,11 +6,13 @@ import static cafe.Utils.db.DBUtils.USERNAME;
 import static cafe.Utils.db.DBUtils.sqlInsertList;
 import static cafe.Utils.db.DBUtils.sqlRemoveList;
 import static cafe.Utils.db.DBUtils.sqlSelectList;
+import static cafe.Utils.db.DBUtils.sqlUpdateIsCookList;
 import static cafe.Utils.db.DBUtils.sqlUpdatePriceList;
 import static cafe.Utils.db.DBUtils.sqlUpdateTitleList;
 import cafe.Utils.json.JSONUtils;
 import cafe.model.Dish;
 import static cafe.view.MainForm.menu;
+import static cafe.view.WeightForm.listOfCoeffic;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,8 +21,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import org.apache.log4j.Logger;
 
 public class DishUtils {
+    private static final Logger log = Logger.getLogger(DishUtils.class);
 
 
 
@@ -144,7 +148,6 @@ public class DishUtils {
                 }
             }
         }
-
     }
 
     public static void updateDishPrice(int dbId, int pass, int activeCat) {
@@ -165,5 +168,71 @@ public class DishUtils {
             }
         }
     }
+    
+    public static void updateCookDishParametr(int dbId, boolean isCook, int activeCat) {
+        for (int i = 0; i < sqlUpdatePriceList.size(); i++) {
+            if (i == activeCat) {
+                try (Connection connection = DriverManager
+                        .getConnection(URL, USERNAME, PASSWORD)) {
+                    PreparedStatement pst = connection.prepareStatement(sqlUpdateIsCookList.get(i));
+                    pst.setBoolean(1, isCook);
+                    pst.setInt(2, dbId);
+                    int rowsInserted = pst.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("IsCook parametr was updated successfully!");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connection Failed! Check output console - updateCookDishParametr");
+                }
+            }
+        }
+    }
+    
+    public static void initDishMeatWeight(){
+        final String SQL = "SELECT * from meat_weight";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {            
+            Statement statement = connection.createStatement();
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    listOfCoeffic.put(rs.getInt("storage_id"), (double) rs.getInt("weight")/100);                    
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - initDishMeatWeight");
+        }
+    }
+    
+    public static void updateDishMeatWeight(int storageId, int weight) {
+        final String SQL = "UPDATE meat_weight SET weight = ? WHERE  storage_id = ?";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            PreparedStatement pst = connection.prepareStatement(SQL);
+            pst.setInt(1, weight);
+            pst.setInt(2, storageId);
+            int rowsInserted = pst.executeUpdate();
+            if (rowsInserted > 0) {
+                log.debug("The DishMeatWeight was updated successfully!");
+            }
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - updateDishMeatWeight");
+        }
+    }
+    
+    public static void createDishMeatWeight(int storageId, int weight) {
+        final String SQL = "INSERT INTO meat_weight(storage_id, weight) VALUES(?, ?)";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
 
+            PreparedStatement pstatement = connection.prepareStatement(SQL);
+            pstatement.setInt(1, storageId);
+            pstatement.setInt(2, weight);
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("The new DishMeatWeight was added successfully!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console - createDishMeatWeight");
+        }
+    }
 }

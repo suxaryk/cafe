@@ -11,8 +11,10 @@ import cafe.model.Order;
 import cafe.Utils.db.DishUtils;
 import static cafe.Utils.db.DBUtils.PASSWORD;
 import static cafe.Utils.db.DBUtils.USERNAME;
-import static cafe.Utils.db.DBUtils.showMessageYesNo;
+import static cafe.Utils.db.DBUtils.showInfo;
 import static cafe.Utils.db.DBUtils.updateSystemVariables;
+import static cafe.Utils.db.DishUtils.createDishMeatWeight;
+import static cafe.Utils.db.DishUtils.updateDishMeatWeight;
 import cafe.Utils.db.RecepiesUtils;
 import static cafe.Utils.db.EmployeeUtils.isEmployeeLogged;
 import cafe.Utils.db.ReviziaUtils;
@@ -78,7 +80,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import static cafe.Utils.json.JSONUtils.convertToJSON;
+import static cafe.view.WeightForm.listOfCoeffic;
 import java.net.ConnectException;
+import static cafe.Utils.db.DBUtils.setPayMethod;
 
 /**
  * all methods in one class it`s very bad i know
@@ -105,6 +109,7 @@ public class MainForm extends javax.swing.JFrame {
         loadTables();
         initStartOrderId();
         initBDmenu();
+        DishUtils.initDishMeatWeight();
         initSystemVariables();
         doDBDump();
 
@@ -264,6 +269,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton88 = new javax.swing.JButton();
         jButton41 = new javax.swing.JButton();
         jButton22 = new javax.swing.JButton();
+        jTextField7 = new javax.swing.JTextField();
+        jButton48 = new javax.swing.JButton();
         StoragePanel = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
@@ -1145,7 +1152,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel6.setBounds(0, 470, 120, 18);
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Imprint MT Shadow", 1, 12)); // NOI18N
         jButton1.setText("<html>&nbsp;видалити<br/>&nbsp; страву </html> ");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1154,10 +1161,10 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         DishesPanel.add(jButton1);
-        jButton1.setBounds(270, 530, 100, 70);
+        jButton1.setBounds(360, 530, 70, 70);
 
         jButton11.setBackground(new java.awt.Color(204, 204, 204));
-        jButton11.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton11.setFont(new java.awt.Font("Imprint MT Shadow", 1, 12)); // NOI18N
         jButton11.setText("<html>&nbsp;&nbsp;додати<br/>&nbsp; страву </html> ");
         jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -1166,11 +1173,11 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         DishesPanel.add(jButton11);
-        jButton11.setBounds(170, 530, 100, 70);
+        jButton11.setBounds(290, 530, 70, 70);
 
         jButton12.setBackground(new java.awt.Color(102, 153, 255));
-        jButton12.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton12.setText("<html>&nbsp;&nbsp;&nbsp;оновити<br/>  калькуляцію </html>\n");
+        jButton12.setFont(new java.awt.Font("Imprint MT Shadow", 1, 12)); // NOI18N
+        jButton12.setText("<html>&nbsp;&nbsp;оновити<br/>  калькуляц </html>\n");
         jButton12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -1179,7 +1186,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         DishesPanel.add(jButton12);
-        jButton12.setBounds(470, 530, 100, 70);
+        jButton12.setBounds(500, 530, 70, 70);
 
         jTextField4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         DishesPanel.add(jTextField4);
@@ -1196,8 +1203,8 @@ public class MainForm extends javax.swing.JFrame {
         jLabel9.setBounds(130, 470, 90, 16);
 
         jButton19.setBackground(new java.awt.Color(102, 153, 255));
-        jButton19.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton19.setText("<html>&nbsp;&nbsp;оновити<br/>  назву/ціну </html>\n");
+        jButton19.setFont(new java.awt.Font("Imprint MT Shadow", 1, 12)); // NOI18N
+        jButton19.setText("<html>&nbsp;&nbsp;оновити<br/>&nbsp;&nbsp; страву </html>\n");
         jButton19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton19.addActionListener(new java.awt.event.ActionListener() {
@@ -1206,7 +1213,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         DishesPanel.add(jButton19);
-        jButton19.setBounds(370, 530, 100, 70);
+        jButton19.setBounds(430, 530, 70, 70);
 
         jCheckBox3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jCheckBox3.setText("страва");
@@ -1879,7 +1886,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel18.setText("Сортування:");
         RecipePanel.add(jLabel18);
-        jLabel18.setBounds(1130, 120, 120, 18);
+        jLabel18.setBounds(1130, 30, 120, 18);
 
         jComboBox6.setBackground(new java.awt.Color(240, 240, 240));
         jComboBox6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -1890,7 +1897,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         RecipePanel.add(jComboBox6);
-        jComboBox6.setBounds(1080, 140, 198, 30);
+        jComboBox6.setBounds(1080, 50, 198, 30);
 
         jButton77.setBackground(new java.awt.Color(204, 204, 204));
         jButton77.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
@@ -2051,7 +2058,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton41.setBackground(new java.awt.Color(153, 153, 255));
         jButton41.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton41.setText("<html> &nbsp;зберегти<br/> &nbsp;&nbsp; зміни</html> ");
+        jButton41.setText("<html> &nbsp; &nbsp; &nbsp; &nbsp;зберегти<br/>  зміни кальукуляції</html> ");
         jButton41.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton41.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton41.addActionListener(new java.awt.event.ActionListener() {
@@ -2072,6 +2079,32 @@ public class MainForm extends javax.swing.JFrame {
         });
         RecipePanel.add(jButton22);
         jButton22.setBounds(1080, 610, 200, 73);
+
+        jTextField7.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                enableRecipeKeyboard(evt);
+            }
+        });
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PriceTyped(evt);
+            }
+        });
+        RecipePanel.add(jTextField7);
+        jTextField7.setBounds(1080, 120, 200, 30);
+
+        jButton48.setBackground(new java.awt.Color(255, 153, 153));
+        jButton48.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton48.setText("<html> &nbsp; &nbsp;оновити<br/>   &nbsp;&nbsp;прожарку</html> ");
+        jButton48.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton48.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton48.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createOrUpdateMeatWeight(evt);
+            }
+        });
+        RecipePanel.add(jButton48);
+        jButton48.setBounds(1080, 160, 200, 70);
 
         getContentPane().add(RecipePanel);
         RecipePanel.setBounds(0, 0, 1280, 1000);
@@ -3403,6 +3436,8 @@ public class MainForm extends javax.swing.JFrame {
         jTabbedPane1.setVisible(false);
         OrderPanel.setVisible(false);
         RecipePanel.setVisible(true);
+        jTextField12.setText("");
+        jTextField7.setText("");
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         jLabel12.setText(title);
         //join between storageList(all count = 0) and exist recipe into storageList
@@ -3453,6 +3488,9 @@ public class MainForm extends javax.swing.JFrame {
             if (price != 0) {
                 DishUtils.updateDishPrice(dbId, price, activeCat);
             }
+            boolean isCook = jCheckBox3.isSelected();
+            DishUtils.updateCookDishParametr(dbId, isCook, activeCat);
+                    
             menu.get(activeCat).getDishes().clear();
             DishUtils.readDBCategoryById(activeCat);
             jList2.clearSelection();
@@ -3614,6 +3652,8 @@ public class MainForm extends javax.swing.JFrame {
         StoragePanel.setVisible(true);
         jTabbedPane1.setVisible(false);
         OrderPanel.setVisible(false);
+        jTextField12.setText("");
+        jTextField7.setText("");
         setComponentsVisible();
         StorageUtils.readStorage();
         if (isAdmin()) {
@@ -3717,7 +3757,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         } else {
             jTextField12.setText("" + jTextField12.getText() + button.getText());
-
+            jTextField7.setText("" + jTextField7.getText() + button.getText());
         }
     }
     //todo fix 0
@@ -3775,11 +3815,18 @@ public class MainForm extends javax.swing.JFrame {
         } else {
             String old = jTextField12.getText();
             jTextField12.setText(old.substring(0, old.length() - 1));
+            String old2 = jTextField7.getText();
+            jTextField7.setText(old2.substring(0, old2.length() - 1));
         }
     }
     private void clearDigitLine(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDigitLine
-        int index = jTable3.getSelectedRow();
-        jTable3.setValueAt("", index, 2);
+        int index = jTable3.getSelectedRow();  
+        if (index != -1) {
+            jTable3.setValueAt("", index, 2);
+        } else {
+            jTextField7.setText("");
+        }
+        
     }//GEN-LAST:event_clearDigitLine
 
     private void exitFromStorageTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitFromStorageTable
@@ -4212,7 +4259,7 @@ public class MainForm extends javax.swing.JFrame {
     private void choosePaymentMethod() {    
         String msg = "Виберіть спосіб оплати чеку";
         if (CARD_PAYMENT) {
-            orders.get(activeTable).setCardPayed(showMessageYesNo(msg));
+            orders.get(activeTable).setCardPayed(setPayMethod(msg));
         }else{
             orders.get(activeTable).setCardPayed(CARD_PAYMENT);
         }
@@ -4371,6 +4418,39 @@ public class MainForm extends javax.swing.JFrame {
         updateSystemVariables(KITCHEN_CHECK_FONT_SIZE, size);
         systemVariables = DBUtils.getSystemVariables();
     }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void createOrUpdateMeatWeight(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createOrUpdateMeatWeight
+        int index = jTable3.getSelectedRow();
+        if (!jTextField7.getText().isEmpty() && index != -1) {            
+            int storageId = Integer.parseInt(jTable3.getValueAt(index, 0).toString());
+            int weight = Integer.valueOf(jTextField7.getText());
+            if (listOfCoeffic.containsKey(storageId)) {
+                updateDishMeatWeight(storageId, weight);
+            } else {
+                createDishMeatWeight(storageId, weight);
+            }
+            listOfCoeffic.clear();
+            DishUtils.initDishMeatWeight();
+            showInfo("Вагу прожарки змінено на "  + weight + " грам");
+        }else{
+            showInfo("Спочатку введіть вагу прожарки на 100 грам та виберіть продукт(м'ясний) зі списку");
+        }              
+    }//GEN-LAST:event_createOrUpdateMeatWeight
+
+    private void enableRecipeKeyboard(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_enableRecipeKeyboard
+        jButton77.setEnabled(true);
+        jButton78.setEnabled(true);
+        jButton79.setEnabled(true);
+        jButton80.setEnabled(true);
+        jButton81.setEnabled(true);
+        jButton82.setEnabled(true);
+        jButton83.setEnabled(true);
+        jButton84.setEnabled(true);
+        jButton85.setEnabled(true);
+        jButton86.setEnabled(true);
+        jButton87.setEnabled(true);
+        jButton88.setEnabled(true);
+    }//GEN-LAST:event_enableRecipeKeyboard
 
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
@@ -4817,6 +4897,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton45;
     private javax.swing.JButton jButton46;
     private javax.swing.JButton jButton47;
+    private javax.swing.JButton jButton48;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -4908,6 +4989,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JButton table01;

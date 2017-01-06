@@ -1653,7 +1653,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Imprint MT Shadow" size="12" style="1"/>
+                  <Font name="Verdana" size="12" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&#x432;&#x438;&#x434;&#x430;&#x43b;&#x438;&#x442;&#x438;&lt;br/&gt;&amp;nbsp; &#x441;&#x442;&#x440;&#x430;&#x432;&#x443; &lt;/html&gt; "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1677,7 +1677,7 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Imprint MT Shadow" size="12" style="1"/>
+                  <Font name="Verdana" size="12" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&amp;nbsp;&#x434;&#x43e;&#x434;&#x430;&#x442;&#x438;&lt;br/&gt;&amp;nbsp; &#x441;&#x442;&#x440;&#x430;&#x432;&#x443; &lt;/html&gt; "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1701,7 +1701,7 @@
                   <Color blue="ff" green="99" red="66" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Imprint MT Shadow" size="12" style="1"/>
+                  <Font name="Verdana" size="12" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&amp;nbsp;&#x43e;&#x43d;&#x43e;&#x432;&#x438;&#x442;&#x438;&lt;br/&gt;  &#x43a;&#x430;&#x43b;&#x44c;&#x43a;&#x443;&#x43b;&#x44f;&#x446; &lt;/html&gt;&#xa;"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1764,7 +1764,7 @@
                   <Color blue="ff" green="99" red="66" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Imprint MT Shadow" size="12" style="1"/>
+                  <Font name="Verdana" size="12" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&amp;nbsp;&#x43e;&#x43d;&#x43e;&#x432;&#x438;&#x442;&#x438;&lt;br/&gt;&amp;nbsp;&amp;nbsp; &#x441;&#x442;&#x440;&#x430;&#x432;&#x443; &lt;/html&gt;&#xa;"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -2215,6 +2215,24 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="120" y="540" width="280" height="30"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton16">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/cafe/icons/libra.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="weight_order_meat"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="0" y="530" width="100" height="70"/>
             </Constraint>
           </Constraints>
         </Component>

@@ -83,6 +83,8 @@ import static cafe.Utils.json.JSONUtils.convertToJSON;
 import static cafe.view.WeightForm.listOfCoeffic;
 import java.net.ConnectException;
 import static cafe.Utils.db.DBUtils.setPayMethod;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * all methods in one class it`s very bad i know
@@ -207,6 +209,7 @@ public class MainForm extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jButton16 = new javax.swing.JButton();
         UsersPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -1152,7 +1155,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel6.setBounds(0, 470, 120, 18);
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setFont(new java.awt.Font("Imprint MT Shadow", 1, 12)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton1.setText("<html>&nbsp;видалити<br/>&nbsp; страву </html> ");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1164,7 +1167,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton1.setBounds(360, 530, 70, 70);
 
         jButton11.setBackground(new java.awt.Color(204, 204, 204));
-        jButton11.setFont(new java.awt.Font("Imprint MT Shadow", 1, 12)); // NOI18N
+        jButton11.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton11.setText("<html>&nbsp;&nbsp;додати<br/>&nbsp; страву </html> ");
         jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -1176,7 +1179,7 @@ public class MainForm extends javax.swing.JFrame {
         jButton11.setBounds(290, 530, 70, 70);
 
         jButton12.setBackground(new java.awt.Color(102, 153, 255));
-        jButton12.setFont(new java.awt.Font("Imprint MT Shadow", 1, 12)); // NOI18N
+        jButton12.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton12.setText("<html>&nbsp;&nbsp;оновити<br/>  калькуляц </html>\n");
         jButton12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1203,7 +1206,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel9.setBounds(130, 470, 90, 16);
 
         jButton19.setBackground(new java.awt.Color(102, 153, 255));
-        jButton19.setFont(new java.awt.Font("Imprint MT Shadow", 1, 12)); // NOI18N
+        jButton19.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton19.setText("<html>&nbsp;&nbsp;оновити<br/>&nbsp;&nbsp; страву </html>\n");
         jButton19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1432,6 +1435,16 @@ public class MainForm extends javax.swing.JFrame {
         jLabel13.setText("В КАСУ НЕ РАХУЄ");
         OrderPanel.add(jLabel13);
         jLabel13.setBounds(120, 540, 280, 30);
+
+        jButton16.setBackground(new java.awt.Color(255, 255, 255));
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/libra.png"))); // NOI18N
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                weight_order_meat(evt);
+            }
+        });
+        OrderPanel.add(jButton16);
+        jButton16.setBounds(0, 530, 100, 70);
 
         getContentPane().add(OrderPanel);
         OrderPanel.setBounds(710, 5, 500, 680);
@@ -2716,6 +2729,14 @@ public class MainForm extends javax.swing.JFrame {
         jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
         setOrderIdForTable(orders.get(activeTable).getDayId());
     }
+    
+    public void updateOrderItemModel(){
+        //TODO fix order sum
+        jTable1.setValueAt(WeightForm.orderItem.getDish().getTitle(), activeOrderItemIndex, 0);
+        jTable1.setValueAt(WeightForm.orderItem.getDish().getPrice(), activeOrderItemIndex, 2);
+        jTable1.setValueAt(WeightForm.orderItem.getSum(), activeOrderItemIndex, 3);
+        jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
+    }
 
     public boolean calcMeat() {
         boolean calcMeat = false;
@@ -2730,12 +2751,13 @@ public class MainForm extends javax.swing.JFrame {
 
     private void addRecordToTable(int count) {
         clearCountButton();
-        if (activeCat == 4 && calcMeat()) {
-            changeIngredientWeight();
-            mainForm.setEnabled(false);
-        } else {
+        //remove after 03.2017 for host4
+//        if (activeCat == 4 && calcMeat()) {
+//            changeIngredientWeight();
+//            mainForm.setEnabled(false);
+//        } else {
             addOrderItemToTable(count);
-        }
+//        }
     }
 
     private void refreshListOfPrices() {
@@ -4224,7 +4246,9 @@ public class MainForm extends javax.swing.JFrame {
 
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
         if (jButton10.isEnabled()) {
-            if (orders.get(activeTable).getOrderSum() != 0) {
+            if (orders.get(activeTable).getOrderSum() != 0) {                           
+                mainForm.setEnabled(false);
+                
                 subOrderIngredientsFromDB();
                 changeBackGroundTable1(lightRed);
 
@@ -4316,9 +4340,12 @@ public class MainForm extends javax.swing.JFrame {
                 0, JOptionPane.YES_NO_OPTION, null, new String[]{"OK"}, null);
     }//GEN-LAST:event_getLastDayKass
 
-    public void changeIngredientWeight() {
+    public void changeIngredientWeight() {    
+        
+//        mainForm.setEnabled(false);
+        
         WeightForm weightForm = new WeightForm();
-        weightForm.setVisible(true);
+        weightForm.setVisible(true);       
         weightForm.toFront();
     }
     private void EmployeesTableClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeesTableClick
@@ -4385,8 +4412,8 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton47ActionPerformed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        int index = jTable1.getSelectedRow();
-        if (!orders.get(activeTable).isPayed() && index < orders.get(activeTable).getItems().size()) {
+        activeOrderItemIndex = jTable1.getSelectedRow();
+        if (!orders.get(activeTable).isPayed() && activeOrderItemIndex < orders.get(activeTable).getItems().size()) {
             JTable table = (JTable) evt.getSource();
             Point p = evt.getPoint();
             int row = table.rowAtPoint(p);
@@ -4394,7 +4421,7 @@ public class MainForm extends javax.swing.JFrame {
             if (evt.getClickCount() == 1) {
 
                 System.out.println("clicked greeeen");
-                orders.get(activeTable).getItems().get(index).setRealized(true);
+                orders.get(activeTable).getItems().get(activeOrderItemIndex).setRealized(true);
                 changeRowColorTable1();
             }
         }
@@ -4451,6 +4478,23 @@ public class MainForm extends javax.swing.JFrame {
         jButton87.setEnabled(true);
         jButton88.setEnabled(true);
     }//GEN-LAST:event_enableRecipeKeyboard
+
+    Optional<Boolean> isMeatDish(){
+        int dbID = orders.get(activeTable).getItems().get(activeOrderItemIndex).getDish().getDbID();
+        return  menu.get(4).getDishes().stream()
+                .map(d -> d.getDbID() == dbID)
+                .findFirst();
+        
+    }
+    
+    private void weight_order_meat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weight_order_meat
+        activeOrderItemIndex = jTable1.getSelectedRow();
+        System.out.println("isMeatDish " + isMeatDish());
+        System.out.println(activeOrderItemIndex);
+        if (activeOrderItemIndex >= 0 && activeTable >= 0 && isMeatDish().isPresent()) {
+            changeIngredientWeight();
+        }       
+    }//GEN-LAST:event_weight_order_meat
 
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
@@ -4814,6 +4858,7 @@ public class MainForm extends javax.swing.JFrame {
     public static int activeDishes;
     public static int activeCat;
     public static int activeTable;
+    public static int activeOrderItemIndex;
     public static DecimalFormat decFormat = new DecimalFormat("#.###");
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
     public static ArrayList<Ingredient> diffStorage = new ArrayList<>();
@@ -4868,6 +4913,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;

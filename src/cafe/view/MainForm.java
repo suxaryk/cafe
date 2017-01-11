@@ -1295,8 +1295,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton7.setBackground(new java.awt.Color(255, 102, 102));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/delete101.png"))); // NOI18N
         jButton7.setEnabled(false);
-        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeCheckItem(evt);
             }
         });
@@ -2858,42 +2858,6 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_clearTable
 
-    private void removeCheckItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCheckItem
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        System.out.println("selectedRow" + jTable1.getSelectedRow());
-        int lastIndex = orders.get(activeTable).getItems().size() - 1;
-        if (jTable1.getRowCount() != 0) {
-            if (!orders.get(activeTable).isPayed()
-                    && (!orders.get(activeTable).getItems()
-                    .get(lastIndex).isPrinted()
-                    && !orders.get(activeTable).getItems()
-                    .get(lastIndex).isRealized())) {
-                model.removeRow(jTable1.getRowCount() - 1);
-
-                OrderItem item = orders.get(activeTable).getItems().get(lastIndex);
-                int count = orders.get(activeTable).getItems().get(lastIndex).getCount();
-                if (orders.get(activeTable).getRemovedItems().contains(
-                        orders.get(activeTable).getItems().get(lastIndex))) {
-                    int index = orders.get(activeTable).getRemovedItems().indexOf(item);
-                    orders.get(activeTable).getRemovedItems().get(index).addCount(count);
-                } else {
-                    orders.get(activeTable).getRemovedItems().add(item);
-                }
-                orders.get(activeTable).getItems().remove(lastIndex);
-
-                if (orders.get(activeTable).getItems().isEmpty()) {
-                    setOrderIdForTable(0);
-                    System.out.println("00");
-                } else {
-                    setOrderIdForTable(orders.get(activeTable).getDayId());
-                    System.out.println("11");
-                }
-
-            }
-            jTextField1.setText("" + orders.get(activeTable).getOrderSum());
-        }
-    }//GEN-LAST:event_removeCheckItem
-
     public void initBarmen() {
         if (User.active != -1) {
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
@@ -3111,7 +3075,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
-        if (!orders.get(activeTable).isPayed()) {
+        if (activeTable >=1 && !orders.get(activeTable).isPayed()) {
             jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
             setOrderIdForTable(orders.get(activeTable).getDayId());
             setOrderPrinted();
@@ -4246,8 +4210,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
         if (jButton10.isEnabled()) {
-            if (orders.get(activeTable).getOrderSum() != 0) {                           
-                mainForm.setEnabled(false);
+            if (orders.get(activeTable).getOrderSum() != 0) {                          
                 
                 subOrderIngredientsFromDB();
                 changeBackGroundTable1(lightRed);
@@ -4479,22 +4442,60 @@ public class MainForm extends javax.swing.JFrame {
         jButton88.setEnabled(true);
     }//GEN-LAST:event_enableRecipeKeyboard
 
-    Optional<Boolean> isMeatDish(){
-        int dbID = orders.get(activeTable).getItems().get(activeOrderItemIndex).getDish().getDbID();
-        return  menu.get(4).getDishes().stream()
-                .map(d -> d.getDbID() == dbID)
-                .findFirst();
-        
+    boolean isMeatDish(){
+        if (activeOrderItemIndex >= 0) {
+            int dbID = orders.get(activeTable).getItems().get(activeOrderItemIndex).getDish().getDbID();
+            return menu.get(4).getDishes().stream()
+                    .map(d -> d.getDbID() == dbID)
+                    .findFirst().isPresent();
+        }
+        return false;        
     }
     
     private void weight_order_meat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weight_order_meat
         activeOrderItemIndex = jTable1.getSelectedRow();
         System.out.println("isMeatDish " + isMeatDish());
         System.out.println(activeOrderItemIndex);
-        if (activeOrderItemIndex >= 0 && activeTable >= 0 && isMeatDish().isPresent()) {
+        if (activeOrderItemIndex >= 0 && activeTable >= 0 && isMeatDish()) {
             changeIngredientWeight();
         }       
     }//GEN-LAST:event_weight_order_meat
+
+    private void removeCheckItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCheckItem
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        System.out.println("selectedRow" + jTable1.getSelectedRow());
+        int lastIndex = orders.get(activeTable).getItems().size() - 1;
+        if (jTable1.getRowCount() != 0) {
+            if (!orders.get(activeTable).isPayed()
+                    && (!orders.get(activeTable).getItems()
+                    .get(lastIndex).isPrinted()
+                    && !orders.get(activeTable).getItems()
+                    .get(lastIndex).isRealized())) {
+                model.removeRow(jTable1.getRowCount() - 1);
+
+                OrderItem item = orders.get(activeTable).getItems().get(lastIndex);
+                int count = orders.get(activeTable).getItems().get(lastIndex).getCount();
+                if (orders.get(activeTable).getRemovedItems().contains(
+                        orders.get(activeTable).getItems().get(lastIndex))) {
+                    int index = orders.get(activeTable).getRemovedItems().indexOf(item);
+                    orders.get(activeTable).getRemovedItems().get(index).addCount(count);
+                } else {
+                    orders.get(activeTable).getRemovedItems().add(item);
+                }
+                orders.get(activeTable).getItems().remove(lastIndex);
+
+                if (orders.get(activeTable).getItems().isEmpty()) {
+                    setOrderIdForTable(0);
+                    System.out.println("00");
+                } else {
+                    setOrderIdForTable(orders.get(activeTable).getDayId());
+                    System.out.println("11");
+                }
+
+            }
+            jTextField1.setText("" + orders.get(activeTable).getOrderSum());
+        }      
+    }//GEN-LAST:event_removeCheckItem
 
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
@@ -4502,7 +4503,6 @@ public class MainForm extends javax.swing.JFrame {
         } else {
             return false;
         }
-
     }
 
     private boolean isOrderItemPrinted(int index) {

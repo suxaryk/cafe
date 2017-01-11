@@ -218,13 +218,12 @@ public class OrderUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new check was added successfully!");
+                System.out.println("Table was added successfully!");
             }
 
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - updateTable");
         }
-
     }
 
     public static void fillTableById(int activeTable) {
@@ -250,7 +249,7 @@ public class OrderUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new check was added successfully!");
+                System.out.println("fillTableById was added successfully!");
             }
 
         } catch (SQLException e) {

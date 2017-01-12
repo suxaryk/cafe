@@ -19,9 +19,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.apache.log4j.Logger;
 
 public class EmployeeUtils {
@@ -44,7 +42,7 @@ public class EmployeeUtils {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getEmployeeTime");
+            log.error("Connection Failed! Check output console - getEmployeeTime");
         }
     }
 
@@ -52,11 +50,8 @@ public class EmployeeUtils {
         final String SQL = "SELECT name FROM luckyroger.employee_time where DATE(date_in) = DATE(curdate())";
         List<String> tmpEmplNames = new ArrayList<>(0);
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! isDayCountStarted"
-                    : "Error DB connecting");
-            Statement statement = connection.createStatement();
-           
+                .getConnection(URL, USERNAME, PASSWORD)) {      
+            Statement statement = connection.createStatement();           
             try (ResultSet rs = statement.executeQuery(SQL)) {             
                 while (rs.next()) {
                     tmpEmplNames.add(rs.getString("name"));
@@ -71,7 +66,7 @@ public class EmployeeUtils {
             
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - isEmployeeLogged");
+            log.error("Connection Failed! Check output console - isEmployeeLogged");
             return false;
         }
     }
@@ -83,8 +78,6 @@ public class EmployeeUtils {
         final String SQL = "SELECT date_in from employee_time where DATE(date_in)=DATE('" + sdf.format(date) + "') LIMIT 1";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! getStartDayTime"
-                    : "Error DB connecting");
             Statement statement = connection.createStatement();
 
             Date newdate = new Date();
@@ -96,7 +89,7 @@ public class EmployeeUtils {
             return newdate;
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getStartDayTime");
+            log.error("Connection Failed! Check output console - getStartDayTime");
             return null;
         }
     }
@@ -124,7 +117,7 @@ public class EmployeeUtils {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getEmployeeDayTime");
+            log.error("Connection Failed! Check output console - getEmployeeDayTime");
         }
     }
 
@@ -138,10 +131,10 @@ public class EmployeeUtils {
             pstatement.setInt(2, pass);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Employee was added successfully!");
+                log.debug("NEW Employee was added successfully! " + name);
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addEmployeeToDB");
+            log.error("Connection Failed! Check output console - addEmployeeToDB");
         }
     }
 
@@ -160,10 +153,10 @@ public class EmployeeUtils {
                             rs.getInt("pass")
                     ));
                 }
-                System.out.println("DB readAllEmployees");
+                log.debug("DB readAllEmployees");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - setAllEmployees");
+            log.error("Connection Failed! Check output console - setAllEmployees");
         }
 
     }
@@ -177,10 +170,10 @@ public class EmployeeUtils {
             pst.setInt(1, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Employee was removed successfully!");
+                log.debug("Employee was removed successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - removeEmployee");
+            log.error("Connection Failed! Check output console - removeEmployee");
         }
 
     }
@@ -195,10 +188,10 @@ public class EmployeeUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Employee was updated successfully!");
+                log.debug("Employee was updated successfully! " + userList.get(dbId).getName());
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateEmployeePass");
+            log.error("Connection Failed! Check output console - updateEmployeePass");
         }
 
     }
@@ -213,10 +206,10 @@ public class EmployeeUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Employee was updated successfully!");
+                log.debug("Employee was updated successfully! " + userList.get(dbId).getName());
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateEmployeeName");
+            log.error("Connection Failed! Check output console - updateEmployeeName");
         }
 
     }
@@ -226,16 +219,15 @@ public class EmployeeUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
 
-            PreparedStatement pstatement = connection.prepareStatement(SQL);
-            System.out.println("name" + employee.getName());
+            PreparedStatement pstatement = connection.prepareStatement(SQL);           
             pstatement.setString(1, employee.getName());
             pstatement.setTimestamp(2, getCurrentTimeStamp());
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Time was added successfully!");
+                log.debug("A new Time In was added successfully!" + employee.getName());
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addTimeIn");
+            log.error("Connection Failed! Check output console - addTimeIn" + employee.getName());
         }
     }
 
@@ -251,10 +243,10 @@ public class EmployeeUtils {
             pstatement.setString(1, employee.getName());
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Time was added successfully!");
+                log.debug("A new Time was added successfully! " + employee.getName());
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addTimeOut");
+            log.error("Connection Failed! Check output console - addTimeOut" + employee.getName());
         }
     }
     
@@ -286,9 +278,9 @@ public class EmployeeUtils {
             empl.setHalfWorkDaysCount(0);
         }     
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("getEmployeeFullWorksDay->");
-        System.out.println("start " + sdf.format(new Date(start.getTime())));
-        System.out.println("end " + sdf.format(new Date(end.getTime())));
+        log.debug("getEmployeeFullWorksDay->");
+        log.debug("start " + sdf.format(new Date(start.getTime())));
+        log.debug("end " + sdf.format(new Date(end.getTime())));
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             for (Employee empl : employees) {
@@ -301,12 +293,11 @@ public class EmployeeUtils {
                         }
                     }                    
                 } catch (Exception e) {
-                    System.out.println("Error execute query prepare statment getEmployeeFullWorksDay");
+                    log.error("Error execute query prepare statment getEmployeeFullWorksDay");
                 }                             
             }                   
-            System.out.println("DB connection getEmployeeFullWorksDay");
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getEmployeeFullWorksDay");
+            log.error("Connection Failed! Check output console - getEmployeeFullWorksDay");
         }
     }   
     
@@ -332,12 +323,12 @@ public class EmployeeUtils {
                         }
                     }                    
                 } catch (Exception e) {
-                    System.out.println("Error execute query prepare statment getEmployeeHalfWorksDay");
+                    log.error("Error execute query prepare statment getEmployeeHalfWorksDay");
                 }                             
             }                   
-            System.out.println("DB connection getEmployeeHalfWorksDay");
+            log.debug("DB connection getEmployeeHalfWorksDay");
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getEmployeeHalfWorksDay");
+            log.error("Connection Failed! Check output console - getEmployeeHalfWorksDay");
         }
     }   
 

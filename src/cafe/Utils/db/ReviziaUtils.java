@@ -18,7 +18,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 
-public class ReviziaUtils {
+public class ReviziaUtils { 
     private static final Logger log = Logger.getLogger(ReviziaUtils.class);
 
     public static void addRevizia(List<ReviziaItem> revizia) 
@@ -74,18 +74,17 @@ public class ReviziaUtils {
                 reviziaDates.add(rs.getDate(1));          
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed!"
-                            + " Check output console - getReviziaDates" + e);
+            log.error("Connection Failed! Check output console - getReviziaDates" + e);
 
         } finally {
-            System.out.println("DB getReviziaDates");
+            log.debug("DB getReviziaDates");
             return reviziaDates;
         }
     }
 
     public static List<ReviziaItem> getReviziaByDate(Timestamp date, String orderCriteria) {
         List<ReviziaItem> revizia = new ArrayList<>();
-        System.out.println("date = " + date);
+        log.debug("date = " + date);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             final String SQL = "SELECT ingredient_id, old_count, storage.title, "
@@ -108,8 +107,7 @@ public class ReviziaUtils {
                 ));
             }            
         } catch (SQLException e) {
-            System.out.println("Connection Failed!"
-                            + " Check output console - getReviziaDates  " + e);
+            log.error("Connection Failed! Check output console - getReviziaDates  " + e);
         } finally {
             return revizia;
         }

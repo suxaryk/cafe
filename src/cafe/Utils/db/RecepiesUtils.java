@@ -11,8 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
 
 public class RecepiesUtils {
+    private static final Logger log = Logger.getLogger(RecepiesUtils.class);
 
     private static final ArrayList<String> sqlUpdateRecepiesById = new ArrayList<>();
 
@@ -35,12 +37,9 @@ public class RecepiesUtils {
     }
 
     public static void addRecipes(int dishDbId, String ingredients) {
-        System.out.println("dvID" + dishDbId);
         final String SQL = "INSERT INTO recipes(dishId, ingredients) VALUES(?, ?)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! addRecipes"
-                    : "Error DB connecting");
             PreparedStatement pstatement = connection.prepareStatement(SQL);
 
             pstatement.setInt(1, dishDbId);
@@ -48,10 +47,10 @@ public class RecepiesUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new recipes was added successfully!");
+                log.debug("A new recipes was added successfully!, dishDbId " + dishDbId + " " + ingredients);
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addRecepies");
+            log.error("Connection Failed! Check output console - addRecepies, dishDbId " + dishDbId + " " + ingredients);
         }
     }
 
@@ -60,20 +59,17 @@ public class RecepiesUtils {
             if (i == activeCat) {
                 try (Connection connection = DriverManager
                         .getConnection(URL, USERNAME, PASSWORD)) {
-                    System.out.println(!connection.isClosed() ? "DB connected! updateRecipes"
-                            : "Error DB connecting");
                     PreparedStatement pstatement = connection.
                             prepareStatement(sqlUpdateRecepiesById.get(i));
-
                     pstatement.setString(1, ingredients);
                     pstatement.setInt(2, dishDbId);
 
                     int rowsInserted = pstatement.executeUpdate();
                     if (rowsInserted > 0) {
-                        System.out.println("A new recipes was added successfully!");
+                        log.debug("A new recipes was added successfully! dishID " + dishDbId + " activeCat " + activeCat + " " + ingredients);
                     }
                 } catch (SQLException e) {
-                    System.out.println("Connection Failed! Check output console - updateRecipes");
+                    log.error("Connection Failed! Check output console - updateRecipes, dishID " + dishDbId + " activeCat " + activeCat + " " + ingredients);
                 }
             }
         }
@@ -82,9 +78,6 @@ public class RecepiesUtils {
     public static String readRecipeFromDB(int activeCat, int dishDbId) {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! readRecipeFromDB"
-                    : "Error DB connecting");
             PreparedStatement pst = connection.prepareStatement(sqlSelectByIdList.get(activeCat));
             pst.setInt(1, dishDbId);
 
@@ -96,7 +89,7 @@ public class RecepiesUtils {
             }
             return jsonRecepies;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - readRecipesFromDB");
+            log.error("Connection Failed! Check output console - readRecipesFromDB");
             return null;
         }
     }

@@ -22,19 +22,19 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author suxarina
  */
 public class StorageUtils {
+    private static final Logger log = Logger.getLogger(StorageUtils.class);
 
     public static void readStorage() {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             String SQL = "SELECT * FROM storage";
-            System.out.println(!connection.isClosed() ? "DB connected! readStorage"
-                    : "Error DB connecting");
             MainForm.storageList.clear();
             Statement statement = connection.createStatement();        
             ResultSet rs = statement.executeQuery(SQL);                
@@ -46,9 +46,9 @@ public class StorageUtils {
                                 rs.getDouble("count")
                         ));
             }
-        
+        log.debug("readStorage");
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - readStorage");
+            log.error("Connection Failed! Check output console - readStorage");
         }
 
     }
@@ -72,11 +72,11 @@ public class StorageUtils {
             pstatement.setInt(2, 0);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new Ingredient was added successfully!");
+                log.debug("A new Ingredient was added successfully!");
 
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addIngredientToDB");
+            log.error("Connection Failed! Check output console - addIngredientToDB");
         }
 
     }
@@ -90,10 +90,10 @@ public class StorageUtils {
             pst.setInt(1, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Ingredient was removed successfully!");
+                log.debug("Ingredient was removed successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - removeIngredientFromDB");
+            log.debug("Connection Failed! Check output console - removeIngredientFromDB");
         }
 
     }
@@ -108,10 +108,10 @@ public class StorageUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Storage count was updated successfully! Product id = " + dbId);
+                log.debug("Storage ing count was updated successfully! Product id = " + dbId);
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateCount" + dbId);
+            log.error("Connection Failed! Check output console - updateCount(Storage ing count)" + dbId);
         }
     }
 
@@ -120,8 +120,6 @@ public class StorageUtils {
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             String SQL = "SELECT * FROM storage WHERE Id =" + id;
-            System.out.println(!connection.isClosed() ? "DB connected! getIngredientById " + id
-                    : "Error DB connecting");
             MainForm.storageList.clear();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -132,7 +130,7 @@ public class StorageUtils {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getIngredientById " + id);
+            log.error("Connection Failed! Check output console - getIngredientById " + id);
         }
         return ingredient;
 
@@ -153,11 +151,11 @@ public class StorageUtils {
             pstatement.setString(3, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("New RemovedItem(s) was added successfully!");
+                log.debug("Списання продуктів RemovedItem(s) was added successfully!");
 
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addRemovedItems");
+            log.error("Connection Failed! Check output console - addRemovedItems(Списання продуктів)");
         }
     }
 //TODO fix hardcode
@@ -171,10 +169,10 @@ public class StorageUtils {
             pstatement.setString(2, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("New AddedItem(s) was added successfully!");
+                log.debug("New AddedItem(приход) was added successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addAddesItems");
+            log.error("Connection Failed! Check output console - addAddesItems(приход)");
         }
     }
     
@@ -189,10 +187,10 @@ public class StorageUtils {
             pstatement.setString(3, JsonItems);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("New AddedItem(s) was added successfully!");
+                log.debug("New addAddedItemsWithUser(приход) was added successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - addAddedItemsWithUser");
+            log.error("Connection Failed! Check output console - addAddedItemsWithUser(приход)");
         }
     }
 
@@ -227,9 +225,6 @@ public class StorageUtils {
                 + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getRemovedIngredients"
-                    : "Error DB connecting");
             List<Ingredient> removedList = new ArrayList<>();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -239,12 +234,12 @@ public class StorageUtils {
                                     rs.getString("removed_ingredients"))
                     );
                 }
-                System.out.println("read removedList size = " + removedList.size());
+                log.debug("read removedList(списання) size = " + removedList.size());
                 return removedList;
             }
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getRemovedIngredients ");
+            log.error("Connection Failed! Check output console - getRemovedIngredients(списання) ");
             return null;
         }
     }
@@ -255,9 +250,6 @@ public class StorageUtils {
                 + "'";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getAddedIngredients"
-                    : "Error DB connecting");
             List<Ingredient> addedList = new ArrayList<>();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -267,12 +259,12 @@ public class StorageUtils {
                                     rs.getString("added_ingredients"))
                     );
                 }
-                System.out.println("read addedList size = " + addedList.size());
+                log.debug("read addedList(приход) size = " + addedList.size());
                 return addedList;
             }
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getAddedIngredients ");
+            log.error("Connection Failed! Check output console - getAddedIngredients (приход)");
             return null;
         }
     }
@@ -284,9 +276,6 @@ public class StorageUtils {
                 + "' AND sum >= 0 ";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
-
-            System.out.println(!connection.isClosed() ? "DB connected! getOrderedDishes"
-                    : "Error DB connecting");
             List<OrderItem> orderedDishes = new ArrayList<>();
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -295,12 +284,12 @@ public class StorageUtils {
                             convertJSONToOrder(rs.getString("order_items"))
                     );
                 }
-                System.out.println("read orderedDishes size = " + orderedDishes.size());
+                log.debug("read orderedDishes size = " + orderedDishes.size());
                 return orderedDishes;
             }
 
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getOrderedDishes ");
+            log.error("Connection Failed! Check output console - getOrderedDishes ");
             return null;
         }
     }
@@ -328,7 +317,7 @@ public class StorageUtils {
             if (connection != null) {
                 connection.rollback();
             }
-            System.out.println("Connection Failed! Check output console - addStorageHistory");
+            log.error("Connection Failed! Check output console - addStorageHistory");
         } finally {
             if (pstatement != null) {
                 pstatement.close();

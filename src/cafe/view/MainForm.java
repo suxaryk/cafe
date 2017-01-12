@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.MediaSizeName;
@@ -3003,11 +3003,11 @@ public class MainForm extends javax.swing.JFrame {
             jTextPane2.print(null, null, false, null, set, false);
 
         } catch (PrinterException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("PrintClientCheck printer exception");
             JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
                     + "\n" + ex);
         } catch (HeadlessException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("PrintClientCheck exception from printer Job");
             JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
                     + "\n" + ex);
         }
@@ -3138,15 +3138,13 @@ public class MainForm extends javax.swing.JFrame {
        
         int allSum = OrderUtils.getAllSumBefore(end);
         int startKass = OrderUtils.getAllSumBefore(start);
-        //getAllCashSumBefore for HM3
+        //getAllCashSumBefore ONLY !!! for HM3
         if (CARD_PAYMENT) {
             allSum = OrderUtils.getAllCashSumBefore(end);
             startKass = OrderUtils.getAllCashSumBefore(start);            
         }
         
-        int cookCount = OrderUtils.getAllCookCountBetween(start, end);
-
-        
+        int cookCount = OrderUtils.getAllCookCountBetween(start, end);        
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
@@ -3163,6 +3161,8 @@ public class MainForm extends javax.swing.JFrame {
                 + "Витрати за день " + dayDiff + " грн.\n"
                 + "Залишок в касі " + allSum + " грн\n"
                 + "------------------------------------------------\n";
+        log.debug(info);
+  
         return info;
     }
 
@@ -3180,12 +3180,12 @@ public class MainForm extends javax.swing.JFrame {
                 StorageUtils.readStorage();
                 StorageUtils.addStorageHistory(storageList);
             } catch (SQLException ex) {
-                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("SQL syntax error addStorageHistory");
+                log.error("SQL syntax error addStorageHistory when closeSystem");
             }
             EmployeeUtils.addTimeOut(userList.get(User.active));         
             EmployeeUtils.updateEmployeesWorkedHours();
             OrderUtils.addDayInfo(DAY_START_TIME, new Date(), dayInfo());
+            log.debug("Касу закрито----------------");
             System.exit(0);
         }
     }
@@ -3885,8 +3885,9 @@ public class MainForm extends javax.swing.JFrame {
         }
         try {
             ReviziaUtils.addRevizia(reviziaList);
+            log.debug("Revizia was added successfully!");
         } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Connection Failed! Check output console - updateItemsFromStorage  Помилка під час проведення ревізії");
             System.out.println("AddRevizia Exception " + ex);
         }
         
@@ -4119,13 +4120,14 @@ public class MainForm extends javax.swing.JFrame {
 
         try {
             jTextPane1.print(null, null, false, null, set, false);
+            log.debug("printKitchenCheck ");
 
         } catch (PrinterException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Помилка роботи принтера printKitchenCheck");
             JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
                     + "\n" + ex);
         } catch (HeadlessException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Device exception printKitchenCheck");
             JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
                     + "\n" + ex);
         }
@@ -4573,12 +4575,10 @@ public class MainForm extends javax.swing.JFrame {
             setColumnRender(jTable6.getColumnModel().getColumn(4));
 
         } catch (ParseException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Table Column render error -> initCalculationTable");
         }
 
     }
-
-    //initCalculationTable
     public static void setColumnRender(TableColumn column) throws ParseException {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
@@ -4788,6 +4788,7 @@ public class MainForm extends javax.swing.JFrame {
         mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     
+    private static final Logger log = Logger.getLogger("MainForm");
     private static String clientCheck; 
     private static String kitchenCheck; 
     private static final String CHECK_FONT_SIZE = "check_font_size";

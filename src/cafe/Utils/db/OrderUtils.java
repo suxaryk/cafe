@@ -126,7 +126,7 @@ public class OrderUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new ORDER was added successfully! + dayId" + order.getDayId());
+                log.debug("A new ORDER was added successfully! + dayId = " + order.getDayId());
                 for (OrderItem item : order.getItems()) {
                     log.debug("----------title " + item.getDish().getTitle() + " count " + item.getCount());
                 }
@@ -193,10 +193,10 @@ public class OrderUtils {
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("updateTable was added successfully!" + activeTable);
+                log.debug("updateTable(backupOrder to tables) was added successfully!" + activeTable);
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updateTable" + activeTable + " " + user.getName());
+            log.error("Connection Failed! Check output console - updateTable(backupOrder to tables)" + activeTable + " " + user.getName());
         }
 
     }
@@ -506,10 +506,10 @@ public class OrderUtils {
                     }
                 }
                 employee.setKeyMoney(sum);  
-                log.debug("getSumKeyMoneyForUser = " + employee.getName());
+                log.debug("getSumKeyMoneyForUser(Аванс) = " + employee.getName());
             }       
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getSumKeyMoney= ");
+            log.error("Connection Failed! Check output console - getSumKeyMoney(Аванс)= ");
         }
     }
 

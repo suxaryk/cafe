@@ -73,7 +73,7 @@ public class DishUtils {
                 }
             }
         } catch (SQLException e) {
-            log.debug("Connection Failed! Check output console - readDBCategoryById");
+            log.error("Connection Failed! Check output console - readDBCategoryById");
         }
     }
 

@@ -161,6 +161,7 @@ public class EmployeeUtils {
 
     }
 
+    //TODO forbit remove user/barmen
     public static void removeById(int dbId) {
         final String SQL = "DELETE FROM employee WHERE Id = ?";
 
@@ -170,7 +171,7 @@ public class EmployeeUtils {
             pst.setInt(1, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("Employee was removed successfully!");
+                log.debug("Employee was removed successfully!" + dbId);
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - removeEmployee");
@@ -224,7 +225,7 @@ public class EmployeeUtils {
             pstatement.setTimestamp(2, getCurrentTimeStamp());
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new Time In was added successfully!" + employee.getName());
+                log.debug("addTimeIn was added successfully!" + employee.getName());
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - addTimeIn" + employee.getName());
@@ -243,7 +244,7 @@ public class EmployeeUtils {
             pstatement.setString(1, employee.getName());
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("A new Time was added successfully! " + employee.getName());
+                log.debug("addTimeOut was added successfully! " + employee.getName());
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - addTimeOut" + employee.getName());

@@ -101,7 +101,7 @@ public class MainForm extends javax.swing.JFrame {
         initIcons();
 
         InitComonentsProperty();
-
+        log.debug("-----------Касу відкрито");
         initLoginForm();
         initMainForm();
         initTables();
@@ -2596,11 +2596,10 @@ public class MainForm extends javax.swing.JFrame {
         model.setRowCount(0);
         jComboBox2.setSelectedIndex(0);
         activeTable = getButtonId(evt);
-        System.out.println("table=" + activeTable);
+        log.debug("table= " + activeTable + " user= " + userList.get(User.active).getName());
 
         jLabel4.setText("Стіл № " + activeTable);
         jLabel4.setForeground(RED);
-        System.out.println("user" + User.active);
 
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
             refreshOrderTable();
@@ -2656,8 +2655,6 @@ public class MainForm extends javax.swing.JFrame {
     private void getListItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getListItem
         clearCountButton();
         activeDishes = jList2.getSelectedIndex();
-        System.out.println("active " + jList2.getLeadSelectionIndex());
-        System.out.println("selected index " + jList2.getSelectedIndex());
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
         jCheckBox3.setSelected(menu.get(activeCat).getDishes().get(activeDishes).isCook());
@@ -2689,8 +2686,8 @@ public class MainForm extends javax.swing.JFrame {
         OrderItem newOrderItem = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCook);
 
         int index = getIndex(count, isCook);
-        System.out.println("activeCAt " + activeCat);
-        System.out.println("iscook " + newOrderItem.getDish().isCook());
+        log.debug("activeCat " + activeCat);
+        log.debug("iscook " + newOrderItem.getDish().isCook());
 
         orders.get(activeTable).getItems().add(newOrderItem);
         int addedIndex = orders.get(activeTable).getItems().size() - 1;
@@ -2806,7 +2803,7 @@ public class MainForm extends javax.swing.JFrame {
         if (User.active != -1) {
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             jLabel5.setText("  " + userList.get(User.active).getName());
-            System.out.println("User.active " + User.active);
+            log.debug("Barmen login " + userList.get(User.active).getName());
             jLabel5.setForeground(BLUE);
             model.setColumnCount(1);
         }
@@ -2874,7 +2871,7 @@ public class MainForm extends javax.swing.JFrame {
     public static void setStartUserTime() {
         if (new LocalTime().getHourOfDay() > 6) {
             if (!isEmployeeLogged()) {
-                System.out.println("-----" + userList.get(User.active).getName());
+                log.debug("-----" + userList.get(User.active).getName());
                 EmployeeUtils.addTimeIn(userList.get(User.active));
                 EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
 
@@ -2888,7 +2885,7 @@ public class MainForm extends javax.swing.JFrame {
         }
 
         DAY_START_TIME = userList.get(User.active).getStartTime();
-        System.out.println("DAY_START_TIME " + DAY_START_TIME);
+        log.debug("DAY_START_TIME " + DAY_START_TIME);
 
     }
 
@@ -2900,9 +2897,7 @@ public class MainForm extends javax.swing.JFrame {
                     .getOrderIngredients().get(ingredient.getId());
             if (diff != 0.0) {
                 double old = ingredient.getCount();
-                System.out.println("old = " + old);
-                System.out.println("diff = " + diff);
-                System.out.println("old-diff = " + decFormat.format(old - diff));
+                log.debug("SubOrderIngredientsFromDB(списання зі складу по чеку) old-diff = " + decFormat.format(old - diff));
                 ingredient.setCount(old - diff);
                 StorageUtils.updateCount(ingredient.getId(), ingredient.getCount());
             }
@@ -3007,7 +3002,7 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
                     + "\n" + ex);
         } catch (HeadlessException ex) {
-            log.error("PrintClientCheck exception from printer Job");
+            log.error("PrintClientCheck Error from printer Job");
             JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
                     + "\n" + ex);
         }
@@ -3125,7 +3120,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginEmployee
     public static String dayInfo() {
-        System.out.println("----------day Info----------");
+        log.debug("----------day Info----------");
 
         int ordersCount = OrderUtils.getDayOrdersCount();
         Timestamp start = new Timestamp(DAY_START_TIME.getTime());
@@ -3194,9 +3189,9 @@ public class MainForm extends javax.swing.JFrame {
         String command = "cmd /c taskkill /im osk.exe /f";
         try {
             Process process = Runtime.getRuntime().exec(command);
-            System.out.println("startKeyboard");
+            log.debug("StopKeyboard");
         } catch (IOException ex) {
-            System.out.println("Error startKeyboard");
+            log.error("Error StopKeyboard");
         }
     }
 
@@ -3204,9 +3199,9 @@ public class MainForm extends javax.swing.JFrame {
         String command = "cmd /c osk";
         try {
             Process process = Runtime.getRuntime().exec(command);
-            System.out.println("startKeyboard");
+            log.debug("startKeyboard");
         } catch (IOException ex) {
-            System.out.println("Error startKeyboard");
+            log.error("Error startKeyboard");
         }
     }
 
@@ -3223,6 +3218,7 @@ public class MainForm extends javax.swing.JFrame {
             try {
                 Process process = Runtime.getRuntime().exec(command);
             } catch (IOException ex) {
+                log.error("Connection Failed! Check output console  doDBDump");
             }
         }
     }
@@ -3268,9 +3264,9 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     private void removeDish(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeDish
-        System.out.println("selectd index = " + jList2.getSelectedIndex());
         int activeIndex = jList2.getSelectedIndex();
         int dbId = menu.get(activeCat).getDishes().get(activeIndex).getDbID();
+        log.debug("removeDish from menu cat " + menu.get(activeCat).getTitle() + " dbID " + dbId);
         if (activeIndex >= 0) {
             DishUtils.removeDishById(dbId, activeCat);
             menu.get(activeCat).getDishes().clear();
@@ -3393,7 +3389,6 @@ public class MainForm extends javax.swing.JFrame {
         if (index != -1) {
             int dbId = menu.get(activeCat).getDishes().get(index).getDbID();
             String title = jTextField4.getText();
-            System.out.println("title = " + title);
             int price = Integer.parseInt(jTextField2.getText());
             if (!title.equals("")) {
                 DishUtils.updateDishTitle(dbId, title, activeCat);
@@ -3452,7 +3447,7 @@ public class MainForm extends javax.swing.JFrame {
                 activeCat, activeDishes);
         String JSONString = RecepiesUtils.readRecipeFromDB(activeCat,
                 menu.get(activeCat).getDishes().get(activeDishes).getDbID());
-        System.out.println("JSONString=" + JSONString);
+        log.debug("saveCalculation =" + JSONString);
         menu.get(activeCat).getDishes().get(activeDishes).getRecipe().clear();
         menu.get(activeCat).getDishes().get(activeDishes).setRecipe(JSONUtils.getRecipeFromJSON(JSONString));
         refreshCalc(null);
@@ -3515,13 +3510,12 @@ public class MainForm extends javax.swing.JFrame {
             for (int j = 0; j < cat.getDishes().size(); j++) {
                 for (int k = 0; k < cat.getDishes().get(j).getRecipe().size(); k++) {
                     if (cat.getDishes().get(j).getRecipe().get(k).getId() == storageList.get(index).getId()) {
-                        System.out.println("remove=" + storageList.get(index).getTitle());
-                        System.out.println("dish----------" + cat.getDishes().get(j).getTitle());
                         message.append("-- ").append(cat.getDishes().get(j).getTitle()).append("\n");
                     }
                 }
             }
         }
+        log.debug(message);
         return message.toString();
     }
     private void removeIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIngredient
@@ -3628,10 +3622,8 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateUserAndEmployee
 
     private void removeEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEmployee
-        System.out.println("size in remove" + employees.size());
         int activeRow = jTable2.getSelectedRow();
         if (activeRow != -1) {
-            System.out.println("activeRow= " + activeRow);
             EmployeeUtils.removeById(employees.get(activeRow).getDbId());
             refreshEmployeesTable();
             setSelectedLastIndex(jTable2);
@@ -3722,7 +3714,6 @@ public class MainForm extends javax.swing.JFrame {
             String old = table.getValueAt(index, columnIndex).toString();
             if (old.length() > 0) {
                 old = old.substring(0, old.length() - 1);
-                System.out.println("old" + old);
                 table.setValueAt(old, index, columnIndex);
             }
         } else {
@@ -3828,6 +3819,7 @@ public class MainForm extends javax.swing.JFrame {
                         new Ingredient(storageList.get(i).getId(), diff));
             }
         }      
+        //TODO check and FIX 
         if (!addedProductsToStorage.isEmpty()) {
                 StorageUtils.addAddedItemsWithUser(
                         convertToJSON(addedProductsToStorage),
@@ -3888,7 +3880,7 @@ public class MainForm extends javax.swing.JFrame {
             log.debug("Revizia was added successfully!");
         } catch (SQLException ex) {
             log.error("Connection Failed! Check output console - updateItemsFromStorage  Помилка під час проведення ревізії");
-            System.out.println("AddRevizia Exception " + ex);
+
         }
         
     }
@@ -3998,7 +3990,7 @@ public class MainForm extends javax.swing.JFrame {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
                 order.setCardPayed(false);
-                System.out.println("Incasacia - diff =" + order.getOrderSum());
+                log.debug("Inkasacia = " + order.getOrderSum());
                 OrderUtils.addOrder(order, employees.get(index), "");
                 jTextField5.setText(String.valueOf(getRealKasa()));
                 jTextField12.setText("");
@@ -4120,7 +4112,7 @@ public class MainForm extends javax.swing.JFrame {
 
         try {
             jTextPane1.print(null, null, false, null, set, false);
-            log.debug("printKitchenCheck ");
+            log.debug("printedKitchenCheck №" + orders.get(activeTable).getDayId());
 
         } catch (PrinterException ex) {
             log.error("Помилка роботи принтера printKitchenCheck");

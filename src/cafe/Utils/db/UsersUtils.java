@@ -31,7 +31,7 @@ public class UsersUtils {
                             rs.getInt("pass")
                     ));
                 }
-                System.out.println("DB readAllUsers");
+                log.debug("DB readAllUsers");
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - readAllUsers");

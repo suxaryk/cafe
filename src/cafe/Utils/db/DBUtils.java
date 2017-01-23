@@ -210,9 +210,7 @@ public class DBUtils {
         final String SQL = "SELECT * from sys_var";
         Map<String, String> sysVar = new HashMap<>();
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! getSystemVariables"
-                    : "Error DB connecting");
+                .getConnection(URL, USERNAME, PASSWORD)) {       
             Statement statement = connection.createStatement();
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 while (rs.next()) {
@@ -229,9 +227,7 @@ public class DBUtils {
     public static void updateSystemVariables(String sysVarName, String value) {
         final String SQL = "UPDATE sys_var set value=? where name = ?";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(!connection.isClosed() ? "DB connected! updateSystemVariables"
-                    : "Error DB connecting");
+                .getConnection(URL, USERNAME, PASSWORD)) {       
             PreparedStatement pstatement = connection.prepareStatement(SQL);
             pstatement.setString(1, value);
             pstatement.setString(2, sysVarName);

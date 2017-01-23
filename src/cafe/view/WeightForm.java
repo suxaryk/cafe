@@ -2,19 +2,13 @@ package cafe.view;
 
 import cafe.Utils.db.DishUtils;
 import cafe.model.Ingredient;
-import cafe.model.OrderItem;
 import static cafe.view.MainForm.activeCat;
 import static cafe.view.MainForm.activeDishes;
-import static cafe.view.MainForm.activeTable;
 import static cafe.view.MainForm.dishCount;
 import static cafe.view.MainForm.mainForm;
 import static cafe.view.MainForm.menu;
-import static cafe.view.MainForm.orders;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.swing.JButton;
-import static cafe.view.MainForm.activeOrderItemIndex;
 
 /**
  *
@@ -27,7 +21,6 @@ public class WeightForm extends javax.swing.JFrame {
      */
     public WeightForm() {
         initComponents();
-        initTargetDish();
 
     }
 
@@ -50,15 +43,11 @@ public class WeightForm extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Вага м'яса");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
             public void windowDeactivated(java.awt.event.WindowEvent evt) {
                 formWindowDeactivated(evt);
             }
@@ -224,12 +213,6 @@ public class WeightForm extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(280, 40, 150, 50);
 
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel3.setText(" ");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(10, 10, 500, 20);
-
         setSize(new java.awt.Dimension(530, 250));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -261,28 +244,23 @@ public class WeightForm extends javax.swing.JFrame {
 
     //change ingredient weight if it is equals 0.1 KG
     public void setDishMeetWeight() {
-        for (Ingredient ing : orderItem.getDish().getRecipe()) {
+        for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {
             if (ing.getCount() == 0.1) {
                 if (listOfCoeffic.containsKey(ing.getId())) {
                     ing.setCount((weightCount * listOfCoeffic.get(ing.getId())) / 1000);
                 } else {
                     ing.setCount(weightCount / 1000);
                 }
-                String title = orderItem.getDish().getTitle();
-                int price = orderItem.getDish().getPrice();
-                orderItem.getDish().setTitle(removeLastFewChar(title) + "(" + weightCount.intValue() + " гр.)");
+                String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
+                int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
+                menu.get(activeCat).getDishes().get(activeDishes).setTitle(removeLastFewChar(title) + "(" + weightCount.intValue() + " гр.)");
                 Double k = (weightCount * price) / 100;
-                orderItem.getDish().setPrice((int) Math.ceil(k));
+                menu.get(activeCat).getDishes().get(activeDishes).setPrice((int) Math.ceil(k));
                 break;
             }
         }
     }
     
-    public void initTargetDish(){
-        orderItem = orders.get(activeTable).getItems().get(activeOrderItemIndex);
-        jLabel3.setText(orderItem.getDish().getTitle());
-    }
-
     private void initCoeffic() {
        
 //        listOfCoeffic = new HashMap<>();
@@ -302,22 +280,15 @@ public class WeightForm extends javax.swing.JFrame {
             weightCount = Double.parseDouble(line);
             System.out.println("weightCount " + weightCount);
             setDishMeetWeight();
-            mainForm.updateOrderItemModel();
-//            mainForm.addOrderItemToTable(dishCount);
-//            DishUtils.readDBCategoryById(4);
-//            mainForm.refreshDishList(4);
-
-            if (weightCount != 0) {
-                this.dispose();
-//            mainForm.setEnabled(true);
-            }
+            mainForm.addOrderItemToTable(dishCount);
+            DishUtils.readDBCategoryById(4);
+            mainForm.refreshDishList(4);
         }
-
+        if (weightCount != 0) {
+            this.dispose();
+            mainForm.setEnabled(true);
+        }
     }//GEN-LAST:event_setWeightCount
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        this.dispose();
-    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -332,8 +303,6 @@ public class WeightForm extends javax.swing.JFrame {
         });
     }
     public static Double weightCount;
-    public static OrderItem orderItem;
-    
     public static HashMap<Integer, Double> listOfCoeffic = new HashMap<>();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -351,7 +320,6 @@ public class WeightForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

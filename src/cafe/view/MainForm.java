@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.MediaSizeName;
@@ -83,8 +83,6 @@ import static cafe.Utils.json.JSONUtils.convertToJSON;
 import static cafe.view.WeightForm.listOfCoeffic;
 import java.net.ConnectException;
 import static cafe.Utils.db.DBUtils.setPayMethod;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * all methods in one class it`s very bad i know
@@ -103,7 +101,7 @@ public class MainForm extends javax.swing.JFrame {
         initIcons();
 
         InitComonentsProperty();
-
+        log.debug("-----------Касу відкрито");
         initLoginForm();
         initMainForm();
         initTables();
@@ -209,7 +207,6 @@ public class MainForm extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jButton16 = new javax.swing.JButton();
         UsersPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -1284,8 +1281,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/paper6.png"))); // NOI18N
         jButton3.setEnabled(false);
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PrintCheck(evt);
             }
         });
@@ -1306,14 +1303,9 @@ public class MainForm extends javax.swing.JFrame {
         jButton9.setBackground(new java.awt.Color(255, 102, 102));
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/dining4.png"))); // NOI18N
         jButton9.setEnabled(false);
-        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                clearTable(evt);
-            }
-        });
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                clearTable(evt);
             }
         });
         OrderPanel.add(jButton9);
@@ -1435,16 +1427,6 @@ public class MainForm extends javax.swing.JFrame {
         jLabel13.setText("В КАСУ НЕ РАХУЄ");
         OrderPanel.add(jLabel13);
         jLabel13.setBounds(120, 540, 280, 30);
-
-        jButton16.setBackground(new java.awt.Color(255, 255, 255));
-        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/libra.png"))); // NOI18N
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                weight_order_meat(evt);
-            }
-        });
-        OrderPanel.add(jButton16);
-        jButton16.setBounds(0, 530, 100, 70);
 
         getContentPane().add(OrderPanel);
         OrderPanel.setBounds(710, 5, 500, 680);
@@ -2614,11 +2596,10 @@ public class MainForm extends javax.swing.JFrame {
         model.setRowCount(0);
         jComboBox2.setSelectedIndex(0);
         activeTable = getButtonId(evt);
-        System.out.println("table=" + activeTable);
+        log.debug("table= " + activeTable + " user= " + userList.get(User.active).getName());
 
         jLabel4.setText("Стіл № " + activeTable);
         jLabel4.setForeground(RED);
-        System.out.println("user" + User.active);
 
         if (evt.getComponent().getBackground().equals(Color.yellow)) {
             refreshOrderTable();
@@ -2674,8 +2655,6 @@ public class MainForm extends javax.swing.JFrame {
     private void getListItem(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getListItem
         clearCountButton();
         activeDishes = jList2.getSelectedIndex();
-        System.out.println("active " + jList2.getLeadSelectionIndex());
-        System.out.println("selected index " + jList2.getSelectedIndex());
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         int price = menu.get(activeCat).getDishes().get(activeDishes).getPrice();
         jCheckBox3.setSelected(menu.get(activeCat).getDishes().get(activeDishes).isCook());
@@ -2707,8 +2686,8 @@ public class MainForm extends javax.swing.JFrame {
         OrderItem newOrderItem = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCook);
 
         int index = getIndex(count, isCook);
-        System.out.println("activeCAt " + activeCat);
-        System.out.println("iscook " + newOrderItem.getDish().isCook());
+        log.debug("activeCat " + activeCat);
+        log.debug("iscook " + newOrderItem.getDish().isCook());
 
         orders.get(activeTable).getItems().add(newOrderItem);
         int addedIndex = orders.get(activeTable).getItems().size() - 1;
@@ -2730,14 +2709,6 @@ public class MainForm extends javax.swing.JFrame {
         setOrderIdForTable(orders.get(activeTable).getDayId());
     }
     
-    public void updateOrderItemModel(){
-        //TODO fix order sum
-        jTable1.setValueAt(WeightForm.orderItem.getDish().getTitle(), activeOrderItemIndex, 0);
-        jTable1.setValueAt(WeightForm.orderItem.getDish().getPrice(), activeOrderItemIndex, 2);
-        jTable1.setValueAt(WeightForm.orderItem.getSum(), activeOrderItemIndex, 3);
-        jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
-    }
-
     public boolean calcMeat() {
         boolean calcMeat = false;
         for (Ingredient ing : menu.get(activeCat).getDishes().get(activeDishes).getRecipe()) {
@@ -2751,13 +2722,12 @@ public class MainForm extends javax.swing.JFrame {
 
     private void addRecordToTable(int count) {
         clearCountButton();
-        //remove after 03.2017 for host4
-//        if (activeCat == 4 && calcMeat()) {
-//            changeIngredientWeight();
-//            mainForm.setEnabled(false);
-//        } else {
+        if (activeCat == 4 && calcMeat()) {
+            changeIngredientWeight();
+            mainForm.setEnabled(false);
+        } else {
             addOrderItemToTable(count);
-//        }
+    }
     }
 
     private void refreshListOfPrices() {
@@ -2829,40 +2799,11 @@ public class MainForm extends javax.swing.JFrame {
         evt.getComponent().setBackground(RED);
     }//GEN-LAST:event_chooseCount
 
-    private void clearTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearTable
-        if (jButton9.isEnabled()) {
-            orders.remove(activeTable);
-            jTabbedPane1.setSelectedIndex(0);
-            System.out.println("compId" + activeTable);
-            TablesPanel.getComponent(activeTable - 1).setBackground(GREEN);
-            jTabbedPane1.setEnabledAt(1, false);
-            jTabbedPane1.setEnabledAt(2, false);
-            DefaultTableModel model
-                    = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            jTextField1.setText("0");
-            jButton10.setBackground(Color.WHITE);
-            OrderUtils.fillTableById(activeTable);
-            setOrderIdForTable(0);
-            activeTable = 0;
-            jLabel4.setText("Стіл № ");
-            System.out.println("orders size on remove" + orders.size());
-            jButton10.setBackground(Color.WHITE);
-            jButton3.setBackground(Color.WHITE);
-            jButton10.setEnabled(true);
-            System.out.println("actTable=" + activeTable);
-            jButton3.setEnabled(false);
-            jButton7.setEnabled(false);
-            jButton9.setEnabled(false);
-            jButton10.setEnabled(false);
-        }
-    }//GEN-LAST:event_clearTable
-
     public void initBarmen() {
         if (User.active != -1) {
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             jLabel5.setText("  " + userList.get(User.active).getName());
-            System.out.println("User.active " + User.active);
+            log.debug("Barmen login " + userList.get(User.active).getName());
             jLabel5.setForeground(BLUE);
             model.setColumnCount(1);
         }
@@ -2930,7 +2871,7 @@ public class MainForm extends javax.swing.JFrame {
     public static void setStartUserTime() {
         if (new LocalTime().getHourOfDay() > 6) {
             if (!isEmployeeLogged()) {
-                System.out.println("-----" + userList.get(User.active).getName());
+                log.debug("-----" + userList.get(User.active).getName());
                 EmployeeUtils.addTimeIn(userList.get(User.active));
                 EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
 
@@ -2944,7 +2885,7 @@ public class MainForm extends javax.swing.JFrame {
         }
 
         DAY_START_TIME = userList.get(User.active).getStartTime();
-        System.out.println("DAY_START_TIME " + DAY_START_TIME);
+        log.debug("DAY_START_TIME " + DAY_START_TIME);
 
     }
 
@@ -2956,9 +2897,7 @@ public class MainForm extends javax.swing.JFrame {
                     .getOrderIngredients().get(ingredient.getId());
             if (diff != 0.0) {
                 double old = ingredient.getCount();
-                System.out.println("old = " + old);
-                System.out.println("diff = " + diff);
-                System.out.println("old-diff = " + decFormat.format(old - diff));
+                log.debug("SubOrderIngredientsFromDB(списання зі складу по чеку) old-diff = " + decFormat.format(old - diff));
                 ingredient.setCount(old - diff);
                 StorageUtils.updateCount(ingredient.getId(), ingredient.getCount());
             }
@@ -3059,11 +2998,11 @@ public class MainForm extends javax.swing.JFrame {
             jTextPane2.print(null, null, false, null, set, false);
 
         } catch (PrinterException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("PrintClientCheck printer exception");
             JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
                     + "\n" + ex);
         } catch (HeadlessException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("PrintClientCheck Error from printer Job");
             JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
                     + "\n" + ex);
         }
@@ -3073,23 +3012,6 @@ public class MainForm extends javax.swing.JFrame {
         jTextPane2.setContentType("text/html");
         jTextPane2.setText(checkHtml);
     }
-
-    private void PrintCheck(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintCheck
-        if (activeTable >=1 && !orders.get(activeTable).isPayed()) {
-            jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
-            setOrderIdForTable(orders.get(activeTable).getDayId());
-            setOrderPrinted();
-            OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
-
-            if (jButton3.isEnabled()) {
-                if (orders.get(activeTable).getOrderSum() != 0) {
-                    printKitchenCheck();
-                    jButton9.setEnabled(false);
-                }
-            }
-        }
-
-    }//GEN-LAST:event_PrintCheck
     private void sortListOfDish(List list, final int orderArg) {
         Collections.sort(list, new Comparator<Dish>() {
             @Override
@@ -3198,7 +3120,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginEmployee
     public static String dayInfo() {
-        System.out.println("----------day Info----------");
+        log.debug("----------day Info----------");
 
         int ordersCount = OrderUtils.getDayOrdersCount();
         Timestamp start = new Timestamp(DAY_START_TIME.getTime());
@@ -3211,15 +3133,13 @@ public class MainForm extends javax.swing.JFrame {
        
         int allSum = OrderUtils.getAllSumBefore(end);
         int startKass = OrderUtils.getAllSumBefore(start);
-        //getAllCashSumBefore for HM3
+        //getAllCashSumBefore ONLY !!! for HM3
         if (CARD_PAYMENT) {
             allSum = OrderUtils.getAllCashSumBefore(end);
             startKass = OrderUtils.getAllCashSumBefore(start);            
         }
         
-        int cookCount = OrderUtils.getAllCookCountBetween(start, end);
-
-        
+        int cookCount = OrderUtils.getAllCookCountBetween(start, end);        
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String info = ""
@@ -3236,6 +3156,8 @@ public class MainForm extends javax.swing.JFrame {
                 + "Витрати за день " + dayDiff + " грн.\n"
                 + "Залишок в касі " + allSum + " грн\n"
                 + "------------------------------------------------\n";
+        log.debug(info);
+  
         return info;
     }
 
@@ -3253,12 +3175,12 @@ public class MainForm extends javax.swing.JFrame {
                 StorageUtils.readStorage();
                 StorageUtils.addStorageHistory(storageList);
             } catch (SQLException ex) {
-                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("SQL syntax error addStorageHistory");
+                log.error("SQL syntax error addStorageHistory when closeSystem");
             }
             EmployeeUtils.addTimeOut(userList.get(User.active));         
             EmployeeUtils.updateEmployeesWorkedHours();
             OrderUtils.addDayInfo(DAY_START_TIME, new Date(), dayInfo());
+            log.debug("Касу закрито----------------");
             System.exit(0);
         }
     }
@@ -3267,9 +3189,9 @@ public class MainForm extends javax.swing.JFrame {
         String command = "cmd /c taskkill /im osk.exe /f";
         try {
             Process process = Runtime.getRuntime().exec(command);
-            System.out.println("startKeyboard");
+            log.debug("StopKeyboard");
         } catch (IOException ex) {
-            System.out.println("Error startKeyboard");
+            log.error("Error StopKeyboard");
         }
     }
 
@@ -3277,9 +3199,9 @@ public class MainForm extends javax.swing.JFrame {
         String command = "cmd /c osk";
         try {
             Process process = Runtime.getRuntime().exec(command);
-            System.out.println("startKeyboard");
+            log.debug("startKeyboard");
         } catch (IOException ex) {
-            System.out.println("Error startKeyboard");
+            log.error("Error startKeyboard");
         }
     }
 
@@ -3296,6 +3218,7 @@ public class MainForm extends javax.swing.JFrame {
             try {
                 Process process = Runtime.getRuntime().exec(command);
             } catch (IOException ex) {
+                log.error("Connection Failed! Check output console  doDBDump");
             }
         }
     }
@@ -3341,9 +3264,9 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     private void removeDish(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeDish
-        System.out.println("selectd index = " + jList2.getSelectedIndex());
         int activeIndex = jList2.getSelectedIndex();
         int dbId = menu.get(activeCat).getDishes().get(activeIndex).getDbID();
+        log.debug("removeDish from menu cat " + menu.get(activeCat).getTitle() + " dbID " + dbId);
         if (activeIndex >= 0) {
             DishUtils.removeDishById(dbId, activeCat);
             menu.get(activeCat).getDishes().clear();
@@ -3466,7 +3389,6 @@ public class MainForm extends javax.swing.JFrame {
         if (index != -1) {
             int dbId = menu.get(activeCat).getDishes().get(index).getDbID();
             String title = jTextField4.getText();
-            System.out.println("title = " + title);
             int price = Integer.parseInt(jTextField2.getText());
             if (!title.equals("")) {
                 DishUtils.updateDishTitle(dbId, title, activeCat);
@@ -3525,7 +3447,7 @@ public class MainForm extends javax.swing.JFrame {
                 activeCat, activeDishes);
         String JSONString = RecepiesUtils.readRecipeFromDB(activeCat,
                 menu.get(activeCat).getDishes().get(activeDishes).getDbID());
-        System.out.println("JSONString=" + JSONString);
+        log.debug("saveCalculation =" + JSONString);
         menu.get(activeCat).getDishes().get(activeDishes).getRecipe().clear();
         menu.get(activeCat).getDishes().get(activeDishes).setRecipe(JSONUtils.getRecipeFromJSON(JSONString));
         refreshCalc(null);
@@ -3588,13 +3510,12 @@ public class MainForm extends javax.swing.JFrame {
             for (int j = 0; j < cat.getDishes().size(); j++) {
                 for (int k = 0; k < cat.getDishes().get(j).getRecipe().size(); k++) {
                     if (cat.getDishes().get(j).getRecipe().get(k).getId() == storageList.get(index).getId()) {
-                        System.out.println("remove=" + storageList.get(index).getTitle());
-                        System.out.println("dish----------" + cat.getDishes().get(j).getTitle());
                         message.append("-- ").append(cat.getDishes().get(j).getTitle()).append("\n");
                     }
                 }
             }
         }
+        log.debug(message);
         return message.toString();
     }
     private void removeIngredient(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIngredient
@@ -3701,10 +3622,8 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateUserAndEmployee
 
     private void removeEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEmployee
-        System.out.println("size in remove" + employees.size());
         int activeRow = jTable2.getSelectedRow();
         if (activeRow != -1) {
-            System.out.println("activeRow= " + activeRow);
             EmployeeUtils.removeById(employees.get(activeRow).getDbId());
             refreshEmployeesTable();
             setSelectedLastIndex(jTable2);
@@ -3795,7 +3714,6 @@ public class MainForm extends javax.swing.JFrame {
             String old = table.getValueAt(index, columnIndex).toString();
             if (old.length() > 0) {
                 old = old.substring(0, old.length() - 1);
-                System.out.println("old" + old);
                 table.setValueAt(old, index, columnIndex);
             }
         } else {
@@ -3901,6 +3819,7 @@ public class MainForm extends javax.swing.JFrame {
                         new Ingredient(storageList.get(i).getId(), diff));
             }
         }      
+        //TODO check and FIX 
         if (!addedProductsToStorage.isEmpty()) {
                 StorageUtils.addAddedItemsWithUser(
                         convertToJSON(addedProductsToStorage),
@@ -3958,9 +3877,10 @@ public class MainForm extends javax.swing.JFrame {
         }
         try {
             ReviziaUtils.addRevizia(reviziaList);
+            log.debug("Revizia was added successfully!");
         } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("AddRevizia Exception " + ex);
+            log.error("Connection Failed! Check output console - updateItemsFromStorage  Помилка під час проведення ревізії");
+
         }
         
     }
@@ -4070,7 +3990,7 @@ public class MainForm extends javax.swing.JFrame {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
                 order.setCardPayed(false);
-                System.out.println("Incasacia - diff =" + order.getOrderSum());
+                log.debug("Inkasacia = " + order.getOrderSum());
                 OrderUtils.addOrder(order, employees.get(index), "");
                 jTextField5.setText(String.valueOf(getRealKasa()));
                 jTextField12.setText("");
@@ -4192,13 +4112,14 @@ public class MainForm extends javax.swing.JFrame {
 
         try {
             jTextPane1.print(null, null, false, null, set, false);
+            log.debug("printedKitchenCheck №" + orders.get(activeTable).getDayId());
 
         } catch (PrinterException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Помилка роботи принтера printKitchenCheck");
             JOptionPane.showMessageDialog(null, "\n" + "Помилка роботи принтера "
                     + "\n" + ex);
         } catch (HeadlessException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Device exception printKitchenCheck");
             JOptionPane.showMessageDialog(null, "\n" + "Error from Printer Job "
                     + "\n" + ex);
         }
@@ -4211,7 +4132,6 @@ public class MainForm extends javax.swing.JFrame {
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
         if (jButton10.isEnabled()) {
             if (orders.get(activeTable).getOrderSum() != 0) {                          
-                
                 subOrderIngredientsFromDB();
                 changeBackGroundTable1(lightRed);
 
@@ -4304,9 +4224,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_getLastDayKass
 
     public void changeIngredientWeight() {    
-        
-//        mainForm.setEnabled(false);
-        
         WeightForm weightForm = new WeightForm();
         weightForm.setVisible(true);       
         weightForm.toFront();
@@ -4375,8 +4292,8 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton47ActionPerformed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        activeOrderItemIndex = jTable1.getSelectedRow();
-        if (!orders.get(activeTable).isPayed() && activeOrderItemIndex < orders.get(activeTable).getItems().size()) {
+        int index = jTable1.getSelectedRow();
+        if (!orders.get(activeTable).isPayed() && index < orders.get(activeTable).getItems().size()) {
             JTable table = (JTable) evt.getSource();
             Point p = evt.getPoint();
             int row = table.rowAtPoint(p);
@@ -4384,7 +4301,7 @@ public class MainForm extends javax.swing.JFrame {
             if (evt.getClickCount() == 1) {
 
                 System.out.println("clicked greeeen");
-                orders.get(activeTable).getItems().get(activeOrderItemIndex).setRealized(true);
+                orders.get(activeTable).getItems().get(index).setRealized(true);
                 changeRowColorTable1();
             }
         }
@@ -4392,9 +4309,34 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTable1MousePressed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    private void clearTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTable
+        if (jButton9.isEnabled()) {
+            orders.remove(activeTable);
+            jTabbedPane1.setSelectedIndex(0);
+            System.out.println("compId" + activeTable);
+            TablesPanel.getComponent(activeTable - 1).setBackground(GREEN);
+            jTabbedPane1.setEnabledAt(1, false);
+            jTabbedPane1.setEnabledAt(2, false);
+            DefaultTableModel model
+                    = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            jTextField1.setText("0");
+            jButton10.setBackground(Color.WHITE);
+            OrderUtils.fillTableById(activeTable);
+            setOrderIdForTable(0);
+            activeTable = 0;
+            jLabel4.setText("Стіл № ");
+            System.out.println("orders size on remove" + orders.size());
+            jButton10.setBackground(Color.WHITE);
+            jButton3.setBackground(Color.WHITE);
+            jButton10.setEnabled(true);
+            System.out.println("actTable=" + activeTable);
+            jButton3.setEnabled(false);
+            jButton7.setEnabled(false);
+            jButton9.setEnabled(false);
+            jButton10.setEnabled(false);
+        }
+    }//GEN-LAST:event_clearTable
 
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
         String size = (String) jComboBox4.getSelectedItem();
@@ -4442,24 +4384,21 @@ public class MainForm extends javax.swing.JFrame {
         jButton88.setEnabled(true);
     }//GEN-LAST:event_enableRecipeKeyboard
 
-    boolean isMeatDish(){
-        if (activeOrderItemIndex >= 0) {
-            int dbID = orders.get(activeTable).getItems().get(activeOrderItemIndex).getDish().getDbID();
-            return menu.get(4).getDishes().stream()
-                    .map(d -> d.getDbID() == dbID)
-                    .findFirst().isPresent();
+    private void PrintCheck(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintCheck
+        if (!orders.get(activeTable).isPayed() && activeTable >= 0) {
+            jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
+            setOrderIdForTable(orders.get(activeTable).getDayId());
+            setOrderPrinted();
+            OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
+
+            if (jButton3.isEnabled()) {
+                if (orders.get(activeTable).getOrderSum() != 0) {
+                    printKitchenCheck();
+                    jButton9.setEnabled(false);
+                }
+            }
         }
-        return false;        
-    }
-    
-    private void weight_order_meat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weight_order_meat
-        activeOrderItemIndex = jTable1.getSelectedRow();
-        System.out.println("isMeatDish " + isMeatDish());
-        System.out.println(activeOrderItemIndex);
-        if (activeOrderItemIndex >= 0 && activeTable >= 0 && isMeatDish()) {
-            changeIngredientWeight();
-        }       
-    }//GEN-LAST:event_weight_order_meat
+    }//GEN-LAST:event_PrintCheck
 
     private void removeCheckItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCheckItem
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -4494,9 +4433,9 @@ public class MainForm extends javax.swing.JFrame {
 
             }
             jTextField1.setText("" + orders.get(activeTable).getOrderSum());
-        }      
+        }
     }//GEN-LAST:event_removeCheckItem
-
+                           
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
             return orders.get(activeTable).getItems().get(index).isRealized();
@@ -4627,12 +4566,10 @@ public class MainForm extends javax.swing.JFrame {
             setColumnRender(jTable6.getColumnModel().getColumn(4));
 
         } catch (ParseException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Table Column render error -> initCalculationTable");
         }
 
     }
-
-    //initCalculationTable
     public static void setColumnRender(TableColumn column) throws ParseException {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
@@ -4842,6 +4779,7 @@ public class MainForm extends javax.swing.JFrame {
         mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     
+    private static final Logger log = Logger.getLogger("MainForm");
     private static String clientCheck; 
     private static String kitchenCheck; 
     private static final String CHECK_FONT_SIZE = "check_font_size";
@@ -4858,7 +4796,6 @@ public class MainForm extends javax.swing.JFrame {
     public static int activeDishes;
     public static int activeCat;
     public static int activeTable;
-    public static int activeOrderItemIndex;
     public static DecimalFormat decFormat = new DecimalFormat("#.###");
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
     public static ArrayList<Ingredient> diffStorage = new ArrayList<>();
@@ -4913,7 +4850,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;

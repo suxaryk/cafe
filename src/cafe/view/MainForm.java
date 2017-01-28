@@ -3133,7 +3133,7 @@ public class MainForm extends javax.swing.JFrame {
        
         int allSum = OrderUtils.getAllSumBefore(end);
         int startKass = OrderUtils.getAllSumBefore(start);
-        //getAllCashSumBefore ONLY !!! for HM3
+        //getAllCashSumBefore ONLY !!! for HM3 and bukov
         if (CARD_PAYMENT) {
             allSum = OrderUtils.getAllCashSumBefore(end);
             startKass = OrderUtils.getAllCashSumBefore(start);            
@@ -3998,8 +3998,14 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_payForStorageAddition
     private int getRealKasa() {
-        //for hm getAllCashSumBefore
-        return OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
+        //for hm and bk getAllCashSumBefore
+        //else getAllSumBefore
+        if (CARD_PAYMENT) {
+            return OrderUtils.getAllCashSumBefore(new Timestamp(new Date().getTime()));
+        }else{
+            return OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
+        }
+       
     }
 
 

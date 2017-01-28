@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 public class DBUtils {
 
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
-    public static String URL = "jdbc:mysql://localhost:3306/hm";
+    public static String URL = "jdbc:mysql://localhost:3306/bukov";
     public static String USERNAME = "root";
     public static String PASSWORD = "root";
 

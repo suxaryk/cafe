@@ -207,6 +207,7 @@ public class MainForm extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jButton16 = new javax.swing.JButton();
         UsersPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -688,13 +689,13 @@ public class MainForm extends javax.swing.JFrame {
         jTextField5.setText("0");
         jTextField5.setBorder(null);
         TablesPanel.add(jTextField5);
-        jTextField5.setBounds(130, 560, 90, 40);
+        jTextField5.setBounds(90, 560, 180, 40);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 102, 102));
         jLabel3.setText("грн.");
         TablesPanel.add(jLabel3);
-        jLabel3.setBounds(230, 570, 60, 30);
+        jLabel3.setBounds(280, 570, 60, 30);
 
         jButton18.setBackground(new java.awt.Color(67, 96, 156));
         jButton18.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -1427,6 +1428,16 @@ public class MainForm extends javax.swing.JFrame {
         jLabel13.setText("В КАСУ НЕ РАХУЄ");
         OrderPanel.add(jLabel13);
         jLabel13.setBounds(120, 540, 280, 30);
+
+        jButton16.setBackground(new java.awt.Color(255, 255, 255));
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/invoice.png"))); // NOI18N
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                print(evt);
+            }
+        });
+        OrderPanel.add(jButton16);
+        jButton16.setBounds(1, 530, 100, 70);
 
         getContentPane().add(OrderPanel);
         OrderPanel.setBounds(710, 5, 500, 680);
@@ -3150,12 +3161,12 @@ public class MainForm extends javax.swing.JFrame {
                 + "Каса на початок зміни " + startKass + " грн.\n"
                 + "Сума за день готівка " + daySumCash + " грн.\n"
                 + "Сума за день карта " + daySumCard + " грн.\n"
-                + "Сума загальна за день " + daySum + " грн.\n"
+                + "Сума загальна за день " + daySum + " грн. = (" + daySumCash + " + " + daySumCard+")\n"
                 + "Страв за день " + cookCount + " \n"
                 + "Чеків за день " + ordersCount + " \n"
                 + "Витрати за день " + dayDiff + " грн.\n"
-                + "Залишок в касі " + allSum + " грн\n"
-                + "------------------------------------------------\n";
+                + "Залишок в касі " + allSum + " грн. = (" + startKass + " + (" + daySumCash + " - " + dayDiff+"))\n"
+                + "------------------------------------------------\n";               
         log.debug(info);
   
         return info;
@@ -4315,6 +4326,16 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTable1MousePressed
 
+    private boolean isOrderRealized(){
+        for(OrderItem item:orders.get(activeTable).getItems()){
+            if (!item.isRealized()){
+                showInfo("Для друку чеку потрібно видати замовлені страви");
+                return false;
+            }
+        }        
+        return true;
+    }
+    
     private void clearTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTable
         if (jButton9.isEnabled()) {
             orders.remove(activeTable);
@@ -4441,6 +4462,12 @@ public class MainForm extends javax.swing.JFrame {
             jTextField1.setText("" + orders.get(activeTable).getOrderSum());
         }
     }//GEN-LAST:event_removeCheckItem
+
+    private void print(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_print
+        if (isOrderRealized()) {
+            PrintClientCheck();
+        }           
+    }//GEN-LAST:event_print
                            
     private boolean isOrderItemRelized(int index) {
         if (index < orders.get(activeTable).getItems().size()) {
@@ -4856,6 +4883,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;

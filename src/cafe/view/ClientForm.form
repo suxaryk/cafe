@@ -33,11 +33,12 @@
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
+          <StringArray count="5">
             <StringItem index="0" value="&#x428;&#x435;&#x43f;&#x435;&#x442;&#x456;&#x432;&#x43a;&#x430;"/>
             <StringItem index="1" value="&#x421;&#x442;&#x430;&#x440;&#x43e;&#x43a;&#x43e;&#x43d;&#x441;&#x442;&#x44f;&#x43d;&#x442;&#x438;&#x43d;&#x456;&#x432;"/>
             <StringItem index="2" value="&#x421;&#x43b;&#x430;&#x432;&#x443;&#x442;&#x430;"/>
             <StringItem index="3" value="&#x425;&#x43c;&#x435;&#x43b;&#x44c;&#x43d;&#x438;&#x446;&#x44c;&#x43a;&#x438;&#x439;"/>
+            <StringItem index="4" value="&#x411;&#x443;&#x43a;&#x43e;&#x432;&#x435;&#x43b;&#x44c;"/>
           </StringArray>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

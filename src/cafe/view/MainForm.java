@@ -1431,6 +1431,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton16.setBackground(new java.awt.Color(255, 255, 255));
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/invoice.png"))); // NOI18N
+        jButton16.setEnabled(false);
         jButton16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 print(evt);
@@ -2624,6 +2625,7 @@ public class MainForm extends javax.swing.JFrame {
         if (orders.get(activeTable).isPayed()) {
             changeBackGroundTable1(lightRed);
             jButton10.setEnabled(false);
+            jButton16.setEnabled(false);
             jButton3.setEnabled(false);
             jButton7.setEnabled(false);
             jButton10.setBackground(lightRed);
@@ -2634,6 +2636,7 @@ public class MainForm extends javax.swing.JFrame {
             jTabbedPane1.setEnabledAt(1, true);
             jTabbedPane1.setSelectedIndex(1);
             jButton10.setEnabled(true);
+            jButton16.setEnabled(true);
             jButton3.setEnabled(true);
             jButton7.setEnabled(true);
             jButton10.setBackground(Color.WHITE);
@@ -3146,8 +3149,8 @@ public class MainForm extends javax.swing.JFrame {
         int startKass = OrderUtils.getAllSumBefore(start);
         //getAllCashSumBefore ONLY !!! for HM3 and bukov
         if (CARD_PAYMENT) {
-            allSum = OrderUtils.getAllCashSumBefore(end);
-            startKass = OrderUtils.getAllCashSumBefore(start);            
+            allSum = OrderUtils.getAllCashSumBeforeBK(end);
+            startKass = OrderUtils.getAllCashSumBeforeBK(start);            
         }
         
         int cookCount = OrderUtils.getAllCookCountBetween(start, end);        
@@ -4009,10 +4012,11 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_payForStorageAddition
     private int getRealKasa() {
-        //for hm and bk getAllCashSumBefore
+        //for hm getAllCashSumBefore
+        // and bk getAllCashSumBeforeBK
         //else getAllSumBefore
         if (CARD_PAYMENT) {
-            return OrderUtils.getAllCashSumBefore(new Timestamp(new Date().getTime()));
+            return OrderUtils.getAllCashSumBeforeBK(new Timestamp(new Date().getTime()));
         }else{
             return OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
         }
@@ -4158,7 +4162,7 @@ public class MainForm extends javax.swing.JFrame {
                 }
                 choosePaymentMethod();
                 
-                PrintClientCheck();
+//                PrintClientCheck();
                 OrderUtils.addOrder(orders.get(activeTable),
                         userList.get(User.active), "");
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
@@ -4170,6 +4174,7 @@ public class MainForm extends javax.swing.JFrame {
                 jButton3.setBackground(lightRed);
                 jButton7.setBackground(lightRed);
                 jButton10.setEnabled(false);
+                jButton16.setEnabled(false);
                 jButton3.setEnabled(false);
                 jButton7.setEnabled(false);
                 jTabbedPane1.setEnabledAt(1, false);
@@ -4356,12 +4361,12 @@ public class MainForm extends javax.swing.JFrame {
             System.out.println("orders size on remove" + orders.size());
             jButton10.setBackground(Color.WHITE);
             jButton3.setBackground(Color.WHITE);
-            jButton10.setEnabled(true);
             System.out.println("actTable=" + activeTable);
             jButton3.setEnabled(false);
             jButton7.setEnabled(false);
             jButton9.setEnabled(false);
             jButton10.setEnabled(false);
+            jButton16.setEnabled(false);
         }
     }//GEN-LAST:event_clearTable
 
@@ -4464,8 +4469,9 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_removeCheckItem
 
     private void print(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_print
-        if (isOrderRealized()) {
+        if (isOrderRealized() && orders.get(activeTable).getOrderSum() != 0) {
             PrintClientCheck();
+            jButton16.setEnabled(false);
         }           
     }//GEN-LAST:event_print
                            

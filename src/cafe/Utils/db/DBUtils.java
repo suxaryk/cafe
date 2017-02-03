@@ -22,8 +22,10 @@ import javax.swing.JOptionPane;
 public class DBUtils {
 
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
+//    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String URL = "jdbc:mysql://localhost:3306/bukov";
     public static String USERNAME = "root";
+//    public static String PASSWORD = "root";
     public static String PASSWORD = "root";
 
 //for stat
@@ -33,12 +35,13 @@ public class DBUtils {
 //    public static final String HOST_1 = "185.15.6.103";
 //    private static final String HOST_2 = "46.63.96.79";
 //    private static final String HOST_3 = "46.63.25.213";
-//    private static final String HOST_4 = "46.63.25.213";
+//    private static final String HOST_4 = "185.76.69.182";
 //
 //    private static final String LOCALHOST_0 = "192.168.0.111";
 //    private static final String LOCALHOST_1 = "192.168.0.102";
 //    private static final String LOCALHOST_2 = "192.168.0.2";
 //    private static final String LOCALHOST_3 = "192.168.0.106";
+//    private static final String LOCALHOST_3 = "192.168.1.118";
 
     private static final int TIMEOUT = 2_000;
     //for hm = true
@@ -84,31 +87,27 @@ public class DBUtils {
     public static String getHost(int cafeId) {
         String HOST = "localhost";
 //        if (cafeId == 0) {
-//            //shep
 //            HOST = HOST_0;
 //        } else if (cafeId == 1) {
-//            //star
 //            HOST = HOST_1;
 //        } else if (cafeId == 2) {
-//            //slav
 //            HOST = HOST_2;
 //        } else if (cafeId == 3) {
-//            //hm
 //            HOST = HOST_3;
+//        } else if (cafeId == 4) {
+//            HOST = HOST_4;
 //        }
 //        if (isLocalHost) {
 //            if (cafeId == 0) {
-//                //shep
 //                HOST = LOCALHOST_0;
 //            } else if (cafeId == 1) {
-//                //star
 //                HOST = LOCALHOST_1;
 //            } else if (cafeId == 2) {
-//                //slav
 //                HOST = LOCALHOST_2;
 //            } else if (cafeId == 3) {
-//                //hm
 //                HOST = LOCALHOST_3;
+//            } else if (cafeId == 4) {
+//                HOST = LOCALHOST_4;
 //            }
 //        }
 //        if (cafeId == 3) {

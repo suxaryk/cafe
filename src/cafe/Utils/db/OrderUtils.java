@@ -303,6 +303,36 @@ public class OrderUtils {
             return 0;
         }
     }
+    
+    
+    public static int getAllCashSumBeforeBK(Timestamp time) {
+        final int startKasaFrom_28__01 = 9622;
+        final String SQL = "select SUM(sum) from orders where "
+                + "(operator != '" + userList.get(5).getName() + "'  "
+                + "OR (operator = '" + userList.get(5).getName() + "' AND sum < 0)"
+                + "OR datatime < '2015-11-17 10:40:00'"
+                + ")"
+                + "AND Id > 2586 "
+                + "AND pay_card = false "
+                + "AND datatime <= '" + time + "'";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+
+            int sum;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                sum = 0;
+                while (rs.next()) {
+                    sum = rs.getInt(1);
+                }
+            }
+            log.debug("getAllCashSumBeforeBK(only for bk) " + sum);
+            return sum + startKasaFrom_28__01;
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - getAllCashSumBeforeBK");
+            return 0;
+        }
+    }
     public static int getAllSumBefore(Timestamp time) {
         final String SQL = "select SUM(sum) from orders where "
                 + "(operator != '" + userList.get(5).getName() + "'  "

@@ -25,8 +25,8 @@ public class DBUtils {
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String URL = "jdbc:mysql://localhost:3306/bukov";
     public static String USERNAME = "root";
-    public static String PASSWORD = "root";
-//    public static String PASSWORD = "dbiytdbq18";
+//    public static String PASSWORD = "root";
+    public static String PASSWORD = "dbiytdbq18";
 
 //for stat
 //    private static final String PASSWORD_MAIN = "dbiytdbq18";

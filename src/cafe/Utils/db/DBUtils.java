@@ -25,8 +25,8 @@ public class DBUtils {
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
     public static String URL = "jdbc:mysql://localhost:3306/bukov";
     public static String USERNAME = "root";
-//    public static String PASSWORD = "root";
     public static String PASSWORD = "root";
+//    public static String PASSWORD = "dbiytdbq18";
 
 //for stat
 //    private static final String PASSWORD_MAIN = "dbiytdbq18";
@@ -35,13 +35,13 @@ public class DBUtils {
 //    public static final String HOST_1 = "185.15.6.103";
 //    private static final String HOST_2 = "46.63.96.79";
 //    private static final String HOST_3 = "46.63.25.213";
-//    private static final String HOST_4 = "185.76.69.182";
+//    private static final String HOST_4 = "185.109.54.153";
 //
 //    private static final String LOCALHOST_0 = "192.168.0.111";
 //    private static final String LOCALHOST_1 = "192.168.0.102";
 //    private static final String LOCALHOST_2 = "192.168.0.2";
 //    private static final String LOCALHOST_3 = "192.168.0.106";
-//    private static final String LOCALHOST_3 = "192.168.1.118";
+//    private static final String LOCALHOST_4 = "192.168.1.118";
 
     private static final int TIMEOUT = 2_000;
     //for hm = true

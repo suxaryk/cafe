@@ -1310,7 +1310,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         OrderPanel.add(jButton9);
-        jButton9.setBounds(260, 460, 100, 70);
+        jButton9.setBounds(300, 460, 100, 70);
 
         jButton10.setBackground(new java.awt.Color(255, 255, 255));
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/small/payment7.png"))); // NOI18N
@@ -1321,19 +1321,19 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         OrderPanel.add(jButton10);
-        jButton10.setBounds(130, 460, 100, 70);
+        jButton10.setBounds(200, 460, 100, 70);
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel2.setText("Сума замовлення:");
         OrderPanel.add(jLabel2);
-        jLabel2.setBounds(10, 430, 189, 23);
+        jLabel2.setBounds(2, 430, 189, 23);
 
         jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(255, 51, 51));
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         OrderPanel.add(jTextField1);
-        jTextField1.setBounds(210, 430, 150, 29);
+        jTextField1.setBounds(200, 430, 160, 29);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Стіл № ");
@@ -1438,7 +1438,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         OrderPanel.add(jButton16);
-        jButton16.setBounds(1, 530, 100, 70);
+        jButton16.setBounds(100, 460, 100, 70);
 
         getContentPane().add(OrderPanel);
         OrderPanel.setBounds(710, 5, 500, 680);
@@ -2617,18 +2617,23 @@ public class MainForm extends javax.swing.JFrame {
             refreshOrderTable();
         } else {
             orders.put(activeTable, new Order());
-            if (!isOrderPrinted()) {
+            if (!isOrderKitchenPrinted()) {
                 orders.get(activeTable).setDayId(printedOrderCount++);
             }
             jTextField1.setText("0");
         }
-        if (orders.get(activeTable).isPayed()) {
+        if (orders.get(activeTable).isClientPrinted()) {
             changeBackGroundTable1(lightRed);
-            jButton10.setEnabled(false);
+            if (orders.get(activeTable).isPayed()) {
+                jButton10.setEnabled(false);
+            }else{
+                jButton10.setEnabled(true);
+            }            
             jButton16.setEnabled(false);
             jButton3.setEnabled(false);
             jButton7.setEnabled(false);
             jButton10.setBackground(lightRed);
+            jButton16.setBackground(lightRed);
             jButton3.setBackground(lightRed);
             jButton7.setBackground(lightRed);
             jTable1.setBackground(lightRed);
@@ -2640,6 +2645,7 @@ public class MainForm extends javax.swing.JFrame {
             jButton3.setEnabled(true);
             jButton7.setEnabled(true);
             jButton10.setBackground(Color.WHITE);
+            jButton16.setBackground(Color.WHITE);
             jButton3.setBackground(Color.WHITE);
             jButton7.setBackground(Color.WHITE);
             jTable1.setBackground(Color.WHITE);
@@ -2652,6 +2658,12 @@ public class MainForm extends javax.swing.JFrame {
             jButton9.setEnabled(false);
         }
         jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
+       
+        if (isOrderPrinted()) {
+            jButton16.setEnabled(false);
+        }else{
+            jButton16.setEnabled(true);
+        }
     }//GEN-LAST:event_chooseTable
 
     private void PersonalLogining(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalLogining
@@ -2916,17 +2928,27 @@ public class MainForm extends javax.swing.JFrame {
                 StorageUtils.updateCount(ingredient.getId(), ingredient.getCount());
             }
         }
-
     }
 
+    private void setOrderKitchenPrinted() {
+        orders.get(activeTable).setKitchenPrinted(true);
+        changeRowColorTable1();
+    }
+
+    private boolean isOrderKitchenPrinted() {
+        return orders.get(activeTable).isKitchenPrinted();
+    }
+    
     private void setOrderPrinted() {
-        orders.get(activeTable).setPrinted(true);
+        orders.get(activeTable).setClientPrinted(true);
         changeRowColorTable1();
     }
 
     private boolean isOrderPrinted() {
-        return orders.get(activeTable).isPrinted();
+        return orders.get(activeTable).isClientPrinted();
     }
+    
+    
 
     private void PrintClientCheck() {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");      
@@ -4151,37 +4173,27 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
-        if (jButton10.isEnabled()) {
+        if (jButton10.isEnabled() && isOrderPrinted()) {
             if (orders.get(activeTable).getOrderSum() != 0) {                          
                 subOrderIngredientsFromDB();
                 changeBackGroundTable1(lightRed);
 
-                if (!isOrderPrinted()) {
+                if (!isOrderKitchenPrinted()) {
                     jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
                 choosePaymentMethod();
+                jTextField5.setText(String.valueOf(getRealKasa()));
                 
 //                PrintClientCheck();
                 OrderUtils.addOrder(orders.get(activeTable),
                         userList.get(User.active), "");
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
-                jTable1.setBackground(lightRed);
-                jTextField5.setText(String.valueOf(getRealKasa()));
-
-                jButton10.setBackground(lightRed);
-                jButton3.setBackground(lightRed);
-                jButton7.setBackground(lightRed);
-                jButton10.setEnabled(false);
-                jButton16.setEnabled(false);
-                jButton3.setEnabled(false);
-                jButton7.setEnabled(false);
-                jTabbedPane1.setEnabledAt(1, false);
-                jTabbedPane1.setEnabledAt(2, false);
-                jTabbedPane1.setSelectedIndex(0);
-                jButton9.setEnabled(true);
+                changePayBackground();
             }
+        }else{
+            showInfo("Перед разрахунком потрібно роздрукувати чек для кліента");
         }
     }//GEN-LAST:event_payOrder
 
@@ -4194,6 +4206,29 @@ public class MainForm extends javax.swing.JFrame {
         }
             
     }
+    
+    private void  changePayBackground(){
+        jTable1.setBackground(lightRed);
+        
+
+        jButton10.setBackground(lightRed);
+        jButton16.setBackground(lightRed);
+        jButton3.setBackground(lightRed);
+        jButton7.setBackground(lightRed);
+        if (orders.get(activeTable).isPayed()) {
+            jButton10.setEnabled(false);
+            jButton9.setEnabled(true);
+        }else{
+            jButton10.setEnabled(true); 
+        }        
+        jButton16.setEnabled(false);
+        jButton3.setEnabled(false);
+        jButton7.setEnabled(false);
+        jTabbedPane1.setEnabledAt(1, false);
+        jTabbedPane1.setEnabledAt(2, false);
+        jTabbedPane1.setSelectedIndex(0);        
+    }
+            
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
         setSort(jComboBox6, jTable3);
@@ -4354,12 +4389,14 @@ public class MainForm extends javax.swing.JFrame {
             model.setRowCount(0);
             jTextField1.setText("0");
             jButton10.setBackground(Color.WHITE);
+            jButton16.setBackground(Color.WHITE);
             OrderUtils.fillTableById(activeTable);
             setOrderIdForTable(0);
             activeTable = 0;
             jLabel4.setText("Стіл № ");
             System.out.println("orders size on remove" + orders.size());
             jButton10.setBackground(Color.WHITE);
+            jButton16.setBackground(Color.WHITE);
             jButton3.setBackground(Color.WHITE);
             System.out.println("actTable=" + activeTable);
             jButton3.setEnabled(false);
@@ -4417,14 +4454,14 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_enableRecipeKeyboard
 
     private void PrintCheck(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintCheck
-        if (!orders.get(activeTable).isPayed() && activeTable >= 0) {
-            jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
-            setOrderIdForTable(orders.get(activeTable).getDayId());
-            setOrderPrinted();
-            OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
-
+        if (!orders.get(activeTable).isPayed() && activeTable >= 0) {         
             if (jButton3.isEnabled()) {
                 if (orders.get(activeTable).getOrderSum() != 0) {
+                    jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
+                    setOrderIdForTable(orders.get(activeTable).getDayId());
+                    setOrderKitchenPrinted();
+                    OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
+                    
                     printKitchenCheck();
                     jButton9.setEnabled(false);
                 }
@@ -4469,10 +4506,12 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_removeCheckItem
 
     private void print(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_print
-        if (isOrderRealized() && orders.get(activeTable).getOrderSum() != 0) {
+        if (isOrderRealized() && !isOrderPrinted() && orders.get(activeTable).getOrderSum() != 0) {
             PrintClientCheck();
+            setOrderPrinted();
             jButton16.setEnabled(false);
-        }           
+            changePayBackground();
+        }         
     }//GEN-LAST:event_print
                            
     private boolean isOrderItemRelized(int index) {

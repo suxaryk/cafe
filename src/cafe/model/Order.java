@@ -15,6 +15,7 @@ public class Order {
     private int orderSum;
     private boolean payed;
     private boolean printed;
+    private boolean clientPrinted;
     private Date date;
     private String user;
     private ArrayList<OrderItem> items = new ArrayList<>();
@@ -122,13 +123,23 @@ public class Order {
         this.coment = coment;
     }
 
-    public boolean isPrinted() {
+    public boolean isKitchenPrinted() {
         return printed;
     }
 
-    public void setPrinted(boolean printed) {
+    public void setKitchenPrinted(boolean printed) {
         this.printed = printed;
     }
+
+    public boolean isClientPrinted() {
+        return clientPrinted;
+    }
+
+    public void setClientPrinted(boolean clientPrinted) {
+        this.clientPrinted = clientPrinted;
+    }
+    
+    
 
     public String getJSONItems() {
         if (!items.isEmpty()) {

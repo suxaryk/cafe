@@ -2853,7 +2853,6 @@ public class MainForm extends javax.swing.JFrame {
             jButton19.setVisible(true);
             jButton43.setVisible(true);
             jButton44.setVisible(true);
-            jButton39.setVisible(true);
             jButton45.setVisible(true);
             jButton46.setVisible(true);
             jTextField2.setVisible(true);
@@ -4072,7 +4071,6 @@ public class MainForm extends javax.swing.JFrame {
         jTextField13.setVisible(false);
         jButton43.setVisible(false);
         jButton44.setVisible(false);
-        jButton39.setVisible(false);
         jButton45.setVisible(false);
         jButton46.setVisible(false);
         jTable6.setVisible(false);
@@ -4771,7 +4769,6 @@ public class MainForm extends javax.swing.JFrame {
         jTextField13.setVisible(false);
         jButton43.setVisible(false);
         jButton44.setVisible(false);
-        jButton39.setVisible(false);
         jButton45.setVisible(false);
         jButton46.setVisible(false);
         UsersPanel.setVisible(false);

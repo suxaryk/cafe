@@ -1,6 +1,7 @@
 package cafe.view;
 
 import cafe.Utils.db.DBUtils;
+import static cafe.Utils.db.DBUtils.HOST_4;
 import static cafe.Utils.db.DBUtils.PASSWORD;
 import static cafe.Utils.db.DBUtils.URL;
 import static cafe.Utils.db.DBUtils.USERNAME;
@@ -52,6 +53,10 @@ public class ClientForm extends javax.swing.JFrame {
     public ClientForm() {
         initComponents();
         User.active = 5;
+        //for bk
+        cafeId = 0;
+        isLocalHost = false;
+        chooseServer(cafeId);
 
         initEnabledComponents();       
     }
@@ -143,7 +148,7 @@ public class ClientForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Шепетівка", "Староконстянтинів", "Славута", "Хмельницький", "Буковель" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Буковель" }));
         jComboBox1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,6 +180,12 @@ public class ClientForm extends javax.swing.JFrame {
         jButton1.setBounds(0, 110, 220, 40);
         getContentPane().add(jXDatePicker1);
         jXDatePicker1.setBounds(50, 30, 170, 22);
+
+        jXDatePicker2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jXDatePicker2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jXDatePicker2);
         jXDatePicker2.setBounds(50, 50, 170, 22);
 
@@ -1058,8 +1069,13 @@ public class ClientForm extends javax.swing.JFrame {
     private boolean validInputDates(){
         if (tryConnectToCafe()) {
             if (jXDatePicker1.getDate() != null && jXDatePicker2.getDate() != null && jComboBox1.getSelectedIndex() >= 0) {
-                startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime() + SIX_HOURS));
-                endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
+                if (DBUtils.getHost(cafeId).equalsIgnoreCase(HOST_4)) {
+                    startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime() + EIGHT_HOURS));
+                    endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_EIGHT_HOURS);
+                }else{
+                    startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime() + SIX_HOURS));
+                    endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_THREE_HOURS);
+                }
                 return true;
             } else {
                 DBUtils.showMessage("Задані дати введено не корректно, спробуйте задати дати");
@@ -1076,27 +1092,32 @@ public class ClientForm extends javax.swing.JFrame {
 
             orders.clear();
             clearAllForms();
-            UsersUtils.readAllUsers();
-            User.active = 5;
-            refreshReviziaDates();
-            
-            EmployeeUtils.readAllEmployees();
-            orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
+            try {
+                UsersUtils.readAllUsers();
+                User.active = 5;
+                refreshReviziaDates();
 
-            refreshOrderTable(jTable1, orders);
+                EmployeeUtils.readAllEmployees();
+                orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
+
+                refreshOrderTable(jTable1, orders);
 
 //                MainForm.initBDmenu();                
 //            EmployeeUtils.updateEmployeesWorkedHours();
-            getEmployeeFullWorksDay(startDate, endDate);
-            getEmployeeHalfWorksDay(startDate, endDate);
-            getStorageTable();                           
-            refreshRemovedIngTable();
-            refreshAddedIngTable();
-            showOrderedDishes();
-            //awans
-            getEmployeeKeyMoney();
-            getInkass();
-            refreshBarmensTable();  
+                getEmployeeFullWorksDay(startDate, endDate);
+                getEmployeeHalfWorksDay(startDate, endDate);
+                getStorageTable();
+                refreshRemovedIngTable();
+                refreshAddedIngTable();
+                showOrderedDishes();
+                //awans
+                getEmployeeKeyMoney();
+                getInkass();
+                refreshBarmensTable();
+            } catch (Exception e) {
+                DBUtils.showInfo("Проблеми зі зєднання, спробуйте ще раз");
+            }
+           
 
             jButton2.setEnabled(true);
             jButton39.setEnabled(true);
@@ -1208,7 +1229,7 @@ public class ClientForm extends javax.swing.JFrame {
             jButton1.setEnabled(false);
             jTabbedPane1.setEnabled(false);
             return false;
-        }   
+       }   
     }
 
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
@@ -1328,6 +1349,10 @@ public class ClientForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         jButton2.setEnabled(true);
     }//GEN-LAST:event_jPanel4ComponentShown
+
+    private void jXDatePicker2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXDatePicker2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jXDatePicker2ActionPerformed
 
     private void getStorageTable() {
         StorageUtils.readStorage();
@@ -1450,7 +1475,7 @@ public class ClientForm extends javax.swing.JFrame {
             AllAvans += employee.getKeyMoney();
         }
         //Hm - with card pay
-        if (cafeId == 3 || cafeId == 4) {
+        if (cafeId == 3 || cafeId == 4 || DBUtils.getHost(cafeId).equalsIgnoreCase(HOST_4)){
             jLabel27.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, true)));
             jLabel15.setText(String.valueOf(OrderUtils.getAllCashSumBefore(new Timestamp(new Date().getTime()))));
         }else{
@@ -1541,10 +1566,13 @@ public class ClientForm extends javax.swing.JFrame {
     
     private static Date actualDate;
     private static final int SIX_HOURS = 6 * 60 * 60 * 1000;
+    private static final int EIGHT_HOURS = 8 * 60 * 60 * 1000;
     private static final long ONE_DAY_PLUS_THREE_HOURS = 27 * 60 * 60 * 1000;
+    private static final long ONE_DAY_PLUS_EIGHT_HOURS = 32 * 60 * 60 * 1000;
     public static int cafeId;
     public static boolean isLocalHost;
-    private static final String[] servers  = {"Шепетовка", "Староконстянтинів", "Славута", "Хмельницький"};;
+//    private static final String[] servers  = {"Шепетовка", "Староконстянтинів", "Славута", "Хмельницький", "Буковель"};;
+    private static final String[] servers  = {"Буковель"};;
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();

@@ -2855,6 +2855,8 @@ public class MainForm extends javax.swing.JFrame {
             jButton44.setVisible(true);
             jButton39.setVisible(true);
             jButton46.setVisible(true);
+            jButton42.setVisible(true);
+            jButton47.setVisible(true);
             jTextField2.setVisible(true);
             jTextField4.setVisible(true);
             jLabel8.setVisible(true);
@@ -4038,11 +4040,15 @@ public class MainForm extends javax.swing.JFrame {
         //for hm getAllCashSumBefore
         // and bk getAllCashSumBeforeBK
         //else getAllSumBefore
+        int kasa = 0;
         if (CARD_PAYMENT) {
-            return OrderUtils.getAllCashSumBeforeBK(new Timestamp(new Date().getTime()));
+            kasa =  OrderUtils.getAllCashSumBeforeBK(new Timestamp(new Date().getTime()));
         }else{
-            return OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
-        }
+            kasa = OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
+        }        
+        log.debug("getRealKasa() = " + kasa);
+        jTextField5.setText(String.valueOf(kasa));
+        return kasa;
        
     }
 
@@ -4073,6 +4079,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton44.setVisible(false);
         jButton39.setVisible(false);
         jButton46.setVisible(false);
+        jButton42.setVisible(false);
+        jButton47.setVisible(false);
         jTable6.setVisible(false);
         jScrollPane6.setVisible(false);
         jScrollPane7.setVisible(false);
@@ -4185,7 +4193,8 @@ public class MainForm extends javax.swing.JFrame {
                     setOrderIdForTable(orders.get(activeTable).getDayId());
                 }
                 choosePaymentMethod();
-                jTextField5.setText(String.valueOf(getRealKasa()));
+                
+               
                 
 //                PrintClientCheck();
                 OrderUtils.addOrder(orders.get(activeTable),
@@ -4193,6 +4202,7 @@ public class MainForm extends javax.swing.JFrame {
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
                 orders.get(activeTable).setPayed(true);
                 changePayBackground();
+                getRealKasa();
             }
         }else{
             showInfo("Перед разрахунком потрібно роздрукувати чек для кліента");
@@ -4771,6 +4781,8 @@ public class MainForm extends javax.swing.JFrame {
         jButton44.setVisible(false);
         jButton39.setVisible(false);
         jButton46.setVisible(false);
+        jButton42.setVisible(false);
+        jButton47.setVisible(false);
         UsersPanel.setVisible(false);
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);

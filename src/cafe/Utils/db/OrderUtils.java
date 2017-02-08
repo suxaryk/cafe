@@ -315,8 +315,9 @@ public class OrderUtils {
                 + "AND pay_card = false "
                 + "AND datatime <= '" + time + "'";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            Statement statement = connection.createStatement();
+                .getConnection(URL, USERNAME, PASSWORD);
+                Statement statement = connection.createStatement()) {
+            
 
             int sum;
             try (ResultSet rs = statement.executeQuery(SQL)) {
@@ -325,7 +326,7 @@ public class OrderUtils {
                     sum = rs.getInt(1);
                 }
             }
-            log.debug("getAllCashSumBeforeBK(only for bk) " + sum);
+            log.debug("getAllCashSumBeforeBK(only for bk) " +( sum + startKasaFrom_28__01));
             return sum + startKasaFrom_28__01;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllCashSumBeforeBK");

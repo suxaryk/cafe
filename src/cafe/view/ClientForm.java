@@ -54,9 +54,9 @@ public class ClientForm extends javax.swing.JFrame {
         initComponents();
         User.active = 5;
         //for bk
-        cafeId = 0;
-        isLocalHost = false;
-        chooseServer(cafeId);
+//        cafeId = 0;
+//        isLocalHost = false;
+//        chooseServer(cafeId);
 
         initEnabledComponents();       
     }

@@ -84,8 +84,8 @@ import static cafe.view.WeightForm.listOfCoeffic;
 import java.net.ConnectException;
 import static cafe.Utils.db.DBUtils.setPayMethod;
 import static cafe.Utils.db.EmployeeUtils.getFirstTodayBarmenLoginTime;
-import static cafe.Utils.db.OrderUtils.getDayStartTime;
 import static cafe.Utils.db.OrderUtils.getFirstOrderTime;
+import static cafe.Utils.db.OrderUtils.getDayEndTime;
 
 /**
  * all methods in one class it`s very bad i know
@@ -2920,14 +2920,12 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     public static void initDay(){
-        Date firstOrder = getFirstOrderTime();
-        //same day
-        if (firstOrder != null || (firstOrder == null && getFirstTodayBarmenLoginTime() == null)) {
-            DAY_START_TIME = getDayStartTime();
-        //new day
-        }else {
-            DAY_START_TIME = new Date();
+        DAY_START_TIME = getDayEndTime();
+        if (DAY_START_TIME == null) {
+            DAY_START_TIME = OrderUtils.getDayStartTime();
+        }else{
             OrderUtils.addDayStartTime();
+            DAY_START_TIME = new Date();
         }
     }
 
@@ -3231,7 +3229,7 @@ public class MainForm extends javax.swing.JFrame {
             }
             EmployeeUtils.addTimeOut(userList.get(User.active));         
             EmployeeUtils.updateEmployeesWorkedHours();
-            OrderUtils.addDayInfo(new Date(), dayInfo());
+            OrderUtils.addDayInfo(dayInfo());
             log.debug("Касу закрито----------------");
             System.exit(0);
         }

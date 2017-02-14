@@ -136,13 +136,14 @@ public class OrderUtils {
         }
     }
 
-    public static void addDayInfo(Date end, String info) {
-        final String sql = "UPDATE day_info SET time_end=?, info=? where id = (SELECT id FROM day_info order by id desc limit 1)";
+    public static void addDayInfo(String info) {
+        final String sql = "UPDATE day_info SET time_end=?, info=? where id = ?";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             PreparedStatement pstatement = connection.prepareStatement(sql);
-            pstatement.setTimestamp(2, new Timestamp(end.getTime()));
-            pstatement.setString(3, info);
+            pstatement.setTimestamp(1, getCurrentTimeStamp());
+            pstatement.setString(2, info);
+            pstatement.setInt(3, getLastDayInfoId());
 
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -165,6 +166,42 @@ public class OrderUtils {
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - addDayStartTime");
+        }
+    }    
+        
+    public static Date getDayEndTime() {
+        final String SQL = "SELECT time_end FROM day_info order by id desc limit 1";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+            Date endTime = null;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    endTime = rs.getTimestamp(1);
+                }
+            }
+            return endTime;
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - getDayEndTime");
+            return null;
+        }
+    }
+    
+    private static int getLastDayInfoId() {
+        final String SQL = "SELECT max(id) FROM day_info";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+            int  id = 0;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    id  = rs.getInt(1);
+                }
+            }
+            return id;
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - getDayStartTime");
+            return 0;
         }
     }
     

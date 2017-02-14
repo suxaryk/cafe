@@ -50,7 +50,6 @@ public class StorageUtils {
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - readStorage");
         }
-
     }
 
     public static String getIngTitleById(int Id) {
@@ -237,12 +236,12 @@ public class StorageUtils {
                 log.debug("read removedList(списання) size = " + removedList.size());
                 return removedList;
             }
-
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getRemovedIngredients(списання) ");
             return null;
         }
     }
+    
     public static List<Ingredient> getAddedIngredients(Timestamp start, Timestamp end) {
         final String SQL = "SELECT * from storage_added where"
                 + " date >= '" + start
@@ -262,7 +261,6 @@ public class StorageUtils {
                 log.debug("read addedList(приход) size = " + addedList.size());
                 return addedList;
             }
-
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAddedIngredients (приход)");
             return null;
@@ -327,7 +325,6 @@ public class StorageUtils {
                 connection.close();
             }
         }
-
     }
 
 }

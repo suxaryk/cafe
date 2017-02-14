@@ -8,6 +8,7 @@ import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
 import cafe.model.Employee;
 import cafe.model.User;
 import static cafe.view.LoginForm.userList;
+import static cafe.view.MainForm.DAY_START_TIME;
 import static cafe.view.MainForm.employees;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -47,7 +48,7 @@ public class EmployeeUtils {
     }
 
     public static boolean isEmployeeLogged() {      
-        final String SQL = "SELECT name FROM luckyroger.employee_time where DATE(date_in) = DATE(curdate())";
+        final String SQL = "SELECT name FROM employee_time where date_in >= '" + new Timestamp(DAY_START_TIME.getTime()) + "'";
         List<String> tmpEmplNames = new ArrayList<>(0);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {      
@@ -332,8 +333,40 @@ public class EmployeeUtils {
             log.error("Connection Failed! Check output console - getEmployeeHalfWorksDay");
         }
     }   
-
-   
     
-
+    public static Date getFirstTodayBarmenLoginTime() {
+        final String SQL = "SELECT date_in FROM employee_time where date(date_in) = date(current_date()) order by id asc limit 1";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+            Date date = null;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    date = rs.getTimestamp(1);
+                }
+            }
+            return date;
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - getFirstTodayBarmenLoginTime ");
+            return null;
+        }
+    }
+    public static Date getLastEmployeeLogged() {
+        String name = userList.get(User.active).getName();
+        final String SQL = "SELECT date_in FROM employee_time where name = '"+ name +"'  order by Id desc limit 1";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+            Date date = null;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    date = rs.getTimestamp(1);
+                }
+            }
+            return date;
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - getLastEmployeeLogged ");
+            return null;
+        }
+    }
 }

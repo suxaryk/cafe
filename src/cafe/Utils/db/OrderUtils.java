@@ -136,13 +136,11 @@ public class OrderUtils {
         }
     }
 
-    public static void addDayInfo(Date start, Date end, String info) {
-        final String sql = "INSERT INTO day_info(time_start, time_end, info)"
-                + " VALUES(?, ?, ?)";
+    public static void addDayInfo(Date end, String info) {
+        final String sql = "UPDATE day_info SET time_end=?, info=? where id = (SELECT id FROM day_info order by id desc limit 1)";
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             PreparedStatement pstatement = connection.prepareStatement(sql);
-            pstatement.setTimestamp(1, new Timestamp(start.getTime()));
             pstatement.setTimestamp(2, new Timestamp(end.getTime()));
             pstatement.setString(3, info);
 
@@ -152,6 +150,39 @@ public class OrderUtils {
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - addDayInfo");
+        }
+    }
+    public static void addDayStartTime() {        
+        final String sql = "INSERT INTO day_info(time_start) VALUES(?)";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            PreparedStatement pstatement = connection.prepareStatement(sql);
+            pstatement.setTimestamp(1, new Timestamp(new Date().getTime()));
+
+            int rowsInserted = pstatement.executeUpdate();
+            if (rowsInserted > 0) {
+                log.debug("StartTime was added successfully!");
+            }
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - addDayStartTime");
+        }
+    }
+    
+    public static Date getDayStartTime() {
+        final String SQL = "SELECT time_start FROM day_info order by id desc limit 1";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+            Date startTime = null;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    startTime = rs.getTimestamp(1);
+                }
+            }
+            return startTime;
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - getDayStartTime");
+            return null;
         }
     }
 
@@ -465,6 +496,24 @@ public class OrderUtils {
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getDayOrdersCount");
             return 0;
+        }
+    }
+    
+    public static Date getFirstOrderTime(){
+        final String SQL = "SELECT datatime FROM orders where dayId = 1 and date(datatime) = date(curdate()) order by datatime asc limit 1";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            Statement statement = connection.createStatement();
+            Date date = null;
+            try (ResultSet rs = statement.executeQuery(SQL)) {
+                while (rs.next()) {
+                    date = rs.getTimestamp(1);
+                }
+            }
+            return date;
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - getFirstOrderTime ");
+            return null;
         }
     }
 

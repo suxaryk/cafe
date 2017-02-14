@@ -83,6 +83,9 @@ import static cafe.Utils.json.JSONUtils.convertToJSON;
 import static cafe.view.WeightForm.listOfCoeffic;
 import java.net.ConnectException;
 import static cafe.Utils.db.DBUtils.setPayMethod;
+import static cafe.Utils.db.EmployeeUtils.getFirstTodayBarmenLoginTime;
+import static cafe.Utils.db.OrderUtils.getDayStartTime;
+import static cafe.Utils.db.OrderUtils.getFirstOrderTime;
 
 /**
  * all methods in one class it`s very bad i know
@@ -95,6 +98,8 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();       
         ConnectDb();
+        
+        initDay();
     
         StorageUtils.readStorage();
         CheckUtils.readCheck();
@@ -2898,24 +2903,32 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
 
     public static void setStartUserTime() {
-        if (new LocalTime().getHourOfDay() > 6) {
+//        if (new LocalTime().getHourOfDay() > 8) {
             if (!isEmployeeLogged()) {
                 log.debug("-----" + userList.get(User.active).getName());
                 EmployeeUtils.addTimeIn(userList.get(User.active));
                 EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
-
-            } else {
-                userList.get(User.active).setStartTime(EmployeeUtils.getStartDayTime(new Date()));
+            } else {                
+                userList.get(User.active).setStartTime(EmployeeUtils.getLastEmployeeLogged());
             }
+//            перший раз + чекыв нема  DAY_START_TIME 
 
-        } else {
-            userList.get(User.active).setStartTime(EmployeeUtils.getStartDayTime(
-                    new Date(System.currentTimeMillis() - 10 * 60 * 60 * 1000)));
-        }
 
-        DAY_START_TIME = userList.get(User.active).getStartTime();
+        log.debug("User start time " + userList.get(User.active).getStartTime());
         log.debug("DAY_START_TIME " + DAY_START_TIME);
 
+    }
+    
+    public static void initDay(){
+        Date firstOrder = getFirstOrderTime();
+        //same day
+        if (firstOrder != null || (firstOrder == null && getFirstTodayBarmenLoginTime() == null)) {
+            DAY_START_TIME = getDayStartTime();
+        //new day
+        }else {
+            DAY_START_TIME = new Date();
+            OrderUtils.addDayStartTime();
+        }
     }
 
     private void subOrderIngredientsFromDB() {
@@ -3218,7 +3231,7 @@ public class MainForm extends javax.swing.JFrame {
             }
             EmployeeUtils.addTimeOut(userList.get(User.active));         
             EmployeeUtils.updateEmployeesWorkedHours();
-            OrderUtils.addDayInfo(DAY_START_TIME, new Date(), dayInfo());
+            OrderUtils.addDayInfo(new Date(), dayInfo());
             log.debug("Касу закрито----------------");
             System.exit(0);
         }

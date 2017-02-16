@@ -394,7 +394,7 @@ public class OrderUtils {
                     sum = rs.getInt(1);
                 }
             }
-            log.debug("getAllCashSumBeforeBK(only for bk) " +( sum + startKasaFrom_28__01));
+            log.debug("getAllCashSumBeforeBK(only for bk) сума к касі " +( sum + startKasaFrom_28__01));
             return sum + startKasaFrom_28__01;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllCashSumBeforeBK");
@@ -441,6 +441,7 @@ public class OrderUtils {
                     sum = rs.getInt(1);
                 }
             }
+            log.debug("getAllBarmenSumBetween (сума кас) " + sum);
             return sum;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllBarmenSumBetween");
@@ -464,6 +465,7 @@ public class OrderUtils {
                     sum = rs.getInt(1);
                 }
             }
+            log.debug("getAllBarmenSumWithCardBetween (безнал або налічка) = " +  sum);
             return sum;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllBarmenSumWithCardBetween");
@@ -486,6 +488,7 @@ public class OrderUtils {
                     sum = rs.getInt(1);
                 }
             }
+            log.debug("getAllRemovedSumBetween (інкасація) = " + sum);
             return sum;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllRemovedSumBetween");
@@ -508,6 +511,7 @@ public class OrderUtils {
                     sum = rs.getInt(1);
                 }
             }
+            log.debug("getAllCookCountBetween (кількість страв) = " + sum);
             return sum;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllCookCountBetween");

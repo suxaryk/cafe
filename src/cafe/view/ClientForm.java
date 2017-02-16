@@ -54,9 +54,9 @@ public class ClientForm extends javax.swing.JFrame {
         initComponents();
         User.active = 5;
         //for bk
-//        cafeId = 0;
-//        isLocalHost = false;
-//        chooseServer(cafeId);
+        cafeId = 0;
+        isLocalHost = false;
+        chooseServer(cafeId);
 
         initEnabledComponents();       
     }
@@ -1477,7 +1477,7 @@ public class ClientForm extends javax.swing.JFrame {
         //Hm - with card pay
         if (cafeId == 3 || cafeId == 4 || DBUtils.getHost(cafeId).equalsIgnoreCase(HOST_4)){
             jLabel27.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, true)));
-            jLabel15.setText(String.valueOf(OrderUtils.getAllCashSumBefore(new Timestamp(new Date().getTime()))));
+            jLabel15.setText(String.valueOf(OrderUtils.getAllCashSumBeforeBK(new Timestamp(new Date().getTime()))));
         }else{
             jLabel27.setText("0");
             jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));

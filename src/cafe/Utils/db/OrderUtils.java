@@ -234,6 +234,7 @@ public class OrderUtils {
                     info = rs.getString("info");
                 }
             }
+            log.debug("getDayInfo = " + info);
             return info;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getDaySum");

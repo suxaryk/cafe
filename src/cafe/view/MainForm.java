@@ -2920,8 +2920,7 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     public static void initDay(){
-        DAY_START_TIME = getDayEndTime();
-        if (DAY_START_TIME == null) {
+        if (getDayEndTime() == null) {
             DAY_START_TIME = OrderUtils.getDayStartTime();
         }else{
             OrderUtils.addDayStartTime();

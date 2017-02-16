@@ -3,6 +3,7 @@ package cafe.view;
 import cafe.Utils.db.DBUtils;
 import static cafe.Utils.db.DBUtils.HOST_4;
 import static cafe.Utils.db.DBUtils.PASSWORD;
+import static cafe.Utils.db.DBUtils.STATISTIC;
 import static cafe.Utils.db.DBUtils.URL;
 import static cafe.Utils.db.DBUtils.USERNAME;
 import static cafe.Utils.db.DBUtils.chooseServer;
@@ -54,9 +55,12 @@ public class ClientForm extends javax.swing.JFrame {
         initComponents();
         User.active = 5;
         //for bk
-        cafeId = 0;
-        isLocalHost = false;
-        chooseServer(cafeId);
+        if (STATISTIC) {
+            cafeId = 0;
+            isLocalHost = false;
+            chooseServer(cafeId);
+        }
+        
 
         initEnabledComponents();       
     }

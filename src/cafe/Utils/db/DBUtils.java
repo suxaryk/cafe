@@ -1,6 +1,5 @@
 package cafe.Utils.db;
 
-import static cafe.view.ClientForm.isLocalHost;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.sql.Connection;
@@ -29,13 +28,14 @@ public class DBUtils {
     public static String PASSWORD = "root";
 
 //for stat
-    public static final boolean STATISTIC = false;
+    public static final boolean STATISTIC = true;
+    public static final boolean BK_CAFE = false;
     private static final String PASSWORD_MAIN = "dbiytdbq18";
-//    private static String PASSWORD_HM = "___agneshka17";
-//    public static final String HOST_0 = "93.183.216.29";
-//    public static final String HOST_1 = "185.15.6.103";
-//    private static final String HOST_2 = "46.63.96.79";
-//    private static final String HOST_3 = "46.63.25.213";
+    private static String PASSWORD_HM = "___agneshka17";
+    public static final String HOST_0 = "93.183.216.29";
+    public static final String HOST_1 = "185.15.6.103";
+    private static final String HOST_2 = "46.63.96.79";
+    private static final String HOST_3 = "46.63.25.213";
     public static final String HOST_4 = "185.109.54.153";
 //
 //    private static final String LOCALHOST_0 = "192.168.0.111";
@@ -58,12 +58,16 @@ public class DBUtils {
     
 
     static {
-        try {
+        try {            
             //statistic
-            if (STATISTIC) {
-//                setHost(HOST_1);
+//            if (STATISTIC) {
+//                if (BK_CAFE) {
+//                    setHost(HOST_4);
+//                }else{
+//                    setHost(HOST_0);
+//                }                
 //                PASSWORD = PASSWORD_MAIN;
-            }
+//            }
 
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("MySQL JDBC Driver Registered!");
@@ -90,35 +94,24 @@ public class DBUtils {
 
     public static String getHost(int cafeId) {
         String HOST = "localhost";
-//        if (cafeId == 0) {
-//            HOST = HOST_0;
-//        } else if (cafeId == 1) {
-//            HOST = HOST_1;
-//        } else if (cafeId == 2) {
-//            HOST = HOST_2;
-//        } else if (cafeId == 3) {
-//            HOST = HOST_3;
-//        } else if (cafeId == 4) {
-//            HOST = HOST_4;
-//        }
-//        if (isLocalHost) {
-//            if (cafeId == 0) {
-//                HOST = LOCALHOST_0;
-//            } else if (cafeId == 1) {
-//                HOST = LOCALHOST_1;
-//            } else if (cafeId == 2) {
-//                HOST = LOCALHOST_2;
-//            } else if (cafeId == 3) {
-//                HOST = LOCALHOST_3;
-//            } else if (cafeId == 4) {
-//                HOST = LOCALHOST_4;
-//            }
-//        }
-//        if (cafeId == 3) {
-//            PASSWORD = PASSWORD_HM;
-//        } else {
-//            PASSWORD = PASSWORD_MAIN;
-//        }
+        if (BK_CAFE) {
+            HOST = HOST_4;
+        } else if (cafeId == 0) {
+            HOST = HOST_0;
+        } else if (cafeId == 1) {
+            HOST = HOST_1;
+        } else if (cafeId == 2) {
+            HOST = HOST_2;
+        } else if (cafeId == 3) {
+            HOST = HOST_3;
+        } else if (cafeId == 4) {
+            HOST = HOST_4;
+        }
+        if (cafeId == 3) {
+            PASSWORD = PASSWORD_HM;
+        } else {
+            PASSWORD = PASSWORD_MAIN;
+        }
         return HOST;
     }
 
@@ -170,35 +163,25 @@ public class DBUtils {
         return (reply == JOptionPane.YES_OPTION);
     }
 
-    public static void chooseServer(int cafeId) {
-//        if (isLocalHost) {
-//                    if (cafeId == 0) {    //shep
-//                setHost(LOCALHOST_0);
-//            } else if (cafeId == 1) {     //star
-//                setHost(LOCALHOST_1);
-//            } else if (cafeId == 2) {     //slav          
-//                setHost(LOCALHOST_2);
-//            } else if (cafeId == 3) {     //hm         
-//                setHost(LOCALHOST_3);            
-//            } else if (cafeId == 4) {    //bk       
-//                setHost(LOCALHOST_4);
-//            }
-//        } else if (cafeId == 0) {    //shep
-//            setHost(HOST_0);
-//        } else if (cafeId == 1) {    //star
-//            setHost(HOST_1);
-//        } else if (cafeId == 2) {    //slav
-//            setHost(HOST_2);
-//        } else if (cafeId == 3) {    //hm
-//            setHost(HOST_3);        
-////        } else if (cafeId == 4) {    //bk
-//            setHost(HOST_4);
-//        }
-//        if (cafeId == 3) {
-//            PASSWORD = PASSWORD_HM;
-//        } else {
-//            PASSWORD = PASSWORD_MAIN;
-//        }
+    public static void chooseServer(int cafeId) {//
+        if (BK_CAFE) {
+            setHost(HOST_4);
+        } else if (cafeId == 0) {    //shep
+            setHost(HOST_0);
+        } else if (cafeId == 1) {    //star
+            setHost(HOST_1);
+        } else if (cafeId == 2) {    //slav
+            setHost(HOST_2);
+        } else if (cafeId == 3) {    //hm
+            setHost(HOST_3);
+        } else if (cafeId == 4) {    //bk
+            setHost(HOST_4);
+        }
+        if (cafeId == 3) {
+            PASSWORD = PASSWORD_HM;
+        } else {
+            PASSWORD = PASSWORD_MAIN;
+        }
     }
 
     private static void setHost(String host) {

@@ -1,6 +1,7 @@
 package cafe.view;
 
 import cafe.Utils.db.CheckUtils;
+import cafe.Utils.db.ConnectionException;
 import cafe.Utils.db.DBUtils;
 import static cafe.Utils.db.DBUtils.CARD_PAYMENT;
 import static cafe.Utils.db.DBUtils.ConnectDb;
@@ -4039,7 +4040,7 @@ public class MainForm extends javax.swing.JFrame {
                 Order order = new Order();
                 order.setOrderSum(diff * (-1));
                 order.setCardPayed(false);
-                log.debug("Inkasacia = " + order.getOrderSum());
+                log.debug("Iwans = " + order.getOrderSum());
                 OrderUtils.addOrder(order, employees.get(index), "");
                 jTextField5.setText(String.valueOf(getRealKasa()));
                 jTextField12.setText("");
@@ -4628,7 +4629,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void refreshEmployeesTable() {
-        EmployeeUtils.readAllEmployees();
+        EmployeeUtils.readAllEmployees();      
         EmployeeUtils.readEmployeeDayTime(new java.sql.Timestamp(new Date().getTime()));
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();

@@ -157,7 +157,7 @@ public class EmployeeUtils {
                 log.debug("DB readAllEmployees");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - setAllEmployees");
+            log.error("Connection Failed! Check output console - setAllEmployees");            
         }
 
     }

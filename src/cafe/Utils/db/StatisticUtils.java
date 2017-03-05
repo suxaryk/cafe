@@ -181,7 +181,6 @@ public class StatisticUtils {
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console - setAllEmployees");
         }
-
     }
     
     private static List<Order> getOrdersBetween(Timestamp start, Timestamp end) {

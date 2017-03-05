@@ -354,9 +354,8 @@ public class OrderUtils {
                 + "AND pay_card = false "
                 + "AND datatime <= '" + time + "'";
         try (Connection connection = DriverManager
-                .getConnection(URL, USERNAME, PASSWORD)) {
-            Statement statement = connection.createStatement();
-
+                .getConnection(URL, USERNAME, PASSWORD);
+                Statement statement = connection.createStatement()) {           
             int sum;
             try (ResultSet rs = statement.executeQuery(SQL)) {
                 sum = 0;

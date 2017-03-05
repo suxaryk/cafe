@@ -1,6 +1,8 @@
 package cafe.view;
 
 import cafe.Utils.db.DBUtils;
+import static cafe.Utils.db.DBUtils.BK_CAFE;
+import static cafe.Utils.db.DBUtils.HOST_0;
 import static cafe.Utils.db.DBUtils.HOST_4;
 import static cafe.Utils.db.DBUtils.PASSWORD;
 import static cafe.Utils.db.DBUtils.STATISTIC;
@@ -34,11 +36,13 @@ import static cafe.view.MainForm.setSort;
 import static cafe.view.MainForm.showCalcTable;
 import static cafe.view.MainForm.sortListOfIngredients;
 import static cafe.view.MainForm.sortListOfOrderItems;
+import java.net.ConnectException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,13 +60,20 @@ public class ClientForm extends javax.swing.JFrame {
         User.active = 5;
         //for bk
         if (STATISTIC) {
-            cafeId = 0;
             isLocalHost = false;
             chooseServer(cafeId);
         }
         
-
-        initEnabledComponents();       
+        
+        initEnabledComponents();  
+        if (BK_CAFE) {
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Буковель"}));         
+            servers.add("Буковель");
+        }else{
+            String[] serverArray = new String[]{"Шепетовка", "Староконстянтинів", "Славута", "Хмельницький", "Буковель"};
+            servers.addAll(Arrays.asList(serverArray));
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(serverArray));
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -1061,7 +1072,6 @@ public class ClientForm extends javax.swing.JFrame {
         jTable1.setEnabled(false);
         jComboBox2.setEnabled(false);
         jButton39.setBackground(GREEN);
-//        addStorageListener();
 
         try {
             setColumnRender(jTable6.getColumnModel().getColumn(2));
@@ -1106,8 +1116,6 @@ public class ClientForm extends javax.swing.JFrame {
 
                 refreshOrderTable(jTable1, orders);
 
-//                MainForm.initBDmenu();                
-//            EmployeeUtils.updateEmployeesWorkedHours();
                 getEmployeeFullWorksDay(startDate, endDate);
                 getEmployeeHalfWorksDay(startDate, endDate);
                 getStorageTable();
@@ -1117,6 +1125,7 @@ public class ClientForm extends javax.swing.JFrame {
                 //awans
                 getEmployeeKeyMoney();
                 getInkass();
+                showUserKasa();
                 refreshBarmensTable();
             } catch (Exception e) {
                 DBUtils.showInfo("Проблеми зі зєднання, спробуйте ще раз");
@@ -1221,14 +1230,14 @@ public class ClientForm extends javax.swing.JFrame {
 
     private boolean tryConnectToCafe() {  
         if (DBUtils.checkConnection(cafeId)) {
-            jLabel23.setText("Є підключення до " + servers[cafeId]);
+            jLabel23.setText("Є підключення до " + servers.get(cafeId));
             jLabel23.setForeground(GREEN);
             jButton1.setEnabled(true);
             jTabbedPane1.setEnabled(true);
             return true;                
         }else{
             System.out.println("ERROR DB Connection " + "cafeId " + cafeId + URL + "/" + USERNAME + "/" + PASSWORD);
-            jLabel23.setText("Немає підключення до " + servers[cafeId]);
+            jLabel23.setText("Немає підключення до " + servers.get(cafeId));
             jLabel23.setForeground(RED);
             jButton1.setEnabled(false);
             jTabbedPane1.setEnabled(false);
@@ -1409,10 +1418,12 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void getInkass() {
         inkassOrders.clear();
+        inkassStatSum = 0;
         inkassOrders.addAll(OrderUtils.getInkassOrders(startDate, endDate));
         DefaultTableModel model = (DefaultTableModel) jTable9.getModel();
         model.setRowCount(0);
         for (Order order : inkassOrders) {
+            inkassStatSum += order.getOrderSum();
             model.addRow(new Object[]{
                 order.getUser(),
                 order.getComent(),
@@ -1421,6 +1432,7 @@ public class ClientForm extends javax.swing.JFrame {
             });
         }
     }
+    
 
     private void refreshEmployeeTable() {
 //        SimpleDateFormat format1 = new SimpleDateFormat("HH:mm:ss");
@@ -1464,6 +1476,29 @@ public class ClientForm extends javax.swing.JFrame {
     }
 
     private void refreshBarmensTable() {
+
+        //Hm - with card pay
+        if (cafeId == 3 || cafeId == 4 || DBUtils.getHost(cafeId).equalsIgnoreCase(HOST_4)) {
+            jLabel27.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, true)));
+            if (cafeId == 3) {
+                jLabel15.setText(String.valueOf(OrderUtils.getAllCashSumBefore(new Timestamp(new Date().getTime()))));
+            }else if(cafeId == 4){
+                jLabel15.setText(String.valueOf(OrderUtils.getAllCashSumBeforeBK(new Timestamp(new Date().getTime()))));
+            }
+        } else {
+            jLabel27.setText("0");
+            jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));
+        }
+        jLabel29.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, false)));
+
+        jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
+        jLabel13.setText(String.valueOf(inkassStatSum));
+        jLabel19.setText(String.valueOf(getAllAvans()));
+
+        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));
+    }
+    
+    private void showUserKasa(){
         getUserKasa(startDate, endDate);
         DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
         model.setRowCount(0);
@@ -1474,25 +1509,14 @@ public class ClientForm extends javax.swing.JFrame {
                 user.getKasa()
             });
         }
+    }
+    
+    private int getAllAvans(){
         int AllAvans = 0;
         for (Employee employee : employees) {
             AllAvans += employee.getKeyMoney();
         }
-        //Hm - with card pay
-        if (cafeId == 3 || cafeId == 4 || DBUtils.getHost(cafeId).equalsIgnoreCase(HOST_4)){
-            jLabel27.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, true)));
-            jLabel15.setText(String.valueOf(OrderUtils.getAllCashSumBeforeBK(new Timestamp(new Date().getTime()))));
-        }else{
-            jLabel27.setText("0");
-            jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));
-        }
-        jLabel29.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, false)));
-
-        jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
-        jLabel13.setText(String.valueOf(OrderUtils.getAllRemovedSumBetween(startDate, endDate)));
-        jLabel19.setText(String.valueOf(AllAvans));
-        
-        jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));
+        return AllAvans;
     }
 
     private void refreshRemovedIngTable() {
@@ -1575,12 +1599,13 @@ public class ClientForm extends javax.swing.JFrame {
     private static final long ONE_DAY_PLUS_EIGHT_HOURS = 32 * 60 * 60 * 1000;
     public static int cafeId;
     public static boolean isLocalHost;
-//    private static final String[] servers  = {"Шепетовка", "Староконстянтинів", "Славута", "Хмельницький", "Буковель"};;
-    private static final String[] servers  = {"Буковель"};;
+    private static List<String> servers = new ArrayList<>();
+//    private static String[] servers  = {"Буковель"};
     private static Timestamp startDate, endDate, EmployeeDate;
     private static int activeOrder;
     private static final List<Order> orders = new ArrayList<>();
     private static final List<Order> inkassOrders = new ArrayList<>();
+    private static int inkassStatSum = 0;
     private static final List<OrderItem> orderedDishes = new ArrayList<>();
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
     public static ClientForm clientForm;

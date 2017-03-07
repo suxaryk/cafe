@@ -35,6 +35,7 @@ public class UsersUtils {
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - readAllUsers");
+            DBUtils.showConnectionError();
         }
     }
 

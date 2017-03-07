@@ -52,7 +52,8 @@ public class OrderUtils {
                 log.debug("getUserKasa" + user.getName() + " kasa = " + kasa);                         
             }              
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - getUserKasa ");          
+            log.error("Connection Failed! Check output console - getUserKasa ");     
+            DBUtils.showConnectionError();
         }
     
     }
@@ -103,6 +104,7 @@ public class OrderUtils {
             return loadOrders;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getOrdersBetween");
+            DBUtils.showConnectionError();
             return null;
         }
     }
@@ -367,6 +369,7 @@ public class OrderUtils {
             return sum;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllCashSumBefore");
+            DBUtils.showConnectionError();
             return 0;
         }
     }
@@ -398,6 +401,7 @@ public class OrderUtils {
             return sum + startKasaFrom_28__01;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllCashSumBeforeBK");
+            DBUtils.showConnectionError();
             return 0;
         }
     }
@@ -422,6 +426,7 @@ public class OrderUtils {
             return sum;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllSumBefore");
+            DBUtils.showConnectionError();
             return 0;
         }
     }
@@ -469,6 +474,7 @@ public class OrderUtils {
             return sum;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllBarmenSumWithCardBetween");
+            DBUtils.showConnectionError();
             return 0;
         }
     }
@@ -515,6 +521,7 @@ public class OrderUtils {
             return sum;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAllCookCountBetween");
+            DBUtils.showConnectionError();  
             return 0;
         }
     }
@@ -580,6 +587,7 @@ public class OrderUtils {
             return inkassOrders;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getInkassOrders");
+            DBUtils.showConnectionError();
             return null;
         }
     }
@@ -631,6 +639,7 @@ public class OrderUtils {
             }       
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getSumKeyMoney(Аванс)= ");
+            DBUtils.showConnectionError();
         }
     }
 

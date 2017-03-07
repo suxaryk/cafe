@@ -75,6 +75,7 @@ public class ReviziaUtils {
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getReviziaDates" + e);
+            DBUtils.showConnectionError();
 
         } finally {
             log.debug("DB getReviziaDates");

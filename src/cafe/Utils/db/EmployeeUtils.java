@@ -157,7 +157,8 @@ public class EmployeeUtils {
                 log.debug("DB readAllEmployees");
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - setAllEmployees");            
+            log.error("Connection Failed! Check output console - setAllEmployees");  
+            DBUtils.showConnectionError();            
         }
 
     }
@@ -300,6 +301,7 @@ public class EmployeeUtils {
             }                   
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getEmployeeFullWorksDay");
+            DBUtils.showConnectionError();
         }
     }   
     
@@ -331,6 +333,7 @@ public class EmployeeUtils {
             log.debug("DB connection getEmployeeHalfWorksDay");
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getEmployeeHalfWorksDay");
+            DBUtils.showConnectionError();
         }
     }   
     

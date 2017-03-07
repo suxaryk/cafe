@@ -1,5 +1,6 @@
 package cafe.Utils.db;
 
+import cafe.view.ClientForm;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.sql.Connection;
@@ -29,7 +30,7 @@ public class DBUtils {
 
 //for stat
     public static final boolean STATISTIC = true;
-    public static final boolean BK_CAFE = false;
+    public static final boolean ONLY_BK_CAFE = false;
     private static final String PASSWORD_MAIN = "dbiytdbq18";
     private static String PASSWORD_HM = "___agneshka17";
     public static final String HOST_0 = "93.183.216.29";
@@ -61,7 +62,7 @@ public class DBUtils {
         try {            
             //statistic
 //            if (STATISTIC) {
-//                if (BK_CAFE) {
+//                if (ONLY_BK_CAFE) {
 //                    setHost(HOST_4);
 //                }else{
 //                    setHost(HOST_0);
@@ -94,7 +95,7 @@ public class DBUtils {
 
     public static String getHost(int cafeId) {
         String HOST = "localhost";
-        if (BK_CAFE) {
+        if (ONLY_BK_CAFE) {
             HOST = HOST_4;
         } else if (cafeId == 0) {
             HOST = HOST_0;
@@ -134,6 +135,12 @@ public class DBUtils {
     public static void showInfo(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
+    
+    public static void showConnectionError(){
+        if (STATISTIC) {
+            showInfo("Проблеми зі зєднання, спробуйте ще раз");
+        }            
+    }
 
     public static void showMessage(String msg) {
         String defaultMessage = "Помилка підключення до бази данних!\n"
@@ -164,7 +171,7 @@ public class DBUtils {
     }
 
     public static void chooseServer(int cafeId) {//
-        if (BK_CAFE) {
+        if (ONLY_BK_CAFE) {
             setHost(HOST_4);
         } else if (cafeId == 0) {    //shep
             setHost(HOST_0);

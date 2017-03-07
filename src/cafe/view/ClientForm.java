@@ -1,7 +1,6 @@
 package cafe.view;
 
 import cafe.Utils.db.DBUtils;
-import static cafe.Utils.db.DBUtils.BK_CAFE;
 import static cafe.Utils.db.DBUtils.HOST_0;
 import static cafe.Utils.db.DBUtils.HOST_4;
 import static cafe.Utils.db.DBUtils.PASSWORD;
@@ -52,6 +51,7 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import static cafe.Utils.db.DBUtils.ONLY_BK_CAFE;
 
 public class ClientForm extends javax.swing.JFrame {
 
@@ -66,7 +66,7 @@ public class ClientForm extends javax.swing.JFrame {
         
         
         initEnabledComponents();  
-        if (BK_CAFE) {
+        if (ONLY_BK_CAFE) {
             jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Буковель"}));         
             servers.add("Буковель");
         }else{
@@ -1232,14 +1232,12 @@ public class ClientForm extends javax.swing.JFrame {
         if (DBUtils.checkConnection(cafeId)) {
             jLabel23.setText("Є підключення до " + servers.get(cafeId));
             jLabel23.setForeground(GREEN);
-            jButton1.setEnabled(true);
             jTabbedPane1.setEnabled(true);
             return true;                
         }else{
-            System.out.println("ERROR DB Connection " + "cafeId " + cafeId + URL + "/" + USERNAME + "/" + PASSWORD);
+            System.out.println("ERROR DB Connection " + "cafeId " + cafeId + URL + "/" + USERNAME + "/");
             jLabel23.setText("Немає підключення до " + servers.get(cafeId));
             jLabel23.setForeground(RED);
-            jButton1.setEnabled(false);
             jTabbedPane1.setEnabled(false);
             return false;
        }   
@@ -1396,9 +1394,6 @@ public class ClientForm extends javax.swing.JFrame {
     private void getEmployeeKeyMoney() {        
         System.out.println("employee size " + employees.size());
         getCustomSumKeyMoneyForUserBetween(startDate, endDate);
-//        for (Employee employee : employees) {
-//            employee.setKeyMoney(getSumKeyMoneyForUserBetween(startDate, endDate, employee.getName()));
-//        }
         refresEmployeeKeyMoneyTable();
 
     }
@@ -1492,10 +1487,23 @@ public class ClientForm extends javax.swing.JFrame {
         jLabel29.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, false)));
 
         jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
-        jLabel13.setText(String.valueOf(inkassStatSum));
-        jLabel19.setText(String.valueOf(getAllAvans()));
+        showInkassAndAvans();        
 
         jLabel10.setText(String.valueOf(OrderUtils.getAllCookCountBetween(startDate, endDate)));
+    }
+    
+    private void showInkassAndAvans(){
+        if (inkassStatSum == 0) {
+            jLabel13.setText(String.valueOf("-" + inkassStatSum));
+        }else{
+            jLabel13.setText(String.valueOf(inkassStatSum));
+        }
+        int avans = getAllAvans();
+        if (avans == 0) {
+            jLabel19.setText(String.valueOf("-" + avans));
+        }else{
+            jLabel19.setText(String.valueOf(avans));
+        }             
     }
     
     private void showUserKasa(){

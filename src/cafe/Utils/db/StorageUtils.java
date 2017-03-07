@@ -49,6 +49,7 @@ public class StorageUtils {
         log.debug("readStorage");
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - readStorage");
+            DBUtils.showConnectionError();
         }
     }
 
@@ -237,6 +238,7 @@ public class StorageUtils {
                 return removedList;
             }
         } catch (SQLException e) {
+            DBUtils.showConnectionError();
             log.error("Connection Failed! Check output console - getRemovedIngredients(списання) ");
             return null;
         }
@@ -263,6 +265,7 @@ public class StorageUtils {
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getAddedIngredients (приход)");
+            DBUtils.showConnectionError();
             return null;
         }
     }
@@ -288,6 +291,7 @@ public class StorageUtils {
 
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getOrderedDishes ");
+            DBUtils.showConnectionError();
             return null;
         }
     }

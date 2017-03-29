@@ -100,7 +100,8 @@ public class OrderUtils {
                     tmpOrder.setRemovedItems(JSONUtils.convertJSONToOrder(rs.getString("removed_items")));
                     loadOrders.add(tmpOrder);
                 }
-            }          
+            }        
+            log.debug("Check output console - getOrdersBetween");
             return loadOrders;
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - getOrdersBetween");

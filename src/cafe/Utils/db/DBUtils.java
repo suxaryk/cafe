@@ -22,11 +22,11 @@ import javax.swing.JOptionPane;
 public class DBUtils {
 
 //    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
-//    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
-    public static String URL = "jdbc:mysql://localhost:3306/bukov";
+    public static String URL = "jdbc:mysql://localhost:3306/hm";
+//    public static String URL = "jdbc:mysql://localhost:3306/bukov";
     public static String USERNAME = "root";
-//    public static String PASSWORD = "dbiytdbq18";
-    public static String PASSWORD = "root";
+    public static String PASSWORD = "dbiytdbq18";
+//    public static String PASSWORD = "root";
 
 //for stat
     public static final boolean STATISTIC = true;
@@ -79,7 +79,7 @@ public class DBUtils {
     }
 
     public static boolean ConnectDb() {
-        DriverManager.setLoginTimeout(2);
+        DriverManager.setLoginTimeout(TIMEOUT);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
             System.out.println(!connection.isClosed() ? "DB connected to " + URL
@@ -126,6 +126,7 @@ public class DBUtils {
             } else {
                 System.out.println("Connection ERROR");
             }
+            socket.close();
             return isConnected;
         } catch (Exception e) {
             return false;
@@ -138,7 +139,7 @@ public class DBUtils {
     
     public static void showConnectionError(){
         if (STATISTIC) {
-            showInfo("Проблеми зі зєднання, спробуйте ще раз");
+            showInfo("Проблеми зі з'єднання, дані можуть бути не корректними, спробуйте ще раз!");
         }            
     }
 

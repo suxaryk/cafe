@@ -1,6 +1,7 @@
 package cafe.Utils.db;
 
 import cafe.view.ClientForm;
+import static cafe.view.ClientForm.isLocalHost;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.sql.Connection;
@@ -10,7 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,31 +24,28 @@ import javax.swing.JOptionPane;
  * @author suxarina
  */
 public class DBUtils {
+    
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DBUtils.class);
 
-//    public static String URL = "jdbc:mysql://localhost:3306/luckyroger_prod";
-    public static String URL = "jdbc:mysql://localhost:3306/hm";
+//    public static String URL = "jdbc:mysql://localhost:3306/hm";
+//    public static String URL = "jdbc:mysql://localhost:3306/slavut";
+    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
 //    public static String URL = "jdbc:mysql://localhost:3306/bukov";
     public static String USERNAME = "root";
-    public static String PASSWORD = "dbiytdbq18";
-//    public static String PASSWORD = "root";
+//    public static String PASSWORD = "dbiytdbq18";
+    public static String PASSWORD = "root";
 
 //for stat
-    public static final boolean STATISTIC = true;
+    public static final boolean LOCAL = true;
+    public static final boolean STATISTIC = false;
     public static final boolean ONLY_BK_CAFE = false;
+    
     private static final String PASSWORD_MAIN = "dbiytdbq18";
-    private static String PASSWORD_HM = "___agneshka17";
-    public static final String HOST_0 = "93.183.216.29";
-    public static final String HOST_1 = "185.15.6.103";
-    private static final String HOST_2 = "46.63.96.79";
-    private static final String HOST_3 = "46.63.25.213";
-    public static final String HOST_4 = "185.109.54.153";
-//
-//    private static final String LOCALHOST_0 = "192.168.0.111";
-//    private static final String LOCALHOST_1 = "192.168.0.102";
-//    private static final String LOCALHOST_2 = "192.168.0.2";
-//    private static final String LOCALHOST_3 = "192.168.0.106";
-//    private static final String LOCALHOST_4 = "192.168.0.102";
-
+    private static final String PASSWORD_HM = "___agneshka17";
+    
+    public static final List<String> LOCAL_HOSTS = new ArrayList<>();
+    public static final List<String> HOSTS = new ArrayList<>();
+    
     private static final int TIMEOUT = 2_000;
     //for hm = true
     public static final boolean CARD_PAYMENT = true;
@@ -59,35 +60,44 @@ public class DBUtils {
     
 
     static {
-        try {            
-            //statistic
-//            if (STATISTIC) {
-//                if (ONLY_BK_CAFE) {
-//                    setHost(HOST_4);
-//                }else{
-//                    setHost(HOST_0);
-//                }                
-//                PASSWORD = PASSWORD_MAIN;
-//            }
-
-            Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("MySQL JDBC Driver Registered!");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your MySQL JDBC Driver?");
-        }
+        createListHosts();
+        registerDriver();       
         initQueries();
+    }
+    
+    private static void registerDriver(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            log.debug("MySQL JDBC Driver Registered!");
+        } catch (ClassNotFoundException e) {
+            log.debug("MySQL JDBC Driver NOT Registered!");
+        }               
+    }
+    
+    private static void createListHosts(){
+        LOCAL_HOSTS.add("192.168.0.111");
+        LOCAL_HOSTS.add("192.168.0.102");
+        LOCAL_HOSTS.add("192.168.0.2");
+        LOCAL_HOSTS.add("192.168.0.106");
+        LOCAL_HOSTS.add("192.168.0.102");   
+        
+        HOSTS.add("93.183.216.29");
+        HOSTS.add("185.15.6.103");
+        HOSTS.add("46.63.96.79");
+        HOSTS.add("46.63.25.213");
+        HOSTS.add("185.109.54.153");
     }
 
     public static boolean ConnectDb() {
         DriverManager.setLoginTimeout(TIMEOUT);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD);) {
-            System.out.println(!connection.isClosed() ? "DB connected to " + URL
+            log.debug(!connection.isClosed() ? "DB connected to " + URL
                     : "Error DB connecting "
                     + URL + USERNAME + PASSWORD);
             return true;
         } catch (SQLException e) {
-            System.out.println("Connection to DB Failed! ");
+            log.debug("Connection to DB Failed! ");
             showMessage("");
             return false;
         }
@@ -96,19 +106,13 @@ public class DBUtils {
     public static String getHost(int cafeId) {
         String HOST = "localhost";
         if (ONLY_BK_CAFE) {
-            HOST = HOST_4;
-        } else if (cafeId == 0) {
-            HOST = HOST_0;
-        } else if (cafeId == 1) {
-            HOST = HOST_1;
-        } else if (cafeId == 2) {
-            HOST = HOST_2;
-        } else if (cafeId == 3) {
-            HOST = HOST_3;
-        } else if (cafeId == 4) {
-            HOST = HOST_4;
+            HOST = HOSTS.get(4);
+        } else {
+            HOST = getHostById(cafeId);
         }
-        if (cafeId == 3) {
+        if (LOCAL) {
+            PASSWORD = "root";
+        }else if (cafeId == 3) {
             PASSWORD = PASSWORD_HM;
         } else {
             PASSWORD = PASSWORD_MAIN;
@@ -122,9 +126,9 @@ public class DBUtils {
             socket.connect(new InetSocketAddress(HOST, 3306), TIMEOUT);
             boolean isConnected = socket.isConnected();
             if (isConnected) {
-                System.out.println("Connection is reached " + HOST);
+                log.debug("Connection is reached " + HOST);
             } else {
-                System.out.println("Connection ERROR");
+                log.debug("Connection ERROR");
             }
             socket.close();
             return isConnected;
@@ -171,19 +175,11 @@ public class DBUtils {
         return (reply == JOptionPane.YES_OPTION);
     }
 
-    public static void chooseServer(int cafeId) {//
+    public static void chooseServer(int cafeId) {
         if (ONLY_BK_CAFE) {
-            setHost(HOST_4);
-        } else if (cafeId == 0) {    //shep
-            setHost(HOST_0);
-        } else if (cafeId == 1) {    //star
-            setHost(HOST_1);
-        } else if (cafeId == 2) {    //slav
-            setHost(HOST_2);
-        } else if (cafeId == 3) {    //hm
-            setHost(HOST_3);
-        } else if (cafeId == 4) {    //bk
-            setHost(HOST_4);
+            setHost(LOCAL_HOSTS.get(4));
+        } else {
+            setHost(getHostById(cafeId));
         }
         if (cafeId == 3) {
             PASSWORD = PASSWORD_HM;
@@ -191,9 +187,21 @@ public class DBUtils {
             PASSWORD = PASSWORD_MAIN;
         }
     }
+    
+    private static String getHostById(final int cafeId){
+        if (LOCAL) {
+            return "localhost";
+        }else if (isLocalHost) {
+          return LOCAL_HOSTS.get(cafeId);            
+        }else{
+          return HOSTS.get(cafeId);
+        }
+    }
 
     private static void setHost(String host) {
-        URL = "jdbc:mysql://" + host + ":3306/luckyroger";
+        if (!LOCAL) {
+            URL = "jdbc:mysql://" + host + ":3306/luckyroger"; 
+        }        
     }
 
     public static Map<String, String> getSystemVariables() {
@@ -209,7 +217,7 @@ public class DBUtils {
             }
             return sysVar;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - getSystemVariables");
+            log.error("Connection Failed! Check output console - getSystemVariables");
             return null;
         }
     }
@@ -223,10 +231,10 @@ public class DBUtils {
             pstatement.setString(2, sysVarName);
             int rowsInserted = pstatement.executeUpdate();
             if (rowsInserted > 0) {
-//                System.out.println("A new sysVarName was updated successfully!");
+                log.debug("A new sysVarName was updated successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console - updateSystemVariables");
+            log.error("Connection Failed! Check output console - updateSystemVariables");
         }
     }
 

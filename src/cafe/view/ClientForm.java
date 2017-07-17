@@ -1,13 +1,11 @@
 package cafe.view;
 
 import cafe.Utils.db.DBUtils;
-import static cafe.Utils.db.DBUtils.HOST_0;
-import static cafe.Utils.db.DBUtils.HOST_4;
+import static cafe.Utils.db.DBUtils.HOSTS;
 import static cafe.Utils.db.DBUtils.PASSWORD;
 import static cafe.Utils.db.DBUtils.STATISTIC;
 import static cafe.Utils.db.DBUtils.URL;
 import static cafe.Utils.db.DBUtils.USERNAME;
-import static cafe.Utils.db.DBUtils.chooseServer;
 import cafe.Utils.db.EmployeeUtils;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeFullWorksDay;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeHalfWorksDay;
@@ -52,15 +50,17 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import static cafe.Utils.db.DBUtils.ONLY_BK_CAFE;
+import static cafe.Utils.db.DBUtils.chooseServer;
 
 public class ClientForm extends javax.swing.JFrame {
+    
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClientForm.class);
 
     public ClientForm() {
         initComponents();
         User.active = 5;
         //for bk
         if (STATISTIC) {
-            isLocalHost = false;
             chooseServer(cafeId);
         }
         
@@ -1081,9 +1081,8 @@ public class ClientForm extends javax.swing.JFrame {
     }
     
     private boolean validInputDates(){
-        if (tryConnectToCafe()) {
             if (jXDatePicker1.getDate() != null && jXDatePicker2.getDate() != null && jComboBox1.getSelectedIndex() >= 0) {
-                if (DBUtils.getHost(cafeId).equalsIgnoreCase(HOST_4)) {
+                if (DBUtils.getHost(cafeId).equalsIgnoreCase(HOSTS.get(4))) {
                     startDate = new java.sql.Timestamp((jXDatePicker1.getDate().getTime() + EIGHT_HOURS));
                     endDate = new java.sql.Timestamp(jXDatePicker2.getDate().getTime() + ONE_DAY_PLUS_EIGHT_HOURS);
                 }else{
@@ -1095,8 +1094,6 @@ public class ClientForm extends javax.swing.JFrame {
                 DBUtils.showMessage("Задані дати введено не корректно, спробуйте задати дати");
                 return false;
             }
-        }
-        return false;   
     }
 
     private void getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getAllOrders
@@ -1127,15 +1124,12 @@ public class ClientForm extends javax.swing.JFrame {
                 getInkass();
                 showUserKasa();
                 refreshBarmensTable();
+                log.debug("orders list size = " + orders.size());
             } catch (Exception e) {
                 DBUtils.showInfo("Проблеми зі зєднання, спробуйте ще раз");
-            }
-           
-
+            }         
             jButton2.setEnabled(true);
             jButton39.setEnabled(true);
-
-
         }
     }//GEN-LAST:event_getAllOrders
 
@@ -1231,12 +1225,13 @@ public class ClientForm extends javax.swing.JFrame {
     private boolean tryConnectToCafe() {  
         if (DBUtils.checkConnection(cafeId)) {
             jLabel23.setText("Є підключення до " + servers.get(cafeId));
+            log.debug("DB Connection " + "cafeId " + cafeId + URL + "/" + USERNAME + "/");
             jLabel23.setForeground(GREEN);
             jTabbedPane1.setEnabled(true);
             return true;                
         }else{
-            System.out.println("ERROR DB Connection " + "cafeId " + cafeId + URL + "/" + USERNAME + "/");
             jLabel23.setText("Немає підключення до " + servers.get(cafeId));
+            log.debug("ERROR DB Connection " + "cafeId " + cafeId + URL + "/" + USERNAME + "/");
             jLabel23.setForeground(RED);
             jTabbedPane1.setEnabled(false);
             return false;
@@ -1306,6 +1301,7 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void jButton3getAllOrders(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3getAllOrders
         if (validInputDates()) {
+            orders.clear();
             orders.addAll(OrderUtils.getOrdersBetween(startDate, endDate));
             refreshOrderTable(jTable1, orders);
         }
@@ -1391,8 +1387,8 @@ public class ClientForm extends javax.swing.JFrame {
         }
     }
 
-    private void getEmployeeKeyMoney() {        
-        System.out.println("employee size " + employees.size());
+    private void getEmployeeKeyMoney() {   
+        log.debug("employee size " + employees.size());
         getCustomSumKeyMoneyForUserBetween(startDate, endDate);
         refresEmployeeKeyMoneyTable();
 
@@ -1473,7 +1469,7 @@ public class ClientForm extends javax.swing.JFrame {
     private void refreshBarmensTable() {
 
         //Hm - with card pay
-        if (cafeId == 3 || cafeId == 4 || DBUtils.getHost(cafeId).equalsIgnoreCase(HOST_4)) {
+        if (cafeId == 3 || cafeId == 4 || DBUtils.getHost(cafeId).equalsIgnoreCase(HOSTS.get(4))) {
             jLabel27.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, true)));
             if (cafeId == 3) {
                 jLabel15.setText(String.valueOf(OrderUtils.getAllCashSumBefore(new Timestamp(new Date().getTime()))));

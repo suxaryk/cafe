@@ -19,7 +19,9 @@ public class UsersUtils {
 
     public static void readAllUsers() {
         userList.clear();
+        log.debug(URL + " " + USERNAME +" " + PASSWORD);
         final String SQL = "SELECT * from users";
+        log.debug("JDBC connected to.. " + URL);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             Statement statement = connection.createStatement();

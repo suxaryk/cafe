@@ -1,5 +1,6 @@
 package cafe.Utils.db;
 
+import static cafe.Utils.db.DBUtils.HOSTS;
 import static cafe.Utils.db.DBUtils.URL;
 import static cafe.Utils.db.StorageUtils.fullJoinIngLists;
 import static cafe.Utils.db.StorageUtils.fullJoinOrderItemLists;
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +35,7 @@ public class StatisticUtils {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "dbiytdbq18";
     private static final String HOST = "";
-    private static final String R_HOST = "localhost";
+    private static final String R_HOST = HOSTS.get(1);
     private static final int PORT = 22;
     private static final int L_PORT = 3306;
     private static final int R_PORT = 3306;
@@ -42,7 +44,7 @@ public class StatisticUtils {
     private static Session session = null;
     
     
-    public static void main1(String args[]) {
+    public static void main(String args[]) {
         try {
             Connection connection = getSSHConnection();
             readAllUsers(connection);
@@ -61,25 +63,32 @@ public class StatisticUtils {
     
     public static Connection getSSHConnection() throws SQLException{       
         try {
+            Properties config = new java.util.Properties();
             JSch jsch = new JSch();
-            session = jsch.getSession(USERNAME, HOST, PORT);      
-            session.setPassword(PASSWORD);
-            java.util.Properties config = new java.util.Properties();
+            String sshUser = "root";
+            String sshHost = HOSTS.get(1);
+            String sshPassword = PASSWORD;
+            int localPort = 1234;
+            int DB_PORT = 3306;
+            String localSSHUrl = "localhost";
+            session = jsch.getSession(sshUser, sshHost, 22);
+            session.setPassword(sshPassword);
             config.put("StrictHostKeyChecking", "no");
             config.put("ConnectionAttempts", "3");
             session.setConfig(config);
-            System.out.println("Establishing Connection...");
             session.connect();
+
             if (session.isConnected()) {
                 System.out.println("Ssh session is open...");
             }
-//            session.setPortForwardingL(L_PORT, R_HOST, R_PORT);            
-//            String url = "jdbc:mysql://" + R_HOST + ":" + L_PORT + "/";
-            String url = "jdbc:mysql://localhost:3306/luckyroger";
-            String db = "luckyroger";
-            Class.forName("com.mysql.jdbc.Driver");
+
+//            int assinged_port = session.setPortForwardingL(localPort, localSSHUrl, 22);
+            session.setPortForwardingL(localPort, localSSHUrl, DB_PORT);
+            System.out.println("Port Forwarded");
             try {
-                connect = DriverManager.getConnection(url, USERNAME, PASSWORD);
+                Class.forName("com.mysql.jdbc.Driver");
+                System.out.println("MySQL JDBC Driver Registered!");
+                connect = DriverManager.getConnection(URL, USERNAME, PASSWORD);
                 if (!connect.isClosed()) {
                     System.out.println("Mysql connection is open...");                    
                 }             
@@ -87,6 +96,36 @@ public class StatisticUtils {
                 Logger.getLogger(StatisticUtils.class.getName()).log(Level.SEVERE, null, ex);
                 throw new SQLException();
             }
+
+//            System.out.println("localhost:" + assinged_port + " -> " + sshHost + ":" + 22);
+            
+//            ----------------------------------------------
+//            JSch jsch = new JSch();
+//            session = jsch.getSession(USERNAME, HOST, PORT);      
+//            session.setPassword(PASSWORD);
+//            java.util.Properties config = new java.util.Properties();
+//            config.put("StrictHostKeyChecking", "no");
+//            config.put("ConnectionAttempts", "3");
+//            session.setConfig(config);
+//            System.out.println("Establishing Connection...");
+//            session.connect();
+//            if (session.isConnected()) {
+//                System.out.println("Ssh session is open...");
+//            }
+////            session.setPortForwardingL(L_PORT, R_HOST, R_PORT);            
+////            String url = "jdbc:mysql://" + R_HOST + ":" + L_PORT + "/";
+//            String url = "jdbc:mysql://localhost:3306/luckyroger";
+//            String db = "luckyroger";
+//            Class.forName("com.mysql.jdbc.Driver");
+//            try {
+//                connect = DriverManager.getConnection(url, USERNAME, PASSWORD);
+//                if (!connect.isClosed()) {
+//                    System.out.println("Mysql connection is open...");                    
+//                }             
+//            } catch (SQLException ex) {
+//                Logger.getLogger(StatisticUtils.class.getName()).log(Level.SEVERE, null, ex);
+//                throw new SQLException();
+//            }
         } catch (Exception e) {            
             System.err.println(e);
         }finally{                

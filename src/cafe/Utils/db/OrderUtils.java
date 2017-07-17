@@ -84,6 +84,7 @@ public class OrderUtils {
                 + "' AND datatime <= '" + end
                 + "' ORDER BY Id DESC";
         List<Order> loadOrders = new ArrayList<>();
+        log.debug("JDBC connected to.. " + URL);
         try (Connection connection = DriverManager
                 .getConnection(URL, USERNAME, PASSWORD)) {
             Statement statement = connection.createStatement();

@@ -4386,7 +4386,7 @@ public class MainForm extends javax.swing.JFrame {
     private boolean isOrderRealized(){
         for(OrderItem item:orders.get(activeTable).getItems()){
             if (!item.isRealized()){
-                showInfo("Для друку чеку потрібно видати замовлені страви");
+                showInfo("Для друку чеку потрібно видати замовлені страви \n - виберіть в замовленні страви");
                 return false;
             }
         }        

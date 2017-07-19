@@ -1,6 +1,5 @@
 package cafe.Utils.db;
 
-import cafe.view.ClientForm;
 import static cafe.view.ClientForm.isLocalHost;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -11,13 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -25,19 +23,17 @@ import javax.swing.JOptionPane;
  */
 public class DBUtils {
     
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DBUtils.class);
+    private static final Logger log = Logger.getLogger(DBUtils.class);
 
-//    public static String URL = "jdbc:mysql://localhost:3306/hm";
-//    public static String URL = "jdbc:mysql://localhost:3306/slavut";
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
-//    public static String URL = "jdbc:mysql://localhost:3306/bukov";
+//    public static String URL = "jdbc:mysql://localhost:3306/starkon";
     public static String USERNAME = "root";
 //    public static String PASSWORD = "dbiytdbq18";
     public static String PASSWORD = "root";
 
 //for stat
-    public static final boolean LOCAL = true;
-    public static final boolean STATISTIC = false;
+    public static final boolean LOCAL = false;
+    public static final boolean STATISTIC = true;
     public static final boolean ONLY_BK_CAFE = false;
     
     private static final String PASSWORD_MAIN = "dbiytdbq18";
@@ -201,6 +197,7 @@ public class DBUtils {
     private static void setHost(String host) {
         if (!LOCAL) {
             URL = "jdbc:mysql://" + host + ":3306/luckyroger"; 
+            log.debug("new url = " + URL);
         }        
     }
 

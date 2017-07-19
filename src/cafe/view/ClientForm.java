@@ -55,14 +55,15 @@ import static cafe.Utils.db.DBUtils.chooseServer;
 public class ClientForm extends javax.swing.JFrame {
     
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClientForm.class);
+    private String[] serverArray ;
 
     public ClientForm() {
         initComponents();
         User.active = 5;
         //for bk
-        if (STATISTIC) {
-            chooseServer(cafeId);
-        }
+//        if (STATISTIC) {
+//            chooseServer(cafeId);
+//        }
         
         
         initEnabledComponents();  
@@ -70,7 +71,7 @@ public class ClientForm extends javax.swing.JFrame {
             jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Буковель"}));         
             servers.add("Буковель");
         }else{
-            String[] serverArray = new String[]{"Шепетовка", "Староконстянтинів", "Славута", "Хмельницький", "Буковель"};
+            serverArray = new String[]{"Шепетовка", "Староконстянтинів", "Славута", "Хмельницький", "Буковель"};
             servers.addAll(Arrays.asList(serverArray));
             jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(serverArray));
         }
@@ -1150,27 +1151,7 @@ public class ClientForm extends javax.swing.JFrame {
         ((DefaultTableModel)jTable9.getModel()).setRowCount(0);
         ((DefaultTableModel)jTable7.getModel()).setRowCount(0);
     }
-//custom db import 
-//    private void updateLocalDB(){
-//        SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");        
-//         Date end =  new Date(new Timestamp(endDate.getTime() - ONE_DAY_PLUS_THREE_HOURS).getTime());     
-//         if (end.after(actualDate)) {      
-//             JFrame frame = new JFrame();
-//             String[] options = new String[2];
-//             options[0] = "Так";
-//             options[1] = "Ні";
-//             int reply = JOptionPane.showOptionDialog(frame.getContentPane(),
-//                     "Дані програми актуальні до дати " + df2.format(actualDate)+
-//                     "Бажаєте зактуалізувати дані до дати  " +df2.format(end) + " ?", "",
-//                     0, JOptionPane.YES_NO_OPTION, null, options, null);
-//             if (reply == JOptionPane.YES_OPTION) {
-//                 DBUtils.doDBDumpToClientMachine();
-//                 actualDate = getLastModifiedDate();
-//                 jLabel26.setText("Дані актуальні на " + end);                                
-//             }                      
-//        }
-//        DBUtils.doDBImport();
-//    }
+
     private  void addStorageListener(){
         jTable6.getModel().addTableModelListener(new TableModelListener() {
 
@@ -1225,13 +1206,13 @@ public class ClientForm extends javax.swing.JFrame {
     private boolean tryConnectToCafe() {  
         if (DBUtils.checkConnection(cafeId)) {
             jLabel23.setText("Є підключення до " + servers.get(cafeId));
-            log.debug("DB Connection " + "cafeId " + cafeId + URL + "/" + USERNAME + "/");
+            log.debug("DB Connection " + serverArray[cafeId]);
             jLabel23.setForeground(GREEN);
             jTabbedPane1.setEnabled(true);
             return true;                
         }else{
             jLabel23.setText("Немає підключення до " + servers.get(cafeId));
-            log.debug("ERROR DB Connection " + "cafeId " + cafeId + URL + "/" + USERNAME + "/");
+            log.debug("ERROR DB Connection " + serverArray[cafeId]);
             jLabel23.setForeground(RED);
             jTabbedPane1.setEnabled(false);
             return false;
@@ -1468,20 +1449,9 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void refreshBarmensTable() {
 
-        //Hm - with card pay
-        if (cafeId == 3 || cafeId == 4 || DBUtils.getHost(cafeId).equalsIgnoreCase(HOSTS.get(4))) {
-            jLabel27.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, true)));
-            if (cafeId == 3) {
-                jLabel15.setText(String.valueOf(OrderUtils.getAllCashSumBefore(new Timestamp(new Date().getTime()))));
-            }else if(cafeId == 4){
-                jLabel15.setText(String.valueOf(OrderUtils.getAllCashSumBeforeBK(new Timestamp(new Date().getTime()))));
-            }
-        } else {
-            jLabel27.setText("0");
-            jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()))));
-        }
+        jLabel27.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, true)));
+        jLabel15.setText(String.valueOf(OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime() + SIX_HOURS))));
         jLabel29.setText(String.valueOf(OrderUtils.getAllBarmenSumWithCardBetween(startDate, endDate, false)));
-
         jLabel9.setText(String.valueOf(OrderUtils.getAllBarmenSumBetween(startDate, endDate)));
         showInkassAndAvans();        
 

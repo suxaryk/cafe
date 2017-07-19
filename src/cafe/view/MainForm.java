@@ -3180,11 +3180,6 @@ public class MainForm extends javax.swing.JFrame {
        
         int allSum = OrderUtils.getAllSumBefore(end);
         int startKass = OrderUtils.getAllSumBefore(start);
-        //getAllCashSumBefore ONLY !!! for HM3 and bukov
-        if (CARD_PAYMENT) {
-            allSum = OrderUtils.getAllCashSumBeforeBK(end);
-            startKass = OrderUtils.getAllCashSumBeforeBK(start);            
-        }
         
         int cookCount = OrderUtils.getAllCookCountBetween(start, end);        
 
@@ -4049,11 +4044,7 @@ public class MainForm extends javax.swing.JFrame {
         // and bk getAllCashSumBeforeBK
         //else getAllSumBefore
         int kasa = 0;
-        if (CARD_PAYMENT) {
-            kasa =  OrderUtils.getAllCashSumBeforeBK(new Timestamp(new Date().getTime()));
-        }else{
-            kasa = OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
-        }        
+        kasa = OrderUtils.getAllSumBefore(new Timestamp(new Date().getTime()));
         log.debug("getRealKasa() = " + kasa);
         jTextField5.setText(String.valueOf(kasa));
         return kasa;
@@ -4386,7 +4377,7 @@ public class MainForm extends javax.swing.JFrame {
     private boolean isOrderRealized(){
         for(OrderItem item:orders.get(activeTable).getItems()){
             if (!item.isRealized()){
-                showInfo("Для друку чеку потрібно видати замовлені страви \n - виберіть в замовленні страви");
+                showInfo("Для друку чеку потрібно видати замовлені страви \n  виберіть страви в списку замовлення");
                 return false;
             }
         }        

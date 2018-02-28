@@ -2714,10 +2714,10 @@ public class MainForm extends javax.swing.JFrame {
     public void addOrderItemToTable(int count) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
-        boolean isCook = true ? activeCat < 9 : false;
-        OrderItem newOrderItem = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCook);
+        boolean isCookCategory = true ? activeCat < 9 : false;
+        OrderItem newOrderItem = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCookCategory);
 
-        int index = getIndex(count, isCook);
+        int index = getIndex(count, isCookCategory);
         log.debug("activeCat " + activeCat);
         log.debug("iscook " + newOrderItem.getDish().isCook());
 
@@ -2734,11 +2734,15 @@ public class MainForm extends javax.swing.JFrame {
             .getSum()
         });
 
-        changeRowColorTable1();
-
         OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
         jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
         setOrderIdForTable(orders.get(activeTable).getDayId());
+        scrollToLastItem();
+    }
+
+    private void scrollToLastItem() {
+        Rectangle cellBounds = jTable1.getCellRect(jTable1.getRowCount() - 1, 0, true);
+        jTable1.scrollRectToVisible(cellBounds);
     }
     
     public boolean calcMeat() {
@@ -4143,8 +4147,8 @@ public class MainForm extends javax.swing.JFrame {
         for (OrderItem item : orders.get(activeTable).getItems()) {
             if (!item.isPrinted()) {
                 item.setPrinted(true);
+                 System.out.println("cook" + item.isCook());
                 if (item.isCook()) {
-                    System.out.println("cook" + item.isCook());
 
                     dishes += "  <tr>"
                             + "    <td style=\"width:3%\"> " + i++ + " </td> "

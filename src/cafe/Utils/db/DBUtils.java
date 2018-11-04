@@ -28,11 +28,11 @@ public class DBUtils {
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
 //    public static String URL = "jdbc:mysql://localhost:3306/starkon";
     public static String USERNAME = "root";
-    public static String PASSWORD = "dbiytdbq18";
+    public static String PASSWORD = "root";
 //    public static String PASSWORD = "root";
 
 //for stat
-    public static final boolean LOCAL = false;
+    public static final boolean LOCAL = true;
     public static final boolean STATISTIC = true;
     public static final boolean ONLY_BK_CAFE = false;
     

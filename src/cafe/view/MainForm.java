@@ -2932,6 +2932,7 @@ public class MainForm extends javax.swing.JFrame {
     private void subOrderIngredientsFromDB() {
         System.out.println("----- remove Order ingredients from DB-----------");
         StorageUtils.readStorage();
+        storageDiffList.clear();
         for (Ingredient ingredient : storageList) {
             double diff = orders.get(activeTable)
                     .getOrderIngredients().get(ingredient.getId());
@@ -2940,6 +2941,7 @@ public class MainForm extends javax.swing.JFrame {
                 log.debug("SubOrderIngredientsFromDB(списання зі складу по чеку) old-diff = " + decFormat.format(old - diff));
                 ingredient.setCount(old - diff);
                 StorageUtils.updateCount(ingredient.getId(), ingredient.getCount());
+                storageDiffList.add(new Ingredient(ingredient.getDbId(), diff));
             }
         }
     }
@@ -4183,23 +4185,24 @@ public class MainForm extends javax.swing.JFrame {
 
     private void payOrder(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payOrder
         if (jButton10.isEnabled() && isOrderPrinted()) {
-            if (orders.get(activeTable).getOrderSum() != 0) {                          
+            final Order order = orders.get(activeTable);                          
+            if (order.getOrderSum() != 0) {                          
                 subOrderIngredientsFromDB();
+                try {
+                    StorageUtils.addStorageOrderHistory(storageDiffList);
+                } catch (SQLException ex) {
+                    log.error("Error addStorageOrderHistory, order day Id = " + order.getDayId() , ex);
+                }
                 changeBackGroundTable1(lightRed);
 
                 if (!isOrderKitchenPrinted()) {
-                    jLabel10.setText("Чек № " + orders.get(activeTable).getDayId());
-                    setOrderIdForTable(orders.get(activeTable).getDayId());
+                    jLabel10.setText("Чек № " + order.getDayId());
+                    setOrderIdForTable(order.getDayId());
                 }
                 choosePaymentMethod();
-                
-               
-                
-//                PrintClientCheck();
-                OrderUtils.addOrder(orders.get(activeTable),
-                        userList.get(User.active), "");
+                OrderUtils.addOrder(order, userList.get(User.active), "");
                 OrderUtils.updateTable(new Order(), userList.get(User.active), activeTable);
-                orders.get(activeTable).setPayed(true);
+                order.setPayed(true);
                 changePayBackground();
                 getRealKasa();
             }
@@ -4888,6 +4891,7 @@ public class MainForm extends javax.swing.JFrame {
     public static int activeTable;
     public static DecimalFormat decFormat = new DecimalFormat("#.###");
     public static ArrayList<Ingredient> storageList = new ArrayList<>();
+    public static ArrayList<Ingredient> storageDiffList = new ArrayList<>();
     public static ArrayList<Ingredient> diffStorage = new ArrayList<>();
     public static ArrayList<Ingredient> changeList = new ArrayList<>();
     public static ArrayList<Ingredient> addedProductsToStorage = new ArrayList<>();

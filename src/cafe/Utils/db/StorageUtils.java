@@ -108,10 +108,10 @@ public class StorageUtils {
             pst.setInt(2, dbId);
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
-                log.debug("Storage ing count was updated successfully! Product id = " + dbId);
+                log.debug("Storage ing count was updated successfully! Product id = " + dbId + " new count=" + count);
             }
         } catch (SQLException e) {
-            log.error("Connection Failed! Check output console - updateCount(Storage ing count)" + dbId);
+            log.error("Connection Failed! Check output console - updateCount(Storage ing count)" + dbId + " count = " + count + "\n");
         }
     }
 
@@ -320,6 +320,41 @@ public class StorageUtils {
                 connection.rollback();
             }
             log.error("Connection Failed! Check output console - addStorageHistory");
+        } finally {
+            if (pstatement != null) {
+                pstatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+    
+    public static void addStorageOrderHistory(List<Ingredient> storageDiff) throws SQLException {
+        final String SQL = "INSERT INTO storage_order_history(date, ingredient_id, count) VALUES(?, ?, ?)";
+        Connection connection = null;
+        PreparedStatement pstatement = null;
+
+        try {
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            pstatement = connection.prepareStatement(SQL);
+            connection.setAutoCommit(false);
+
+            for (Ingredient ing : storageDiff) {
+                pstatement.setTimestamp(1, getCurrentTimeStamp());
+                pstatement.setInt(2, ing.getId());
+                pstatement.setDouble(3, ing.getCount());
+                pstatement.addBatch();
+            }
+            pstatement.executeBatch();
+            connection.commit();
+
+        } catch (SQLException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            log.error("Connection Failed! Check output console - addStorageOrderHistory");
         } finally {
             if (pstatement != null) {
                 pstatement.close();

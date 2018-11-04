@@ -3414,7 +3414,7 @@ public class MainForm extends javax.swing.JFrame {
                 storageList1.setCount(zero);
             }
         }
-        setSort(jComboBox6, jTable3);
+        setSort(jComboBox6, jTable3, storageList);
         showCalcTable(jTable3);
     }//GEN-LAST:event_refreshCalc
 
@@ -3457,19 +3457,17 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_updateTitleAndPrice
 
-    public static void setSort(JComboBox comboBox, JTable table) {
+    public static void setSort(JComboBox comboBox, JTable table, List<Ingredient> ingredients) {
         int activeRow = table.getSelectedRow();
         int index = comboBox.getSelectedIndex();
-        sortListOfIngredients(storageList, index);
+        sortListOfIngredients(ingredients, index);
         if (activeRow != -1) {
             table.setRowSelectionInterval(activeRow, activeRow);
             Rectangle cellRect = table.getCellRect(activeRow, 0, true);
             table.scrollRectToVisible(cellRect);
         }
     }
-    
-
-
+       
     private static ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn) {
         ArrayList<Ingredient> changedList = new ArrayList<>();
         int checkColumn = table.getColumnCount()-1;
@@ -3611,10 +3609,10 @@ public class MainForm extends javax.swing.JFrame {
         setComponentsVisible();
         StorageUtils.readStorage();
         if (isAdmin()) {
-            setSort(jComboBox7, jTable6);
+            setSort(jComboBox7, jTable6, storageList);
             showCalcTable(jTable6);
         } else {
-            setSort(jComboBox7, jTable5);
+            setSort(jComboBox7, jTable5, storageList);
             showCalcTable(jTable5);
         }
 
@@ -3945,13 +3943,13 @@ public class MainForm extends javax.swing.JFrame {
             if (reply == JOptionPane.YES_OPTION) {
                 addIngCountToStorage(jTable6);
                 StorageUtils.readStorage();
-                setSort(jComboBox7, jTable6);
+                setSort(jComboBox7, jTable6, storageList);
                 showCalcTable(jTable6);
             }
         }else{
             addIngCountToStorage(jTable5);
             StorageUtils.readStorage();
-            setSort(jComboBox7, jTable5);
+            setSort(jComboBox7, jTable5, storageList);
             showCalcTable(jTable5);  
         }       
     }//GEN-LAST:event_addToStorage
@@ -3968,13 +3966,13 @@ public class MainForm extends javax.swing.JFrame {
             if (reply == JOptionPane.YES_OPTION) {
                removeIngCountFromStorage(jTable6);
                 StorageUtils.readStorage();
-                setSort(jComboBox7, jTable6);
+                setSort(jComboBox7, jTable6, storageList);
                 showCalcTable(jTable6);
             }
         } else {
         removeIngCountFromStorage(jTable5);
         StorageUtils.readStorage();
-        setSort(jComboBox7, jTable5);
+        setSort(jComboBox7, jTable5, storageList);
         showCalcTable(jTable5);
         }    
     }//GEN-LAST:event_removeFromStorage
@@ -4245,16 +4243,16 @@ public class MainForm extends javax.swing.JFrame {
             
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
-        setSort(jComboBox6, jTable3);
+        setSort(jComboBox6, jTable3, storageList);
         showCalcTable(jTable3);
     }//GEN-LAST:event_jComboBox6ActionPerformed
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
         if (isAdmin()) {
-            setSort(jComboBox7, jTable6);
+            setSort(jComboBox7, jTable6, storageList);
             showCalcTable(jTable6);
         } else {
-            setSort(jComboBox7, jTable5);
+            setSort(jComboBox7, jTable5, storageList);
             showCalcTable(jTable5);
         }
 
@@ -4281,7 +4279,7 @@ public class MainForm extends javax.swing.JFrame {
         if (reply == JOptionPane.YES_OPTION) {
             updateItemsFromStorage();
             StorageUtils.readStorage();
-            setSort(jComboBox7, jTable6);
+            setSort(jComboBox7, jTable6, storageList);
             showUpdateStorageTable();
         }
     }//GEN-LAST:event_updateIngCountInStorage

@@ -13,6 +13,7 @@ import cafe.model.User;
 import cafe.view.ClientForm;
 import static cafe.view.LoginForm.userList;
 import cafe.view.MainForm;
+import static cafe.view.MainForm.storageDiffList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -49,6 +50,32 @@ public class StorageUtils {
         log.debug("readStorage");
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - readStorage");
+            DBUtils.showConnectionError();
+        }
+    }
+    
+    public static void readStorageOrderHistory(Timestamp start, Timestamp end) {
+        storageDiffList.clear();
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String SQL = "SELECT ingredient_id, ROUND(sum(count), 3) as count "
+                    + "FROM storage_order_history "
+                    + "where date >= '" + start + "' "
+                    + "AND date <= '" + end + "' "
+                    + "group by ingredient_id "
+                    + "order by ingredient_id";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(SQL);
+            while (rs.next()) {
+                MainForm.storageDiffList.add(
+                        new Ingredient(
+                                rs.getInt("ingredient_id"),
+                                "EMPTY",
+                                rs.getDouble("count")
+                        ));
+            }
+            log.debug("readStorageOrderHistory");
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - readStorageOrderHistory");
             DBUtils.showConnectionError();
         }
     }

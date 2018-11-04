@@ -37,7 +37,7 @@ public class DBUtils {
     public static final boolean ONLY_BK_CAFE = false;
     
     private static final String PASSWORD_MAIN = "dbiytdbq18";
-    private static final String PASSWORD_HM = "___agneshka17";
+    private static final String PASSWORD_HM = "empty";
     
     public static final List<String> LOCAL_HOSTS = new ArrayList<>();
     public static final List<String> HOSTS = new ArrayList<>();

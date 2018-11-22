@@ -46,7 +46,10 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import static cafe.Utils.db.DBUtils.ONLY_BK_CAFE;
 import static cafe.Utils.db.DBUtils.chooseServer;
+import cafe.model.Dish;
 import static cafe.view.MainForm.storageList;
+import static java.math.BigDecimal.ZERO;
+import java.util.function.Function;
 
 public class ClientForm extends javax.swing.JFrame {
     
@@ -56,6 +59,7 @@ public class ClientForm extends javax.swing.JFrame {
     public ClientForm() {
         initComponents();
         User.active = 5;
+        MainForm.initBDmenu();
 
                 
         initEnabledComponents();  
@@ -150,6 +154,24 @@ public class ClientForm extends javax.swing.JFrame {
         jComboBox8 = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
+        jPanel11 = new javax.swing.JPanel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        CategoriesPanel = new javax.swing.JPanel();
+        cat5 = new javax.swing.JButton();
+        cat6 = new javax.swing.JButton();
+        cat7 = new javax.swing.JButton();
+        cat8 = new javax.swing.JButton();
+        cat3 = new javax.swing.JButton();
+        cat4 = new javax.swing.JButton();
+        cat2 = new javax.swing.JButton();
+        cat1 = new javax.swing.JButton();
+        cat9 = new javax.swing.JButton();
+        cat10 = new javax.swing.JButton();
+        cat11 = new javax.swing.JButton();
+        cat12 = new javax.swing.JButton();
+        DishesPanel = new javax.swing.JPanel();
+        jScrollPane15 = new javax.swing.JScrollPane();
+        jTable15 = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -414,6 +436,7 @@ public class ClientForm extends javax.swing.JFrame {
             jTable6.getColumnModel().getColumn(4).setMinWidth(70);
             jTable6.getColumnModel().getColumn(4).setPreferredWidth(70);
             jTable6.getColumnModel().getColumn(4).setMaxWidth(70);
+            jTable6.getColumnModel().getColumn(4).setHeaderValue("Вибраний");
         }
 
         jPanel10.add(jScrollPane6);
@@ -592,6 +615,7 @@ public class ClientForm extends javax.swing.JFrame {
             jTable14.getColumnModel().getColumn(3).setMinWidth(70);
             jTable14.getColumnModel().getColumn(3).setPreferredWidth(70);
             jTable14.getColumnModel().getColumn(3).setMaxWidth(70);
+            jTable14.getColumnModel().getColumn(3).setHeaderValue("Вибраний");
         }
 
         jPanel9.add(jScrollPane14);
@@ -1082,6 +1106,262 @@ public class ClientForm extends javax.swing.JFrame {
         jButton8.setBounds(430, 470, 160, 40);
 
         jTabbedPane1.addTab("Замовлені страви", jPanel6);
+
+        jPanel11.setLayout(null);
+
+        jTabbedPane2.setBackground(new java.awt.Color(232, 232, 232));
+        jTabbedPane2.setToolTipText("");
+        jTabbedPane2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+
+        CategoriesPanel.setBackground(new java.awt.Color(67, 96, 156));
+        CategoriesPanel.setToolTipText("");
+        CategoriesPanel.setLayout(null);
+
+        cat5.setBackground(new java.awt.Color(233, 234, 237));
+        cat5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/christmas161.png"))); // NOI18N
+        cat5.setText("<html>\n<br/>\n<br/>\n<br/>\n<br/>\n <br/> \n&nbsp;М'ясне</html>");
+        cat5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat5.setName("cat4"); // NOI18N
+        cat5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat5);
+        cat5.setBounds(0, 170, 160, 160);
+
+        cat6.setBackground(new java.awt.Color(233, 234, 237));
+        cat6.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/italian1.png"))); // NOI18N
+        cat6.setText("<html>  \n<br/> \n<br/> \n<br/> \n<br/>  \n<br/>  \n&nbsp;Піцца</html>");
+        cat6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat6.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat6.setName("cat5"); // NOI18N
+        cat6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat6);
+        cat6.setBounds(160, 170, 160, 160);
+
+        cat7.setBackground(new java.awt.Color(233, 234, 237));
+        cat7.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/sushi6.png"))); // NOI18N
+        cat7.setText("<html>  \n<br/> \n<br/> \n<br/> \n<br/>  \n<br/>  \n&nbsp;Суші</html>");
+        cat7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat7.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat7.setName("cat6"); // NOI18N
+        cat7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat7);
+        cat7.setBounds(320, 170, 160, 160);
+
+        cat8.setBackground(new java.awt.Color(233, 234, 237));
+        cat8.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/ice53.png"))); // NOI18N
+        cat8.setText("<html>  \n<br/> \n<br/> \n<br/> \n<br/>  \n<br/>  \n&nbsp;Десерт</html>");
+        cat8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat8.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat8.setName("cat7"); // NOI18N
+        cat8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat8);
+        cat8.setBounds(480, 170, 160, 160);
+
+        cat3.setBackground(new java.awt.Color(233, 234, 237));
+        cat3.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/burger.png"))); // NOI18N
+        cat3.setText("<html>  \n<br/> \n<br/> \n<br/>    \n<br/>\n<br/>\nСтрави&nbsp;Роджера</html> ");
+        cat3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat3.setName("cat2"); // NOI18N
+        cat3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat3);
+        cat3.setBounds(320, 10, 160, 160);
+
+        cat4.setBackground(new java.awt.Color(233, 234, 237));
+        cat4.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/fryingpan1.png"))); // NOI18N
+        cat4.setText("<html>  \n<br/> \n<br/> \n<br/>    \n<br/>\n&nbsp;Страви  <br/>  \n&nbsp;на&nbsp;пательні</html>");
+        cat4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat4.setName("cat3"); // NOI18N
+        cat4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat4.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        cat4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat4);
+        cat4.setBounds(480, 10, 160, 160);
+
+        cat2.setBackground(new java.awt.Color(233, 234, 237));
+        cat2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/salad.png"))); // NOI18N
+        cat2.setText("<html>  \n<br/> \n<br/> \n<br/> \n<br/>  \n<br/>  \n&nbsp;Салати</html>");
+        cat2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat2.setName("cat1"); // NOI18N
+        cat2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat2);
+        cat2.setBounds(160, 10, 160, 160);
+
+        cat1.setBackground(new java.awt.Color(233, 234, 237));
+        cat1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/hot-food.png"))); // NOI18N
+        cat1.setText("<html>  \n<br/> \n<br/> \n<br/> \n<br/>  \n<br/>  \n&nbsp;1, 2 страви</html>");
+        cat1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cat1.setName("cat0"); // NOI18N
+        cat1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat1);
+        cat1.setBounds(0, 10, 160, 160);
+
+        cat9.setBackground(new java.awt.Color(233, 234, 237));
+        cat9.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/coffee127.png"))); // NOI18N
+        cat9.setText("<html>  \n<br/> \n<br/> \n<br/> \n<br/>  \n<br/> \n&nbsp;Напої</html>");
+        cat9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat9.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat9.setName("cat8"); // NOI18N
+        cat9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat9);
+        cat9.setBounds(0, 330, 160, 160);
+
+        cat10.setBackground(new java.awt.Color(233, 234, 237));
+        cat10.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/beer.png"))); // NOI18N
+        cat10.setText("<html>   <br/>  <br/>  <br/>  <br/>   <br/>   &nbsp;Пиво</html>");
+        cat10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat10.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat10.setName("cat9"); // NOI18N
+        cat10.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat10);
+        cat10.setBounds(160, 330, 160, 160);
+
+        cat11.setBackground(new java.awt.Color(233, 234, 237));
+        cat11.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/drink175.png"))); // NOI18N
+        cat11.setText("<html>   <br/>  <br/>  <br/>  <br/>   <br/>   &nbsp;Алкоголь</html>");
+        cat11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat11.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat11.setName("cat10"); // NOI18N
+        cat11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat11);
+        cat11.setBounds(320, 330, 160, 160);
+
+        cat12.setBackground(new java.awt.Color(233, 234, 237));
+        cat12.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cat12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cafe/icons/no-drink.png"))); // NOI18N
+        cat12.setText("<html>   <br/>  <br/>  <br/> <br/>    <br/>  &nbspБезал.<br/>  </html>");
+        cat12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cat12.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        cat12.setName("cat11"); // NOI18N
+        cat12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        cat12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                chooseCat(evt);
+            }
+        });
+        CategoriesPanel.add(cat12);
+        cat12.setBounds(480, 330, 160, 160);
+
+        jTabbedPane2.addTab("Категорії", null, CategoriesPanel, "");
+
+        DishesPanel.setBackground(new java.awt.Color(233, 234, 237));
+        DishesPanel.setEnabled(false);
+        DishesPanel.setFocusable(false);
+        DishesPanel.setLayout(null);
+
+        jTable15.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jTable15.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "№", "Назва", "Собівартість (грн)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable15.setRowHeight(18);
+        jScrollPane15.setViewportView(jTable15);
+        if (jTable15.getColumnModel().getColumnCount() > 0) {
+            jTable15.getColumnModel().getColumn(0).setMinWidth(50);
+            jTable15.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTable15.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTable15.getColumnModel().getColumn(2).setMinWidth(110);
+            jTable15.getColumnModel().getColumn(2).setPreferredWidth(110);
+            jTable15.getColumnModel().getColumn(2).setMaxWidth(110);
+        }
+
+        DishesPanel.add(jScrollPane15);
+        jScrollPane15.setBounds(0, 0, 640, 490);
+
+        jTabbedPane2.addTab("Страви", DishesPanel);
+
+        jPanel11.add(jTabbedPane2);
+        jTabbedPane2.setBounds(0, 0, 643, 530);
+
+        jTabbedPane1.addTab("Меню", jPanel11);
 
         getContentPane().add(jTabbedPane1);
         jTabbedPane1.setBounds(220, 0, 1130, 560);
@@ -1577,6 +1857,47 @@ public class ClientForm extends javax.swing.JFrame {
         jButton40.setEnabled(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void chooseCat(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseCat
+        jTabbedPane2.setEnabledAt(1, true);
+        jTabbedPane2.setSelectedIndex(1);
+
+        int catId = MainForm.getButtonId(evt);
+        if (catId > 5) {
+            catId++;
+        }
+//        jList2.setLiśstData(MainForm.menu.get(catId).getDishes().toArray());
+        MainForm.menu.get(catId).getDishes().forEach(this::updateDishCost);
+        showDishesTable(jTable15, MainForm.menu.get(catId).getDishes());
+        MainForm.activeCat = catId;
+    }//GEN-LAST:event_chooseCat
+
+    public static void showDishesTable(JTable jTable, List<Dish> dishes) {
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0);
+        for (Dish dish : dishes) { //admin 
+            model.addRow(new Object[]{
+                dish.getDbID(),
+                dish.getTitle(),
+                dish.getCost()
+            });
+        }
+    }
+    private void updateDishCost(Dish dish) {
+        final Double cost = dish.getRecipe().stream()
+                .map(Ingredient::getDbId)
+                .mapToDouble(this::getIngredientCost)
+                .sum();
+        dish.setCost(cost);
+    }
+
+    
+    private Double getIngredientCost(int ingredientId){
+        return MainForm.storageList.stream()
+                .filter(a -> a.getDbId() == ingredientId)
+                .findFirst()
+                .map(a -> a.getCost())
+                .orElse(ZERO.doubleValue());
+    }
     private void getStorageTable() {
         StorageUtils.readStorage();
         setSort(jComboBox7, jTable6, storageList);
@@ -1846,7 +2167,21 @@ public class ClientForm extends javax.swing.JFrame {
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
     public static ClientForm clientForm;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel CategoriesPanel;
+    private javax.swing.JPanel DishesPanel;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton cat1;
+    private javax.swing.JButton cat10;
+    private javax.swing.JButton cat11;
+    private javax.swing.JButton cat12;
+    private javax.swing.JButton cat2;
+    private javax.swing.JButton cat3;
+    private javax.swing.JButton cat4;
+    private javax.swing.JButton cat5;
+    private javax.swing.JButton cat6;
+    private javax.swing.JButton cat7;
+    private javax.swing.JButton cat8;
+    private javax.swing.JButton cat9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
@@ -1898,6 +2233,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1911,6 +2247,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane14;
+    private javax.swing.JScrollPane jScrollPane15;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1920,12 +2257,14 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable10;
     private javax.swing.JTable jTable11;
     private javax.swing.JTable jTable12;
     private javax.swing.JTable jTable14;
+    private javax.swing.JTable jTable15;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;

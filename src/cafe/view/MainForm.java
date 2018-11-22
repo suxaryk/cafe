@@ -2584,7 +2584,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    private int getButtonId(java.awt.event.MouseEvent evt) {
+    public static int getButtonId(java.awt.event.MouseEvent evt) {
         JButton myButton = (JButton) evt.getSource();
         String btnName = myButton.getName();
         return Integer.parseInt(btnName.substring(3));

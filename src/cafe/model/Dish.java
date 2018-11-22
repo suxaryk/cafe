@@ -10,6 +10,7 @@ public class Dish {
     private int price;
     private boolean cook;
     private List<Ingredient> recipe = new ArrayList<>();
+    private double cost;
 
     public Dish() {
     }
@@ -87,5 +88,15 @@ public class Dish {
     public String toString() {
         return title;
     }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+    
+    
 
 }

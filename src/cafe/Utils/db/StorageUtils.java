@@ -44,7 +44,8 @@ public class StorageUtils {
                         new Ingredient(
                                 rs.getInt("Id"),
                                 rs.getString("title"),
-                                rs.getDouble("count")
+                                rs.getDouble("count"),
+                                rs.getDouble("cost")
                         ));
             }
         log.debug("readStorage");
@@ -139,6 +140,22 @@ public class StorageUtils {
             }
         } catch (SQLException e) {
             log.error("Connection Failed! Check output console - updateCount(Storage ing count)" + dbId + " count = " + count + "\n");
+        }
+    }
+    
+    public static void updateCost(int dbId, double cost) {
+        final String SQL = "UPDATE storage SET cost = ? WHERE Id = ?";
+        try (Connection connection = DriverManager
+                .getConnection(URL, USERNAME, PASSWORD)) {
+            PreparedStatement pst = connection.prepareStatement(SQL);
+            pst.setDouble(1, cost);
+            pst.setInt(2, dbId);
+            int rowsInserted = pst.executeUpdate();
+            if (rowsInserted > 0) {
+                log.debug("Storage ing cost was updated successfully! Product id = " + dbId + " new cost=" + cost);
+            }
+        } catch (SQLException e) {
+            log.error("Connection Failed! Check output console - updateCost(Storage ing cost)" + dbId + " cost = " + cost + "\n");
         }
     }
 

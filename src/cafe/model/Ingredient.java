@@ -12,6 +12,7 @@ public class Ingredient {
     private double count;
     private boolean active;
     private int dishId;
+    private double cost;
     
     public Ingredient() {
     }
@@ -34,6 +35,13 @@ public class Ingredient {
         this.dbId = dbId;
         this.title = title;
         this.count = count;
+    }
+    
+    public Ingredient(int dbId, String title, double count, double cost) {
+        this.dbId = dbId;
+        this.title = title;
+        this.count = count;
+        this.cost = cost;
     }
 
     public Ingredient(int dbId, String title, double count, boolean active) {
@@ -59,18 +67,6 @@ public class Ingredient {
     public void setDishId(int dishId) {
         this.dishId = dishId;
     }
-
-    
-    
-    
-    //utils tmp
-//    public Ingredient(int dbId, int  ing_id, double count) {
-//        this.dbId = dbId;
-//        this.ing_id = ing_id;
-//        this.count = count;
-//    }
-
-   
 
     public int getId() {
         return dbId;
@@ -107,20 +103,18 @@ public class Ingredient {
 
     public void setActive(boolean active) {
         this.active = active;
+    }  
+
+    public double getCost() {
+        return cost;
     }
 
-//    public int getIng_id() {
-//        return ing_id;
-//    }
-//
-//    public void setIng_id(int ing_id) {
-//        this.ing_id = ing_id;
-//    }
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
     
     
     
-    
-
     @Override
     public int hashCode() {
         int hash = 7;

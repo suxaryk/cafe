@@ -3369,7 +3369,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
     }
-
+    
     public void showUpdateStorageTable() {
         DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
         model.setRowCount(0);
@@ -3848,20 +3848,18 @@ public class MainForm extends javax.swing.JFrame {
         deleteDigit(jTable3, 2);
     }//GEN-LAST:event_deleteRecipesFieldDigit
 
-    public static void addIngCountToStorage(JTable table) {
+    public static void addIngCountToStorage(JTable table, Integer columnIndex) {
         changeList.clear();
         addedProductsToStorage.clear();
-        changeList.addAll(getListFromTable(table, 3));
+        changeList.addAll(getListFromTable(table, columnIndex));
         for (int i = 0; i < storageList.size(); i++) {           
             if (changeList.get(i).isActive() && changeList.get(i).getCount() != 0.0) {
                 double old = storageList.get(i).getCount();               
                 double diff = changeList.get(i).getCount();
                 storageList.get(i).setCount(old + diff);
                 System.out.println("new count " + storageList.get(i).getCount());
-                StorageUtils.updateCount(storageList.get(i).getId(),
-                        storageList.get(i).getCount());
-                addedProductsToStorage.add(
-                        new Ingredient(storageList.get(i).getId(), diff));
+                StorageUtils.updateCount(storageList.get(i).getId(), storageList.get(i).getCount());
+                addedProductsToStorage.add(new Ingredient(storageList.get(i).getId(), diff));
             }
         }      
         //TODO check and FIX 
@@ -3930,6 +3928,19 @@ public class MainForm extends javax.swing.JFrame {
         
     }
    
+    public static void updateStorageCost(JTable table, Integer columnIndex) {
+        changeList.clear();
+        changeList.addAll(getListFromTable(table, columnIndex));
+        for (int i = 0; i < storageList.size(); i++) {           
+            if (changeList.get(i).isActive() && changeList.get(i).getCount() != 0.0) {
+                double newCount = changeList.get(i).getCount();
+                final Ingredient ing = storageList.get(i);
+                ing.setCount(newCount);
+                System.out.println("new count " + ing.getCount());
+                StorageUtils.updateCost(ing.getId(), ing.getCount());
+            }
+        }      
+    }
     
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
         if (isAdmin()) {
@@ -3941,13 +3952,13 @@ public class MainForm extends javax.swing.JFrame {
                     "Підтвердити приход на склад?", "Поповнення складу",
                     0, JOptionPane.YES_NO_OPTION, null, options, null);       
             if (reply == JOptionPane.YES_OPTION) {
-                addIngCountToStorage(jTable6);
+                addIngCountToStorage(jTable6, 3);
                 StorageUtils.readStorage();
                 setSort(jComboBox7, jTable6, storageList);
                 showCalcTable(jTable6);
             }
         }else{
-            addIngCountToStorage(jTable5);
+            addIngCountToStorage(jTable5, 3);
             StorageUtils.readStorage();
             setSort(jComboBox7, jTable5, storageList);
             showCalcTable(jTable5);  

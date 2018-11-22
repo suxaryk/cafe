@@ -2,10 +2,6 @@ package cafe.view;
 
 import cafe.Utils.db.DBUtils;
 import static cafe.Utils.db.DBUtils.HOSTS;
-import static cafe.Utils.db.DBUtils.PASSWORD;
-import static cafe.Utils.db.DBUtils.STATISTIC;
-import static cafe.Utils.db.DBUtils.URL;
-import static cafe.Utils.db.DBUtils.USERNAME;
 import cafe.Utils.db.EmployeeUtils;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeFullWorksDay;
 import static cafe.Utils.db.EmployeeUtils.getEmployeeHalfWorksDay;
@@ -33,7 +29,6 @@ import static cafe.view.MainForm.setSort;
 import static cafe.view.MainForm.showCalcTable;
 import static cafe.view.MainForm.sortListOfIngredients;
 import static cafe.view.MainForm.sortListOfOrderItems;
-import java.net.ConnectException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -110,6 +105,12 @@ public class ClientForm extends javax.swing.JFrame {
         jTable12 = new javax.swing.JTable();
         jComboBox10 = new javax.swing.JComboBox();
         jButton9 = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jButton40 = new javax.swing.JButton();
+        jComboBox11 = new javax.swing.JComboBox();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        jTable14 = new javax.swing.JTable();
+        jButton10 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
@@ -407,16 +408,16 @@ public class ClientForm extends javax.swing.JFrame {
             jTable6.getColumnModel().getColumn(2).setMinWidth(120);
             jTable6.getColumnModel().getColumn(2).setPreferredWidth(120);
             jTable6.getColumnModel().getColumn(2).setMaxWidth(120);
-            jTable6.getColumnModel().getColumn(3).setMinWidth(100);
-            jTable6.getColumnModel().getColumn(3).setPreferredWidth(100);
-            jTable6.getColumnModel().getColumn(3).setMaxWidth(100);
+            jTable6.getColumnModel().getColumn(3).setMinWidth(110);
+            jTable6.getColumnModel().getColumn(3).setPreferredWidth(110);
+            jTable6.getColumnModel().getColumn(3).setMaxWidth(110);
             jTable6.getColumnModel().getColumn(4).setMinWidth(70);
             jTable6.getColumnModel().getColumn(4).setPreferredWidth(70);
             jTable6.getColumnModel().getColumn(4).setMaxWidth(70);
         }
 
         jPanel10.add(jScrollPane6);
-        jScrollPane6.setBounds(0, 0, 566, 500);
+        jScrollPane6.setBounds(0, 0, 610, 480);
 
         jComboBox7.setBackground(new java.awt.Color(240, 240, 240));
         jComboBox7.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -427,21 +428,22 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         jPanel10.add(jComboBox7);
-        jComboBox7.setBounds(580, 10, 198, 25);
+        jComboBox7.setBounds(620, 20, 198, 25);
 
         jButton39.setBackground(new java.awt.Color(204, 204, 204));
-        jButton39.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton39.setText("<html>поповнити<br/>&nbsp; склад</html> ");
+        jButton39.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jButton39.setText("Поповнити склад");
         jButton39.setBorder(null);
         jButton39.setEnabled(false);
         jButton39.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton39.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jButton39.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addToStorage(evt);
             }
         });
         jPanel10.add(jButton39);
-        jButton39.setBounds(580, 130, 198, 48);
+        jButton39.setBounds(620, 190, 198, 48);
 
         jButton4.setBackground(new java.awt.Color(0, 153, 204));
         jButton4.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -452,7 +454,7 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         jPanel10.add(jButton4);
-        jButton4.setBounds(580, 330, 220, 40);
+        jButton4.setBounds(620, 380, 190, 40);
 
         jTabbedPane3.addTab("Склад", jPanel10);
 
@@ -496,7 +498,7 @@ public class ClientForm extends javax.swing.JFrame {
         }
 
         jPanel8.add(jScrollPane12);
-        jScrollPane12.setBounds(0, 0, 560, 490);
+        jScrollPane12.setBounds(0, 0, 600, 490);
 
         jComboBox10.setBackground(new java.awt.Color(240, 240, 240));
         jComboBox10.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -507,7 +509,7 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         jPanel8.add(jComboBox10);
-        jComboBox10.setBounds(580, 10, 198, 25);
+        jComboBox10.setBounds(630, 10, 198, 25);
 
         jButton9.setBackground(new java.awt.Color(0, 153, 204));
         jButton9.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -519,12 +521,97 @@ public class ClientForm extends javax.swing.JFrame {
             }
         });
         jPanel8.add(jButton9);
-        jButton9.setBounds(560, 410, 240, 40);
+        jButton9.setBounds(610, 410, 240, 40);
 
         jTabbedPane3.addTab("Історія складу", jPanel8);
 
+        jPanel9.setLayout(null);
+
+        jButton40.setBackground(new java.awt.Color(204, 204, 204));
+        jButton40.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jButton40.setText("Оновити собівартість");
+        jButton40.setToolTipText("");
+        jButton40.setBorder(null);
+        jButton40.setEnabled(false);
+        jButton40.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton40.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jButton40.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton40addToStorage(evt);
+            }
+        });
+        jPanel9.add(jButton40);
+        jButton40.setBounds(620, 180, 198, 48);
+        jButton40.getAccessibleContext().setAccessibleName("");
+
+        jComboBox11.setBackground(new java.awt.Color(240, 240, 240));
+        jComboBox11.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jComboBox11.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "за номером", "за ціною", "за назвою" }));
+        jComboBox11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox11ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jComboBox11);
+        jComboBox11.setBounds(620, 10, 198, 25);
+
+        jTable14.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jTable14.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "№", "Назва", "Собівартість (грн)", "Вибраний"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable14.setRowHeight(18);
+        jScrollPane14.setViewportView(jTable14);
+        if (jTable14.getColumnModel().getColumnCount() > 0) {
+            jTable14.getColumnModel().getColumn(0).setMinWidth(50);
+            jTable14.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTable14.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTable14.getColumnModel().getColumn(2).setMinWidth(110);
+            jTable14.getColumnModel().getColumn(2).setPreferredWidth(110);
+            jTable14.getColumnModel().getColumn(2).setMaxWidth(110);
+            jTable14.getColumnModel().getColumn(3).setMinWidth(70);
+            jTable14.getColumnModel().getColumn(3).setPreferredWidth(70);
+            jTable14.getColumnModel().getColumn(3).setMaxWidth(70);
+        }
+
+        jPanel9.add(jScrollPane14);
+        jScrollPane14.setBounds(0, 0, 610, 480);
+
+        jButton10.setBackground(new java.awt.Color(0, 153, 204));
+        jButton10.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jButton10.setText("Показати склад");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jButton10);
+        jButton10.setBounds(620, 380, 190, 40);
+
+        jTabbedPane3.addTab("Собівартість", jPanel9);
+
         jPanel2.add(jTabbedPane3);
-        jTabbedPane3.setBounds(0, 0, 810, 530);
+        jTabbedPane3.setBounds(0, 0, 1120, 530);
 
         jTabbedPane1.addTab("Склад", jPanel2);
 
@@ -997,7 +1084,7 @@ public class ClientForm extends javax.swing.JFrame {
         jTabbedPane1.addTab("Замовлені страви", jPanel6);
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(220, 0, 820, 560);
+        jTabbedPane1.setBounds(220, 0, 1130, 560);
 
         jLabel10.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 153, 0));
@@ -1146,7 +1233,7 @@ public class ClientForm extends javax.swing.JFrame {
         getContentPane().add(jLabel29);
         jLabel29.setBounds(140, 270, 80, 23);
 
-        setSize(new java.awt.Dimension(1051, 624));
+        setSize(new java.awt.Dimension(1384, 624));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1185,7 +1272,7 @@ public class ClientForm extends javax.swing.JFrame {
         if (validInputDates()) {
             jTable1.setEnabled(true);
             jComboBox2.setEnabled(true);                             
-
+            //show all data
             orders.clear();
             clearAllForms();
             try {
@@ -1234,6 +1321,7 @@ public class ClientForm extends javax.swing.JFrame {
         ((DefaultTableModel)jTable8.getModel()).setRowCount(0);
         ((DefaultTableModel)jTable9.getModel()).setRowCount(0);
         ((DefaultTableModel)jTable7.getModel()).setRowCount(0);
+        ((DefaultTableModel)jTable12.getModel()).setRowCount(0);
     }
 
     private  void addStorageListener(){
@@ -1306,15 +1394,16 @@ public class ClientForm extends javax.swing.JFrame {
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
         StorageUtils.readStorage();
         setSort(jComboBox7, jTable6, storageList);
-        MainForm.addIngCountToStorage(jTable6);
+        UsersUtils.readAllUsers();
+        MainForm.addIngCountToStorage(jTable6, 3);
         StorageUtils.readStorage();
         setSort(jComboBox7, jTable6, storageList);
-        showCalcTable(jTable6);
+        showStorageStatisticTable(jTable6);
     }//GEN-LAST:event_addToStorage
 
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
         setSort(jComboBox7, jTable6, storageList);
-        showCalcTable(jTable6);
+        showStorageStatisticTable(jTable6);
         System.out.println("change sort storageList  ");
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
@@ -1428,6 +1517,11 @@ public class ClientForm extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // read data from storage history by dates
+        jTable12.setToolTipText("Стовпчик вага \n"
+                + "показує сумарну вагу/кількість \n"
+                + "використаних продуктів \n"
+                + "в замовленнях \n"
+                + "в даному терміні");
         if (validInputDates()) {
             StorageUtils.readStorageOrderHistory(startDate, endDate);
             for (Ingredient ing : MainForm.storageDiffList) {
@@ -1461,10 +1555,59 @@ public class ClientForm extends javax.swing.JFrame {
         System.out.println("change sort storageDiffList  ");
     }//GEN-LAST:event_jComboBox10ActionPerformed
 
+    private void jButton40addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton40addToStorage
+        StorageUtils.readStorage();
+        setSort(jComboBox11, jTable14, storageList);
+        UsersUtils.readAllUsers();
+        MainForm.updateStorageCost(jTable14, 2);
+        StorageUtils.readStorage();
+        setSort(jComboBox11, jTable14, storageList);
+        showStorageCostTable(jTable14);
+    }//GEN-LAST:event_jButton40addToStorage
+
+    private void jComboBox11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox11ActionPerformed
+        setSort(jComboBox11, jTable14, storageList);
+        showStorageCostTable(jTable14);
+    }//GEN-LAST:event_jComboBox11ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        StorageUtils.readStorage();
+        setSort(jComboBox11, jTable14, storageList);
+        showStorageCostTable(jTable14);
+        jButton40.setEnabled(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
     private void getStorageTable() {
         StorageUtils.readStorage();
         setSort(jComboBox7, jTable6, storageList);
-        showCalcTable(jTable6);
+        showStorageStatisticTable(jTable6);        
+    }
+        
+    public static void showStorageStatisticTable(JTable jTable) {
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0);
+        for (Ingredient ingredient : storageList) { //admin 
+            model.addRow(new Object[]{
+                ingredient.getId(),
+                ingredient.getTitle(),
+                ingredient.getCount(),
+                0.0,
+                false                  
+            });
+        }
+    }
+    
+    public static void showStorageCostTable(JTable jTable) {
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0);
+        for (Ingredient ingredient : storageList) { //admin 
+            model.addRow(new Object[]{
+                ingredient.getId(),
+                ingredient.getTitle(),
+                ingredient.getCost(),
+                false                  
+            });
+        }
     }
 
     private void showOrderedDishes() {
@@ -1705,10 +1848,12 @@ public class ClientForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton40;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -1717,6 +1862,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox10;
+    private javax.swing.JComboBox jComboBox11;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox7;
@@ -1759,10 +1905,12 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1777,6 +1925,7 @@ public class ClientForm extends javax.swing.JFrame {
     private javax.swing.JTable jTable10;
     private javax.swing.JTable jTable11;
     private javax.swing.JTable jTable12;
+    private javax.swing.JTable jTable14;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;

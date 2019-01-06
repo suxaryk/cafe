@@ -1,7 +1,6 @@
 package cafe.view;
 
 import cafe.Utils.db.CheckUtils;
-import cafe.Utils.db.ConnectionException;
 import cafe.Utils.db.DBUtils;
 import static cafe.Utils.db.DBUtils.CARD_PAYMENT;
 import static cafe.Utils.db.DBUtils.ConnectDb;
@@ -12,6 +11,7 @@ import cafe.model.Order;
 import cafe.Utils.db.DishUtils;
 import static cafe.Utils.db.DBUtils.PASSWORD;
 import static cafe.Utils.db.DBUtils.USERNAME;
+import static cafe.Utils.db.DBUtils.chooseServer;
 import static cafe.Utils.db.DBUtils.showInfo;
 import static cafe.Utils.db.DBUtils.updateSystemVariables;
 import static cafe.Utils.db.DishUtils.createDishMeatWeight;
@@ -54,7 +54,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
@@ -82,11 +81,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import static cafe.Utils.json.JSONUtils.convertToJSON;
 import static cafe.view.WeightForm.listOfCoeffic;
-import java.net.ConnectException;
 import static cafe.Utils.db.DBUtils.setPayMethod;
-import static cafe.Utils.db.EmployeeUtils.getFirstTodayBarmenLoginTime;
-import static cafe.Utils.db.OrderUtils.getFirstOrderTime;
 import static cafe.Utils.db.OrderUtils.getDayEndTime;
+import static cafe.view.ClientForm.cafeId;
 
 /**
  * all methods in one class it`s very bad i know
@@ -2736,12 +2733,12 @@ public class MainForm extends javax.swing.JFrame {
         OrderUtils.updateTable(orders.get(activeTable), userList.get(User.active), activeTable);
         jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
         setOrderIdForTable(orders.get(activeTable).getDayId());
-        scrollToLastItem();
+        scrollToLastItem(jTable1);
     }
 
-    private void scrollToLastItem() {
-        Rectangle cellBounds = jTable1.getCellRect(jTable1.getRowCount() - 1, 0, true);
-        jTable1.scrollRectToVisible(cellBounds);
+    public static void scrollToLastItem(JTable table) {
+        Rectangle cellBounds = table.getCellRect(table.getRowCount() - 1, 0, true);
+        table.scrollRectToVisible(cellBounds);
     }
     
     public boolean calcMeat() {
@@ -3064,7 +3061,8 @@ public class MainForm extends javax.swing.JFrame {
         jTextPane2.setContentType("text/html");
         jTextPane2.setText(checkHtml);
     }
-    private void sortListOfDish(List list, final int orderArg) {
+    
+    public  static void sortListOfDish(List list, final int orderArg) {
         Collections.sort(list, new Comparator<Dish>() {
             @Override
             public int compare(Dish o1, Dish o2) {
@@ -3468,7 +3466,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
        
-    private static ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn) {
+    public static ArrayList<Ingredient> getListFromTable(JTable table, int indexColumn) {
         ArrayList<Ingredient> changedList = new ArrayList<>();
         int checkColumn = table.getColumnCount()-1;
         for (int i = 0; i < table.getRowCount(); i++) {            
@@ -3675,7 +3673,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeEmployee
 
-    private void setSelectedLastIndex(JTable jTable) {
+    public static void setSelectedLastIndex(JTable jTable) {
         jTable.setRowSelectionInterval(jTable.getRowCount() - 1, jTable.getRowCount() - 1);
         Rectangle cellRect = jTable.getCellRect(jTable.getRowCount() - 1, 0, true);
         jTable.scrollRectToVisible(cellRect);
@@ -3871,10 +3869,10 @@ public class MainForm extends javax.swing.JFrame {
         }             
     }
 
-    private void removeIngCountFromStorage(JTable table) {
+    public static void removeIngCountFromStorage(JTable table, Integer columnIndex) {
         changeList.clear();
         userList.get(User.active).getDayRemovedProducts().clear();
-        changeList.addAll(getListFromTable(table, 3));      
+        changeList.addAll(getListFromTable(table, columnIndex));      
         for (int i = 0; i < storageList.size(); i++) {
             if (changeList.get(i).isActive() && changeList.get(i).getCount() != 0.0) {
                 double old = storageList.get(i).getCount();
@@ -3931,15 +3929,21 @@ public class MainForm extends javax.swing.JFrame {
     public static void updateStorageCost(JTable table, Integer columnIndex) {
         changeList.clear();
         changeList.addAll(getListFromTable(table, columnIndex));
-        for (int i = 0; i < storageList.size(); i++) {           
-            if (changeList.get(i).isActive() && changeList.get(i).getCount() != 0.0) {
-                double newCount = changeList.get(i).getCount();
-                final Ingredient ing = storageList.get(i);
-                ing.setCount(newCount);
-                System.out.println("new count " + ing.getCount());
-                StorageUtils.updateCost(ing.getId(), ing.getCount());
+        final int currentCafeId = cafeId;
+        for (int serverId = 0; serverId < 3; serverId++) {
+            chooseServer(serverId);        
+            for (int i = 0; i < storageList.size(); i++) {           
+                if (changeList.get(i).isActive() && changeList.get(i).getCount() >= 0) {
+                    double newCount = changeList.get(i).getCount();
+                    final Ingredient ing = storageList.get(i);
+                    ing.setCount(newCount);
+                    System.out.println("new count " + ing.getCount());
+                    StorageUtils.updateCost(ing.getId(), ing.getCount());
+                }
             }
-        }      
+         }
+        chooseServer(currentCafeId);
+
     }
     
     private void addToStorage(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToStorage
@@ -3975,13 +3979,13 @@ public class MainForm extends javax.swing.JFrame {
                     "Підтвердити списання?", "Списання зі складу",
                     0, JOptionPane.YES_NO_OPTION, null, options, null);       
             if (reply == JOptionPane.YES_OPTION) {
-               removeIngCountFromStorage(jTable6);
+               removeIngCountFromStorage(jTable6, 3);
                 StorageUtils.readStorage();
                 setSort(jComboBox7, jTable6, storageList);
                 showCalcTable(jTable6);
             }
         } else {
-        removeIngCountFromStorage(jTable5);
+        removeIngCountFromStorage(jTable5, 3);
         StorageUtils.readStorage();
         setSort(jComboBox7, jTable5, storageList);
         showCalcTable(jTable5);
@@ -4683,7 +4687,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     public static void initBDmenu() {
-
+        menu.clear();
         menu.add(new Category("1,2 страви"));
         menu.add(new Category("салати"));
         menu.add(new Category("страви роджера"));

@@ -34,9 +34,9 @@ public class DBUtils {
 //for stat
     public static final boolean LOCAL = true;
     public static final boolean STATISTIC = true;
-    public static final boolean ONLY_BK_CAFE = false;
+//    public static final boolean ONLY_BK_CAFE = false;
     
-    private static final String PASSWORD_MAIN = "dbiytdbq18";
+    private static final String PASSWORD_MAIN = "root";
     private static final String PASSWORD_HM = "empty";
     
     public static final List<String> LOCAL_HOSTS = new ArrayList<>();
@@ -79,9 +79,9 @@ public class DBUtils {
         
         HOSTS.add("46.219.43.69");
         HOSTS.add("185.15.6.103");
-        HOSTS.add("46.63.96.79");
-        HOSTS.add("46.63.25.213");
-        HOSTS.add("185.109.54.153");
+        HOSTS.add("46.63.96.79"); 
+//        HOSTS.add("46.63.25.213"); 
+//        HOSTS.add("185.109.54.153");
     }
 
     public static boolean ConnectDb() {
@@ -101,11 +101,11 @@ public class DBUtils {
 
     public static String getHost(int cafeId) {
         String HOST = "localhost";
-        if (ONLY_BK_CAFE) {
-            HOST = HOSTS.get(4);
-        } else {
-            HOST = getHostById(cafeId);
-        }
+//        if (ONLY_BK_CAFE) {
+//            HOST = HOSTS.get(4);
+//        } else {
+//            HOST = getHostById(cafeId);
+//        }
         if (LOCAL) {
             PASSWORD = "root";
         }else if (cafeId == 3) {
@@ -172,16 +172,11 @@ public class DBUtils {
     }
 
     public static void chooseServer(int cafeId) {
-        if (ONLY_BK_CAFE) {
-            setHost(LOCAL_HOSTS.get(4));
-        } else {
+        if (!LOCAL) {
             setHost(getHostById(cafeId));
-        }
-        if (cafeId == 3) {
-            PASSWORD = PASSWORD_HM;
-        } else {
             PASSWORD = PASSWORD_MAIN;
         }
+        
     }
     
     private static String getHostById(final int cafeId){

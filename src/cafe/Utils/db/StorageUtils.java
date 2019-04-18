@@ -7,7 +7,10 @@ import static cafe.Utils.db.DBUtils.USERNAME;
 import static cafe.Utils.db.DishUtils.getCurrentTimeStamp;
 import cafe.Utils.json.JSONUtils;
 import static cafe.Utils.json.JSONUtils.convertJSONToOrder;
+import cafe.model.Category;
+import cafe.model.Dish;
 import cafe.model.Ingredient;
+import cafe.model.Order;
 import cafe.model.OrderItem;
 import cafe.model.User;
 import cafe.view.ClientForm;
@@ -22,7 +25,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.log4j.Logger;
 
 /**
@@ -89,7 +97,7 @@ public class StorageUtils {
         }
         return "";
     }
-
+    
     public static void addIngredientToDB(Ingredient ingredient) {
         final String SQL = "INSERT INTO storage(title, count) VALUES(?, ?)";
         try (Connection connection = DriverManager
@@ -409,5 +417,35 @@ public class StorageUtils {
             }
         }
     }
+    
+    public static void fillDishIds(HashMap<Integer, Order> loadOrders) {
+        loadOrders.entrySet().stream()
+                .map(a -> a.getValue().getItems())
+                .flatMap(Collection::stream)
+                .forEach(item -> fillDishId(item.getDish()));
+    }
+    
+    public static boolean validateTables(HashMap<Integer, Order> loadOrders){
+        return loadOrders.entrySet().stream()
+                .map(a -> a.getValue().getItems())
+                .flatMap(Collection::stream)
+                .filter(item -> item.getDish().getDbID() == 0 || item.getDish().getRecipe().isEmpty())
+                .findAny().isPresent();
+    }
+    
+    private static void fillDishId(Dish dish) {
+                 MainForm.menu.stream().map(Category::getDishes)
+                .flatMap(Collection::stream)
+                .filter(originDish -> originDish.getTitle().equals(dish.getTitle()))
+                .forEach(originDish -> fillDishData(originDish, dish));
+    }
+
+    private static void fillDishData(Dish from, Dish to) {
+        to.setDbID(from.getDbID());
+        to.setRecipe(from.getRecipe());
+        to.setPrice(from.getPrice());
+        to.setCook(from.isCook());
+    }
+    
 
 }

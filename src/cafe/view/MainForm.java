@@ -109,9 +109,9 @@ public class MainForm extends javax.swing.JFrame {
         initMainForm();
         initTables();
         initCalculationTable();
+        initBDmenu();
         loadTables();
         initStartOrderId();
-        initBDmenu();
         DishUtils.initDishMeatWeight();
         initSystemVariables();
         doDBDump();
@@ -2589,17 +2589,15 @@ public class MainForm extends javax.swing.JFrame {
 
     private void refreshOrderTable() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        jTextField1.setText(String.valueOf(orders.get(activeTable)
-                .getOrderSum()));
-        for (int i = 0; i < orders.get(activeTable)
-                .getItems().size(); i++) {
+        jTextField1.setText(String.valueOf(orders.get(activeTable).getOrderSum()));
+        for (int i = 0; i < orders.get(activeTable).getItems().size(); i++) {
+            final OrderItem orderItem = orders.get(activeTable).getItems().get(i);
+            final Dish dish = orderItem.getDish();
             model.addRow(new Object[]{
-                orders.get(activeTable).getItems().get(i)
-                .getDish().getTitle(),
-                orders.get(activeTable).getItems().get(i).getCount(),
-                orders.get(activeTable).getItems().get(i).getDish()
-                .getPrice(),
-                orders.get(activeTable).getItems().get(i).getSum()
+                dish.getTitle(),
+                orderItem.getCount(),
+                dish.getPrice(),
+                orderItem.getSum()
             });
         }
         changeRowColorTable1();
@@ -2709,11 +2707,9 @@ public class MainForm extends javax.swing.JFrame {
 
     public void addOrderItemToTable(int count) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        String title = menu.get(activeCat).getDishes().get(activeDishes).getTitle();
         boolean isCookCategory = true ? activeCat < 9 : false;
         OrderItem newOrderItem = new OrderItem(menu.get(activeCat).getDishes().get(activeDishes), count, isCookCategory);
 
-        int index = getIndex(count, isCookCategory);
         log.debug("activeCat " + activeCat);
         log.debug("iscook " + newOrderItem.getDish().isCook());
 
@@ -2931,11 +2927,10 @@ public class MainForm extends javax.swing.JFrame {
         StorageUtils.readStorage();
         storageDiffList.clear();
         for (Ingredient ingredient : storageList) {
-            double diff = orders.get(activeTable)
-                    .getOrderIngredients().get(ingredient.getId());
+            double diff = orders.get(activeTable).getOrderIngredients().get(ingredient.getId());
             if (diff != 0.0) {
                 double old = ingredient.getCount();
-                log.debug("SubOrderIngredientsFromDB(списання зі складу по чеку) old-diff = " + decFormat.format(old - diff));
+                log.debug("SubOrderIngredientsFromDB(списання зі складу по чеку nr("+orders.get(activeTable).getDayId()+")) old("+ old +")-diff("+ diff +") = " + decFormat.format(old - diff));
                 ingredient.setCount(old - diff);
                 StorageUtils.updateCount(ingredient.getId(), ingredient.getCount());
                 storageDiffList.add(new Ingredient(ingredient.getDbId(), diff));
@@ -4712,17 +4707,21 @@ public class MainForm extends javax.swing.JFrame {
 
         if (!loadOrders.isEmpty()) {
             System.out.println("loadTables---");
-
-            orders.putAll(loadOrders);
-            for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
-                if (entry.getValue().getOrderSum() > 0) {
-                    TablesPanel.getComponent(entry.getKey() - 1).setBackground(Color.yellow);
-                    activeTable = entry.getKey();
-                    System.out.println("actTAble " + activeTable);
-                    System.out.println("orderId " + entry.getValue().getDayId());
-                    setOrderIdForTable(entry.getValue().getDayId());
-                    if (maxSavedOrderId < entry.getValue().getDayId()) {
-                        maxSavedOrderId = entry.getValue().getDayId();
+            
+            StorageUtils.fillDishIds(loadOrders);
+            
+            if (!StorageUtils.validateTables(loadOrders)) {
+                orders.putAll(loadOrders);
+                for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
+                    if (entry.getValue().getOrderSum() > 0) {
+                        TablesPanel.getComponent(entry.getKey() - 1).setBackground(Color.yellow);
+                        activeTable = entry.getKey();
+                        System.out.println("actTAble " + activeTable);
+                        System.out.println("orderId " + entry.getValue().getDayId());
+                        setOrderIdForTable(entry.getValue().getDayId());
+                        if (maxSavedOrderId < entry.getValue().getDayId()) {
+                            maxSavedOrderId = entry.getValue().getDayId();
+                        }
                     }
                 }
             }

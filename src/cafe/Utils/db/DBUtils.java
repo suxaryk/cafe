@@ -28,15 +28,15 @@ public class DBUtils {
     public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
 //    public static String URL = "jdbc:mysql://localhost:3306/starkon";
     public static String USERNAME = "root";
-    public static String PASSWORD = "root";
+    public static String PASSWORD = "dbiytdbq18";
 //    public static String PASSWORD = "root";
 
 //for stat
-    public static final boolean LOCAL = true;
+    public static final boolean LOCAL = false;
     public static final boolean STATISTIC = true;
 //    public static final boolean ONLY_BK_CAFE = false;
     
-    private static final String PASSWORD_MAIN = "root";
+    private static final String PASSWORD_MAIN = "dbiytdbq18";
     private static final String PASSWORD_HM = "empty";
     
     public static final List<String> LOCAL_HOSTS = new ArrayList<>();
@@ -77,7 +77,7 @@ public class DBUtils {
         LOCAL_HOSTS.add("192.168.0.106");
         LOCAL_HOSTS.add("192.168.0.102");   
         
-        HOSTS.add("46.219.43.69");
+        HOSTS.add("46.219.43.198");
         HOSTS.add("185.15.6.103");
         HOSTS.add("46.63.96.79"); 
 //        HOSTS.add("46.63.25.213"); 

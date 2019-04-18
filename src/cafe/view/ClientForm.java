@@ -2466,16 +2466,13 @@ public class ClientForm extends javax.swing.JFrame {
     
 
     private void refreshEmployeeTable() {
-//        SimpleDateFormat format1 = new SimpleDateFormat("HH:mm:ss");
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
         for (Employee item : employees) {
             model.addRow(new Object[]{
                 item.getName(),
                 item.getStartTime(),
-                //                format1.format(item.getStartTime()),
                 item.getEndTime()
-//                format1.format(item.getEndTime())
             });
         }
     }

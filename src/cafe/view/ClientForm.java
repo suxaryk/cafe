@@ -76,7 +76,7 @@ public class ClientForm extends javax.swing.JFrame {
         MainForm.initBDmenu();
                 
         initEnabledComponents();  
-            serverArray = new String[]{"Шепетовка", "Староконстянтинів", "Славута"};
+            serverArray = new String[]{"Староконстянтинів", "Славута"};
             servers.addAll(Arrays.asList(serverArray));
             jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(serverArray));
             jXDatePicker1.setDate(new Date());

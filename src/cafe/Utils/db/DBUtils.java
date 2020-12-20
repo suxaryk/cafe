@@ -25,15 +25,15 @@ public class DBUtils {
     
     private static final Logger log = Logger.getLogger(DBUtils.class);
 
-    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
-//    public static String URL = "jdbc:mysql://localhost:3306/starkon";
+//    public static String URL = "jdbc:mysql://localhost:3306/luckyroger";
+    public static String URL = "jdbc:mysql://localhost:3306/slavut";
     public static String USERNAME = "root";
-    public static String PASSWORD = "dbiytdbq18";
-//    public static String PASSWORD = "root";
+//    public static String PASSWORD = "dbiytdbq18";
+    public static String PASSWORD = "root";
 
 //for stat
-    public static final boolean LOCAL = false;
-    public static final boolean STATISTIC = true;
+    public static final boolean LOCAL = true;
+    public static final boolean STATISTIC = false;
 //    public static final boolean ONLY_BK_CAFE = false;
     
     private static final String PASSWORD_MAIN = "dbiytdbq18";
@@ -42,7 +42,7 @@ public class DBUtils {
     public static final List<String> LOCAL_HOSTS = new ArrayList<>();
     public static final List<String> HOSTS = new ArrayList<>();
     
-    private static final int TIMEOUT = 2_000;
+    private static final int TIMEOUT = 10_000;
     //for hm = true
     public static final boolean CARD_PAYMENT = true;
 
@@ -71,14 +71,14 @@ public class DBUtils {
     }
     
     private static void createListHosts(){
-        LOCAL_HOSTS.add("192.168.0.111");
-        LOCAL_HOSTS.add("192.168.0.102");
-        LOCAL_HOSTS.add("192.168.0.2");
-        LOCAL_HOSTS.add("192.168.0.106");
-        LOCAL_HOSTS.add("192.168.0.102");   
+//        LOCAL_HOSTS.add("192.168.0.111");
+//        LOCAL_HOSTS.add("192.168.0.102");
+        LOCAL_HOSTS.add("192.168.0.2"); //only slavut
+//        LOCAL_HOSTS.add("192.168.0.106");
+//        LOCAL_HOSTS.add("192.168.0.102");   
         
-        HOSTS.add("46.219.43.198");
-        HOSTS.add("185.15.6.103");
+//        HOSTS.add("46.219.43.198");
+//        HOSTS.add("185.15.6.103");
         HOSTS.add("46.63.96.79"); 
 //        HOSTS.add("46.63.25.213"); 
 //        HOSTS.add("185.109.54.153");
@@ -129,6 +129,8 @@ public class DBUtils {
             socket.close();
             return isConnected;
         } catch (Exception e) {
+            System.out.println("stack trace" + e.getMessage());
+            System.out.println("stack trace" + e.getStackTrace());
             return false;
         }
     }

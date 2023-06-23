@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 public class StatisticUtils {
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "dbiytdbq18";
+    private static final String PASSWORD = "root";
     private static final String HOST = "";
     private static final String R_HOST = "localhost";
     private static final int PORT = 22;

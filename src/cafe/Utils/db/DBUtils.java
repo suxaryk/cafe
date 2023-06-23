@@ -27,8 +27,6 @@ public class DBUtils {
     public static String PASSWORD = "root";
 
 //for stat
-//    private static final String PASSWORD_MAIN = "dbiytdbq18";
-//    private static String PASSWORD_HM = "___agneshka17";
 //    public static final String HOST_0 = "93.183.216.29";
 //    public static final String HOST_1 = "185.15.6.103";
 //    private static final String HOST_2 = "46.63.96.79";

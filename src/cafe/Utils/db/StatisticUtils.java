@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 
 public class StatisticUtils {
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "dbiytdbq18";
+    private static final String PASSWORD = "root";
     private static final String HOST = "HOST_1";
     private static final String R_HOST = "localhost";
     private static final int PORT = 22;
@@ -59,8 +59,7 @@ public class StatisticUtils {
             if (session.isConnected()) {
                 System.out.println("Ssh session is open...");
             }
-//            session.setPortForwardingL(L_PORT, R_HOST, R_PORT);            
-//            String url = "jdbc:mysql://" + R_HOST + ":" + L_PORT + "/";
+
             String url = "jdbc:mysql://localhost:3306/luckyroger";
             String db = "luckyroger";
             Class.forName("com.mysql.jdbc.Driver");
@@ -477,3 +476,4 @@ public class StatisticUtils {
     
     
 }
+

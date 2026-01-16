@@ -69,26 +69,7 @@ public class DBUtils {
     }
     public static String getHost(int cafeId){
         String HOST = "localhost";
-//        if (cafeId == 0) {
-//            HOST = HOST_0;
-//        } else if (cafeId == 1) {
-//            //star
-//            HOST = HOST_1;
-//        } else if (cafeId == 2) {
-//            //slav
-//            HOST = HOST_2;
-//        }
-//        if (isLocalHost) {
-//            if (cafeId == 0) {
-//                HOST = LOCALHOST_0;
-//            } else if (cafeId == 1) {
-//                //star
-//                HOST = LOCALHOST_1;
-//            } else if (cafeId == 2) {
-//                //slav
-//                HOST = LOCALHOST_2;
-//            }
-//        }
+
         return HOST;
     }
     
@@ -135,48 +116,10 @@ public class DBUtils {
         
         return (reply == JOptionPane.YES_OPTION);
         
-//        if (reply == JOptionPane.YES_OPTION) {
-//              return true;
-//        }else{
-//            return false;
-//        }
     }
     
     public static void chooseServer(int cafeId) {  
-//        if (isLocalHost) {
-//            if (cafeId == 0) {
-//                //shep
-//                URL = "jdbc:mysql://" + LOCALHOST_0 + ":3306/luckyroger";
-//            } else if (cafeId == 1) {
-//                //star
-//                URL = "jdbc:mysql://" + LOCALHOST_1 + ":3306/luckyroger";
-//            } else if (cafeId == 2) {
-//                //slav          
-//                URL = "jdbc:mysql://" + LOCALHOST_2 + ":3306/luckyroger";            
-//            } else if (cafeId == 3) {
-//                //hm         
-//                URL = "jdbc:mysql://" + LOCALHOST_3 + ":3306/luckyroger";
-//            }
-//        }else{
-//            if (cafeId == 0) {
-//                //shep
-//                URL = "jdbc:mysql://" + HOST_0 + ":3306/luckyroger";
-//            } else if (cafeId == 1) {
-//                //star
-//                URL = "jdbc:mysql://" + HOST_1 + ":3306/luckyroger";
-//            } else if (cafeId == 2) {
-//                //slav
-//                URL = "jdbc:mysql://" + HOST_2 + ":3306/luckyroger";            
-//            } else if (cafeId == 3) {
-//                //hm
-//                URL = "jdbc:mysql://" + HOST_3 + ":3306/luckyroger";               
-//            }
-//        }
-//        if (cafeId == 3) {
-//            PASSWORD = "___agneshka17";            
-//        }else{
-//            PASSWORD = "dbiytdbq18";
-//        }
+
       
     } 
     
@@ -307,3 +250,4 @@ public class DBUtils {
 
     
 }
+
